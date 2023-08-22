@@ -1,0 +1,37 @@
+
+
+/* ==[ sidebar ] == == == == == == == == == */
+sidebar {
+   background: #16181c;
+   display: grid;
+   grid-template-rows: 68px 1fr;
+   width: 68px;
+   height: calc( 100vh - 81px );
+   gap: 1rem;
+   position: fixed;
+   top: 81px;
+   left: 0;
+   box-shadow: #0005 0 0 2px;
+}
+
+sidebar-logo {
+   display: grid;
+   place-items: center;
+   width: 100%;
+   aspect-ratio: 1 / 1;
+   padding: 5px; 
+   background: #1b1d22;
+}
+
+sidebar-body {
+   display: grid;
+   width: 100%;
+}
+sidebar-body > item {
+   display: block;
+   width: 100%;
+   width: fit-content;
+   margin: 0 auto;
+   color: #27f;
+}
+
