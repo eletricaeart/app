@@ -23,7 +23,8 @@
             --dark2: #212329;   --dark3: #505257;
             
             --light0: #ffffff;  --light1: #f5f5f5;
-            --appbar: #059;
+            --azul0: #19497b;   --azul1: #8cb2e6;
+            --azul2: #b5dfef;   --azul3: #deeff7;
             --pink: #905;   --amber: #ffab00;   --red: #ce3635;
             --azul: #27f;   --green: #006400;   --blue: #149cbe;
             --texto: #e9e6e3;
@@ -52,8 +53,8 @@
          [link]:hover { color: #27f; transition: .3s ease-in-out; }
          
          body {
-            min-height: 150vh;
-            padding-top: 81px;
+            width: 100%;
+            min-height: 100vh;
             background: #fff;
             color: var( --texto );
             font-family: 'Poppins';
@@ -63,46 +64,330 @@
             display: grid;
             grid-template-columns: .35fr .65fr;
             width: 100%;
-            /*height: 81px;*/
+            height: calc( 150px );
             padding: 1vw;
-            position: absolute;
-            top: 0; left: 0;
+            position: sticky;
+            /*top: 0; left: 0;*/
+            inset: 0;
             z-index: 9;
-            background: var( --appbar );
+            background: var( --azul0 );
             filter: var( --appbar-filter-shadow );
          }
-         appbar logo {}
+         appbar logo {
+            width: 100%;
+         }
+         appbar logo img {
+            width: 100%;
+         }
          appbar-text {
             width: 100%;
-            display: grid;
-            place-items: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             font-size: 2.5vw;
-            line-height: 2.5vw;
+            /*line-height: 2.5vw;*/
             text-align: center;
          }
+         appbar-text > * {
+            margin-top: 0;
+            margin-bottom: 0;
+         }
+         appbar-text h1 { font-size: 7vw; }
+         
+         form {
+            max-width: 100%;
+            margin: 2vw auto;
+            font-size: 2.5vw;
+         }
+         
+         form header {
+            background: var( --azul1 );
+            display: grid;
+            grid-template-columns: repeat( 3, .3fr );
+            justify-content: center;
+         }
+         form header label {
+            display: grid;
+            grid-template-columns: .6fr .4fr;
+            place-items: center;
+            color: var( --azul0 );
+            font-size: 3.5vw;
+            font-weight: 900;
+         }
+         label h3 {
+            width: 100%;
+            margin: 0;
+         }
+         label input {
+            width: 100%;
+            background: transparent;
+            border: transparent;
+            outline: transparent;
+         }
+         
+         cliente {
+            display: block;
+            background: var( --azul3 );
+            margin: 2vw auto;
+            color: #212329;
+         }
+         
+         cliente header {
+            display: grid;
+            grid-template-columns: 1fr;
+            background: var( --azul0 );
+            color: #fff;
+         }
+         cliente header h1 {
+            width: 100%;
+            margin: 0 auto;
+            text-align: center;
+         }
+         cliente main {
+            display: grid;
+            grid-template-columns: 1fr;
+            padding: 0;
+         }
+         cliente main item {
+            display: grid;
+            grid-template-columns: 1fr;
+         }
+         item label {
+            display: grid;
+            background: var( --azul2 );
+            grid-template-columns: .2fr .8fr;
+            padding: 0 1vw;
+         }
+         item label h3 {
+            font-size: 3.5vw;
+            margin: 0;
+            padding: 0;
+         }
+         item label input {
+            background: var( --azul3 );
+            padding: 1vw;
+         }
+         
+         item[ type="tel-email" ] {
+            grid-template-columns: .5fr .5fr;
+         }
+         item[ type="tel-email" ] :nth-child(1) {
+            grid-template-columns: .41fr .59fr;
+         }
+         
+         item[ type="cpf-rg" ] {
+            grid-template-columns: .5fr .5fr;
+         }
+         item[ type="cpf-rg" ] :nth-child(1) {
+            grid-template-columns: .41fr .59fr;
+         }
+         
+         item[ type="b-c-u-c" ] {
+            grid-template-columns: .3fr .3fr .1fr .3fr;
+         }
+         item[ type="b-c-u-c" ] :nth-child(1) {
+            grid-template-columns: .41fr .59fr;
+         }
+         
+         item[ type="endereco" ] {
+            grid-template-columns: .8fr .2fr;
+         }
+         item[ type="endereco" ] label {
+            grid-template-columns: .25fr .75fr;
+         }
+         select#select-cpf-cnpj {
+            padding: 0;
+            background: transparent;
+            border: transparent solid 0;
+            outline: transparent;
+         }
+         select#select-cpf-cnpj option, select#select-cpf-cnpj option h3 {
+            padding: 0; margin: 0;
+         }
+         
+         
+         orcamento {
+            display: block;
+            background: var( --azul3 );
+            margin: 2vw auto;
+         }
+         
+         orcamento header {
+            display: grid;
+            grid-template-columns: 1fr;
+            background: var( --azul0 );
+         }
+         orcamento header h1 {
+            width: 100%;
+            margin: 0 auto;
+            text-align: center;
+         }
+         
+         
+         obs {
+            display: block;
+            background: #fff;
+            margin: 2vw auto;
+         }
+         
+         obs header {
+            display: grid;
+            grid-template-columns: 1fr;
+            background: #fff;
+         }
+         obs header h1 {
+            width: 100%;
+            margin: 0 auto;
+            text-align: center;
+            color: var( --azul0 );
+         }
+         ts { display: block; background: orange; width: 100%; min-height: 50px; border: purple solid; }
       </style>
    </head>
    <body>
       <appbar>
-         <logo></logo>
+         <logo>
+            <img src="./ea.jpg" alt="ea" />
+         </logo>
          <appbar-text>
             <h1>ELÉTRICA & ART</h1>
             
-               <cnpj>CPF/CNPJ 32.858.892/0001-52 - IM 67358/0001</cnpj> <br />
+               <h3>CPF/CNPJ 32.858.892/0001-52 - IM 67358/0001</h3>
                Rua José Alves Maciel, 40 - Aviação <br />
                Praia Grande - São Paulo - SP - Cep 11702-440 <br />
-               <strong>
-                  Fone: ( 13 ) 99768-5853 
-               </strong> <br />
-               <strong>
-                  Whatsapp
-               </strong> <br />
-               <strong>
-                  E-mail: eletrica.art.ltda@gmail.com
-               </strong>
+               <strong>Fone: ( 13 ) 99768-5853  <br />
+               Whatsapp<br />
+               E-mail: eletrica.art.ltda@gmail.com</strong>
             
          </appbar-text>
       </appbar>
+      <form>
+         <header>
+            <label>
+               Orçamento: 
+               <input type="number" name="" id="" value="oi" />
+            </label>
+            <label>
+               Emissão: 
+               <input type="number" name="" id="" value="oi" />
+            </label>
+            <label>
+               Validade: 
+               <input type="number" name="" id="" value="oi" />
+            </label>
+         </header>
+         <cliente>
+            <header>
+               <h1>CLIENTE</h1>
+            </header>
+            <main>
+               <item type="nome">
+                  <label>
+                     <h3>NOME</h3>
+                     <input type="text" placeholder="Nome do cliente" name="" id="" value="" />
+                  </label>
+               </item>
+               <item type="tel-email">
+                  <label>
+                     <h3>TELEFONE</h3>
+                     <input type="text" placeholder="(99) 9 9999-9999" name="" id="" value="" />
+                  </label>
+                  <label>
+                     <h3>EMAIL</h3>
+                     <input type="email" placeholder="email@email.com" name="" id="" value="" />
+                  </label>
+               </item>
+               <item type="cpf-rg">
+                  <label>
+                     <select name="" id="select-cpf-cnpj">
+                        <option><h3>CPF</h3></option>
+                        <option><h3>CNPJ</h3></option>
+                     </select>
+                     <!--<h3>CPF/CNPJ</h3>-->
+                     <input type="text" placeholder="999.999.999-99" name="" id="" value="" />
+                  </label>
+                  <label>
+                     <h3>RG/IE</h3>
+                     <input type="text" placeholder="41.44.5792-4" name="" id="" value="" />
+                  </label>
+               </item>
+               <item type="endereco">
+                  <label>
+                     <h3>ENDEREÇO</h3>
+                     <input type="text" placeholder="rua ..." id="" value="" />
+                  </label>
+                  <label>
+                     <h3>N°</h3>
+                     <input type="text" placeholder="999" name="" id="" value="" />
+                  </label>
+               </item>
+               <item type="b-c-u-c">
+                  <label>
+                     <h3>BAIRRO</h3>
+                     <input type="text" name="" id="" value="" />
+                  </label>
+                  <label>
+                     <h3>CIDADE</h3>
+                     <input type="text" name="" id="" value="" />
+                  </label>
+                  <label>
+                     <h3>UF</h3>
+                     <select id="estado" name="estado">
+                         <option value="AC">Acre</option>
+                         <option value="AL">Alagoas</option>
+                         <option value="AP">Amapá</option>
+                         <option value="AM">Amazonas</option>
+                         <option value="BA">Bahia</option>
+                         <option value="CE">Ceará</option>
+                         <option value="DF">Distrito Federal</option>
+                         <option value="ES">Espírito Santo</option>
+                         <option value="GO">Goiás</option>
+                         <option value="MA">Maranhão</option>
+                         <option value="MT">Mato Grosso</option>
+                         <option value="MS">Mato Grosso do Sul</option>
+                         <option value="MG">Minas Gerais</option>
+                         <option value="PA">Pará</option>
+                         <option value="PB">Paraíba</option>
+                         <option value="PR">Paraná</option>
+                         <option value="PE">Pernambuco</option>
+                         <option value="PI">Piauí</option>
+                         <option value="RJ">Rio de Janeiro</option>
+                         <option value="RN">Rio Grande do Norte</option>
+                         <option value="RS">Rio Grande do Sul</option>
+                         <option value="RO">Rondônia</option>
+                         <option value="RR">Roraima</option>
+                         <option value="SC">Santa Catarina</option>
+                         <option value="SP">São Paulo</option>
+                         <option value="SE">Sergipe</option>
+                         <option value="TO">Tocantins</option>
+                         <option value="EX">Estrangeiro</option>
+                     </select>
+                  </label>
+                  <label>
+                     <h3>CEP</h3>
+                     <input type="text" placeholder="00.000-000" name="" id="" value="" />
+                  </label>
+               </item>
+            </main>
+         </cliente>
+         <orcamento>
+            <header>
+               <h1>ORÇAMENTO</h1>
+            </header>
+            <main>
+               
+            </main>
+         </orcamento>
+         <obs>
+            <header>
+               <h1>OBSERVAÇÕES</h1>
+            </header>
+            <main>
+               
+            </main>
+         </obs>
+      </form>
       
       
       
@@ -131,3 +416,14 @@
       </script>
    </body>
 </html>
+<!--
+não seria possível alguém como eu poder tocar um anjo como aquele 
+
+mas um dia, assim tão inesperadamente, aquele rostinho estava ali 
+
+olhando pra mim, sorrindo 
+
+me senti nú 
+não tive tempo de pensar 
+
+-->
