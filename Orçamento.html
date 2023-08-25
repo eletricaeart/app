@@ -212,9 +212,11 @@
          
          orcamento {
             display: block;
-            background: var( --azul3 );
             margin: 2vw auto;
             color: #000;
+         }
+         orcamento main {
+            background: var( --azul3 );
          }
          
          orcamento header {
@@ -227,6 +229,66 @@
             width: 100%;
             margin: 0 auto;
             text-align: center;
+         }
+         
+         orcamento main item {
+            display: grid;
+            grid-template-columns: .1fr .7fr .2fr;
+         }
+         orcamento main item:nth-child( even ) {
+            background: var( --azul2 ) !important;
+         }
+         item[type="header"] {
+            place-items: center;
+            background: var( --azul1 );
+         }
+         item[type="header"] h3 {
+            width: 100%;
+            text-align: center;
+            font-size: 3vw;
+            font-weight: 900;
+            margin: 0;
+         }
+         orcamento main item > * {
+            width: 100%;
+            background: transparent;
+            border: transparent solid 0;
+            text-align: center;
+            font-size: 3vw;
+         }
+         orcamento main item :nth-child( 1 ) {
+            border-right: #fff5 .5vw dotted;
+         }
+
+         orcamento main item :nth-last-child( 1 ) {
+            border-left: #fff5 .5vw dotted;
+         }
+         
+         orcamento footer {
+            display: grid;
+            grid-template-columns: repeat( 3, 1fr );
+            margin: 2vw 0 0 0;
+         }
+         orcamento footer item {
+            width: 100%;
+         }
+         orcamento footer item label {
+            grid-template-columns: auto 1fr;
+            display: grid;
+         }
+         orcamento footer :nth-last-child( 1 ) label {
+            background: var( --azul0 );
+            color: #fff;
+         }
+         orcamento footer :nth-last-child( 1 ) label input {
+            background: var( --azul1 );
+            color: #000;
+            width: 100%;
+         }
+         orcamento footer item label h4 {
+            display: grid;
+            place-items: center;
+            margin: 0;
          }
          
          
@@ -246,6 +308,15 @@
             margin: 0 auto;
             text-align: center;
             color: var( --azul0 );
+         }
+         
+         textarea {
+            width: 100%;
+            min-height: 15vw;
+            text-align: center;
+            font-size: 3vw;
+            padding: 2vw;
+            background: var( --azul3 );
          }
          ts { display: block; background: orange; width: 100%; min-height: 50px; border: purple solid; }
       </style>
@@ -382,18 +453,83 @@
             </header>
             <main>
                <item type="header">
-                  <h3>PRODUTO / SERVIÇO</h3>
                   <h3>QTD.</h3>
+                  <h3>PRODUTO / SERVIÇO</h3>
                   <h3>VALOR</h3>
                </item>
+               <item>
+                  <input type="number" name="" id="" value="" />
+                  <input type="text" name="" id="" value="" />
+                  <input type="number" name="" id="" value="" />
+               </item>
+               <item>
+                  <input type="number" name="" id="" value="" />
+                  <input type="text" name="" id="" value="" />
+                  <input type="number" name="" id="" value="" />
+               </item>
+               <item>
+                  <input type="number" name="" id="" value="" />
+                  <input type="text" name="" id="" value="" />
+                  <input type="number" name="" id="" value="" />
+               </item>
+               <item>
+                  <input type="number" name="" id="" value="" />
+                  <input type="text" name="" id="" value="" />
+                  <input type="number" name="" id="" value="" />
+               </item>
+               <item>
+                  <input type="number" name="" id="" value="" />
+                  <input type="text" name="" id="" value="" />
+                  <input type="number" name="" id="" value="" />
+               </item>
+               <item>
+                  <input type="number" name="" id="" value="" />
+                  <input type="text" name="" id="" value="" />
+                  <input type="number" name="" id="" value="" />
+               </item>
+               <item>
+                  <input type="number" name="" id="" value="" />
+                  <input type="text" name="" id="" value="" />
+                  <input type="number" name="" id="" value="" />
+               </item>
+               <item>
+                  <input type="number" name="" id="" value="" />
+                  <input type="text" name="" id="" value="" />
+                  <input type="number" name="" id="" value="" />
+               </item>
+               <item>
+                  <input type="number" name="" id="" value="" />
+                  <input type="text" name="" id="" value="" />
+                  <input type="number" name="" id="" value="" />
+               </item>
             </main>
+            <footer>
+               <item>
+                  <label>
+                     <h4>SUBTOTAL</h4>
+                     <input type="number" placeholder="R$ 48.968,00" name="" id="" value="" />
+                  </label>
+               </item>
+               <item>
+                  <label>
+                     <h4>DESCONTO</h4>
+                     <input type="number" placeholder="R$ 1.000,00" name="" id="" value="" />
+                  </label>
+               </item>
+               <item>
+                  <label>
+                     <h3>TOTAL</h3>
+                     <input type="number" placeholder="R$ 48.968,00" name="" id="" value="" />
+                  </label>
+               </item>
+            </footer>
          </orcamento>
          <obs>
             <header>
                <h1>OBSERVAÇÕES</h1>
             </header>
             <main>
-               
+               <textarea name="" rows="8"></textarea>
             </main>
          </obs>
       </form>
