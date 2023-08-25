@@ -64,7 +64,7 @@
             display: grid;
             grid-template-columns: .35fr .65fr;
             width: 100%;
-            height: calc( 150px );
+            height: 36.3vw;
             padding: 1vw;
             position: sticky;
             /*top: 0; left: 0;*/
@@ -187,7 +187,10 @@
             grid-template-columns: .3fr .3fr .1fr .3fr;
          }
          item[ type="b-c-u-c" ] :nth-child(1) {
-            grid-template-columns: .41fr .59fr;
+            /*grid-template-columns: .4fr .5fr;*/
+         }
+         select#estado {
+            width: 100%;
          }
          
          item[ type="endereco" ] {
@@ -211,12 +214,14 @@
             display: block;
             background: var( --azul3 );
             margin: 2vw auto;
+            color: #000;
          }
          
          orcamento header {
             display: grid;
             grid-template-columns: 1fr;
             background: var( --azul0 );
+            color: #fff;
          }
          orcamento header h1 {
             width: 100%;
@@ -376,7 +381,11 @@
                <h1>ORÇAMENTO</h1>
             </header>
             <main>
-               
+               <item type="header">
+                  <h3>PRODUTO / SERVIÇO</h3>
+                  <h3>QTD.</h3>
+                  <h3>VALOR</h3>
+               </item>
             </main>
          </orcamento>
          <obs>
