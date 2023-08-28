@@ -86,7 +86,6 @@
             align-items: center;
             justify-content: center;
             font-size: 2.5vw;
-            /*line-height: 2.5vw;*/
             text-align: center;
          }
          appbar-text > * {
@@ -155,6 +154,7 @@
          }
          item label {
             display: grid;
+            place-items: center;
             background: var( --azul2 );
             grid-template-columns: .2fr .8fr;
             padding: 0 1vw;
@@ -353,15 +353,15 @@
          <header>
             <label>
                Orçamento: 
-               <input type="number" name="" id="" value="oi" />
+               <input type="number" name="" id="orcamento-number" value="oi" />
             </label>
             <label>
                Emissão: 
-               <input type="number" name="" id="" value="oi" />
+               <input type="number" name="" id="emissao" value="oi" />
             </label>
             <label>
                Validade: 
-               <input type="number" name="" id="" value="oi" />
+               <input type="number" name="" id="validade" value="oi" />
             </label>
          </header>
          <cliente>
@@ -372,17 +372,17 @@
                <item type="nome">
                   <label>
                      <h3>NOME</h3>
-                     <input type="text" placeholder="Nome do cliente" name="" id="" value="" />
+                     <input type="text" placeholder="Nome do cliente" name="" id="client-name" value="" />
                   </label>
                </item>
                <item type="tel-email">
                   <label>
                      <h3>TELEFONE</h3>
-                     <input type="text" placeholder="(99) 9 9999-9999" name="" id="" value="" />
+                     <input type="text" placeholder="(99) 9 9999-9999" name="" id="phone" value="" />
                   </label>
                   <label>
                      <h3>EMAIL</h3>
-                     <input type="email" placeholder="email@email.com" name="" id="" value="" />
+                     <input type="email" placeholder="email@email.com" name="" id="email" value="" />
                   </label>
                </item>
                <item type="cpf-rg">
@@ -392,31 +392,31 @@
                         <option><h3>CNPJ</h3></option>
                      </select>
                      <!--<h3>CPF/CNPJ</h3>-->
-                     <input type="text" placeholder="999.999.999-99" name="" id="" value="" />
+                     <input type="text" placeholder="999.999.999-99" name="" id="cpf" value="" />
                   </label>
                   <label>
                      <h3>RG/IE</h3>
-                     <input type="text" placeholder="41.44.5792-4" name="" id="" value="" />
+                     <input type="text" placeholder="41.44.5792-4" name="" id="rg" value="" />
                   </label>
                </item>
                <item type="endereco">
                   <label>
                      <h3>ENDEREÇO</h3>
-                     <input type="text" placeholder="rua ..." id="" value="" />
+                     <input type="text" placeholder="rua ..." id="address" value="" />
                   </label>
                   <label>
                      <h3>N°</h3>
-                     <input type="text" placeholder="999" name="" id="" value="" />
+                     <input type="text" placeholder="999" name="" id="address-number" value="" />
                   </label>
                </item>
                <item type="b-c-u-c">
                   <label>
                      <h3>BAIRRO</h3>
-                     <input type="text" name="" id="" value="" />
+                     <input type="text" name="" id="bairro" value="" />
                   </label>
                   <label>
                      <h3>CIDADE</h3>
-                     <input type="text" name="" id="" value="" />
+                     <input type="text" name="" id="city" value="" />
                   </label>
                   <label>
                      <h3>UF</h3>
@@ -453,7 +453,7 @@
                   </label>
                   <label>
                      <h3>CEP</h3>
-                     <input type="text" placeholder="00.000-000" name="" id="" value="" />
+                     <input type="text" placeholder="00.000-000" name="" id="cep" value="" />
                   </label>
                </item>
             </main>
@@ -518,13 +518,13 @@
                <item>
                   <label>
                      <h4> DESCONTO </h4>
-                     <input type="number" placeholder="R$ 1.000,00" name="" id="" value="" />
+                     <input type="number" placeholder="R$ 1.000,00" name="" id="desconto" value="" />
                   </label>
                </item>
                <item>
                   <label>
                      <h3> Valor TOTAL </h3>
-                     <input type="number" placeholder="R$ 48.968,00" name="" id="" value="" />
+                     <input type="number" placeholder="R$ 48.968,00" name="" id="total-value" value="" />
                   </label>
                </item>
             </footer>
@@ -534,7 +534,7 @@
                <h1>OBSERVAÇÕES</h1>
             </header>
             <main>
-               <textarea name="" rows="8"></textarea>
+               <textarea id="obs" name="" rows="8"></textarea>
             </main>
          </obs>
       </form>
@@ -546,16 +546,30 @@
          'use strict';
          /* [ properties ]
          =================================== */
-         const $ = v => document.querySelector( v ),
+         const 
+            $ = v => document.querySelector( v ),
             $$ = v => document.querySelectorAll( v ),
-            log = v => console.log( v );
+            log = ( ...v ) => console.log( ...v )
+         ;
          /* -------------------------------- */
          
          
          /* [ events ]
          =================================== */
          window.addEventListener( 'load', ev => {
-            let links = document.querySelectorAll( '[link]' );
+            let 
+               links = document.querySelectorAll( '[link]' )
+            ;
+            
+            const 
+               selectCpfCnpj = $( "select#select-cpf-cnpj" ),
+               clientName = $( "#client-name" ),
+               phone = $( "#phone" ),
+               email =$( "#email" ),
+               
+            ;
+            
+            
          
          
             links.forEach( link => link.addEventListener( 'click', ev => {
