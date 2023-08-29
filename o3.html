@@ -17,11 +17,11 @@
       <!-- <script src='https://html2canvas.hertzen.com/dist/html2canvas.js'></script> -->
       <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js"></script>
    </head>
-   <body id="doc">
+   <body>
       <print id="print">
-         <appbar>
+          <appbar>
             <logo>
-               <img src="./ea.jpg" alt="ea" />
+               <!-- <img src="ea.jpg" alt="ea" > -->
             </logo>
             <appbar-text>
                <h1>ELÉTRICA & ART</h1>
@@ -34,7 +34,7 @@
                   E-mail: eletrica.art.ltda@gmail.com</strong>
                
             </appbar-text>
-         </appbar>
+         </appbar> 
          <form>
             <header>
                <label>
@@ -241,102 +241,67 @@
       
    </body>
       <script>
-         // 'use strict';
+         'use strict';
          /* [ properties ]
          =================================== */
-         // const 
-         //    $ = v => document.querySelector( v ),
-         //    $$ = v => document.querySelectorAll( v ),
-         //    log = ( ...v ) => console.log( ...v )
-         // ;
+         const 
+            $ = v => document.querySelector( v ),
+            $$ = v => document.querySelectorAll( v ),
+            log = ( ...v ) => console.log( ...v )
+         ;
          /* -------------------------------- */
          
          
          /* [ events ]
          =================================== */
-         // window.addEventListener( 'load', ev => {
-         //    let 
-         //       links = document.querySelectorAll( '[link]' )
-         //    ;
+         window.addEventListener( 'load', ev => {
+            let 
+               links = document.querySelectorAll( '[link]' )
+            ;
             
-         //    const 
-         //       selectCpfCnpj = $( "select#select-cpf-cnpj" ),
-         //       clientName = $( "#client-name" ),
-         //       phone = $( "#phone" ),
-         //       email =$( "#email" ),
+            const 
+               selectCpfCnpj = $( "select#select-cpf-cnpj" ),
+               clientName = $( "#client-name" ),
+               phone = $( "#phone" ),
+               email =$( "#email" )
                
-         //    ;
+            ;
             
             
          
          
-         //    links.forEach( link => link.addEventListener( 'click', ev => {
-         //       window.open( link.getAttribute( 'link' ), '_blank' );
-         //    } ) );
+            links.forEach( link => link.addEventListener( 'click', ev => {
+               window.open( link.getAttribute( 'link' ), '_blank' );
+            } ) );
             
-         // } );
-
-
-         // window.jsPDF = window.jspdf.jsPDF;
-
-         // $( "#submit" ).addEventListener( "click", ev => Convert_HTML_To_PDF() );
-
-         // // Convert HTML content to PDF
-         // function Convert_HTML_To_PDF() {
-         //    var doc = new jsPDF();
-
-         //    doc.html( $("#doc"), {
-         //       callback: function(doc) {
-         //          doc.addImage("ea.jpg", "JPEG", 15, 40, 180, 180);
-         //             // Save the PDF
-         //             doc.save('document-html.pdf');
-         //       },
-         //       margin: [10, 10, 10, 10],
-         //       autoPaging: 'text',
-         //       x: 0,
-         //       y: 0,
-         //       width: 190, //target width in the PDF document
-         //       windowWidth: 1200 //window width in CSS pixels
-         //    });
-         // }
+         } );
 
          /* ========================================== */
          let 
             btn = document.querySelector( "#submit" ),
             inprin = document.querySelector( "#doc" )
          ;
-         // window.addEventListener( "load", () => {
-         //    btn.addEventListener("click", () => {
-         //          // const invoice = this.document.getElementById("#doc");
-         //          const invoice = inprin;
-         //          console.log(invoice);
-         //          console.log(window);
-         //          var opt = {
-         //             margin: 1,
-         //             filename: "myfile.pdf",
-         //             image: { type: "jpeg", quality: 0.98 },
-         //             html2canvas: { scale: 2 },
-         //             jsPDF: { unit: "in", format: "letter", orientation: "portrait" }
-         //          };
-         //          html2pdf().from(invoice).set(opt).save();
-         //       });
-         // } );
          window.onload = function () {
-            // document.getElementById("submit")
             btn
                .addEventListener("click", () => {
-                  // const invoice = this.document.getElementById("invoice");
-                  const invoice = this.document.getElementById("print");
+                  const invoice = this.document.querySelector("#print");
                   console.log(invoice);
                   console.log(window);
                   var opt = {
                      margin: 1,
                      filename: "myfile.pdf",
                      image: { type: "jpeg", quality: 0.98 },
+                     autoPaging: 'text',
+                     x: 0,
+                     y: 0,
+                     width: 290, 
+                     windowWidth: 1200,
                      html2canvas: { scale: 2 },
                      jsPDF: { unit: "in", format: "letter", orientation: "portrait" }
                   };
                   html2pdf().from(invoice).set(opt).save();
+                  
+               
                });
          };
 
