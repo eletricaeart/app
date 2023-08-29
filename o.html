@@ -1,0 +1,272 @@
+
+
+<!DOCTYPE html>
+<html lang="pt-br">
+   <head>
+      <title>App Template</title>
+   
+      <link rel="icon" href="src/pix/logo.svg" type="svg+xml">
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" href="./o.css" />
+   </head>
+   <body>
+      <appbar>
+         <logo>
+            <img src="./ea.jpg" alt="ea" />
+         </logo>
+         <appbar-text>
+            <h1>ELÉTRICA & ART</h1>
+            
+               <h3>CPF/CNPJ 32.858.892/0001-52 - IM 67358/0001</h3>
+               Rua José Alves Maciel, 40 - Aviação <br />
+               Praia Grande - São Paulo - SP - Cep 11702-440 <br />
+               <strong>Fone: ( 13 ) 99768-5853  <br />
+               Whatsapp<br />
+               E-mail: eletrica.art.ltda@gmail.com</strong>
+            
+         </appbar-text>
+      </appbar>
+      <form>
+         <header>
+            <label>
+               Orçamento: 
+               <input type="number" name="" id="orcamento-number" value="oi" />
+            </label>
+            <label>
+               Emissão: 
+               <input type="number" name="" id="emissao" value="oi" />
+            </label>
+            <label>
+               Validade: 
+               <input type="number" name="" id="validade" value="oi" />
+            </label>
+         </header>
+         <cliente>
+            <header>
+               <h1>CLIENTE</h1>
+            </header>
+            <main>
+               <item type="nome">
+                  <label>
+                     <h3>NOME</h3>
+                     <input type="text" placeholder="Nome do cliente" name="" id="client-name" value="" />
+                  </label>
+               </item>
+               <item type="tel-email">
+                  <label>
+                     <h3>TELEFONE</h3>
+                     <input type="text" placeholder="(99) 9 9999-9999" name="" id="phone" value="" />
+                  </label>
+                  <label>
+                     <h3>EMAIL</h3>
+                     <input type="email" placeholder="email@email.com" name="" id="email" value="" />
+                  </label>
+               </item>
+               <item type="cpf-rg">
+                  <label>
+                     <select name="" id="select-cpf-cnpj">
+                        <option><h3>CPF</h3></option>
+                        <option><h3>CNPJ</h3></option>
+                     </select>
+                     <!--<h3>CPF/CNPJ</h3>-->
+                     <input type="text" placeholder="999.999.999-99" name="" id="cpf" value="" />
+                  </label>
+                  <label>
+                     <h3>RG/IE</h3>
+                     <input type="text" placeholder="41.44.5792-4" name="" id="rg" value="" />
+                  </label>
+               </item>
+               <item type="endereco">
+                  <label>
+                     <h3>ENDEREÇO</h3>
+                     <input type="text" placeholder="rua ..." id="address" value="" />
+                  </label>
+                  <label>
+                     <h3>N°</h3>
+                     <input type="text" placeholder="999" name="" id="address-number" value="" />
+                  </label>
+               </item>
+               <item type="b-c-u-c">
+                  <label>
+                     <h3>BAIRRO</h3>
+                     <input type="text" name="" id="bairro" value="" />
+                  </label>
+                  <label>
+                     <h3>CIDADE</h3>
+                     <input type="text" name="" id="city" value="" />
+                  </label>
+                  <label>
+                     <h3>UF</h3>
+                     <select id="estado" name="estado">
+                         <option value="AC">Acre</option>
+                         <option value="AL">Alagoas</option>
+                         <option value="AP">Amapá</option>
+                         <option value="AM">Amazonas</option>
+                         <option value="BA">Bahia</option>
+                         <option value="CE">Ceará</option>
+                         <option value="DF">Distrito Federal</option>
+                         <option value="ES">Espírito Santo</option>
+                         <option value="GO">Goiás</option>
+                         <option value="MA">Maranhão</option>
+                         <option value="MT">Mato Grosso</option>
+                         <option value="MS">Mato Grosso do Sul</option>
+                         <option value="MG">Minas Gerais</option>
+                         <option value="PA">Pará</option>
+                         <option value="PB">Paraíba</option>
+                         <option value="PR">Paraná</option>
+                         <option value="PE">Pernambuco</option>
+                         <option value="PI">Piauí</option>
+                         <option value="RJ">Rio de Janeiro</option>
+                         <option value="RN">Rio Grande do Norte</option>
+                         <option value="RS">Rio Grande do Sul</option>
+                         <option value="RO">Rondônia</option>
+                         <option value="RR">Roraima</option>
+                         <option value="SC">Santa Catarina</option>
+                         <option value="SP">São Paulo</option>
+                         <option value="SE">Sergipe</option>
+                         <option value="TO">Tocantins</option>
+                         <option value="EX">Estrangeiro</option>
+                     </select>
+                  </label>
+                  <label>
+                     <h3>CEP</h3>
+                     <input type="text" placeholder="00.000-000" name="" id="cep" value="" />
+                  </label>
+               </item>
+            </main>
+         </cliente>
+         <orcamento>
+            <header>
+               <h1>ORÇAMENTO</h1>
+            </header>
+            <main>
+               <item type="header">
+                  <h3>QT</h3>
+                  <h3>DESCRIÇÃO</h3>
+                  <h3>R$ TOT</h3>
+               </item>
+               <item>
+                  <input type="number" name="" id="" value="" />
+                  <input type="text" name="" id="" value="" />
+                  <input type="number" name="" id="" value="" />
+               </item>
+               <item>
+                  <input type="number" name="" id="" value="" />
+                  <input type="text" name="" id="" value="" />
+                  <input type="number" name="" id="" value="" />
+               </item>
+               <item>
+                  <input type="number" name="" id="" value="" />
+                  <input type="text" name="" id="" value="" />
+                  <input type="number" name="" id="" value="" />
+               </item>
+               <item>
+                  <input type="number" name="" id="" value="" />
+                  <input type="text" name="" id="" value="" />
+                  <input type="number" name="" id="" value="" />
+               </item>
+               <item>
+                  <input type="number" name="" id="" value="" />
+                  <input type="text" name="" id="" value="" />
+                  <input type="number" name="" id="" value="" />
+               </item>
+               <item>
+                  <input type="number" name="" id="" value="" />
+                  <input type="text" name="" id="" value="" />
+                  <input type="number" name="" id="" value="" />
+               </item>
+               <item>
+                  <input type="number" name="" id="" value="" />
+                  <input type="text" name="" id="" value="" />
+                  <input type="number" name="" id="" value="" />
+               </item>
+               <item>
+                  <input type="number" name="" id="" value="" />
+                  <input type="text" name="" id="" value="" />
+                  <input type="number" name="" id="" value="" />
+               </item>
+               <item>
+                  <input type="number" name="" id="" value="" />
+                  <input type="text" name="" id="" value="" />
+                  <input type="number" name="" id="" value="" />
+               </item>
+            </main>
+            <footer>
+               <item>
+                  <label>
+                     <h4> DESCONTO </h4>
+                     <input type="number" placeholder="R$ 1.000,00" name="" id="desconto" value="" />
+                  </label>
+               </item>
+               <item>
+                  <label>
+                     <h3> Valor TOTAL </h3>
+                     <input type="number" placeholder="R$ 48.968,00" name="" id="total-value" value="" />
+                  </label>
+               </item>
+            </footer>
+         </orcamento>
+         <obs>
+            <header>
+               <h1>OBSERVAÇÕES</h1>
+            </header>
+            <main>
+               <textarea id="obs" name="" rows="8"></textarea>
+            </main>
+         </obs>
+      </form>
+      
+      
+      
+      
+      <script>
+         'use strict';
+         /* [ properties ]
+         =================================== */
+         const 
+            $ = v => document.querySelector( v ),
+            $$ = v => document.querySelectorAll( v ),
+            log = ( ...v ) => console.log( ...v )
+         ;
+         /* -------------------------------- */
+         
+         
+         /* [ events ]
+         =================================== */
+         window.addEventListener( 'load', ev => {
+            let 
+               links = document.querySelectorAll( '[link]' )
+            ;
+            
+            const 
+               selectCpfCnpj = $( "select#select-cpf-cnpj" ),
+               clientName = $( "#client-name" ),
+               phone = $( "#phone" ),
+               email =$( "#email" ),
+               
+            ;
+            
+            
+         
+         
+            links.forEach( link => link.addEventListener( 'click', ev => {
+               window.open( link.getAttribute( 'link' ), '_blank' );
+            } ) );
+            
+         } );
+      </script>
+   </body>
+</html>
+<!--
+não seria possível alguém como eu poder tocar um anjo como aquele 
+
+mas um dia, assim tão inesperadamente, aquele rostinho estava ali 
+
+olhando pra mim, sorrindo 
+
+me senti nú 
+não tive tempo de pensar 
+
+-->
