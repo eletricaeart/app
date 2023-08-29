@@ -4,7 +4,7 @@
 
 *:not( h1,h2,h3,h4,h5,h6,p,menu,ul,ol,li,hr,pre,dd,blockquote,fieldset,legend ),
 *:not( h1,h2,h3,h4,h5,h6,p,menu,ul,ol,li,hr,pre,dd,blockquote,fieldset,legend )::before,
-*:not( h1,h2,h3,h4,h5,h6,p,menu,ul,ol,li,hr,pre,dd,blockquote,fieldset,legend )::after {
+*:not( h1,h2,h3,h4,h5,h6,p,menu,ul,ol,li,hr,pre,dd,blockquote,fieldset,legend )::after {  
    margin:0; padding:0; box-sizing:border-box;
 }
 
@@ -61,7 +61,7 @@ appbar {
    width: 100%;
    height: 36.3vw;
    padding: 1vw;
-   position: sticky;
+   /* position: sticky; */
    inset: 0;
    z-index: 9;
    background: var( --azul0 );
@@ -80,7 +80,6 @@ appbar-text {
    flex-direction: column;
    align-items: center;
    justify-content: center;
-   /* font-size: 2.5vw; */
    text-align: center;
 }
 appbar-text > * {
@@ -88,13 +87,11 @@ appbar-text > * {
    margin-bottom: 0;
 }
 appbar-text h1 { 
-   /* font-size: 7vw;  */
 }
 
 form {
    max-width: 100%;
    margin: 2vw auto;
-   /* font-size: 2.5vw; */
 }
 
 form header {
@@ -108,8 +105,6 @@ form header label {
    grid-template-columns: .6fr .4fr;
    place-items: center;
    color: var( --azul0 );
-   /* font-size: 3.5vw; */
-   /* font-weight: 900; */
 }
 label h3 {
    width: 100%;
@@ -161,7 +156,6 @@ item label {
    place-items: center;
    background: var( --azul2 );
    grid-template-columns: .2fr .8fr;
-   /* padding: 0 0 0 1vw; */
 }
 item label h3 {
    margin: 0;
@@ -174,7 +168,6 @@ item label input {
 
 item[ type="tel-email" ] {
    grid-template-columns: .5fr .5fr;
-   /* grid-template-columns: .489fr .5fr; */
 }
 item[ type="tel-email" ] label {
    grid-template-columns: .5fr .5fr;
@@ -271,7 +264,6 @@ item[type="header"] {
 item[type="header"] h3 {
    width: 100%;
    text-align: center;
-   /* font-size: 3vw; */
    font-weight: 800;
    margin: 0;
 }
@@ -283,7 +275,6 @@ orcamento main item > * {
    background: transparent;
    border: transparent solid 0;
    text-align: center;
-   /* font-size: 3vw; */
 }
 orcamento main item :nth-child( 1 ) {
    border-right: #fff5 .5vw dotted;
@@ -351,7 +342,6 @@ textarea {
    width: 100%;
    min-height: 15vw;
    text-align: center;
-   /* font-size: 3vw; */
    padding: 2vw;
    background: var( --azul3 );
 }
