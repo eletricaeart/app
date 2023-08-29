@@ -135,7 +135,7 @@ cliente header {
    background: var( --azul0 );
    color: #fff;
 }
-cliente header h1 {
+cliente header h2 {
    width: 100%;
    margin: 0 auto;
    text-align: center;
@@ -221,7 +221,7 @@ orcamento header {
    background: var( --azul0 );
    color: #fff;
 }
-orcamento header h1 {
+orcamento header h2 {
    width: 100%;
    margin: 0 auto;
    text-align: center;
@@ -310,7 +310,7 @@ obs header {
    grid-template-columns: 1fr;
    background: #fff;
 }
-obs header h1 {
+obs header h2 {
    width: 100%;
    margin: 0 auto;
    text-align: center;
