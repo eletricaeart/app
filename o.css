@@ -121,6 +121,7 @@ label input {
    border: transparent;
    outline: transparent;
 }
+input { font-size: 2vw; }
 
 cliente {
    display: block;
@@ -145,21 +146,26 @@ cliente main {
    grid-template-columns: 1fr;
    padding: 0;
 }
+item[type="nome"] {
+   grid-template-columns: 1fr;
+}
 cliente main item {
    display: grid;
    grid-template-columns: 1fr;
+}
+cliente main item {
+   grid-template-columns: auto 1fr;
 }
 item label {
    display: grid;
    place-items: center;
    background: var( --azul2 );
    grid-template-columns: .2fr .8fr;
-   padding: 0 1vw;
+   /* padding: 0 0 0 1vw; */
 }
 item label h3 {
-   /* font-size: 3.3vw; */
    margin: 0;
-   padding: 0;
+   padding: 0 0 0 2vw;
 }
 item label input {
    background: var( --azul3 );
@@ -168,22 +174,43 @@ item label input {
 
 item[ type="tel-email" ] {
    grid-template-columns: .5fr .5fr;
+   /* grid-template-columns: .489fr .5fr; */
+}
+item[ type="tel-email" ] label {
+   grid-template-columns: .5fr .5fr;
 }
 item[ type="tel-email" ] :nth-child(1) {
-   grid-template-columns: .41fr .59fr;
+   grid-template-columns: .4fr .6fr;
+}
+item[ type="tel-email" ] :nth-child(2) {
+   grid-template-columns: auto 1fr;
 }
 
 item[ type="cpf-rg" ] {
    grid-template-columns: .5fr .5fr;
 }
 item[ type="cpf-rg" ] :nth-child(1) {
-   grid-template-columns: .41fr .59fr;
+   grid-template-columns: .4fr .6fr;
+}
+item[ type="cpf-rg" ] :nth-child(2) {
+   grid-template-columns: auto 1fr;
 }
 
-item[ type="b-c-u-c" ] {
-   grid-template-columns: .3fr .3fr .1fr .3fr;
+item[ type="b-c" ] {
+   grid-template-columns: .5fr .5fr;
 }
-item[ type="b-c-u-c" ] :nth-child(1) {
+item[ type="b-c" ] label {
+   grid-template-columns: .41fr .59fr;
+   grid-template-columns: .41fr .9fr;
+   grid-template-columns: .41fr 1fr;
+   grid-template-columns: auto 1fr;
+}
+
+item[ type="estate-cep" ] {
+   grid-template-columns: .5fr .5fr;
+}
+item[ type="estate-cep" ] label { 
+   grid-template-columns: auto 1fr;
 }
 select#estado {
    width: 100%;
@@ -194,6 +221,9 @@ item[ type="endereco" ] {
 }
 item[ type="endereco" ] label {
    grid-template-columns: .25fr .75fr;
+}
+item[ type="endereco" ] :nth-child(2) {
+   grid-template-columns: auto 1fr;
 }
 select#select-cpf-cnpj {
    padding: 0;
@@ -292,7 +322,7 @@ orcamento footer item label h4 {
    padding: 0 2vw;
 }
 orcamento footer item label h3 {
-   padding: 0 2vw;
+   padding: 0 0 0 2vw;
 }
 orcamento footer item :nth-last-child( 0 ) {
    background: yellow ;
