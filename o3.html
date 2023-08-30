@@ -613,7 +613,6 @@
             </obs>
          </form>
       </print>
-      <!-- <button onclick="Convert_HTML_To_PDF()">Convert HTML to PDF</button> -->
       <pdf id="submit">🧾</pdf>
       
       
@@ -663,16 +662,16 @@
 
          /* ========================================== */
          let 
-            btn = document.querySelector( "#submit" ),
-            inprin = document.querySelector( "#doc" )
+            btn = $( "#submit" ),
+            inprin = $( "#doc" )
          ;
-         window.onload = function () {
+         window.onload = function() {
             btn
-               .addEventListener("click", () => {
-                  const invoice = this.document.querySelector("#print");
-                  console.log(invoice);
-                  console.log(window);
-                  var opt = {
+               .addEventListener( "click", () => {
+                  const invoice = this.document.querySelector( "#print" );
+                  console.log( invoice );
+                  console.log( window );
+                  var data = {
                      margin: 1,
                      filename: "myfile.pdf",
                      image: { type: "png", quality: 100 },
@@ -684,10 +683,8 @@
                      html2canvas: { scale: 2 },
                      jsPDF: { unit: "in", format: "letter", orientation: "portrait" }
                   };
-                  html2pdf().from(invoice).set(opt).save();
-                  
-               
-               });
+                  html2pdf().from( invoice ).set( data ).save();
+               } );
          };
 
 
