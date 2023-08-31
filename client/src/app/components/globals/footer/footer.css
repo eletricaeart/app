@@ -1,0 +1,12 @@
+
+
+/* ==[ footer ]== == == == == == == == == */
+footer {
+   background: #16181c;
+   display: grid;
+   width: 100%;
+   padding: 1.5rem;
+   position: fixed;
+   bottom: 0;
+   left: 0;
+}

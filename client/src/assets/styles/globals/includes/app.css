@@ -1,0 +1,68 @@
+
+
+/* ==[ app ]======================== */
+app {
+   display: grid;
+   width: clamp( 100px, 90%, 650px );
+   margin: 5rem auto;
+   border-radius: 13px;   
+}
+
+app > form,
+card {
+   display: block;
+   padding: 8px;
+   width: 100%;
+   margin: 2.5rem auto;
+   clip-path: polygon( 0 32px, 32px 0, 100% 0,
+   100% calc( 100% - 32px ), calc( 100% - 32px ) 100%, 0 100% );
+   background: linear-gradient( 45deg, #0005 30%, #ffab00cc );
+   border-radius: 15px;   
+   overflow: hidden;
+}
+app > form > form-body,
+card-body {
+   display: grid;
+   gap: 1rem;
+   width: 100%;
+   padding: 2rem;
+   background: #212329;
+   background: #16181c;
+   clip-path: polygon( 0 32px, 32px 0, 100% 0,
+   100% calc( 100% - 32px ), calc( 100% - 32px ) 100%, 0 100% );
+   border-radius: 15px
+}
+
+
+label {
+   display: grid;
+}
+label > h4 {
+   margin: .5rem 0;
+}
+
+label > input,
+fieldset input {
+   padding: .5rem;
+   border-radius: 5px;
+   border: transparent;
+   width: 100%;
+   background: #313339;
+}
+
+fieldset {
+   display: grid;
+   gap: 1rem;
+   border-radius: 1rem;
+   padding: 1.5rem;
+}
+
+hr {
+   width: 100%;
+}
+
+users {
+   display: grid;
+   margin: 2rem;
+}
+

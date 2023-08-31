@@ -1,0 +1,64 @@
+
+
+/* ==[ appbar ]== == == == == == == == == */
+appbar {
+   display: block;
+   width: 100%;
+   height: 81px;
+   position: fixed;
+   top: 0; left: 0;
+   z-index: 9;
+   background: var( --dark0 );
+   background: #000;
+   filter: var( --appbar-filter-shadow );
+}
+appbar-body {
+   display: grid;
+   grid-template-columns: auto .8fr auto;
+   width: clamp( 100px, 100%, 1530px );
+   height: 81px;
+   margin: 0 auto;
+   /* gap: 2rem; */
+}
+
+appbar-body :nth-child( 1n ) {
+   display: grid;
+   place-items: center;
+}
+
+appbar-brand {
+   height: 100%;
+   max-height: 81px;
+   aspect-ratio: 1 / 1;
+   cursor: pointer;
+}
+appbar-options {
+   height: 100%;
+}
+appbar-body > appbar-menu {
+   width: 100%;
+}
+appbar-body > appbar-menu > menu {
+   grid-auto-flow: column;
+   justify-content: center;
+   height: 100%;
+   margin: 0;
+   padding: 0 1ch;
+   gap: 2rem;
+}
+appbar-body > appbar-menu > menu a {
+   list-style: none;
+   color: #fff;
+   text-decoration: none;
+}
+appbar-body > appbar-menu > menu a:hover {
+   color: #905;
+}
+
+
+@media only screen and ( width < 650px ) {
+   appbar-body > appbar-menu > menu {
+      gap: 1rem;
+      
+   }
+}
