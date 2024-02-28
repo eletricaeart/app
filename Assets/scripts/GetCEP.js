@@ -1,9 +1,9 @@
 
 
-let cepInputs = [
-   cep, logradouro, complemento, bairro, 
-   localidade, uf, ibge, gia, ddd, siafi
-];
+// let cepInputs = [
+//    cep, logradouro, complemento, bairro, 
+//    localidade, uf, ibge, gia, ddd, siafi
+// ];
 
 function clearCEP_inputs() {
    [ 
@@ -23,10 +23,15 @@ function CallBack( conteudo ) {
    }
 }
 
-function SearchForCEP( valor ) {
+function SearchForCEP( input ) {
 
    //Nova variável "cep" somente com dígitos.
-   var cep = valor.replace( /\D/g, "" );
+   let 
+      // re = /\d{2}\.\d{3}\-\d{3}/
+      re = /^(\d{2})(\d{3})(\d{3})$/
+      ,
+      cep = input.value.replace( /\D/g, "" )
+   ;
 
    //Verifica se o campo cep possui um valor informado.
    if( cep != "" ) {
@@ -37,7 +42,10 @@ function SearchForCEP( valor ) {
       if( validateCEP.test( cep ) ) {
          [ //Preenche os campos com "..." enquanto consulta o webservice.
             rua, bairro, cidade, uf
-         ].forEach( v => v.value = ".....");
+         ].forEach( v => v.value = "...");
+
+         input.value = cep.replace( re, "$1.$2-$3" );
+         _( "cep: ", cep.replace( re, "$1.$2-$3" ) );
 
          var scriptCB = document.createElement( "script" );
          //Sincroniza com o callback.

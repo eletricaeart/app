@@ -1,0 +1,96 @@
+
+
+<!DOCTYPE html>
+<html lang='pt-br'>
+   <head>
+      <title></title>
+      
+      <!-- <link rel='icon' href='src/pix/logo.svg' type='svg+xml'> -->
+      <meta charset='UTF-8'>
+      <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+      <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+      <!-- <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> -->
+      <link rel='stylesheet' href='https://fonts.googleapis.com/icon?family=Material+Icons'>
+      <!-- css -->
+      <link rel="stylesheet" href="../Assets/styles/globals.css">
+      <link rel="stylesheet" href="../Assets/styles/cadastrar-clientes/style.css">
+      <!-- script -->
+      <script src="../Assets/scripts/global.js" defer></script>
+      <script src="../Assets/scripts/Utils/form-RegEx.js" defer></script>
+      <script src="../Assets/scripts/Utils/form-crud.js" defer></script>
+      <script src="../Assets/scripts/clientes.js" defer></script>
+      <script src="../Assets/Scripts/GetCEP.js" defer></script>
+      <style>
+         
+         
+      </style>
+   </head>
+<body>
+   <section>
+      <form method="get" action="." id="form">
+         <header>
+            <h1>Cadastrar Cliente</h1>
+         </header>
+         <home id="formInputs">
+            <label>
+               <small>Nome</small>
+               <input type="text" id="i_clientName" tabindex="1" required>
+            </label>
+            <label>
+               <small>Gênero</small>
+               <input type="text" id="i_clientGender" tabindex="-1" required>
+            </label>
+            <label>
+               <small>RG</small>
+               <input type="text" id="i_clientRG" tabindex="-1" maxlength="9" onblur="rgRegEx( this )">
+            </label>
+            <label>
+               <small>CPF</small>
+               <input type="text" id="i_clientCPF" tabindex="-1" maxlength="11" onblur="cpfRegEx( this )">
+            </label>
+            <label>
+               <small>Celular</small>
+               <!-- <input type="tel" id="i_clientPhone" tabindex="-1" maxlength="11" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"> -->
+               <input type="tel" id="i_clientPhone" tabindex="-1" maxlength="11" onblur="phoneRegEx( this )">
+            </label>
+            <label>
+               <small>E-Mail</small>
+               <input type="text" id="i_clientEmail" tabindex="-1">
+            </label>
+            <hr>
+            <legend>Endereço</legend>
+            <label>
+               <small>CEP</small>
+               <input type="text" id="cep" name="cep" maxlength="9" onblur="SearchForCEP( this );" tabindex="2" >
+            </label>
+            <label>
+               <small>Rua</small>
+               <input type="text" id="rua" name="rua">
+            </label>
+            <label>
+               <small>N°</small>
+               <input type="number" id="i_clientAddressNumber" tabindex="3">
+            </label>
+            <label>
+               <small>Bairro</small>
+               <input type="text" id="bairro" name="bairro">
+            </label>
+            <label>
+               <small>Cidade</small>
+               <input type="text" id="cidade" name="cidade">
+            </label>
+            <label>
+               <small>Estado</small>
+               <input type="text" id="uf" name="uf">
+            </label>
+         </home>
+         <footer>
+            <input type="submit">
+         </footer>
+      </form>
+   </section>
+   <section>
+      <users id="clientsTarget">
+      </users>
+   </section>
+</body>
