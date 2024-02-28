@@ -81,33 +81,33 @@
          <home id="formInputs">
             <label>
                <small>Nome</small>
-               <input type="text" id="i_clientName" required>
+               <input type="text" id="i_clientName" tabindex="1" required>
             </label>
             <label>
                <small>Gênero</small>
-               <input type="text" id="i_clientGender" required>
+               <input type="text" id="i_clientGender" tabindex="-1" required>
             </label>
             <label>
                <small>RG</small>
-               <input type="number" id="i_clientRG">
+               <input type="number" id="i_clientRG" tabindex="-1">
             </label>
             <label>
                <small>CPF</small>
-               <input type="number" id="i_clientCPF">
+               <input type="number" id="i_clientCPF" tabindex="-1">
             </label>
             <label>
                <small>Celular</small>
-               <input type="number" id="i_clientPhone">
+               <input type="number" id="i_clientPhone" tabindex="-1">
             </label>
             <label>
                <small>E-Mail</small>
-               <input type="text" id="i_clientEmail">
+               <input type="text" id="i_clientEmail" tabindex="-1">
             </label>
             <hr>
             <legend>Endereço</legend>
             <label>
                <small>CEP</small>
-               <input type="text" id="cep" name="cep" size="10" maxlength="9" onblur="pesquisacep( this.value );" >
+               <input type="text" id="cep" name="cep" size="10" maxlength="9" onblur="SearchForCEP( this.value );" tabindex="2" >
             </label>
             <label>
                <small>Rua</small>
@@ -115,7 +115,7 @@
             </label>
             <label>
                <small>N°</small>
-               <input type="number" id="i_clientAddressNumber">
+               <input type="number" id="i_clientAddressNumber" tabindex="3">
             </label>
             <label>
                <small>Bairro</small>
