@@ -1,0 +1,595 @@
+
+
+<!DOCTYPE html>
+<html lang="pt-br">
+   <head>
+      <title>App Template</title>
+   
+      <link rel="icon" href="src/pix/logo.svg" type="svg+xml">
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <style>
+         @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Cinzel+Decorative:wght@400;700;900&family=Open+Sans:wght@500;800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Tangerine:wght@400;700&display=swap');
+         
+         *:not( h1,h2,h3,h4,h5,h6,p,menu,ul,ol,li,hr,pre,dd,blockquote,fieldset,legend ),
+         *:not( h1,h2,h3,h4,h5,h6,p,menu,ul,ol,li,hr,pre,dd,blockquote,fieldset,legend )::before,
+         *:not( h1,h2,h3,h4,h5,h6,p,menu,ul,ol,li,hr,pre,dd,blockquote,fieldset,legend )::after {
+            margin:0; padding:0; box-sizing:border-box;
+         }
+         
+         :root {
+            --dark0: #16181c;   --dark1: #1b1d22;
+            --dark2: #212329;   --dark3: #505257;
+            
+            --light0: #ffffff;  --light1: #f5f5f5;
+            --azul0: #19497b;   --azul1: #8cb2e6;
+            --azul2: #b5dfef;   --azul3: #deeff7;
+            --pink: #905;   --amber: #ffab00;   --red: #ce3635;
+            --azul: #27f;   --green: #006400;   --blue: #149cbe;
+            --texto: #e9e6e3;
+            
+            --green-dark: #8b6d19;  --green-light: #a17d1a; --green-bg: #fbf6e9;
+            --purple-dark: #603479;   --purple-light: #965bb9;  --purple-bg: #f4edf7;
+            --red-dark: #902726;    --red-light: #b83232;   --red-bg: #fceeee;
+            --blue-dark: #1c5b6e;   --blue-light: #267d97;  --blue-bg: #ebf6fb;
+            
+            --appbar-height: 81px;
+            --appbar-filter-shadow: drop-shadow( #0009 0 0 5px );
+            --sidebar-width: 68px;
+         }
+         
+         ::-webkit-scrollbar { width: 10px; }
+         ::-webkit-scrollbar-track {
+            background: var( --blue-bg );
+            border-radius: 5px;
+         }
+         ::-webkit-scrollbar-thumb {
+            background: var( --blue-dark );
+            border-radius: 5px;
+         }
+         
+         [link] { cursor: pointer; }
+         [link]:hover { color: #27f; transition: .3s ease-in-out; }
+         
+         body {
+            width: 100%;
+            min-height: 100vh;
+            background: #fff;
+            color: var( --texto );
+            font-family: 'Poppins';
+         }
+         
+         appbar {
+            display: grid;
+            grid-template-columns: .35fr .65fr;
+            width: 100%;
+            height: 36.3vw;
+            padding: 1vw;
+            position: sticky;
+            /*top: 0; left: 0;*/
+            inset: 0;
+            z-index: 9;
+            background: var( --azul0 );
+            filter: var( --appbar-filter-shadow );
+         }
+         appbar logo {
+            width: 100%;
+         }
+         appbar logo img {
+            width: 100%;
+         }
+         appbar-text {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5vw;
+            text-align: center;
+         }
+         appbar-text > * {
+            margin-top: 0;
+            margin-bottom: 0;
+         }
+         appbar-text h1 { font-size: 7vw; }
+         
+         form {
+            max-width: 100%;
+            margin: 2vw auto;
+            font-size: 2.5vw;
+         }
+         
+         form header {
+            background: var( --azul1 );
+            display: grid;
+            grid-template-columns: repeat( 3, .3fr );
+            justify-content: center;
+         }
+         form header label {
+            display: grid;
+            grid-template-columns: .6fr .4fr;
+            place-items: center;
+            color: var( --azul0 );
+            font-size: 3.5vw;
+            font-weight: 900;
+         }
+         label h3 {
+            width: 100%;
+            margin: 0;
+         } 
+         label input {
+            width: 100%;
+            background: transparent;
+            border: transparent;
+            outline: transparent;
+         }
+         
+         cliente {
+            display: block;
+            background: var( --azul3 );
+            margin: 2vw auto;
+            color: #212329;
+         }
+          
+         cliente header {
+            display: grid;
+            grid-template-columns: 1fr;
+            background: var( --azul0 );
+            color: #fff;
+         }
+         cliente header h1 {
+            width: 100%;
+            margin: 0 auto;
+            text-align: center;
+         }
+         cliente main {
+            display: grid;
+            grid-template-columns: 1fr;
+            padding: 0;
+         }
+         cliente main item {
+            display: grid;
+            grid-template-columns: 1fr;
+         }
+         item label {
+            display: grid;
+            place-items: center;
+            background: var( --azul2 );
+            grid-template-columns: .2fr .8fr;
+            padding: 0 1vw;
+         }
+         item label h3 {
+            font-size: 3.3vw;
+            margin: 0;
+            padding: 0;
+         }
+         item label input {
+            background: var( --azul3 );
+            padding: 1vw;
+         }
+         
+         item[ type="tel-email" ] {
+            grid-template-columns: .5fr .5fr;
+         }
+         item[ type="tel-email" ] :nth-child(1) {
+            grid-template-columns: .41fr .59fr;
+         }
+         
+         item[ type="cpf-rg" ] {
+            grid-template-columns: .5fr .5fr;
+         }
+         item[ type="cpf-rg" ] :nth-child(1) {
+            grid-template-columns: .41fr .59fr;
+         }
+         
+         item[ type="b-c-u-c" ] {
+            grid-template-columns: .3fr .3fr .1fr .3fr;
+         }
+         item[ type="b-c-u-c" ] :nth-child(1) {
+            /*grid-template-columns: .4fr .5fr;*/
+         }
+         select#estado {
+            width: 100%;
+         }
+         
+         item[ type="endereco" ] {
+            grid-template-columns: .8fr .2fr;
+         }
+         item[ type="endereco" ] label {
+            grid-template-columns: .25fr .75fr;
+         }
+         select#select-cpf-cnpj {
+            padding: 0;
+            background: transparent;
+            border: transparent solid 0;
+            outline: transparent;
+         }
+         select#select-cpf-cnpj option, select#select-cpf-cnpj option h3 {
+            padding: 0; margin: 0;
+         }
+         
+         
+         orcamento {
+            display: block;
+            margin: 2vw auto;
+            color: #000;
+         }
+         orcamento main {
+            background: var( --azul3 );
+         }
+         
+         orcamento header {
+            display: grid;
+            grid-template-columns: 1fr;
+            background: var( --azul0 );
+            color: #fff;
+         }
+         orcamento header h1 {
+            width: 100%;
+            margin: 0 auto;
+            text-align: center;
+         }
+         
+         orcamento main item {
+            display: grid;
+            grid-template-columns: .1fr .7fr .2fr;
+         }
+         orcamento main item:nth-child( even ) {
+            background: var( --azul2 ) !important;
+         }
+         item[type="header"] {
+            place-items: center;
+            background: var( --azul1 );
+         }
+         item[type="header"] h3 {
+            width: 100%;
+            text-align: center;
+            font-size: 3vw;
+            font-weight: 800;
+            margin: 0;
+         }
+         orcamento main item {
+            height: 4.5vw;
+         }
+         orcamento main item > * {
+            width: 100%;
+            background: transparent;
+            border: transparent solid 0;
+            text-align: center;
+            font-size: 3vw;
+         }
+         orcamento main item :nth-child( 1 ) {
+            border-right: #fff5 .5vw dotted;
+         }
+
+         orcamento main item :nth-last-child( 1 ) {
+            border-left: #fff5 .5vw dotted;
+         }
+         
+         orcamento footer {
+            display: grid;
+            grid-template-columns: .5fr .5fr;
+            margin: 2vw 0 0 0;
+         }
+         orcamento footer item {
+            width: 100%;
+         }
+         orcamento footer item label {
+            grid-template-columns: auto 1fr;
+            display: grid;
+            padding: 0;
+         }
+         orcamento footer :nth-last-child( 1 ) label {
+            background: var( --azul0 );
+            color: #fff;
+         }
+         orcamento footer :nth-last-child( 1 ) label input {
+            background: var( --azul1 );
+            color: #000;
+            width: 100%;
+         }
+         orcamento footer item label h4 {
+            display: grid;
+            place-items: center;
+            margin: 0;
+            padding: 0 2vw;
+         }
+         orcamento footer item label h3 {
+            padding: 0 2vw;
+         }
+         orcamento footer item :nth-last-child( 0 ) {
+            background: yellow ;
+         }
+         
+         
+         obs {
+            display: block;
+            background: #fff;
+            margin: 2vw auto;
+         }
+         
+         obs header {
+            display: grid;
+            grid-template-columns: 1fr;
+            background: #fff;
+         }
+         obs header h1 {
+            width: 100%;
+            margin: 0 auto;
+            text-align: center;
+            color: var( --azul0 );
+         }
+         
+         textarea {
+            width: 100%;
+            min-height: 15vw;
+            text-align: center;
+            font-size: 3vw;
+            padding: 2vw;
+            background: var( --azul3 );
+         }
+         ts { display: block; background: orange; width: 100%; min-height: 50px; border: purple solid; }
+      </style>
+   </head>
+   <body>
+      <appbar>
+         <logo>
+            <img src="./ea.jpg" alt="ea" />
+         </logo>
+         <appbar-text>
+            <h1>ELÉTRICA & ART</h1>
+            
+               <h3>CPF/CNPJ 32.858.892/0001-52 - IM 67358/0001</h3>
+               Rua José Alves Maciel, 40 - Aviação <br />
+               Praia Grande - São Paulo - SP - Cep 11702-440 <br />
+               <strong>
+                  Fone: ( 13 ) 99768-5853  <br />
+                  Whatsapp<br />
+                  E-mail: eletrica.art.ltda@gmail.com
+               </strong>
+            
+         </appbar-text>
+      </appbar>
+      <form>
+         <header>
+            <label>
+               Orçamento: 
+               <input type="number" name="" id="budgetNumber" value="" />
+            </label>
+            <label>
+               Emissão: 
+               <input type="number" name="" id="budgetEmission" value="" />
+            </label>
+            <label>
+               Validade: 
+               <input type="number" name="" id="budgetValidity" value="" />
+            </label>
+         </header>
+         <cliente>
+            <header>
+               <h1>CLIENTE</h1>
+            </header>
+            <main>
+               <item type="nome">
+                  <label>
+                     <h3>NOME</h3>
+                     <input type="text" placeholder="Nome do cliente" name="" id="i_clientName" value="" />
+                  </label>
+               </item>
+               <item type="tel-email">
+                  <label>
+                     <h3>TELEFONE</h3>
+                     <input type="text" placeholder="(99) 9 9999-9999" name="" id="i_clientPhone" value="" />
+                  </label>
+                  <label>
+                     <h3>EMAIL</h3>
+                     <input type="email" placeholder="email@email.com" name="" id="i_clientEmail" value="" />
+                  </label>
+               </item>
+               <item type="cpf-rg">
+                  <label>
+                     <select name="" id="select-cpf-cnpj">
+                        <option><h3>CPF</h3></option>
+                        <option><h3>CNPJ</h3></option>
+                     </select>
+                     <!--<h3>CPF/CNPJ</h3>-->
+                     <input type="text" placeholder="999.999.999-99" name="" id="i_clientCPF" value="" />
+                  </label>
+                  <label>
+                     <h3>RG/IE</h3>
+                     <input type="text" placeholder="41.44.5792-4" name="" id="i_clientRG" value="" />
+                  </label>
+               </item>
+               <item type="endereco">
+                  <label>
+                     <h3>ENDEREÇO</h3>
+                     <input type="text" placeholder="rua ..." id="i_clientAddressStreet" value="" />
+                  </label>
+                  <label>
+                     <h3>N°</h3>
+                     <input type="text" placeholder="999" name="" id="i_clientAddressNumber" value="" />
+                  </label>
+               </item>
+               <item type="b-c-u-c">
+                  <label>
+                     <h3>BAIRRO</h3>
+                     <input type="text" name="" id="i_clientAddressDistrict" value="" />
+                  </label>
+                  <label>
+                     <h3>CIDADE</h3>
+                     <input type="text" name="" id="i_clientAddressCity" value="" />
+                  </label>
+                  <label>
+                     <h3>UF</h3>
+                     <select id="i_clientAddressState" name="estado">
+                         <option value="AC">Acre</option>
+                         <option value="AL">Alagoas</option>
+                         <option value="AP">Amapá</option>
+                         <option value="AM">Amazonas</option>
+                         <option value="BA">Bahia</option>
+                         <option value="CE">Ceará</option>
+                         <option value="DF">Distrito Federal</option>
+                         <option value="ES">Espírito Santo</option>
+                         <option value="GO">Goiás</option>
+                         <option value="MA">Maranhão</option>
+                         <option value="MT">Mato Grosso</option>
+                         <option value="MS">Mato Grosso do Sul</option>
+                         <option value="MG">Minas Gerais</option>
+                         <option value="PA">Pará</option>
+                         <option value="PB">Paraíba</option>
+                         <option value="PR">Paraná</option>
+                         <option value="PE">Pernambuco</option>
+                         <option value="PI">Piauí</option>
+                         <option value="RJ">Rio de Janeiro</option>
+                         <option value="RN">Rio Grande do Norte</option>
+                         <option value="RS">Rio Grande do Sul</option>
+                         <option value="RO">Rondônia</option>
+                         <option value="RR">Roraima</option>
+                         <option value="SC">Santa Catarina</option>
+                         <option value="SP">São Paulo</option>
+                         <option value="SE">Sergipe</option>
+                         <option value="TO">Tocantins</option>
+                         <option value="EX">Estrangeiro</option>
+                     </select>
+                  </label>
+                  <label>
+                     <h3>CEP</h3>
+                     <input type="text" placeholder="00.000-000" name="" id="i_clientAddressCEP" value="" />
+                  </label>
+               </item>
+            </main>
+         </cliente>
+         <orcamento>
+            <header>
+               <h1>ORÇAMENTO</h1>
+            </header>
+            <main>
+               <item type="header">
+                  <h3>QT</h3>
+                  <h3>DESCRIÇÃO</h3>
+                  <h3>R$ TOT</h3>
+               </item>
+               <item>
+                  <input type="number" name="" id="" value="" />
+                  <input type="text" name="" id="" value="" />
+                  <input type="number" name="" id="" value="" />
+               </item>
+               <item>
+                  <input type="number" name="" id="" value="" />
+                  <input type="text" name="" id="" value="" />
+                  <input type="number" name="" id="" value="" />
+               </item>
+               <item>
+                  <input type="number" name="" id="" value="" />
+                  <input type="text" name="" id="" value="" />
+                  <input type="number" name="" id="" value="" />
+               </item>
+               <item>
+                  <input type="number" name="" id="" value="" />
+                  <input type="text" name="" id="" value="" />
+                  <input type="number" name="" id="" value="" />
+               </item>
+               <item>
+                  <input type="number" name="" id="" value="" />
+                  <input type="text" name="" id="" value="" />
+                  <input type="number" name="" id="" value="" />
+               </item>
+               <item>
+                  <input type="number" name="" id="" value="" />
+                  <input type="text" name="" id="" value="" />
+                  <input type="number" name="" id="" value="" />
+               </item>
+               <item>
+                  <input type="number" name="" id="" value="" />
+                  <input type="text" name="" id="" value="" />
+                  <input type="number" name="" id="" value="" />
+               </item>
+               <item>
+                  <input type="number" name="" id="" value="" />
+                  <input type="text" name="" id="" value="" />
+                  <input type="number" name="" id="" value="" />
+               </item>
+               <item>
+                  <input type="number" name="" id="" value="" />
+                  <input type="text" name="" id="" value="" />
+                  <input type="number" name="" id="" value="" />
+               </item>
+            </main>
+            <footer>
+               <item>
+                  <label>
+                     <h4> DESCONTO </h4>
+                     <input type="number" placeholder="R$ 1.000,00" name="" id="desconto" value="" />
+                  </label>
+               </item>
+               <item>
+                  <label>
+                     <h3> Valor TOTAL </h3>
+                     <input type="number" placeholder="R$ 48.968,00" name="" id="total-value" value="" />
+                  </label>
+               </item>
+            </footer>
+         </orcamento>
+         <obs>
+            <header>
+               <h1>OBSERVAÇÕES</h1>
+            </header>
+            <main>
+               <textarea id="obs" name="" rows="8"></textarea>
+            </main>
+         </obs>
+      </form>
+      
+      
+      
+      
+      <script>
+         'use strict';
+         /* [ properties ]
+         =================================== */
+         const 
+            $ = v => document.querySelector( v ),
+            $$ = v => document.querySelectorAll( v ),
+            log = ( ...v ) => console.log( ...v )
+         ;
+         /* -------------------------------- */
+         
+         
+         /* [ events ]
+         =================================== */
+         window.addEventListener( 'load', ev => {
+            let 
+               links = document.querySelectorAll( '[link]' )
+            ;
+            
+            const 
+               selectCpfCnpj = $( "select#select-cpf-cnpj" ),
+               clientName = $( "#i_clientName" ),
+               phone = $( "#i_clientPhone" ),
+               email =$( "#i_clientEmail" )
+               
+            ;
+            
+            
+         
+         
+            links.forEach( link => link.addEventListener( 'click', ev => {
+               window.open( link.getAttribute( 'link' ), '_blank' );
+            } ) );
+            
+         } );
+      </script>
+   </body>
+</html>
+<!--
+não seria possível alguém como eu poder tocar um anjo como aquele 
+
+mas um dia, assim tão inesperadamente, aquele rostinho estava ali 
+
+olhando pra mim, sorrindo 
+
+me senti nú 
+não tive tempo de pensar 
+
+-->

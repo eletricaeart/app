@@ -1,0 +1,340 @@
+﻿
+
+<head>
+   
+   <meta charset='UTF-8'>
+   <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+   <!-- <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> -->
+   <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+   <script src="./Assets/Scripts/GetCEP.js" defer></script>
+   <style>
+      * { box-sizing: border-box; }
+      html {
+         font: 1em sans-serif;
+         background: #fff;
+         color: #fc0fc0;
+      }
+
+      form {
+         display: grid;
+         gap: 1.5rem;
+         background: #fff;
+         color: darkslateblue;
+         border-radius: 1rem;  
+         width: 90%;
+         margin: auto;
+         padding: 1.5rem;
+      }
+      form > home {
+         display: grid;
+         gap: 1.5rem;
+         color: #3339;
+      } 
+      hr {
+         width: 100%;
+         border: #e0e0e0 solid 1px;
+      }
+      label {
+         display: grid;
+         background: #f3f3f3;
+         border-radius: .3rem;
+         padding: .2rem 0.5rem;
+         gap: 0.2rem;
+      } label:focus-within {
+         box-shadow: inset #fc0 0 0 0 2px;
+      }
+      input {
+         background: transparent;
+         border: transparent;
+         outline: transparent;
+      }
+      t { display: block; }
+      
+      #clientsTarget {
+         display: grid;
+         gap: 10px;
+      }
+      card {
+         display: block;
+         background: #f5f5f5;
+         border-radius: .5rem;
+         padding: 1rem;
+         color: #444;
+      }
+      card b {
+         color: #da0;
+      }
+      
+      [clip="circle"] {
+         clip-path: circle();
+         background: #27f;
+      }
+   </style>
+</head>
+
+<body>
+   <section>
+      <form method="get" action="." id="form">
+         <header>
+            <h1>Cadastrar Cliente</h1>
+         </header>
+         <home id="formInputs">
+            <label>
+               <small>Nome</small>
+               <input type="text" id="i_clientName" required>
+            </label>
+            <label>
+               <small>Gênero</small>
+               <input type="text" id="i_clientGender" required>
+            </label>
+            <label>
+               <small>RG</small>
+               <input type="number" id="i_clientRG">
+            </label>
+            <label>
+               <small>CPF</small>
+               <input type="number" id="i_clientCPF">
+            </label>
+            <label>
+               <small>Celular</small>
+               <input type="number" id="i_clientPhone">
+            </label>
+            <label>
+               <small>E-Mail</small>
+               <input type="text" id="i_clientEmail">
+            </label>
+            <hr>
+            <legend>Endereço</legend>
+            <label>
+               <small>CEP</small>
+               <input type="text" id="cep" name="cep" size="10" maxlength="9" onblur="pesquisacep( this.value );" >
+            </label>
+            <label>
+               <small>Rua</small>
+               <input type="text" id="rua" name="rua" size="">
+            </label>
+            <label>
+               <small>N°</small>
+               <input type="number" id="i_clientAddressNumber">
+            </label>
+            <label>
+               <small>Bairro</small>
+               <input type="text" id="bairro" name="bairro" size="40">
+            </label>
+            <label>
+               <small>Cidade</small>
+               <input type="text" id="cidade" name="cidade" size="40">
+            </label>
+            <label>
+               <small>Estado</small>
+               <input type="text" id="uf" name="uf" size="2">
+            </label>
+         </home>
+         <footer>
+            <input type="submit">
+         </footer>
+      </form>
+   </section>
+   <section>
+      <users id="clientsTarget">
+      </users>
+   </section>
+
+   <script>
+      const 
+         _ = ( ...v ) => console.log( ...v )
+         ,
+         $ = v => document.querySelector( v )
+         ,
+         $$ = v => document.querySelectorAll( v )
+      ;
+
+      form.addEventListener( "submit", () => {
+         event.preventDefault();
+
+         validateForm();
+      } );
+
+      
+
+      /* == [ templates ] 
+      == == == == == == == == == */
+      const 
+         clientsTemplate = ( target, Data ) => {
+            target.innerHTML = "";
+            Data.forEach( data => { target.innerHTML += `
+               <card>
+                  <h3>${ data.name }</h3>
+                  <p>
+                     <t><b>id:</b> ${ data.id }</t>
+                     <t><b>Gênero:</b> ${ data.gender }</t>
+                     <t><b>RG:</b> ${ data.rg }</t>
+                     <t><b>CPF:</b> ${ data.cpf }</t>
+                     <t><b>E-Mail</b> ${ data.email }</t>
+                     <t><b>Celular:</b> ${ data.phone }</t>
+                  </p>
+                  <p>
+                     <t><b>Endereço:</b> ${ data.address.street } ${ data.address.number }, ${ data.address.city }, ${ data.address.district }, ${ data.address.state } - ${ data.address.cep }</t>
+                  </p>
+               </card>
+            `} );
+         }
+      ;
+
+
+      /* == [ functions ] 
+      == == == == == == == == == */
+      const 
+         resetForm = () => {
+            formInputs.querySelectorAll( "input" ).forEach(
+               v => {
+                  v.value = "";
+               }
+            );
+         }
+         ,
+         resolveData = () => {
+            let 
+               data = []
+               ,
+               objct = []
+            ;
+            
+            if( localStorage.getItem( "Clients" ) ) {
+               data = [ ...JSON.parse( localStorage.getItem( "Clients" ) ) ];
+            }
+         }
+         ,
+         validateForm = () => {
+            let 
+               data = []
+               ,
+               validator = []
+            ;
+
+            formInputs.querySelectorAll( "input" ).forEach( 
+               v => {
+                  if( 
+                     v.hasAttribute( "required" )
+                     && 
+                     v.value == ""
+                  ) {
+                     v.style.background = "#f00";
+                     v.value = "informação nescessária";
+                     validator.push( false );
+                  } else {
+                     validator.push( true );
+                  }
+               }
+            );
+            
+            validator.reduce( ( a, b ) => {
+               if( a == false || b == false ) {
+                  return false;
+               } else {
+                  return true;
+               }
+            } ) ? 
+               acceptData()
+               : 
+               _( "validator fail" );
+
+               
+         }
+         ,
+         acceptData = () => {
+            let 
+               clients = []
+               ,
+               data = {
+                  id: `C:${ Math.random() * 99999 }-${ Math.random() * 99999 }`,
+                  name: i_clientName.value,
+                  gender: i_clientGender.value,
+                  cpf: i_clientCPF.value,
+                  rg: i_clientRG.value,
+                  phone: i_clientPhone.value,
+                  email: i_clientEmail.value,
+                  address: {
+                     street: rua.value,
+                     number: i_clientAddressNumber.value,
+                     city: cidade.value,
+                     district: bairro.value,
+                     state: uf.value,
+                     cep: cep.value,
+                  }
+               }
+            ;
+            
+            if( localStorage.getItem( "Clients" ) ) {
+               clients = [ ...JSON.parse( localStorage.getItem( "Clients" ) ) ];
+               
+            }
+            
+            clients.push( data );
+            localStorage.setItem( "Clients", JSON.stringify( clients ) );
+            resetForm();
+            _( "data: ", data );
+            
+            createData();
+         }
+         ,
+         createData = () => {
+            let 
+               data = []
+               ,
+               clients = []
+            ;
+            
+            if( localStorage.getItem( "Clients" ) ) {
+               
+               data = [ ...JSON.parse( localStorage.getItem( "Clients" ) ) ];
+            }
+            
+            clients = [ ...data ];
+            _( "createData: clients - ", clients );
+            clientsTemplate( clientsTarget, clients );
+         }
+      ;
+
+      resetForm( formInputs );
+      addEventListener( "load", () => {
+      } );
+
+      _( [ true, true, true ].reduce( ( a, b ) => {
+         if( a == false || b == false ) {
+            return false;
+         } else {
+            return true;
+         }
+      } ) );
+      
+      createData();
+   </script>
+</body>
+<script>
+/*
+Requerimento assinado pelo dono da propriedade;
+
+Certidão atualizada da matrícula do imóvel;
+
+Levantamento topográfico do imóvel a ser desmembrado;
+
+Planta da propriedade e memorial descritivo;
+
+Certidão negativa de tributos municipais;
+
+Comprovação de pagamento da taxa;
+
+ART;
+
+
+
+Requerimento com firma reconhecida assinado pelo proprietário do imóvel ou procurador, solicitando a averbação do desmembramento, bem como 
+abertura de matriculas individuais para os imóveis originados do desmembramento;
+Memorial descritivo com aprovação da Prefeitura.
+Planta aprovada pela Prefeitura.
+ART ou RRT.
+Certidão de aprovação do desmembramento emitida pela Prefeitura.
+
+*/
+</script>

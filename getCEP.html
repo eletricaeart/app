@@ -1,0 +1,47 @@
+
+
+<html>
+   <head>
+      <title>ViaCEP Webservice</title>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <link rel="stylesheet" href="./Assets/Styles/Globals.css">
+      <script src="./Assets/Scripts/Globals.js" defer></script>
+      <script src="./Assets/Scripts/GetCEP.js" defer></script>
+      <style>
+         label {
+            display: block;
+         }
+      </style>
+   </head>
+   
+   <body>
+      <form method="get" action=".">
+         <label>
+            <t>Cep:</t>
+            <input name="cep" type="text" id="cep" size="10" maxlength="9"
+            onblur="pesquisacep(this.value);" />
+         </label>
+         <label>
+            <t>Rua:</t>
+            <input name="rua" type="text" id="rua" />
+         </label>
+         <label>
+            <t>Bairro:</t>
+            <input name="bairro" type="text" id="bairro" size="40" />
+         </label>
+         <label>
+            <t>Cidade:</t>
+            <input name="cidade" type="text" id="cidade" size="40" />
+         </label>
+         <label>
+            <t>Estado:</t>
+            <input name="uf" type="text" id="uf" size="2" />
+         </label>
+         <label>
+            <t>IBGE:</t>
+            <input name="ibge" type="text" id="ibge" size="8" />
+         </label>
+      </form>
+   </body>
+
+</html>
