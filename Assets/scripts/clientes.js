@@ -3,13 +3,22 @@
 "use strict";
 
 addEventListener( "load", () => {
-   createData();
+   createData(
+      "Clients",
+      clientsTemplate,
+      clientsTarget
+   );
 } );
 
 form.addEventListener( "submit", () => {
    event.preventDefault();
 
-   validateForm();
+   validateForm( 
+      form_registerClientInputs, 
+      "Clients",
+      clientsTemplate,
+      clientsTarget
+   );
 } );
 
 

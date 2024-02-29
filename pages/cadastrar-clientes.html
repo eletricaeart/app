@@ -31,7 +31,7 @@
          <header>
             <h1>Cadastrar Cliente</h1>
          </header>
-         <home id="formInputs">
+         <home id="form_registerClientInputs">
             <label>
                <small>Nome</small>
                <input type="text" id="i_clientName" tabindex="1" required>
@@ -51,7 +51,7 @@
             <label>
                <small>Celular</small>
                <!-- <input type="tel" id="i_clientPhone" tabindex="-1" maxlength="11" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"> -->
-               <input type="tel" id="i_clientPhone" tabindex="-1" maxlength="11" onblur="phoneRegEx( this )">
+               <input type="tel" id="i_clientPhone" tabindex="-1" maxlength="11" pattern="\(\d{2}\)\s*\d{5}-\d{4}" onblur="phoneRegEx( this )">
             </label>
             <label>
                <small>E-Mail</small>

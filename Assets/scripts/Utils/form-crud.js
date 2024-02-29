@@ -3,34 +3,34 @@
 /* == [ functions ] 
 == == == == == == == == == */
 const 
-   resetForm = () => {
-      formInputs.querySelectorAll( "input" ).forEach(
+   resetForm = ( form ) => {
+      form.querySelectorAll( "input" ).forEach(
          v => {
             v.value = "";
          }
       );
    }
    ,
-   resolveData = () => {
+   resolveData = ( db ) => {
       let 
          data = []
          ,
          objct = []
       ;
       
-      if( localStorage.getItem( "Clients" ) ) {
-         data = [ ...JSON.parse( localStorage.getItem( "Clients" ) ) ];
+      if( localStorage.getItem( db ) ) {
+         data = [ ...JSON.parse( localStorage.getItem( db ) ) ];
       }
    }
    ,
-   validateForm = () => {
+   validateForm = ( form, db, htmlTemplate, htmlTarget ) => {
       let 
          data = []
          ,
          validator = []
       ;
 
-      formInputs.querySelectorAll( "input" ).forEach( 
+      form.querySelectorAll( "input" ).forEach( 
          v => {
             if( 
                v.hasAttribute( "required" )
@@ -53,14 +53,14 @@ const
             return true;
          }
       } ) ? 
-         acceptData()
+         acceptData( form, db, htmlTemplate, htmlTarget )
          : 
          _( "validator fail" );
 
          
    }
    ,
-   acceptData = () => {
+   acceptData = ( form, db, htmlTemplate, htmlTarget ) => {
       let 
          clients = []
          ,
@@ -79,38 +79,41 @@ const
                district: bairro.value,
                state: uf.value,
                cep: cep.value,
+            },
+            services: {
+
             }
          }
       ;
       
-      if( localStorage.getItem( "Clients" ) ) {
-         clients = [ ...JSON.parse( localStorage.getItem( "Clients" ) ) ];
+      if( localStorage.getItem( db ) ) {
+         clients = [ ...JSON.parse( localStorage.getItem( db ) ) ];
          
       }
       
       clients.push( data );
-      localStorage.setItem( "Clients", JSON.stringify( clients ) );
-      resetForm();
+      localStorage.setItem( db, JSON.stringify( clients ) );
+      resetForm( form );
       _( "data: ", data );
       
-      createData();
+      createData( db, htmlTemplate, htmlTarget );
    }
    ,
-   createData = () => {
+   createData = ( db, htmlTemplate, htmlTarget ) => {
       let 
          data = []
          ,
          clients = []
       ;
       
-      if( localStorage.getItem( "Clients" ) ) {
+      if( localStorage.getItem( db ) ) {
          
-         data = [ ...JSON.parse( localStorage.getItem( "Clients" ) ) ];
+         data = [ ...JSON.parse( localStorage.getItem( db ) ) ];
       }
       
       clients = [ ...data ];
       _( "createData: clients - ", clients );
-      clientsTemplate( clientsTarget, clients );
+      htmlTemplate( clientsTarget, clients );
    }
 ;
 
