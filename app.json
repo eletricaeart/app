@@ -1,9 +1,9 @@
 {
    "expo": {
       "scheme": "acme",
+      "repo": "github",
       "experiments": {
-         "baseUrl": "/app",
-         "repo": "github"
+         "baseUrl": "/app"
       },
       "web": {
          "output": "single",
