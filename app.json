@@ -1,13 +1,18 @@
 {
-  "expo": {
-    "scheme": "acme",
-    "web": {
-      "bundler": "metro"
-    },
-    "plugins": [
-      "expo-router"
-    ],
-    "name": "app",
-    "slug": "app"
-  }
+   "expo": {
+      "scheme": "acme",
+      "experiments": {
+         "baseUrl": "/app",
+         "repo": "github"
+      },
+      "web": {
+         "output": "single",
+         "bundler": "metro"
+      },
+      "plugins": [
+         "expo-router"
+      ],
+      "name": "app",
+      "slug": "app"
+   }
 }
