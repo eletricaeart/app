@@ -1,7 +1,17 @@
 {
    "expo": {
+      "name": "app",
+      "slug": "app",
       "scheme": "acme",
+      "version": "1.0.0",
+      "orientation": "portrait",
+      "userInterfaceStyle": "light",
       "repo": "github",
+      "splash": {
+         "image": "./app/assets/splash.png",
+         "resizeMode": "contain",
+         "backgroundColor": "#00559c"
+      },
       "experiments": {
          "baseUrl": "/app"
       },
@@ -9,10 +19,17 @@
          "output": "single",
          "bundler": "metro"
       },
+      "android": {
+         "background": "#1b1d22"
+      },
       "plugins": [
          "expo-router"
       ],
-      "name": "app",
-      "slug": "app"
+      "androidStatusBar": {
+         "backgroundColor": "#000",
+         "barStyle": "dark-content",
+         "translucent": true,
+         "hidden": false
+      }
    }
 }

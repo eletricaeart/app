@@ -1,5 +1,6 @@
 
 
+import { Children } from "react";
 import {
    StyleSheet,
    View, ScrollView,
@@ -13,7 +14,8 @@ export default function HomePage( props ) {
 
    return( <>
       <ScrollView style={ style.HomePage }>
-         <Text>HomePage</Text>
+         <Text>HomePage 1</Text>
+         {/* { props.page } */}
       </ScrollView>
    </> );
 }
