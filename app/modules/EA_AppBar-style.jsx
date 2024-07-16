@@ -59,8 +59,8 @@ const
       }
       ,
       logoImage: {
-         width: 120,
-         height: "90%",
+         // width: 90,
+         height: "70%",
          gap: 8,
          // backgroundColor: "#27f"   
       }

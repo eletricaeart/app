@@ -31,6 +31,7 @@ export default function AppBar( props ) {
                <Image 
                   source={ imgs.logo }
                   style={ appbar.logoImage }
+                  resizeMode="contain"
                />
             </View>
          </View>
@@ -58,27 +59,4 @@ const
          elevation: 10,
       },
    } )
-
-   // appbar = StyleSheet.create( {
-   //    root: {
-   //       flexBasis: 72,
-   //       margin: 0,
-   //       padding: 0,
-   //       zIndex: 9,
-   //       backgroundColor: colors.cardLv1,
-   //    }
-   //    ,
-   //    rootContent: {
-   //       flexDirection: "row",
-   //       alignItems: "center",
-   //       height: "100%",
-   //       paddingTop: 0,
-   //       paddingBottom: 0,
-   //       paddingLeft: 16,
-   //       paddingRight: 16,
-   //    }
-   //    ,
-   //    menuLeft: {}
-   //    ,
-   // } )
 ;
