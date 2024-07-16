@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import {
+   StyleSheet,
    Text 
 } from "react-native";
 import { 
@@ -15,12 +16,20 @@ export default function SearchBar( props ) {
    ;
 
   return( <>
-      <Text>SearchBar</Text>
+      <Text style={ s.text }>SearchBar</Text>
       {/* <Searchbar
          placeholder="Search"
          onChangeText={ setSearchQuery }
          value={ searchQuery }
       /> */}
    </> );
-};
+}
 
+const 
+   s = StyleSheet.create( {
+      text: {
+         color: "#27f",
+      }
+      ,
+   } )
+;

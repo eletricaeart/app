@@ -15,27 +15,44 @@ import colors from "../assets/stylesheets/globals/colors";
 /* == [ pages ]
 == == == == == == == == == */
 import HomePage from "./HomePage";
-import Home from "../pages/Home";
+import Routes from "../pages/routes";
 
 
 export default function BottomNavBar( props ) {
    const 
-      MusicRoute = () => <Text>Music</Text>
+      HomeRoute = () => (
+         <HomePage page={ <Routes.Home /> }/>
+      )
       ,
-      AlbumsRoute = () => <Text>Albums</Text>
+      CustomersRoute = () => <HomePage page={ <Routes.Customers /> } />
       ,
       RecentsRoute = () => <Text>Recents</Text>
       ,
-      HomeRoute = () => {
-         <HomePage page={ () => <Home /> }>
-            {/* <Home /> */}
-         </HomePage>
-      }
+      MusicRoute = () => <Text>Music</Text>
    ;
 
    const [index, setIndex] = React.useState(0);
 
    const [routes] = React.useState( [
+      { 
+         key: 'home'
+         , 
+         title: 'Home'
+         , 
+         focusedIcon: 'bell'
+         , 
+         unfocusedIcon: 'bell-outline' 
+      },
+      { 
+         key: 'customers'
+         , 
+         title: 'Clientes'
+         , 
+         focusedIcon: 'album'
+         , 
+         color: "#fc0fc0"
+         ,  
+      },
       { 
          key: 'music'
          , 
@@ -46,16 +63,6 @@ export default function BottomNavBar( props ) {
          unfocusedIcon: 'heart-outline'
       },
       { 
-         key: 'albums'
-         , 
-         title: 'Albums'
-         , 
-         focusedIcon: 'album'
-         , 
-         color: "#fc0fc0"
-         ,  
-      },
-      { 
          key: 'recents'
          , 
          title: 'Recents'
@@ -63,22 +70,13 @@ export default function BottomNavBar( props ) {
          focusedIcon: 'history'
          , 
       },
-      { 
-         key: 'home'
-         , 
-         title: 'Home'
-         , 
-         focusedIcon: 'bell'
-         , 
-         unfocusedIcon: 'bell-outline' 
-      },
    ] );
  
    const renderScene = BottomNavigation.SceneMap( {
-      music: MusicRoute,
-      albums: AlbumsRoute,
-      recents: RecentsRoute,
       home: HomeRoute,
+      customers: CustomersRoute,
+      music: MusicRoute,
+      recents: RecentsRoute,
    } );
  
    return (

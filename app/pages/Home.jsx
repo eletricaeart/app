@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import {
+   StyleSheet,
    View,
    Text,
    Button 
@@ -20,8 +21,17 @@ export default function Home( props ) {
    return( <>
       <View>
          <SearchBar />
-         <Text>Home</Text>
+         <Text style={{ color: "#fc0" }}>&lt; Home</Text>
       </View>
    </> );
-};
+}
+
+const 
+   s = StyleSheet.create( {
+      text: {
+         color: "#27f",
+      }
+      ,
+   } )
+;
 

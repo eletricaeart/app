@@ -67,8 +67,8 @@ const
             width: 0,
             height: 5
          },
-         shadowOpacity: .5,
-         shadowRadius: 4,
+         shadowOpacity: 1,
+         shadowRadius: 10,
          elevation: 10,
       },
    } )

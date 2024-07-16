@@ -10,10 +10,10 @@ const
          shadowColor: "#333333",
          shadowOffset: {
             width: 0,
-            height: 5
+            height: 0
          },
-         shadowOpacity: .5,
-         shadowRadius: 4,
+         shadowOpacity: 1,
+         shadowRadius: 10,
          elevation: 10,
       },
       boxShadow0: {

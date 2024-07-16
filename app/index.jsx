@@ -1,19 +1,22 @@
 
 
 import React from "react";
-import { StatusBar } from "expo-status-bar";
+
 import {
    StyleSheet,
+   useColorScheme,
    View, ScrollView,
    Text,
    Button 
 } from "react-native";
+
 import {
    SafeAreaView, 
    SafeAreaProvider,
    SafeAreaInsetsContext,
    useSafeAreaInsets,
 } from 'react-native-safe-area-context';
+
 import AppBar from "./modules/Appbar";
 import EA_AppBar from "./modules/EA_AppBar";
 import HomePage from "./modules/HomePage";
@@ -22,25 +25,55 @@ import colors from "./assets/stylesheets/globals/colors";
 
 export default function App( props ) {
    
+   const 
+      colorScheme = useColorScheme()
+      ,
+      themeTextStyle = colorScheme === 'light' ? 
+         styles.lightThemeText 
+         : 
+         styles.darkThemeText
+      ,
+      themeContainerStyle = colorScheme === 'light' ? 
+         styles.lightContainer 
+         : 
+         styles.darkContainer
+   ;
 
    return( <>
-      <SafeAreaProvider style={ { backgroundColor: "#fc0",  } }>
-         <StatusBar 
-            backgroundColor={ "#00559c" } 
-            style="light" 
-            translucent={ false }
-         />
+      <SafeAreaProvider style={ [themeContainerStyle] }>
          <EA_AppBar /> 
-         <HomePage style={ style.homePage }></HomePage>
-         <BottomNavBar style={ style.bottomNavBar }></BottomNavBar>
+         {/* <Text style={[styles.text, themeTextStyle]}>Color scheme: {colorScheme}</Text> */}
+         <BottomNavBar style={ styles.bottomNavBar }></BottomNavBar>
       </SafeAreaProvider>
    </> );
 }
  
 const 
-   style = StyleSheet.create( {
+   styles = StyleSheet.create( {
+
+      container: {
+         flex: 1,
+         alignItems: 'center',
+         justifyContent: 'center',
+      },
+      text: {
+         fontSize: 20,
+      },
+      lightContainer: {
+         backgroundColor: '#d0d0c0',
+      },
+      darkContainer: {
+         backgroundColor: '#242c40',
+      },
+      lightThemeText: {
+         color: '#242c40',
+      },
+      darkThemeText: {
+         color: '#d0d0c0',
+      },
+      
       Home: {
-         backgroundColor: "#fff",
+         backgroundColor: "#16181c",
          flex: 1,
       },
       appbar: {
