@@ -26,27 +26,19 @@ export default function AppBar( props ) {
       <View style={ [ appbar.root, globalStyle.boxShadow ] }>
          <View style={ appbar.rootContent }>
             <View style={ appbar.menuLeft }>
-               <View style={ [ appbar.menuLeftContent ] }>
-                  <View style={ [ appbar.backBtn ] } id="backBtn">
-                     <View style={ [ appbar.backBtnBarCenter ] } id="backBtn_centerBar"></View>
-                  </View>
+               <View style={ [ appbar.backBtn ] } id="backBtn">
                </View>
             </View>
             <View style={ [ appbar.Logo ] }>
                <View style={ [ appbar.eaLogo ] }>
-                  <View style={ [ appbar.logoIcon ] }>
-                     <Image 
-                        source={ imgs.logo }
-                        style={ appbar.logoTitleImage }
-                     />
-                  </View>
+                  <Image 
+                     source={ imgs.logo }
+                     style={ appbar.logoTitleImage }
+                  />
                </View>
             </View>
             <View style={ [ appbar.MenuRight ] }>
-               <View style={ [ appbar.MenuRightContent ] } id="">
-                  <View style={ [ appbar.trigram ] } id="openDrawer">
-                     <View style={ [ appbar.trigramBarBottom ] } id="bottomBar_left"></View>
-                  </View>
+               <View style={ [ appbar.trigram ] } id="openDrawer">
                </View>
             </View>
          </View>
