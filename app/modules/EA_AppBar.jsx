@@ -24,23 +24,17 @@ export default function AppBar( props ) {
 
    return( <>
       <View style={ [ appbar.root, globalStyle.boxShadow ] }>
-         <View style={ appbar.rootContent }>
-            <View style={ appbar.menuLeft }>
-               <View style={ [ appbar.backBtn ] } id="backBtn">
-               </View>
+         <View style={ appbar.left }>
+         </View>
+         <View style={ [ appbar.center ] }>
+            <View style={ [ appbar.logoPlaceholder ] }>
+               <Image 
+                  source={ imgs.logo }
+                  style={ appbar.logoImage }
+               />
             </View>
-            <View style={ [ appbar.Logo ] }>
-               <View style={ [ appbar.eaLogo ] }>
-                  <Image 
-                     source={ imgs.logo }
-                     style={ appbar.logoTitleImage }
-                  />
-               </View>
-            </View>
-            <View style={ [ appbar.MenuRight ] }>
-               <View style={ [ appbar.trigram ] } id="openDrawer">
-               </View>
-            </View>
+         </View>
+         <View style={ [ appbar.right ] }>
          </View>
       </View>
    </> );

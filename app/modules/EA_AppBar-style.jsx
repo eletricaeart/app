@@ -12,6 +12,8 @@ import colors from "../assets/stylesheets/globals/colors";
 const 
    appbar = StyleSheet.create( {
       root: {
+         flexDirection: "row",
+         justifyContent: "space-between",
          flexBasis: 69,
          maxHeight: 69,
          margin: 0,
@@ -20,110 +22,48 @@ const
          backgroundColor: colors.cardLv1,
       }
       ,
-      rootContent: {
-         flexDirection: "row",
-         alignItems: "center",
-         height: "100%",
-         paddingTop: 0,
-         paddingBottom: 0,
-         // paddingLeft: 16,
-         // paddingRight: 16,
-      }
-      ,
-      menuLeft: {
+      left: {
+         flexBasis: 35,
          aspectRatio: 1,
-         color: colors.appbarTitle,
+         // backgroundColor: colors.appbarTitle,
          color: "#fff",
-         // flexBasis: "15%",
+         width: 20,
          height: "100%",
          maxHeight: "100%",
          aspectRatio: 1,
       }
       ,
-      menuLeftContent: {}
-      ,
-      backBtn: {}
-      ,
-      backBtnBarTop: {}
-      ,
-      backBtnBarCenter: {}
-      ,
-      backBtnBarBottom: {}
-      ,
-      Logo: {
-         color: "#fff",
+      right: {
+         flexBasis: 35,
+         aspectRatio: 1,
+         // backgroundColor: colors.appbarTitle,
+         color: "#29f",
+         width: 20,
          height: "100%",
-         flex: 1,
+         maxHeight: "100%",
+         aspectRatio: 1,
       }
       ,
-      eaLogo: {
-         height: "100%",
+      center: {
+         // backgroundColor: "#fc0",
+         flex: 1,
+
+      }
+      ,
+      logoPlaceholder: {
+         // backgroundColor: "#fff",
+         flex: 1,
          flexDirection: "row",
          alignItems: "center",
          justifyContent: "center",
-         gap: 8,
-         // backgroundColor: "#27f"   
-      }
-      ,
-      logoIcon: {
-         width: "100%",
-         height: "100%",
-         borderRadius: 100,
-         alignItems: "center",
-         justifyContent: "center",
-         // backgroundColor: "#daa520",
       }
       ,
       logoImage: {
-         borderRadius: 100,
-
-         aspectRatio: 1,
-         width: 54,
-         height: 54,
+         width: 120,
+         height: "90%",
+         gap: 8,
+         // backgroundColor: "#27f"   
       }
-      ,
-      logoTitleImage: {
-         width: 100,
-         height: "80%",
-      }
-      ,
-      logoTitle: {
-         alignItems: "center",
-         justifyContent: "center",
-      }
-      ,
-      logoTitleContent: {
-      }
-      ,
-      tt: {
-         display: "flex",
-         color: "#fff",
-         // backgroundColor: "#000",
-         fontSize: 19,
-         lineHeight: 19,
-         letterSpacing: 3,
-         minWidth: "35%",
-         textAlign: "center",
-      }
-      ,
-      MenuRight: {}
-      ,
-      MenuRightContent: {
-         aspectRatio: 1,
-         color: colors.appbarTitle,
-         color: "#fff",
-         height: "100%",
-         maxHeight: "100%",
-         aspectRatio: 1,
-      }
-      ,
-      trigram: {}
-      ,
-      trigramBarLeft: {}
-      ,
-      trigramBarCenter: {}
-      ,
-      trigramBarBottom: {}
       ,
    } )
 ;
