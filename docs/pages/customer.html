@@ -1,0 +1,387 @@
+
+
+<!DOCTYPE html>
+<html lang="pt-br">
+   <head>
+      <title>Elétrica & Art</title>
+   
+      <link rel="icon" href="src/pix/logo.svg" type="svg+xml">
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <!--- == [ fontawesome ]
+      == == == == == == == == == --->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+      <script src="https://esm.sh/@fortawesome/fontawesome-free"></script>
+      <!-- == [ StyleSheets ] 
+      == == == == == == == == == -->
+      <link rel="stylesheet" href="../Assets/styles/clb.css">
+      <link rel="stylesheet" href="../Assets/styles/globals.css">
+      <!-- <link rel="stylesheet" href="../Assets/styles/includes/theme.css"> -->
+      <link rel="stylesheet" href="../Assets/fonts/fonts.css">
+      <!-- == [ Scripts ] 
+      == == == == == == == == == -->
+      <script src="../Assets/scripts/clb.js" defer=""></script>
+      <script src="../Assets/scripts/global.js" defer=""></script>
+      <!-- == [ includes ]
+      == == == == == == == == == -->
+      <script src="../Assets/scripts/Modules/AppBar.js" defer=""></script>
+      <script src="../Assets/scripts/Modules/Drawer.js" defer=""></script>
+      <script src="../Assets/scripts/Modules/NavBar.js" defer=""></script>
+      <script src="../Assets/scripts/Modules/AppFooter.js" defer=""></script>
+      <script src="../Assets/scripts/Modules/EA-Card.js" defer=""></script>
+      <script src="../Assets/scripts/Widgets/NavLink.js" defer=""></script>
+      <script src="../Assets/scripts/Widgets/Button.js" defer=""></script>
+      
+      <style>  
+         list {
+            display: flex;
+            flex-direction: column;
+            padding: 1em;
+            gap: 0.5em;
+         }
+         list > li {
+            list-style-type: none;
+         }
+      </style>
+   </head>
+   <body>
+      <appbar></appbar>
+      <drawer></drawer>
+      
+      <home-page section="customer">
+         <!-- <tt id="pageTitle">Cliente</tt> -->
+         <side-bar></side-bar>
+         <header id="customer_pic">
+            <picture >
+               <img id="customer_pic_uri" src="" alt="">
+            </picture>
+            <content name>
+               <!-- <name id="customer_name"></name>
+               <address id="customer_address"></address> -->
+            </content>
+         </header>
+         <nome section content>
+            <content>
+               <name id="customer_name"></name>
+               <address id="customer_address"></address>
+            </content>
+         </nome>
+         
+         <dados-pessoais section>
+            <content>
+               <card>
+                  <content>
+                     <header >
+                        <content>
+                           <t5 title>Dados Pessoais</t5>
+                        </content>
+                     </header>
+                     <card-content content>
+                        <card-item>
+                           <strong>RG</strong>
+                           <t id="customer_rg"></t>
+                        </card-item>
+                        <card-item>
+                           <strong>CPF</strong>
+                           <t id="customer_cpf"></t>
+                        </card-item>
+                        <card-item>
+                           <strong>Gênero</strong>
+                           <t id="customer_gender"></t>
+                        </card-item>
+                     </card-content>
+                  </content>
+               </card>
+            </content>
+         </dados-pessoais>
+         
+         <conctat section>
+            <divider section>
+               <content>
+                  <t6 title>CONTATO</t6>
+               </content>
+            </divider>
+            <content>
+               <card>
+                  <content>
+                     <card-content content>
+                        <card-item>
+                           <strong>Celular</strong>
+                           <t id="customer_cellphone"></t>
+                        </card-item>
+                        <card-item>
+                           <strong>WhatsApp</strong>
+                           <t id="customer_whatsapp"></t>
+                        </card-item>
+                        <card-item>
+                           <strong>Telefone</strong>
+                           <t id="customer_phone"></t>
+                        </card-item>
+                        <card-item>
+                           <strong>Telefone secundário</strong>
+                           <t id="customer_phone2"></t>
+                        </card-item>
+                        <card-item>
+                           <strong>Email</strong>
+                           <t id="customer_email"></t>
+                        </card-item>
+                     </card-content>
+                  </content>
+               </card>
+            </content>
+         </conctat>
+
+         <address section>
+            <divider section>
+               <content>
+                  <t6 title>endereço</t6>
+               </content>
+            </divider>
+            <content>
+               <card>
+                  <content>
+                     <card-content>
+                        <card-item>
+                           <strong>CEP</strong>
+                           <t id="customer_cep"></t>
+                        </card-item>
+                        <card-item>
+                           <strong>Rua</strong>
+                           <t id="customer_rua"></t>
+                        </card-item>
+                        <card-item>
+                           <strong>N°</strong>
+                           <t id="customer_número"></t>
+                        </card-item>
+                        <card-item>
+                           <strong>Complemento</strong>
+                           <t id="customer_complemento"></t>
+                        </card-item>
+                        <card-item>
+                           <strong>Bairro</strong>
+                           <t id="customer_bairro"></t>
+                        </card-item>
+                        <card-item>
+                           <strong>Cidade</strong>
+                           <t id="customer_cidade"></t>
+                        </card-item>
+                        <card-item>
+                           <strong>Estado</strong>
+                           <t id="customer_uf"></t>
+                        </card-item>
+                     </card-content>
+                  </content>
+               </card>
+            </content>
+         </address>
+         
+         <notes section>
+            <divider section>
+               <content>
+                  <t6 title>Anotações</t6>
+               </content>
+            </divider>
+            
+            <content>
+               <card>
+                  <content>
+                     <card-content>
+                        <t id="customer_observação"></t>
+                     </card-content>
+                  </content>
+               </card>
+            </content>
+         </notes>
+         
+         <budgets section>
+            <divider section>
+               <content>
+                  <t6 title>Orçamentos</t6>
+               </content>
+            </divider>
+            
+            <content>
+               <card>
+                  <content>
+                     <card-content>
+                        <card-item>
+                           <strong>Orçamento 1</strong>
+                           <t id="customer_observação"></t>
+                        </card-item>
+                     </card-content>
+                  </content>
+               </card>
+            </content>
+         </budgets>
+         
+         <receipts section>
+            <divider section>
+               <content>
+                  <t6 title>Recibos</t6>
+               </content>
+            </divider>
+            
+            <content>
+               <card>
+                  <content>
+                     <card-content>
+                        <card-item>
+                           <strong>Recibo 1</strong>
+                           <t id="customer_observação"></t>
+                        </card-item>
+                     </card-content>
+                  </content>
+               </card>
+            </content>
+         </receipts>
+
+         <form id="form">
+            <footer content>
+               <label>
+                  <input type="submit" value="CADASTRAR">
+               </label>
+            </footer>
+         </form>
+         <app-footer></app-footer>
+      </home-page>
+      
+
+      <navbar></navbar>
+      
+      <script>
+         'use strict';
+         /* [ properties ]
+         =================================== */
+         /* -------------------------------- */
+         
+         
+
+         
+         /* [ events ]
+         =================================== */
+         window.addEventListener( 'load', () => {
+
+            Button( {
+               tag: "showUsers",
+               callback: ShowUsers
+            } );
+
+            Button( {
+               tag: "showLocalStorageEA.Users",
+               bg: "#27f5",
+               color: "#99",
+               callback: ShowLS,
+            } );
+
+            Button( {
+               tag: "eraseEA.Users",
+               bg: "#27f5",
+               color: "#99",
+               callback: EraseLS,
+            } );
+
+            Drawer();
+             NavBar( 
+               { 
+                  item1: { 
+                     name: "AA" 
+                  }
+                  ,
+                  item2: { 
+                     name: "BB" 
+                  }
+                  ,
+                  item3: { 
+                     name: "CC" 
+                  }
+                  ,
+                  item4: { 
+                     name: "DD" 
+                  }
+                  ,
+               } 
+            ); // NavBar();
+
+            NavLink();
+            
+            function PageLoad( props ) {
+               let 
+                  custID = JSON.parse( localStorage.getItem( "ea.load" ) )
+                  ,
+                  cust = {}
+                  ,
+                  data = [ ...JSON.parse( localStorage.getItem( "ea.customers" ) ) ]
+                  ,
+                  whatsappLink = ""
+                  ,
+                  cellphoneLink = ""
+                  ,
+                  phoneLink = ""
+                  ,
+                  phone2Link = ""
+               ;
+               data.forEach( d => {
+                  if( d.id == custID ) {
+                     cust = { ...d };
+                  }
+               } );
+
+               // function FormatNumber( link ) {
+               //    let data = link;
+               //    data = data.replaceAll( /\(/gi, "" );
+               //    data = data.replaceAll( /\)/gi, "" );
+               //    data = data.replaceAll( /\-/gi, "" );
+               //    data = data.replaceAll( /\ /gi, "" );
+               //    return data;
+               // }
+
+               whatsappLink = FormatNumber( cust.whatsapp );
+               cellphoneLink = FormatNumber( cust.cellphone );
+               phoneLink = FormatNumber( cust.phone );
+               phone2Link = FormatNumber( cust.phone2 );
+               
+               // customer_pic.style.backgroundImage = "url( ./ea.jpg )";
+               customer_pic.style.backgroundImage = cust.gender == "feminino" ? 
+                  "url( ../Assets/imgs/Avatar/default_avatar_fem_720p.webp )"
+                  : 
+                  "url( ../Assets/imgs/Avatar/default_avatar_masc_720p.webp )";
+               customer_name.innerText = cust.nome;
+               customer_gender.innerText = `${ cust.gender }`;
+
+               customer_cellphone.innerHTML = `<a href="tel:${ cellphoneLink }">${ cust.cellphone }</a>`;
+               
+               customer_whatsapp.innerHTML = `
+                  <a href="https://wa.me/55${ whatsappLink }">
+                     ${ cust.whatsapp }
+                  </a>
+               `;
+               customer_phone.innerHTML = `<a href="tel:${ phoneLink }">${ cust.phone }</a>`;
+               customer_phone2.innerHTML = `<a href="tel:${ phone2Link }">${ cust.phone2 }</a>`;
+               
+               customer_email.innerHTML = `
+                  <a href="mailto:${ cust.email }?subject=&cc=&body=">
+                     ${ cust.email }
+                  </a>
+               `;
+
+               customer_rg.innerText = `${ cust.rg }`;
+               customer_cpf.innerText = `${ cust.cpf }`;
+               customer_address.innerText = `
+                  Rua ${ cust.rua }, ${ cust.número } - ${ cust.bairro } ${ cust.cidade } - ${ cust.uf }, ${ cust.cep }`;
+               customer_cep.innerHTML += `${ cust.cep }`;
+               customer_uf.innerText = `${ cust.uf }`;
+               customer_rua.innerText = `${ cust.rua }`;
+               customer_número.innerText = `${ cust.número }`;
+               customer_complemento.innerText = `${ cust.complemento }`;
+               customer_bairro.innerText = `${ cust.bairro }`;
+               customer_cidade.innerText = `${ cust.cidade }`;
+               customer_observação.innerText = `${ cust.observação }`;
+            }
+            
+            PageLoad();
+            
+         } );
+      </script>
+   </body>
+</html>

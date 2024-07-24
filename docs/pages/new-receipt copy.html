@@ -1,0 +1,434 @@
+
+
+<!DOCTYPE html>
+<html lang="pt-br">
+   <head>
+      <title>Elétrica & Art</title>
+   
+      <link rel="icon" href="src/pix/logo.svg" type="svg+xml">
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <!-- == [ StyleSheets ] 
+      == == == == == == == == == -->
+      <link rel="stylesheet" href="../Assets/styles/clb.css">
+      <link rel="stylesheet" href="../Assets/styles/globals.css">
+      <!-- <link rel="stylesheet" href="../Assets/styles/includes/theme.css"> -->
+      <link rel="stylesheet" href="../Assets/fonts/fonts.css">
+      <!-- == [ Scripts ] 
+      == == == == == == == == == -->
+      <script src="../Assets/scripts/clb.js" defer=""></script>
+      <script src="../Assets/scripts/global.js" defer=""></script>
+      <script src="../Assets/scripts/regexp.js" defer=""></script>
+      <!-- == [ includes ]
+      == == == == == == == == == -->
+      <script src="../Assets/scripts/Modules/AppBar.js" defer=""></script>
+      <script src="../Assets/scripts/Modules/Drawer.js" defer=""></script>
+      <script src="../Assets/scripts/Modules/NavBar.js" defer=""></script>
+      <script src="../Assets/scripts/Modules/EA-Card.js" defer=""></script>
+      <script src="../Assets/scripts/Widgets/NavLink.js" defer=""></script>
+      <script src="../Assets/scripts/Widgets/Button.js" defer=""></script>
+      
+      <style>
+         budget[card] {
+            background: var( --budget-card, #459 );
+            color: var( --appbar-title );
+         }
+
+         input:invalid {
+            border: red 1px solid;
+         }
+
+         label#label_payDay { display: none; }
+         /* #input_itsPaid ~ label#label_payDay { opacity: 0; }
+         #input_itsPaid:checked ~ label#label_payDay {
+            opacity: 0;
+         } */
+         
+         row:has( > p ) {
+            justify-content: space-between;
+         }
+         
+         row > small {
+            display: flex;
+         }
+         
+         modal-display[display] {
+            display: grid;
+         }
+         modal-display {
+            display: none;
+            place-items: center;
+            width: 100vw;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: #fff9;
+         }
+
+         modal {
+            background: var( --bg );
+            box-shadow: #0005 0 6px 35px;
+            border-radius: 1.2em;
+            width: calc( 100% - 1.2em );
+         }
+         modal[section="formOfPayment"] {
+            min-height: 50vh  ;
+         }
+         modal[section="formOfPayment"] > content {
+            align-items: center;
+         }
+      </style>
+      <!-- pattern 
+         ^ inicio
+         $ fim
+         \d{4,4} só 4 digitos
+         [0,9]{3} 3 digits
+         [a-z]{4,8} 4 to 8 lowercase
+         \(\d{2}\)\s*\d{5}-\d{4} pattern (13) 99148-6078
+
+        -->
+   </head>
+   <body>
+      <appbar></appbar>
+      <drawer></drawer>
+      
+      <home-page section>
+         <header>
+            <content>
+               <st>Novo recibo</st>
+            </content>
+         </header>
+         <budget-value section>
+            <content>
+               <budget card>
+                  <content>
+                     <row>
+                        <p>Valor do recibo </p>
+                        <small id="receiptNumber"></small>
+                     </row>
+                     <row>
+                        <t5>R$&nbsp;</t5>
+                        <t5> 0,00</t5>
+                     </row>
+                  </content>
+               </budget>
+            </content>
+         </budget-value>
+
+         <formulario section>
+            <content>
+               <form action="" id="form_new_recipt" content>
+                  <label switch id="label_itsPaid">
+                     <t>Já foi recebido</t>
+                     <input type="checkbox" value="off" slider id="input_itsPaid" name="itsPaid" placeholder="">
+                     <slider><ball></ball></slider>
+                  </label>
+                  <label id="label_payDay">
+                     <t>Data do recebimento</t>
+                     <input type="date" id="input_payDay" name="payDay" value="">
+                  </label>
+                  <section section class="multi">
+                     <label id="label_id">
+                        <t>referência</t>
+                        <input type="text" id="input_id" name="id" placeholder="" pattern="\d{4,4}" disabled>
+                     </label>
+                     <label id="label_subtotal">
+                        <t>Subtotal</t>
+                        <input type="number" step="0.01" id="input_subtotal" name="subtotal" placeholder="R$ 0,00">
+                     </label>
+                  </section>
+                  <label id="label_dueDate">
+                     <t>Vencimento</t>
+                     <input type="date" id="input_dueDate" name="dueDate" placeholder="dd-mm-yyyy" pattern="\d{4}-\d{2}-\d{2}">
+                  </label>
+                  <label id="label_clientID">
+                     <t>Cliente</t>
+                     <input type="text" id="input_clientID" name="clientID" placeholder="Nome do cliente">
+                  </label>
+                  <label id="label_servicesID">
+                     <t>Serviços</t>
+                     <input type="text" id="input_servicesID" name="servicesID" placeholder="Serviços">
+                  </label>
+                  <label id="label_discount">
+                     <t>Desconto</t>
+                     <input type="number" id="input_discount" name="discount" placeholder="R$ 0,00">
+                  </label>
+                  <label id="label_warranty">
+                     <t>Garantia</t>
+                     <input type="text" id="input_warranty" name="warranty" placeholder="Garantia">
+                  </label>
+                  <label id="label_formOfPayment">
+                     <t>Forma de pagamento</t>
+                     <input type="text" id="input_formOfPayment" name="formOfPayment" placeholder="">
+                  </label>
+                  <label id="label_attachment">
+                     <t>Anexo</t>
+                     <input type="text" id="input_attachment" name="attachment" placeholder="Anexo">
+                  </label>
+                  <label id="label_notes">
+                     <t>Informações adicionais</t>
+                     <input type="text" id="input_notes" name="notes" placeholder="Informações extras">
+                  </label>
+                  <label id="label_">
+                     <input type="submit" id="input_submit" value="salvar">
+                  </label>
+               </form>
+            </content>
+         </formulario>
+      </home-page>
+      
+      <console section>
+         <header>
+         </header>
+         <content gap>
+            <h2>console</h2>
+
+            <button btn="showUsers" id="btn_showUsers">
+               Show users
+            </button>
+            <button btn="showLocalStorageEA.Users" id="btn_showLS">
+               show localStorage ea.users
+            </button>
+            <button btn="eraseEA.Users" id="btn_eraseLS">
+               erase ea.users
+            </button>
+         </content>
+      </console>
+
+      <modal-display>
+         <content>
+            <modal section="formOfPayment">
+               <header content>
+                  <tt>Forma de pagamento</tt>   
+               </header>
+               <content>
+                  <modal-option>pix</modal-option>   
+                  <modal-option>cartão de crédito</modal-option>   
+                  <modal-option>cartão de débito</modal-option>   
+                  <modal-option>dinheiro</modal-option>   
+               </content>   
+            </modal>
+         <content>
+      </modal-display>
+      
+      
+      <script>
+         'use strict';
+         /* [ properties ]
+         =================================== */
+         let 
+            newReceipt = {
+               id: 0
+               ,
+               clientID: ""
+               ,
+               itsPaid: false
+               ,
+               payDay: ""
+               ,
+               dueDate: ""
+               ,
+               bornDate: `${ new Date().getDate() }-${ new Date().getMonth() + 1 }-${ new Date().getFullYear() }`
+               ,
+               servicesID: ""
+               ,
+               discount: 0
+               ,
+               subtotal: 0
+               ,
+               warranty: 0
+               ,
+               formOfPayment: ""
+               ,
+               attachment: ""
+               ,
+               notes: ""
+            }
+            ,
+            date = new Date()
+            ,
+            day = date.getDate() < 10 ? `0${ date.getDate() }` : date.getDate()
+            ,
+            month = date.getMonth() < 10 ? `0${ date.getMonth() + 1 }` : date.getMonth() + 1
+            ,
+            year = date.getFullYear()
+         ;
+         /* -------------------------------- */
+         
+         
+         /* == [ Global functions ]
+         == == == == == == == == == */
+         function Load() {
+            let 
+               thisData = []
+            ;
+
+         }
+         
+         function UpdateReceiptNumber() {
+            let 
+               thisData = []
+            ;
+            
+            if( localStorage.getItem( "ea.receipts" ) ) {
+               thisData = JSON.parse( localStorage.getItem( "ea.receipts" ) );
+               newReceipt.id = `rc-${ Math.round( Math.random() * 999 ) }-${ year }-00${ thisData.length + 1 }`;
+            } else {
+               newReceipt.id = `rc-${ Math.round( Math.random() * 999 ) }-${ year }-00${ 1 }`;
+            }
+         }
+         
+         /* [ events ]
+         =================================== */
+         window.addEventListener( 'load', () => {
+
+            Button( {
+               tag: "showUsers",
+               callback: ShowUsers
+            } );
+
+            Button( {
+               tag: "showLocalStorageEA.Users",
+               bg: "#27f5",
+               color: "#99",
+               callback: ShowLS,
+            } );
+
+            Button( {
+               tag: "eraseEA.Users",
+               bg: "#27f5",
+               color: "#99",
+               callback: EraseLS,
+            } );
+
+            Drawer();
+            NavLink();
+
+            UpdateReceiptNumber();
+            receiptNumber.innerText = newReceipt.id;
+            input_id.value = newReceipt.id;
+
+            input_itsPaid.addEventListener( "click", () => {
+               if( input_itsPaid.getAttribute( "checked" ) == "1" ) {
+                  input_itsPaid.setAttribute( "checked", "0" );
+                  _( "!checked" );
+                  label_payDay.style.display = "none";
+               } else {
+                  input_itsPaid.setAttribute( "checked", "1" );
+                  label_payDay.style.display = "flex";
+                  // input_payDay.value = `${ year }-${ month }-${ day }`;
+                  input_payDay.value = ``;
+                  _( "checked" );
+               }
+            } );
+            
+            input_dueDate.value = `${ year }-${ month }-${ day }`;
+            
+            input_payDay.addEventListener( "load", () => {
+            } );
+
+            /* == [ choose services ]
+            == == == == == == == == == */
+            $( "#input_servicesID" ).addEventListener( "click", () => {
+               let 
+                  tempData = {
+                     id: input_id.value
+                     ,
+                     clientID: input_clientID.value
+                     ,
+                     itsPaid: input_itsPaid.getAttribute( "cheched" )
+                     ,
+                     payDay: input_payDay.value
+                     ,
+                     dueDate: input_dueDate.value
+                     ,
+                     bornDate: newReceipt.bornDate
+                     ,
+                     servicesID: input_servicesID.value
+                     ,
+                     discount: input_discount.value
+                     ,
+                     subtotal: input_subtotal.value
+                     ,
+                     warranty: input_warranty.value
+                     ,
+                     formOfPayment: input_formOfPayment.value
+                     ,
+                     attachment: input_attachment.value
+                     ,
+                     notes: input_notes.value
+                  }
+               ;
+               localStorage.setItem( "ea.tempData", JSON.stringify( tempData ) );
+               window.location.href = "./new-service.html";
+            } );
+
+            /* == [ form of payment ]
+            == == == == == == == == == */
+            input_formOfPayment.addEventListener( "click", () => {
+               $( "modal-display" ).setAttribute( "display", "" );
+               
+               $$( "modal-option" ).forEach( option => {
+                  option.addEventListener( "click", () => {
+                     input_formOfPayment.value = option.innerText;
+                     $( "modal-display" ).removeAttribute( "display" );
+                  } );
+               } );
+            } );
+            
+            /* form submit */
+            form_new_recipt.addEventListener( "submit", () => {
+               event.preventDefault();
+               let 
+                  inputs = [
+                     ...$$( "form#form_new_recipt input[type='text']" ),
+                     ...$$( "form#form_new_recipt input[type='number']" ),
+                     ...$$( "form#form_new_recipt input[type='tel']" ),
+                     ...$$( "form#form_new_recipt input[type='date']" ),
+                  ]
+                  ,
+                  // input_itsPaid.getAttribute( "checked" ) == "1" )
+                  data = {}
+                  ,
+                  keysNvalues = []
+                  ,
+                  recibos = []
+               ;
+               
+               if( localStorage.getItem( "ea.receipts" ) ) {
+                  recibos = [
+                     ...JSON.parse( localStorage.getItem( "ea.receipts" ) )
+                  ];
+               }
+               /* _( "recibos: ", recibos );
+               inputs.forEach( input => {
+                  keysNvalues.push( [ 
+                     input.getAttribute( "name" )
+                     ,
+                     input.value
+                  ] );
+               } );
+               _( "kv: ", keysNvalues ); */
+
+               newReceipt.clientID = input_clientID.value;
+               newReceipt.itsPaid = input_itsPaid.getAttribute( "cheched" );
+               newReceipt.payDay = input_payDay.value;
+               newReceipt.dueDate = input_dueDate.value;
+               newReceipt.servicesID = input_servicesID.value;
+               newReceipt.discount = input_discount.value;
+               newReceipt.subtotal = input_subtotal.value;
+               newReceipt.warranty = input_warranty.value;
+               newReceipt.formOfPayment = input_formOfPayment.value;
+               newReceipt.attachment = input_attachment.value;
+               newReceipt.notes = input_notes.value;
+
+               recibos.push( newReceipt );
+               localStorage.setItem( "ea.receipts", JSON.stringify( recibos ) );
+            } );
+
+         } );
+      </script>
+   </body>
+</html>

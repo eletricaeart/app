@@ -1,0 +1,55 @@
+
+
+@media ( prefers-color-scheme: light ) {
+   :root {
+   --bg: #e5e5e5;
+   --bg2: #f5f5f5;
+   --ground: #fff;
+   --card-lv1: #00559C;
+   --card-lv2: #0075BD;
+   --card-lv3: #009ee6;
+
+   --appbar-shadow: #0005 0 0 10px;
+   --appbar-logo-shadow: #ffab00 0 0 0 2px;
+   --appbar-title: #fff;
+   --appbar-title-divider: #daa520;
+   --appbar-title-shadow: #0005 3px 0 3px;
+
+   --text-color: #333;
+   --a-hover: #747bff;
+   --btn-bg: #27f;
+
+   --form-bg: var( --bg2 );
+   
+   font: 1em "inter";
+   font-weight: 400;
+   color: var(--text-color);
+}
+
+@media ( prefers-color-scheme: dark ) {
+   :root {
+   --bg: #e5e5e5;
+   --bg2: #f5f5f5;
+   --ground: #fff;
+   --card-lv1: #00559C;
+   --card-lv2: #0075BD;
+   --card-lv3: #009ee6;
+
+   --appbar-shadow: #0005 0 0 10px;
+   --appbar-logo-shadow: #ffab00 0 0 0 2px;
+   --appbar-title: #fff;
+   --appbar-title-divider: #daa520;
+   --appbar-title-shadow: #0005 3px 0 3px;
+
+   --text-color: #333;
+   --a-hover: #747bff;
+   --btn-bg: #fc0;
+
+   --form-bg: var( --bg2 );
+   
+   font: 1em "inter";
+   font-weight: 400;
+   color: var(--text-color);
+   }
+}
+

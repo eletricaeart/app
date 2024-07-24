@@ -1,0 +1,88 @@
+
+
+<!DOCTYPE html>
+<html lang="pt-br">
+   <head>
+      <title>Elétrica & Art</title>
+   
+      <link rel="icon" href="src/pix/logo.svg" type="svg+xml">
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <!--- == [ fontawesome ]
+      == == == == == == == == == --->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+      <script src="https://esm.sh/@fortawesome/fontawesome-free"></script>
+      <!-- == [ StyleSheets ] 
+      == == == == == == == == == -->
+      <link rel="stylesheet" href="../Assets/styles/clb.css">
+      <link rel="stylesheet" href="../Assets/styles/globals.css">
+      <!-- <link rel="stylesheet" href="../Assets/styles/includes/theme.css"> -->
+      <link rel="stylesheet" href="../Assets/fonts/fonts.css">
+      <!-- == [ Scripts ] 
+      == == == == == == == == == -->
+      <script src="../Assets/scripts/clb.js" defer=""></script>
+      <script src="../Assets/scripts/global.js" defer=""></script>
+      <!-- == [ includes ]
+      == == == == == == == == == -->
+      <script src="../Assets/scripts/Modules/AppBar.js" defer=""></script>
+      <script src="../Assets/scripts/Modules/Drawer.js" defer=""></script>
+      <script src="../Assets/scripts/Modules/NavBar.js" defer=""></script>
+      <script src="../Assets/scripts/Modules/AppFooter.js" defer=""></script>
+      <script src="../Assets/scripts/Modules/EA-Card.js" defer=""></script>
+      <script src="../Assets/scripts/Widgets/NavLink.js" defer=""></script>
+      <script src="../Assets/scripts/Widgets/Button.js" defer=""></script>
+      
+      <style>
+      </style>
+   </head>
+   <body>
+      <appbar></appbar>
+      <drawer></drawer>
+      
+      <home-page section>
+         <content>
+            <st>Serviço</st>
+         </content>
+         <app-footer></app-footer>
+      </home-page>
+
+      <navbar></navbar>
+      
+      <script>
+         'use strict';
+         /* [ properties ]
+         =================================== */
+         /* -------------------------------- */
+         
+         
+         
+         /* [ events ]
+         =================================== */
+         window.addEventListener( 'load', () => {
+
+            Button( {
+               tag: "showUsers",
+               callback: ShowUsers
+            } );
+
+            Button( {
+               tag: "showLocalStorageEA.Users",
+               bg: "#27f5",
+               color: "#99",
+               callback: ShowLS,
+            } );
+
+            Button( {
+               tag: "eraseEA.Users",
+               bg: "#27f5",
+               color: "#99",
+               callback: EraseLS,
+            } );
+
+            Drawer();
+            NavLink();
+         } );
+      </script>
+   </body>
+</html>

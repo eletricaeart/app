@@ -1,0 +1,284 @@
+
+
+<!DOCTYPE html>
+<html lang="pt-br">
+   <head>
+      <title>Elétrica & Art</title>
+   
+      <link rel="icon" href="src/pix/logo.svg" type="svg+xml">
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <!--- == [ fontawesome ]
+      == == == == == == == == == --->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/fontawesome.min.css" integrity="sha512-UuQ/zJlbMVAw/UU8vVBhnI4op+/tFOpQZVT+FormmIEhRSCnJWyHiBbEVgM4Uztsht41f3FzVWgLuwzUqOObKw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/js/fontawesome.min.js" integrity="sha512-1M9vud0lqoXACA9QaA8IY8k1VR2dMJ2Qmqzt9pN2AH7eQHWpNsxBpaayV0kKkUsF7FLVQ2sA2SSc8w5VOm7/mg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+      <!-- == [ StyleSheets ] 
+      == == == == == == == == == -->
+      <link rel="stylesheet" href="../Assets/styles/clb.css">
+      <link rel="stylesheet" href="../Assets/styles/globals.css">
+      <!-- <link rel="stylesheet" href="../Assets/styles/includes/theme.css"> -->
+      <link rel="stylesheet" href="../Assets/fonts/fonts.css">
+      <!-- == [ Scripts ] 
+      == == == == == == == == == -->
+      <script src="../Assets/scripts/clb.js" defer=""></script>
+      <script src="../Assets/scripts/global.js" defer=""></script>
+      <!-- == [ includes ]
+      == == == == == == == == == -->
+      <script src="../Assets/scripts/Modules/AppBar.js" defer=""></script>
+      <script src="../Assets/scripts/Modules/Drawer.js" defer=""></script>
+      <script src="../Assets/scripts/Modules/NavBar.js" defer=""></script>
+      <script src="../Assets/scripts/Modules/AppFooter.js" defer=""></script>
+      <script src="../Assets/scripts/Modules/EA-Card.js" defer=""></script>
+      <script src="../Assets/scripts/Widgets/NavLink.js" defer=""></script>
+      <script src="../Assets/scripts/Widgets/Button.js" defer=""></script>
+      
+      <style>
+         html:has( body > add-service ) {
+            height: calc( 90dvh - 92px );
+         }
+
+         home-page[ section="new service"] {
+            flex: 1;
+         }
+         add-service {
+            position: sticky;
+            bottom: 0;
+            left: 0;
+         }
+         list[services] > li {
+            padding: 1.2em 0;
+            border-bottom: 2px #9999 solid;
+            gap: .5em;
+         }
+         list > li > info {
+            display: flex;
+            flex-direction: row !important;
+            align-items: center;
+            justify-content: space-between;
+         }
+         list > li > info > * {
+            flex: 1;
+            font-size: .8em;
+            color: #555;
+         }
+         info > total {
+            justify-content: flex-end;
+         }
+      </style>
+   </head>
+   <body>
+      <appbar></appbar>
+      <drawer></drawer>
+      
+      <home-page section="new service">
+         <header>
+            <content>
+               <duo>
+                  <label id="label_serviceName">
+                     <input type="text" id="input_serviceName" placeholder="Nome do serviço">
+                  </label>
+                  <small id="service_id"></small>
+               </duo>
+            </content>
+         </header>
+         <content id="page_content" gap>
+            <p temp>Nenhum serviço cadastrado</p>
+            <list services id="serviços_section"></list>
+            <total-price id="total_price" duo></total-price>
+         </content>
+         <add-service section>
+            <content>
+               <form action="" method="get" accept-charset="utf-8" id="form_new_service">
+                  <form-body id="form_body">
+                     <service section>
+                        <content>
+                           <label id="label_service_description">
+                              <t>Descrição</t>
+                              <input type="text" name="service_description" id="input_service_description" value="" placeholder="" required/>
+                           </label>
+                           <service-info section class="multi">
+                              <label id="label_quantity">
+                                 <t>Quantidade</t>
+                                 <input type="number" step="1" name="quantity" id="input_quantity" value="" placeholder=""/>
+                              </label>
+                              <label id="label_unity_price">
+                                 <t>Valor</t>
+                                 <input type="number" step="0.01" name="unity_price" id="input_unity_price" value="" placeholder="" pattern="[^,/|\\x22]+" required/>
+                              </label>
+                           </service-info>
+                        </content>
+                     </service>
+                  </form-body>
+                  <footer>
+                     <content class="multi">
+                        <input type="button" id="btn_add_service" value="Adicionar serviço" />
+                        <input type="button" id="submit" value="Salvar" />
+                     </content>
+                  </footer>
+               </form>
+            </content>
+         </add-service>
+         
+         <app-footer></app-footer>
+      </home-page>
+
+      <navbar></navbar>
+      
+      <script>
+         'use strict';
+         /* [ properties ]
+         =================================== */
+         let 
+            newService = {
+               id: ""
+               ,
+               servicesList: []
+               ,
+               totalPrice: 0
+               ,
+               customerID: ""
+               ,
+               receiptID: ""
+               ,
+               budgetID: ""
+               ,
+               serviceName: ""
+            }
+            ,
+            dataFromReceiptInProgress = {}
+         ;
+         
+         if( localStorage.getItem( "ea.services" ) ) {
+            newService.id = `srvc:${ new Date().getFullYear() }-${ JSON.parse( localStorage.getItem( "ea.services" ) ).length + 1 }`
+         } else {
+            newService.id = `srvc:${ new Date().getFullYear() }-1`
+         }
+         /* -------------------------------- */
+         
+         /* == [ global functions ]
+         == == == == == == == == == */
+         function CheckForNewReceiptInProgress() {
+            let data = {};
+            if( localStorage.getItem( "ea.newReceipt_bkpData" ) ) {
+               data = { ...JSON.parse( localStorage.getItem( "ea.newReceipt_bkpData" ) ) };
+               dataFromReceiptInProgress = { ...data };
+               newService.receiptID = data.id;
+               newService.customerID = data.customerID;
+
+               localStorage.removeItem( "ea.newReceipt_bkpData" );
+            }
+         }
+
+         function BtnAddNewService_Click() {
+            btn_add_service.addEventListener( "click", () => {
+               let 
+                  qtd = input_quantity.value == "" || input_quantity.value == 0 ? 1 : input_quantity.value
+                  ,
+                  totalUnity = toBrl( ( qtd * input_unity_price.value ) )
+               ;
+               
+               $( "#service_id" ).innerText = newService.id;
+
+               if( 
+                  input_unity_price.value != ""
+                  && 
+                  input_service_description.value != ""
+               ) {
+                  serviços_section.innerHTML += `
+                     <li section>
+                        <name>${ input_service_description.value }</name>
+                        <info>
+                           <unit section>
+                              ${ qtd } x ${ toBrl( input_unity_price.value * 1 ) }
+                           </unit>
+                           <total row>
+                              <strong>Total&nbsp;</strong> ${ totalUnity }
+                           </total>
+                        </info>
+                     </li>
+                  `;
+                  
+                  newService.servicesList.push( {
+                     id: `${ newService.servicesList.length + 1 }`,
+                     description: input_service_description.value,
+                     qtd: parseInt( qtd ),
+                     unityPrice: parseFloat( input_unity_price.value ),
+                     totalPrice: parseFloat( qtd * input_unity_price.value ),
+                  } );
+
+                  newService.totalPrice += parseFloat( qtd * input_unity_price.value );
+                  
+                  total_price.innerHTML = `<strong>TOTAL&nbsp;</strong><t>${ toBrl( newService.totalPrice ) }</t>`;
+
+                  $( "p[temp]" ).innerHTML = "";
+                  $( "p[temp]" ).style.display = "none";
+
+                  input_service_description.value = "";
+                  input_unity_price.value = "";
+                  input_quantity.value = "";
+               }
+            } );
+         } // BtnAddNewService_Click();
+
+         function SubmitBtn_Click() {
+            let 
+               tempDB = []
+            ;
+
+            if( localStorage.getItem( "ea.services" ) ) {
+               tempDB = [
+                  ...JSON.parse( localStorage.getItem( "ea.services" ) )
+               ];
+            }
+
+            if( !newService.servicesList.length <= 0 ) {
+               tempDB.push( newService );
+               localStorage.setItem( "ea.services", JSON.stringify( tempDB ) );
+               return( true );
+            } else {
+               alert( "Você deve adicionar um novo serviço antes de salvar." );
+               return( false );
+            }
+         } // SubmitBtn_Click();
+         
+         
+         /* [ events ]
+         =================================== */
+         window.addEventListener( 'load', () => {
+
+            Drawer();
+            NavLink();
+            
+            if( newService.servicesList.length <= 0 ) {
+               $( "p[temp]" ).style.display = "flex";
+            } else {
+               $( "p[temp]" ).innerHTML = "";
+               $( "p[temp]" ).style.display = "none";
+            }
+
+            input_serviceName.addEventListener( "input", () => {
+               newService.serviceName = input_serviceName.value;
+            } );
+
+            CheckForNewReceiptInProgress();
+
+            /* == [ botão adicionar mais serviço ]
+            == == == == == == == == == */
+            BtnAddNewService_Click();
+
+            /* == [ Submit Btn Click ]
+            == == == == == == == == == */
+            submit.addEventListener( "click", () => {
+               if( SubmitBtn_Click() ) {
+                  dataFromReceiptInProgress.servicesID = newService.id;
+                  localStorage.setItem( "ea.newReceipt_restoreData", JSON.stringify( dataFromReceiptInProgress ) );
+                  window.location.href = "./new-receipt.html";
+               } else {
+                  _( "n" );
+               }
+            } );
+         } );
+      </script>
+   </body>
+</html>

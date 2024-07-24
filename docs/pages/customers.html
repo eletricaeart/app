@@ -1,0 +1,317 @@
+
+
+<!DOCTYPE html>
+<html lang="pt-br">
+   <head>
+      <title>Elétrica & Art</title>
+   
+      <link rel="icon" href="src/pix/logo.svg" type="svg+xml">
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <!--- == [ fontawesome ]
+      == == == == == == == == == --->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+      <script src="https://esm.sh/@fortawesome/fontawesome-free"></script>
+      <!-- == [ StyleSheets ] 
+      == == == == == == == == == -->
+      <link rel="stylesheet" href="../Assets/styles/clb.css">
+      <link rel="stylesheet" href="../Assets/styles/globals.css">
+      <!-- <link rel="stylesheet" href="../Assets/styles/includes/theme.css"> -->
+      <link rel="stylesheet" href="../Assets/fonts/fonts.css">
+      <!-- == [ Scripts ] 
+      == == == == == == == == == -->
+      <script src="../Assets/scripts/clb.js" defer=""></script>
+      <script src="../Assets/scripts/global.js" defer=""></script>
+      <!-- == [ includes ]
+      == == == == == == == == == -->
+      <script src="../Assets/scripts/Modules/AppBar.js" defer=""></script>
+      <script src="../Assets/scripts/Modules/Drawer.js" defer=""></script>
+      <script src="../Assets/scripts/Modules/NavBar.js" defer=""></script>
+      <script src="../Assets/scripts/Modules/AppFooter.js" defer=""></script>
+      <script src="../Assets/scripts/Modules/EA-Card.js" defer=""></script>
+      <script src="../Assets/scripts/Widgets/NavLink.js" defer=""></script>
+      <script src="../Assets/scripts/Widgets/Button.js" defer=""></script>
+      <script src="../Assets/scripts/Modules/Fab.js" defer=""></script>
+      
+      <style>
+      </style>
+   </head>
+      <fab></fab>
+   <body>
+      <appbar></appbar>
+      <drawer></drawer>
+      
+      <home-page section>
+         <header>
+            <content>
+               <st>Clientes</st>
+            </content>
+         </header>
+         <content>
+            <customers section>
+            </customers>
+         </content>
+         <app-footer></app-footer>
+      </home-page>
+
+      <navbar></navbar>
+      
+      <script>
+         'use strict';
+         /* [ properties ]
+         =================================== */
+         /* -------------------------------- */
+         
+         
+         /* [ properties ]
+         =================================== */
+         function LoadCustomers( props ) {
+            let
+               customers = []
+            ;
+
+            if( localStorage.getItem( "ea.customers" ) ) {
+               customers = [
+                  ...JSON.parse( localStorage.getItem( "ea.customers" ) )
+               ];
+            }
+
+            
+            customers.forEach( customer => {
+               return( $( "customers" ).innerHTML += `
+                  <customer section horizontal>
+                     <header>
+                        <content>
+                           <picture>
+                              <img src=${
+                                 customer.gender == "feminino" ?
+                                    "../Assets/imgs/Avatar/default_avatar_fem_ico.webp"
+                                    : 
+                                    "../Assets/imgs/Avatar/default_avatar_masc_ico.webp"
+                              } alt="">
+                           </picture>
+                        </content>
+                     </header>
+                     <contents section>
+                        <content customerlink="${ customer.id }" cust_id="${ customer.id }">
+                           <name>${ customer.nome }</name>
+                           <phone>${ customer.whatsapp || customer.cellphone }</phone>
+                        </content>
+                     </contents>
+                  </customer>
+               ` );
+               /*
+               */
+            } );
+         }
+         
+            function injectCustomers() {
+               let data = [
+                  {
+                     "nome": "Débora Maria Cruz Sammarco",
+                     "gender": "feminino",
+                     "uf": "SP",
+                     "rua": "Henrique Dias",
+                     "complemento": "Casa",
+                     "bairro": "Aviação",
+                     "cidade": "Praia Grande",
+                     "rg": "99.999.999-9",
+                     "cpf": "999.999.999-99",
+                     "cep": "11702-600",
+                     "número": "125",
+                     "cellphone": "(13) 9 9148 - 6078",
+                     "whatsapp": "(13) 9 9148 - 6078",
+                     "phone": "(13) 9 9148 - 6078",
+                     "phone2": "(13) 9 9148 - 6078",
+                     "email": "email@email.com",
+                     "observação": "Observação ",
+                     "id": "cstmr:1:26651-8490"
+                  },
+                  {
+                     "nome": "Rafael Ângelo Sammarco",
+                     "gender": "masculino",
+                     "uf": "SP",
+                     "rua": "Henrique Dias",
+                     "complemento": "Casa",
+                     "bairro": "Aviação",
+                     "cidade": "Praia Grande",
+                     "rg": "99.999.999-9",
+                     "cpf": "999.999.999-99",
+                     "cep": "11702-600",
+                     "número": "125",
+                     "cellphone": "(13) 9 9148 - 6078",
+                     "whatsapp": "(13) 9 9148 - 6078",
+                     "phone": "(13) 9 9148 - 6078",
+                     "phone2": "(13) 9 9148 - 6078",
+                     "email": "email@email.com",
+                     "observação": "Observação ",
+                     "id": "cstmr:2:26651-8490"
+                  },
+                  {
+                     "nome": "Gabriel Sammarco Nunes",
+                     "gender": "masculino",
+                     "uf": "SP",
+                     "rua": "Henrique Dias",
+                     "complemento": "Casa",
+                     "bairro": "Aviação",
+                     "cidade": "Praia Grande",
+                     "rg": "99.999.999-9",
+                     "cpf": "999.999.999-99",
+                     "cep": "11702-600",
+                     "número": "125",
+                     "cellphone": "(13) 9 9148 - 6078",
+                     "whatsapp": "(13) 9 9148 - 6078",
+                     "phone": "(13) 9 9148 - 6078",
+                     "phone2": "(13) 9 9148 - 6078",
+                     "email": "email@email.com",
+                     "observação": "Observação ",
+                     "id": "cstmr:3:26651-8490"
+                  },
+                  {
+                     "nome": "Leonardo Sammarco",
+                     "gender": "masculino",
+                     "uf": "SP",
+                     "rua": "Henrique Dias",
+                     "complemento": "Casa",
+                     "bairro": "Aviação",
+                     "cidade": "Praia Grande",
+                     "rg": "99.999.999-9",
+                     "cpf": "999.999.999-99",
+                     "cep": "11702-600",
+                     "número": "125",
+                     "cellphone": "(13) 9 9148 - 6078",
+                     "whatsapp": "(13) 9 9148 - 6078",
+                     "phone": "(13) 9 9148 - 6078",
+                     "phone2": "(13) 9 9148 - 6078",
+                     "email": "email@email.com",
+                     "observação": "Observação ",
+                     "id": "cstmr:4:26651-8490"
+                  },
+                  {
+                     "nome": "Anselmo Sammarco Nunes",
+                     "gender": "masculino",
+                     "uf": "SP",
+                     "rua": "Henrique Dias",
+                     "complemento": "Casa",
+                     "bairro": "Aviação",
+                     "cidade": "Praia Grande",
+                     "rg": "99.999.999-9",
+                     "cpf": "999.999.999-99",
+                     "cep": "11702-600",
+                     "número": "125",
+                     "cellphone": "(13) 9 9148 - 6078",
+                     "whatsapp": "(13) 9 9148 - 6078",
+                     "phone": "(13) 9 9148 - 6078",
+                     "phone2": "(13) 9 9148 - 6078",
+                     "email": "email@email.com",
+                     "observação": "Observação ",
+                     "id": "cstmr:5:26651-8490"
+                  },
+                  {
+                     "nome": "Noely Oliveira Gangello",
+                     "gender": "feminino",
+                     "uf": "SP",
+                     "rua": "Henrique Dias",
+                     "complemento": "Casa",
+                     "bairro": "Aviação",
+                     "cidade": "Praia Grande",
+                     "rg": "99.999.999-9",
+                     "cpf": "999.999.999-99",
+                     "cep": "11702-600",
+                     "número": "125",
+                     "cellphone": "(13) 9 9148 - 6078",
+                     "whatsapp": "(13) 9 9148 - 6078",
+                     "phone": "(13) 9 9148 - 6078",
+                     "phone2": "(13) 9 9148 - 6078",
+                     "email": "email@email.com",
+                     "observação": "Observação ",
+                     "id": "cstmr:6:26651-8490"
+                  },
+                  {
+                     "nome": "Bernardo Sammarco Gangello",
+                     "gender": "masculino",
+                     "uf": "SP",
+                     "rua": "Henrique Dias",
+                     "complemento": "Casa",
+                     "bairro": "Aviação",
+                     "cidade": "Praia Grande",
+                     "rg": "99.999.999-9",
+                     "cpf": "999.999.999-99",
+                     "cep": "11702-600",
+                     "número": "125",
+                     "cellphone": "(13) 9 9148 - 6078",
+                     "whatsapp": "(13) 9 9148 - 6078",
+                     "phone": "(13) 9 9148 - 6078",
+                     "phone2": "(13) 9 9148 - 6078",
+                     "email": "email@email.com",
+                     "observação": "Observação ",
+                     "id": "cstmr:7:26651-8490"
+                  },
+               ];
+               
+               localStorage.removeItem( "ea.customers" );
+               localStorage.setItem( "ea.customers", 
+                  JSON.stringify( data )
+               );
+            }
+
+
+         /* [ events ]
+         =================================== */
+         window.addEventListener( 'load', () => {
+            
+            //injectCustomers();
+            LoadCustomers();
+
+            Fab( {
+               url: "./new-customer.html",
+            } );
+
+            Button( {
+               tag: "showUsers",
+               callback: ShowUsers
+            } );
+
+            Button( {
+               tag: "showLocalStorageEA.Users",
+               bg: "#27f5",
+               color: "#99",
+               callback: ShowLS,
+            } );
+
+            Button( {
+               tag: "eraseEA.Users",
+               bg: "#27f5",
+               color: "#99",
+               callback: EraseLS,
+            } );
+
+            Drawer();
+             NavBar( 
+               { 
+                  item1: { 
+                     name: "AA" 
+                  }
+                  ,
+                  item2: { 
+                     name: "BB" 
+                  }
+                  ,
+                  item3: { 
+                     name: "CC" 
+                  }
+                  ,
+                  item4: { 
+                     name: "DD" 
+                  }
+                  ,
+               } 
+            ); // NavBar();
+
+            NavLink();
+            
+         } );
+      </script>
+   </body>
+</html>

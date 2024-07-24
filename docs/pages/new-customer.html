@@ -1,0 +1,441 @@
+
+
+<!DOCTYPE html>
+<html lang="pt-br">
+   <head>
+      <title>Cadastrar usuário</title>
+   
+      <link rel="icon" href="src/pix/logo.svg" type="svg+xml">
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <!--- == [ fontawesome ]
+      == == == == == == == == == --->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+      <script src="https://esm.sh/@fortawesome/fontawesome-free"></script>
+      <!-- == [ StyleSheets ] 
+      == == == == == == == == == -->
+      <link rel="stylesheet" href="../Assets/styles/clb.css">
+      <link rel="stylesheet" href="../Assets/styles/globals.css">
+      <!-- <link rel="stylesheet" href="../Assets/styles/includes/theme.css"> -->
+      <link rel="stylesheet" href="../Assets/fonts/fonts.css">
+      <!-- == [ Scripts ] 
+      == == == == == == == == == -->
+      <script src="../Assets/scripts/clb.js" defer=""></script>
+      <script src="../Assets/scripts/global.js" defer=""></script>
+      <script src="../Assets/scripts/regexp.js" defer=""></script>
+      <!-- == [ includes ]
+      == == == == == == == == == -->
+      <script src="../Assets/scripts/Modules/AppBar.js" defer=""></script>
+      <script src="../Assets/scripts/Modules/Drawer.js" defer=""></script>
+      <script src="../Assets/scripts/Modules/AppFooter.js" defer=""></script>
+      <script src="../Assets/scripts/GetCEP.js" defer=""></script>
+      <script src="../Assets/scripts/Widgets/Button.js" defer=""></script>
+      
+      <style>
+      </style>
+   </head>
+   <body>
+      <appbar></appbar>
+      <drawer></drawer>
+      
+      <home-page>
+         <cadastro section>
+            <header>
+               <content>
+                  <st>Cadastro de cliente</st>
+               </content>
+            </header>
+            <form id="form">
+               <header content>
+                  <t4>Cadastro Rápido</t4>
+                  <!--<label>
+                     <t>Orçamento</t>
+                     <input type="number" name="orcamento_id" id="input_orcamento_id" placeholder="número" />
+                  </label>
+                  <label>
+                     <t>Emissão</t>
+                     <input type="number" name="emissão" id="input_emissao" placeholder="emissão" />
+                  </label>
+                  <label>
+                     <t>Validade</t>
+                     <input type="number" name="validade" id="input_validade" placeholder="validade" />
+                  </label>-->
+               </header>
+               <cliente section>
+                  <!--<header>
+                     <content><h1>CLIENTE</h1></content>
+                  </header>-->
+                  <content>
+                     <label>
+                        <t>Nome do Cliente</t>
+                        <input type="text" placeholder="Nome do cliente" name="nome" id="input_nome"/>
+                        <msg id="msg_input_nome"></msg>
+                     </label>
+
+                     <label class="divider">
+                        <content>
+                           <small>CONTATO</small>
+                        </content>
+                     </label>
+
+                     <telefone section class="multi">
+                        <label>
+                           <t>Celular</t>
+                           <input type="tel" placeholder="(99) 9 9999-9999" name="cellphone" id="input_cellphone" pattern="\(\d{2}\)\s*\d{5}-\d{4}" maxlength="15"/>
+                           <msg id="msg_input_cellphone"></msg>
+                        </label>
+                        <whats-copy btn id="whatsCopyBtn">
+                           <img src="../Assets/imgs/icons/transfer.svg" alt="" />
+                        </whats-copy>
+                        <label>
+                           <t>WhatsApp</t>
+                           <input type="tel" placeholder="(99) 9 9999-9999" name="whatsapp" id="input_whatsapp" pattern="\(\d{2}\)\s*\d{5}-\d{4}" maxlength="15"/>
+                           <msg id="msg_input_whatsapp"></msg>
+                        </label>
+                     </telefone>
+                     <telefone section class="multi">
+                        <label>
+                           <t>Telefone</t>
+                           <input type="tel" placeholder="(99) 9 9999-9999" name="phone" id="input_phone" pattern="\(\d{2}\)\s*\d{5}-\d{4}" maxlength="15"/>
+                           <msg id="msg_input_phone"></msg>
+                        </label>
+                        <label>
+                           <t>Telefone 2</t>
+                           <input type="tel" placeholder="(99) 9 9999-9999" name="phone2" id="input_phone2" pattern="\(\d{2}\)\s*\d{5}-\d{4}" maxlength="15"/>
+                           <msg id="msg_input_phone2"></msg>
+                        </label>
+                     </telefone>
+                     <label>
+                        <t>Email</t>
+                        <input type="email" placeholder="email@email.com" name="email" id="input_email"/>
+                        <msg id="msg_input_email"></msg>
+                     </label>
+                     <rg-e-cpf section class="multi">
+                        <label>
+                           <t>RG/IE</t>
+                           <input type="number" placeholder="41.44.5792-4" name="rg" id="input_rg"/>
+                           <msg id="msg_input_rg"></msg>
+                        </label>
+                        <label>
+                           <t>CPF</t>
+                           <input type="number" placeholder="346.372.258-50" name="cpf" id="input_cpf"/>
+                           <msg id="msg_input_cpf"></msg>
+                        </label>
+                     </rg-e-cpf>
+
+                     <label class="divider">
+                        <content><small>ENDEREÇO</small></content>
+                     </label>
+                     <cep-e-uf section class="multi">
+                        <label>
+                           <t>CEP</t>
+                           <input type="number" placeholder="00.000-000" name="cep" id="input_cep" onblur="SearchForCEP( this.value )"/>
+                           <msg id="msg_input_cep"></msg>
+                        </label>
+                        <label>
+                           <t>UF</t>
+                           <input type="text" id="input_uf" name="uf" placeholder="Estado">
+                           <msg id="msg_input_uf"></msg>
+                        </label>
+                     </cep-e-uf>
+                     <label>
+                        <t>Rua</t>
+                        <input type="text" placeholder="Rua ..." id="input_rua" name="rua"/>
+                        <msg id="msg_input_rua"></msg>
+                     </label>
+                     <numero-e-complemento section class="multi">
+                        <label>
+                           <t>Número</t>
+                           <input type="number" placeholder="999" name="número" id="input_número"/>
+                           <msg id="msg_input_número"></msg>
+                        </label>
+                        <label>
+                           <t>Complemento</t>
+                           <input type="text" placeholder="Complemento" name="complemento" id="input_complemento"/>
+                           <msg id="msg_input_complemento"></msg>
+                        </label>
+                     </numero-e-complemento>
+                     <label>
+                        <t>Bairro</t>
+                        <input type="text" name="bairro" id="input_bairro" placeholder="Bairro"/>
+                        <msg id="msg_input_bairro"></msg>
+                     </label>
+                     <label>
+                        <t>Cidade</t>
+                        <input type="text" name="cidade" id="input_cidade" placeholder="Cidade"/>
+                        <msg id="msg_input_cidade"></msg>
+                     </label>
+                     <label class="divider">
+                        <content><small>OBSERVAÇÕES</small></content>
+                     </label>
+                     <label>
+                        <t>Observação</t>
+                        <textarea id="input_observação" name="observação"></textarea>
+                     </label>
+                  </content>
+               </cliente>
+               <!--<orcamento section>
+                  <header content>
+                     <h1>ORÇAMENTO</h1>
+                  </header>
+                  <table flex content>
+                     <thead type="header">
+                        <tr>
+                           <th>QT</th>
+                           <th>DESCRIÇÃO</th>
+                           <th>R$ TOT</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td>
+                              <input type="number" name="" id=""/>
+                           </td>
+                           <td>
+                              <input type="text" name="" id=""/>
+                           </td>
+                           <td>
+                              <input type="number" name="" id=""/>
+                           </td>
+                        </tr>
+                     </tbody>
+                     <tfooter>
+                        <content>
+                           <item>
+                              <label>
+                                 <h4> DESCONTO </h4>
+                                 <input type="number" placeholder="R$ 1.000,00" name="" id="desconto"/>
+                              </label>
+                           </item>
+                           <item>
+                              <label>
+                                 <h3> Valor TOTAL </h3>
+                                 <input type="number" placeholder="R$ 48.968,00" name="" id="total-value"/>
+                              </label>
+                           </item>
+                        </content>
+                     </tfooter>
+                  </table>
+               </orcamento>
+               <obs section>
+                  <header content>
+                     <h1>OBSERVAÇÕES</h1>
+                  </header>
+                  <content>
+                     <textarea id="obs" name="" rows="8"></textarea>
+                  </content>
+               </obs>-->
+               <footer content>
+                  <label>
+                     <input type="submit" value="CADASTRAR">
+                  </label>
+               </footer>
+            </form>
+         </cadastro>
+
+         <app-footer></app-footer>
+      </home-page>
+
+      <navbar></navbar>
+      
+      <script>
+         'use strict';
+         /* [ properties ]
+         =================================== */
+         let 
+            inputs = []
+            ,
+            customers = []
+         ;
+         /* -------------------------------- */
+         
+         
+         
+         function UpdateCustomersDB( customer ) {
+            if( localStorage.getItem( "ea.customers" ) ) {
+               customers = [ 
+                  ...JSON.parse( localStorage.getItem( "ea.customers" ) )
+               ];
+            }
+            if( customer ) {
+               customers.push( customer );
+               localStorage.setItem( "ea.customers", JSON.stringify( customers ) );
+            }
+         }
+         
+         function GetInputs() {
+            inputs = [
+               ...$$( "form input[type='text']" ),
+               ...$$( "form input[type='number']" ),
+               ...$$( "form input[type='tel']" ),
+               ...$$( "form input[type='password']" ),
+               ...$$( "form input[type='email']" ),
+               ...$$( "form input[type='date']" ),
+               ...$$( "form textarea" ),
+            ];
+            _( "GetInputs(): \n", inputs );
+            return( inputs );
+         }
+         
+         function ValidateInputs() {
+            let 
+               _inputs = GetInputs()
+               ,
+               verifier = true
+               ,
+               data = { 
+                  validatedFormData: true
+                  , 
+                  failedInputsIDs: []
+                  ,
+                  succeededInputsIDs: []
+               }
+            ;
+            
+            $$( "form label msg" ).forEach( msg => {
+               msg.innerHTML = "";
+            } );
+            
+            _inputs.forEach( input => {
+               if( input.value === "" ) {
+                  // _( "ValidateInputs(): \n", `${ input.id } vazio` );
+                  verifier = false;
+                  data.validatedFormData = false;
+                  data.failedInputsIDs.push( input.id );
+               } else {
+                  // _( "ValidateInputs(): \n", `${ input.id } ${ input.value }` );
+                  data.succeededInputsIDs.push( input.id );
+               }
+                  
+            } );
+            
+            // return( verifier );
+            return( data );
+         }
+         
+         function ResgisterCustomer() {
+            
+         }
+         
+         function CreateCustomer() {
+            let 
+               values = []
+               ,
+               customer = {}
+            ;
+            
+            inputs.forEach( input => {
+               values.push( [ 
+                  input.name, input.value
+               ] );
+            } );
+            
+            customer = Object.fromEntries( values );
+            customer.id = `cstmr:${ customers.length + 1 }:${ Math.round( Math.random() * 99999 ) }-${ Math.ceil( Math.random() * 99999 ) }`;
+            
+            UpdateCustomersDB( customer );
+            
+            _( "\n\nCreateCustomer(): \n",  
+               "values: \n", values,
+               "\ncustomer: \n", customer
+            );
+         }
+         
+         function SubmitForm() {
+            form.addEventListener( "submit", () => {
+               event.preventDefault();
+               
+               let 
+                  { 
+                     validatedFormData,
+                     failedInputsIDs,
+                     succeededInputsIDs
+                  } = ValidateInputs()
+               ;
+               
+               _( "SubmitForm(): " );
+               if( validatedFormData ) {
+                  _( "validatedFormData = true;" );
+                  CreateCustomer();
+                  window.location.href = "./customers.html"
+               } else {
+                  _( "validatedFormData = false;" );
+                  failedInputsIDs.forEach( inputID => {
+                     $( `#msg_${ inputID }` ).innerHTML = `
+                     <content error>
+                        <t>Verifique este campo!</t>
+                     </content>
+                     `;
+                  } );
+                  _( failedInputsIDs );
+               }
+            } );
+            
+         }
+         
+         /* [ events ]
+         =================================== */
+         window.addEventListener( 'load', () => {
+            Drawer();
+
+            Button( {
+               tag: "showCustomers",
+               callback: ShowCustomers
+            } );
+
+            Button( {
+               tag: "showLocalStorageEA.Customers",
+               bg: "#27f5",
+               color: "#99",
+               callback: ShowLS,
+            } );
+
+            Button( {
+               tag: "eraseEA.Customers",
+               bg: "#27f5",
+               color: "#99",
+               callback: EraseLS,
+            } );
+            
+            GetInputs();
+            UpdateCustomersDB();
+            
+            SubmitForm();
+            
+            whatsCopyBtn.addEventListener( "click", () => {
+               if( 
+                  !input_cellphone.value == "" 
+                  && 
+                  input_whatsapp.value == "" ) {
+                  input_whatsapp.value = input_cellphone.value;
+               } 
+               if( 
+                  input_cellphone.value == "" 
+                  && 
+                  !input_whatsapp.value == "" ) {
+                  input_cellphone.value = input_whatsapp.value;
+               }
+               
+            } );
+
+            
+         } );
+         
+         eraseLS.addEventListener( "click", EraseLS );
+         showCustomers.addEventListener( "click", ShowCustomers );
+         showLS.addEventListener( "click", ShowLS );
+      </script>
+   </body>
+</html>
+<!--
+não seria possível alguém como eu poder tocar um anjo como aquele 
+
+mas um dia, assim tão inesperadamente, aquele rostinho estava ali 
+
+olhando pra mim, sorrindo 
+
+me senti nú 
+não tive tempo de pensar 
+
+-->
