@@ -49,7 +49,7 @@ import customers from "./customers";
 /* == [ exports ]
 == == == == == == == == == */
 export default function NewCustomer( { ...props } ) {
-   const [ Customers, setCustomers ] = useState( [] );
+   const [ customersDB, setcustomersDB ] = useState( [] );
    const 
       [ Name, setName ] = useState( "" )
       ,
@@ -154,12 +154,12 @@ export default function NewCustomer( { ...props } ) {
             const 
                customersDBs = await AsyncStorage.getItem( dbs_name )
             ;
-            customers = [ ...await JSON.parse( customersDBs ) ]
+            customersDB = [ ...await JSON.parse( customersDBs ) ]
          }
 
-         customers.push( data );
+         customersDB.push( data );
 
-         const jsonValue = JSON.stringify( customers );
+         const jsonValue = JSON.stringify( customersDB );
          await AsyncStorage.setItem( dbs_name, jsonValue );
       } catch( err ) {
         console.log( "\n\n== == == == == ==\nsaving error: \n", err );

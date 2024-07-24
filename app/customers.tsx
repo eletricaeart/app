@@ -74,7 +74,7 @@ export default function Customers( { ...props } ) {
    //    </> );
    // } ) }, [ Customers ] )
 
-   useEffect( () => { Customers.map( customer => {
+   useEffect( () => { Customers && Customers.map( customer => {
       return( <>
          <ea.UsersCard 
             key={ customer.id }
