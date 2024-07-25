@@ -21,12 +21,14 @@ import {
 
 import { Icon } from "@/assets/modules/clb-icons";
 import Routes from "@/app/routes";
+import Login from "./login";
 
 const Tab = createBottomTabNavigator();
 
 export default function MyComponent() {
   return (
     <Tab.Navigator
+      // initialRouteName="Login"
       screenOptions={{
          headerShown: true,
          tabBarStyle: { backgroundColor: "#27f" },
@@ -60,9 +62,10 @@ export default function MyComponent() {
             backgroundColor: "#00559C",
          }
          ,
-         statusBarColor: "#00559C"
-         ,
          title: "Eletrica & Art"
+         ,
+         
+         statusBarColor: "#00559C"
          // ,
          // headerBlurEffect: "light"
          // ,
@@ -134,6 +137,11 @@ export default function MyComponent() {
         />
       )}
     >
+      {/* <Tab.Screen 
+         name="Login"
+         component={ Login }
+
+      /> */}
       <Tab.Screen
         name="Home"
         component={Routes.Home}

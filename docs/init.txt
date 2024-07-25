@@ -1,0 +1,13 @@
+
+
+/file/new.rne.sh
+npx create-expo-app name -t expo-template-blank-typescript
+cd ./name
+npx expo install firebase
+
+# navigation
+npm install @create-navigation/native @react-navigation/native-stack
+npx expo install react-native-screens react-native-safe-area-context
+
+# after installing and config FirebaseConfig.tsx
+npx expo customize metro.config.js

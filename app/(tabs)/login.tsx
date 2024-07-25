@@ -10,12 +10,9 @@ import {
 
 import { FirebaseAuth } from "@/FirebaseConfig";
 
-import { router } from "expo-router";
-import TabLayout from "@/app/(tabs)/_layout";
-import { BottomNavigationBar } from "@/assets/modules/clb-modules";
 
 
-export default function Index0() {
+export default function Login() {
    const 
       [ Email, setEmail ] = useState( "" )
       ,
@@ -27,7 +24,8 @@ export default function Index0() {
    ;
 
    return( <>
-      {/* <TabLayout /> */}
-      <BottomNavigationBar />
+      <View>
+         <Text>Login Page</Text>
+      </View>
    </> );
 }

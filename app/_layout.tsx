@@ -25,21 +25,7 @@ export default function RootLayout() {
       <Stack 
          screenOptions={
             {
-               // headerShown: true,
-               // headerBackground: () => ( <>
-               //    <AppBar />
-               // </> )
-               // ,
-               headerLeft: () => (
-                  <>
-                     <AppBarLeft />
-                  </>
-               )
-               ,
-               headerRight: () => ( <>
-                  <AppBarRight />
-               </> )
-               ,
+               headerShown: false,
                headerTitleAlign: "center"
                ,
                headerTintColor: "#e5e5e5"
@@ -49,63 +35,20 @@ export default function RootLayout() {
                   fontWeight: "bold",
                   color: "#fff",
                }
-               ,
-               headerStyle: {
-                  backgroundColor: "#00559C",
-               }
-               ,
-               statusBarColor: "#00559C"
-               ,
-               title: "Eletrica & Art"
                // ,
-               // headerBlurEffect: "light"
-               // ,
-               // headerShadowVisible: true
-               // ,
-               // headerShown: true
-               // ,
-               // headerSearchBarOptions: {
-               //    barTintColor: "#fff0",
-               //    tintColor: "#fff",
-               //    headerIconColor: "#fff",
-               //    hintTextColor: "#eee",
-               //    textColor: "#eee",
-
+               // headerStyle: {
+               //    backgroundColor: "#00559C",
                // }
-               // ,
-               // navigationBarColor: "#16181c"
+               ,
+               statusBarColor: "#00559c"
             }
          }
       >
-         {/* <Stack.Screen
-            options={{
-               headerTitle: props => <LogoTitle {...props} />,
-               headerRight: () => (
-                  <Button onPress={() => setCount(c => c + 1)} title="Update count" />
-               ),
-            }}
-         /> */}
          <Stack.Screen
-            name="index"
+            name="jf"
             options={{
                // headerTitle: "Eletrica & Art",
                headerShown: false,
-               headerTitle: () => ( <>
-                  <Image source={ require( "@/assets/images/EA/EA-logo-appbar-2.png" ) }
-                     style={ {
-                        resizeMode: "contain",
-                        width: 140,
-                        height: 60,
-                        alignSelf: "center",
-                        
-                     } }
-                  />
-               </> ),
-               /* headerRight: () => (
-                  // <Text style={ { color: "#fff", } }>🔲</Text>
-                  <Icon i="mc" name="menu" color="#fff"/>
-                  // <Button onPress={() => ( console.log( "" ) )} title="" />
-               ), */
             }}
          />
       </Stack>

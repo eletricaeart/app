@@ -70,7 +70,7 @@ export function AppBarLeft( { ...props } ) {
          aspectRatio: 1,
          width: 45,
       }}
-      android_ripple={{ color: "#fc0", 
+      android_ripple={{ color: "#fff", 
          radius: 24,
          foreground: true,
       }}
@@ -98,7 +98,7 @@ export function AppBarRight( { ...props } ) {
          aspectRatio: 1,
          width: 45,
       }}
-      android_ripple={{ color: "#fc0", 
+      android_ripple={{ color: "#fff", 
          radius: 24,
          foreground: true,
       }}
