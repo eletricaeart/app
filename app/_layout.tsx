@@ -25,10 +25,11 @@ export default function RootLayout() {
       <Stack 
          screenOptions={
             {
-               headerBackground: () => ( <>
-                  <AppBar />
-               </> )
-               ,
+               // headerShown: true,
+               // headerBackground: () => ( <>
+               //    <AppBar />
+               // </> )
+               // ,
                headerLeft: () => (
                   <>
                      <AppBarLeft />
@@ -44,7 +45,7 @@ export default function RootLayout() {
                headerTintColor: "#e5e5e5"
                ,
                headerTitleStyle: {
-                  fontFamily: "GodOfThunder",
+                  // fontFamily: "GodOfThunder",
                   fontWeight: "bold",
                   color: "#fff",
                }
@@ -88,6 +89,7 @@ export default function RootLayout() {
             name="index"
             options={{
                // headerTitle: "Eletrica & Art",
+               headerShown: false,
                headerTitle: () => ( <>
                   <Image source={ require( "@/assets/images/EA/EA-logo-appbar-2.png" ) }
                      style={ {

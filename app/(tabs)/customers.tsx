@@ -16,6 +16,7 @@ import { Icon } from "@/assets/modules/clb-icons";
 import {
    StyleSheet,
    ScrollView,
+   FlatList,
    View,
    Text,
    Image,
@@ -65,28 +66,10 @@ export default function Customers( { ...props } ) {
       }
       fetchData();
    }, [] ); 
-
-   useEffect( () => { Customers && Customers.map( customer => {
-      return( <>
-         <ea.UsersCard 
-            key={ customer.id }
-            name={ customer.Name }
-         />
-      </> );
-   } ) }, [ Customers ] )
-
-   // useEffect( () => { Customers && Customers.map( customer => {
-   //    return( <>
-   //       <ea.UsersCard 
-   //          key={ customer.id }
-   //          name={ customer.Name }
-   //       />
-   //    </> );
-   // } ) }, [ AsyncStorage.getItem( "customer_dbs" ) ] )
    
 
    return( <>
-      <ScrollView>
+      <ScrollView style={{ flex: 1, backgroundColor: "#e2f4fe", }}>
          <c.Section bg="#e2f4fe" style={{ flex: 1, }}>
             <c.Header>
                <c.Content>

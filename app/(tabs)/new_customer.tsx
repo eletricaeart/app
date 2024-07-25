@@ -183,14 +183,22 @@ export default function NewCustomer( { ...props } ) {
 
 
    async function SaveDBs( props ) {
+      Keyboard.dismiss();
       if( Name != "" ) {
-         Keyboard.dismiss();
-
-         await CStore.Save( props.dbs_name, props.object )
-         .
-         // then( r => inputs.forEach( i => i( "" ) ) );
-         then( r => {
-            inputs.forEach( i => i( "" ) );
+         async function Load() {
+            setTimeout( async () => {
+               console.log( "SaveDBs" );
+            }, 500 );
+         }
+         
+         Load().then( v => {
+            async () => {
+               await CStore.Save( props.dbs_name, props.object )
+               .
+               then( r => {
+                  inputs.forEach( i => i( "" ) );
+               } );
+            }
          } );
       }
    }
@@ -333,7 +341,7 @@ export default function NewCustomer( { ...props } ) {
                               onChangeText={ text => { 
                                  setCep( text )
                               } }
-                              onBlur={ () => { GetCEP( { cep: Cep, set: setCep } ) } }
+                              onBlur={ () => { GetCEP() } }
                               />
                            </View>
                            
@@ -425,39 +433,9 @@ export default function NewCustomer( { ...props } ) {
                               color: "#fff",
                            }}
                            txt="cadastrar"
-                           // onPress={ () => { GetNSaveData( "customer_dbs" ) } }
-                           // onPress={ () => { CStore.Save( "customer_dbs", customersList ) } }
                            onPress={ () => { SaveDBs( { dbs_name: "customer_dbs", object: customersList } ) } }
                         />
 
-                     </c.Section>
-                     <Touch 
-                        touchSty={{
-                           backgroundColor: "#00559C",
-                        }}
-                        txtSty={{
-                           color: "#fff",
-                        }}
-                        txt="eraseDbs"
-                        onPress={ () => { EraseData() }}
-                     />
-                     <Touch 
-                        touchSty={{
-                           backgroundColor: "#00559C",
-                        }}
-                        txtSty={{
-                           color: "#fff",
-                        }}
-                        txt="getDbs"
-                        onPress={ () => { GetData( "customer_dbs" ) }}
-                     />
-
-                     <c.Section bg="#1b1d22" style={ {
-                        padding: 16,
-
-                     } }>
-                        
-                        <c.H2 id="target" color="#fc0">oi{ DBS }</c.H2>
                      </c.Section>
                      
                   </View>

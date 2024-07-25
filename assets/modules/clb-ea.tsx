@@ -21,6 +21,25 @@ import * as c from "./clb-html";
 import { Icon } from "./clb-icons";
 
 
+
+/* == [ exports ]
+== == == == == == == == == */
+export function HeaderTitle( { ...props } ) {
+
+   return( <>
+      <Image source={ require( "@/assets/images/EA/EA-logo-appbar-2.png" ) }
+         style={ {
+            resizeMode: "contain",
+            width: 140,
+            height: 60,
+            alignSelf: "center",
+            
+         } }
+      />
+   </> );
+}
+
+
 export function UsersCard( { ...props } ) {
    const 
       child = props.children 
@@ -47,26 +66,14 @@ export function UsersCard( { ...props } ) {
                width: 70,
                aspectRatio: 1,
                flex: .20,
-               // overflow: "hidden",
-               // backgroundColor: "#27f",
             }}>
-               {/* <Image source={ require( "../images/Avatar/default_avatar_masc_ico.webp" ) } */}
-               {/* <Image source={ profile }
-                  style={{
-                     resizeMode: "contain",
-                     width: "100%",
-                     flex: 1,
-                     borderRadius: 100,
-                     overflow: "hidden",
-                  }}
-               /> */}
                <Avatar.Image source={ profile }
-               size={ 70 }
+               // size={ 70 }
                style={{
                   borderRadius: 1100,
-                  overflow: "hidden",
-                  borderColor: "#0cf",
-                  borderWidth: 3,
+                  // overflow: "hidden",
+                  // borderColor: "#0cf",
+                  // borderWidth: 3,
                }}
                />
             </View>

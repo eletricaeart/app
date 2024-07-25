@@ -16,6 +16,8 @@ import {
    Image,
 } from "react-native";
 
+import { Appbar, } from "react-native-paper";
+
 import {
    Icon,
 } from "@/assets/modules/clb-icons";

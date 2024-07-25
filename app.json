@@ -4,7 +4,7 @@
     "slug": "app",
     "version": "1.0.0",
     "orientation": "portrait",
-   //  "scheme": "myapp",
+    "scheme": "ceo",
     "userInterfaceStyle": "automatic",
     "icon": "./assets/images/EA/ic_launcher.png",
     "splash": {

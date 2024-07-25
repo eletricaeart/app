@@ -41,11 +41,7 @@ export function AppBar( { ...props } ) {
    return( <>
       <View 
          style={ {
-            // height: 5,
             backgroundColor: "#00559C",
-            // shadowColor: "#000",
-            // shadowRadius: 10,
-            // shadowOpacity: 1,
             elevation: 10,
             borderColor: "#ff0",
             borderBottomColor: "#0005",
@@ -55,19 +51,7 @@ export function AppBar( { ...props } ) {
          <View style={ {
             backgroundColor: "#00559C",
             height: 60,
-            // shadowColor: "#000",
-            // shadowRadius: 10,
-            // shadowOpacity: 1,
-            // elevation: 10,
          } }>
-            {/* <Image 
-               source={ require( "../images/EA/EA-appbar-logo.png" ) }
-               style={ {
-                  resizeMode: "contain",
-                  width: 100,
-               } }
-            >
-            </Image> */}
          </View>
       </View>
    </> );
@@ -77,8 +61,26 @@ export function AppBarLeft( { ...props } ) {
 
 
    return( <>
-      <Pressable>
-         <Icon i="f" name="user-circle" color="#fff"/>
+      <Pressable 
+      style={{ 
+         borderRadius: 100,
+         justifyContent: "center", 
+         overflow: "hidden",
+         marginLeft: 8,
+         aspectRatio: 1,
+         width: 45,
+      }}
+      android_ripple={{ color: "#fc0", 
+         radius: 24,
+         foreground: true,
+      }}
+      >
+         <View style={{ 
+            alignItems: "center",
+            justifyContent: "center",
+         }}>
+            <Icon i="f" name="user-circle" color="#fff"/>
+         </View>
       </Pressable>
    </> );
 } 
@@ -87,8 +89,26 @@ export function AppBarRight( { ...props } ) {
 
 
    return( <>
-      <Pressable>
-         <Icon i="mc" name="dots-vertical" color="#fff"/>
+      <Pressable 
+      style={{ 
+         borderRadius: 100,
+         justifyContent: "center", 
+         overflow: "hidden",
+         marginRight: 8,
+         aspectRatio: 1,
+         width: 45,
+      }}
+      android_ripple={{ color: "#fc0", 
+         radius: 24,
+         foreground: true,
+      }}
+      >
+         <View style={{ 
+            alignItems: "center",
+            justifyContent: "center",
+         }}>
+            <Icon i="mc" name="dots-vertical" color="#fff"/>
+         </View>
       </Pressable>
    </> );
 } 

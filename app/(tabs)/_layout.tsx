@@ -7,6 +7,18 @@ import { CommonActions } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Text, BottomNavigation, } from 'react-native-paper';
 
+import {
+   AppBar,
+   AppBarLeft,
+   AppBarRight,
+   BottomNavigationBar,
+   PageFooter,
+} from "@/assets/modules/clb-modules";
+
+import {
+   HeaderTitle,
+} from "@/assets/modules/clb-ea";
+
 import { Icon } from "@/assets/modules/clb-icons";
 import Routes from "@/app/routes";
 
@@ -16,13 +28,58 @@ export default function MyComponent() {
   return (
     <Tab.Navigator
       screenOptions={{
-        headerShown: true,
-        tabBarStyle: { backgroundColor: "#27f" },
-        headerBackground: () => ( <>
-         <View style={{ elevation: 10, shadowOpacity: 1, }}>
-            <Text>Sammarco</Text>
-         </View>
-        </> ) 
+         headerShown: true,
+         tabBarStyle: { backgroundColor: "#27f" },
+         headerBackground: () => ( <>
+            <AppBar />
+         </> )
+         ,
+         headerLeft: () => (
+            <>
+               <AppBarLeft />
+            </>
+         )
+         ,
+         headerRight: () => ( <>
+            <AppBarRight />
+         </> )
+         ,
+         headerTitle: ( () => <HeaderTitle /> )
+         ,
+         headerTitleAlign: "center"
+         ,
+         headerTintColor: "#e5e5e5"
+         ,
+         headerTitleStyle: {
+            // fontFamily: "GodOfThunder",
+            fontWeight: "bold",
+            color: "#fff",
+         }
+         ,
+         headerStyle: {
+            backgroundColor: "#00559C",
+         }
+         ,
+         statusBarColor: "#00559C"
+         ,
+         title: "Eletrica & Art"
+         // ,
+         // headerBlurEffect: "light"
+         // ,
+         // headerShadowVisible: true
+         // ,
+         // headerShown: true
+         // ,
+         // headerSearchBarOptions: {
+         //    barTintColor: "#fff0",
+         //    tintColor: "#fff",
+         //    headerIconColor: "#fff",
+         //    hintTextColor: "#eee",
+         //    textColor: "#eee",
+
+         // }
+         // ,
+         // navigationBarColor: "#16181c"
       }}
       tabBar={({ navigation, state, descriptors, insets }) => (
         <BottomNavigation.Bar
@@ -81,10 +138,12 @@ export default function MyComponent() {
         name="Home"
         component={Routes.Home}
         options={{
-          tabBarLabel: 'Home',
-          tabBarIcon: ({ color, size }) => {
-            return <Icon i="mi" name="electrical-services" color="#27f"/>;
-          },
+            tabBarLabel: 'Home',
+            tabBarIcon: ({ color, size }) => {
+               return <Icon i="mi" name="electrical-services" color="#27f"/>;
+            },
+            unmountOnBlur: true,
+            headerTitle: () => <HeaderTitle />,
         }}
       />
       <Tab.Screen
@@ -94,7 +153,8 @@ export default function MyComponent() {
           tabBarLabel: 'Clientes',
           tabBarIcon: ({ color, size }) => {
             return <Icon i="f" name="people-group" color="#fff"/>;
-          }
+          },
+          unmountOnBlur: true,
         }} 
       />
       <Tab.Screen
