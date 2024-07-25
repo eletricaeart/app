@@ -85,28 +85,6 @@ export default function RootLayout() {
             }}
          /> */}
          <Stack.Screen
-            name="index0"
-            options={{
-               // headerTitle: "Eletrica & Art",
-               headerTitle: () => ( <>
-                  <Image source={ require( "@/assets/images/EA/EA-logo-appbar-2.png" ) }
-                     style={ {
-                        resizeMode: "contain",
-                        width: 140,
-                        height: 60,
-                        alignSelf: "center",
-                        
-                     } }
-                  />
-               </> ),
-               /* headerRight: () => (
-                  // <Text style={ { color: "#fff", } }>🔲</Text>
-                  <Icon i="mc" name="menu" color="#fff"/>
-                  // <Button onPress={() => ( console.log( "" ) )} title="" />
-               ), */
-            }}
-         />
-         <Stack.Screen
             name="index"
             options={{
                // headerTitle: "Eletrica & Art",

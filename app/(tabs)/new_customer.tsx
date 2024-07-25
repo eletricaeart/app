@@ -37,7 +37,7 @@ import {
 
 import * as c from "@/assets/modules/clb-html";
 import { _ } from "@/assets/modules/clb";
-import customers from "./(tabs)/customers.js";
+import customers from "../customers";
 
 
 
@@ -154,7 +154,7 @@ export default function NewCustomer( { ...props } ) {
             const 
                customersDBs = await AsyncStorage.getItem( dbs_name )
             ;
-            customersDB = [ ...await JSON.parse( customersDBs ) ]
+            setcustomersDB( await JSON.parse( customersDBs ) );
          }
 
          customersDB.push( data );

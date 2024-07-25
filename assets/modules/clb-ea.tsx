@@ -25,7 +25,7 @@ export function UsersCard( { ...props } ) {
    const 
       child = props.children 
       ,
-      profile = props.profile || require( "../images/Avatar/default_avatar_masc_ico.webp" )
+      profile = props.profile || require( "@/assets/images/Avatar/default_avatar_masc_ico.webp" )
       ,
       name = props.name || "Nome do Cliente"
       ,
@@ -61,7 +61,7 @@ export function UsersCard( { ...props } ) {
                   }}
                /> */}
                <Avatar.Image source={ profile }
-               size={ "100%" }
+               size={ 70 }
                style={{
                   borderRadius: 1100,
                   overflow: "hidden",

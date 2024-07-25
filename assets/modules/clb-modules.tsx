@@ -28,7 +28,7 @@ import { createMaterialBottomTabNavigator } from "react-native-paper/react-navig
 
 import Routes from "@/app/pages";
 import Homepage from "../../app/homepage";
-import Customers from "../../app/customers";
+import Customers from "../../app/(tabs)/customers";
 import Index from "@/app";
 import Receipts from "@/app/receipts";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -366,7 +366,7 @@ export function BottomNavigationBar() {
       [ index, setIndex ] = React.useState( 0 )
       ,
       [ routes ] = React.useState( [
-         { 
+         {  
             key: 'home', title: 'Home', 
             focusedIcon: () => ( <Icon i="mc" name="electron-framework" color="#fc0"/> ), 
             unfocusedIcon: () => ( <Icon i="mi" name="electrical-services" color="#27f"/> ),

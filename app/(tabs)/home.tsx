@@ -10,7 +10,7 @@ import {
 
 import {
    StyleSheet,
-   ScrollView,
+   ScrollView, 
    View,
    Text,
    Image,

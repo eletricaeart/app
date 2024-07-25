@@ -5,8 +5,10 @@ import { View, StyleSheet } from 'react-native';
 
 import { CommonActions } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Text, BottomNavigation } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Text, BottomNavigation, } from 'react-native-paper';
+
+import { Icon } from "@/assets/modules/clb-icons";
+import Routes from "@/app/routes";
 
 const Tab = createBottomTabNavigator();
 
@@ -20,11 +22,11 @@ export default function MyComponent() {
          <View style={{ elevation: 10, shadowOpacity: 1, }}>
             <Text>Sammarco</Text>
          </View>
-        </> )
+        </> ) 
       }}
       tabBar={({ navigation, state, descriptors, insets }) => (
         <BottomNavigation.Bar
-          navigationState={state}
+         navigationState={state}
 
          sceneAnimationType={ "opacity" }
          shifting={ true }
@@ -33,11 +35,10 @@ export default function MyComponent() {
          activeColor={ "#00559C" }
          inactiveColor={ "#fff" }
          keyboardHidesNavigationBar={ true }
-         
-          theme={{colors: {secondaryContainer: "#212329"}}}
+         barStyle={ { backgroundColor: "#16181C", } }
+         theme={{colors: {secondaryContainer: "#212329"}}}
          safeAreaInsets={insets}
          style={ { backgroundColor: "#16181c" } }
-         compact={ true }
           onTabPress={({ route, preventDefault }) => {
             const event = navigation.emit({
               type: 'tabPress',
@@ -78,47 +79,66 @@ export default function MyComponent() {
     >
       <Tab.Screen
         name="Home"
-        component={HomeScreen}
+        component={Routes.Home}
         options={{
           tabBarLabel: 'Home',
           tabBarIcon: ({ color, size }) => {
-            return <Icon name="home" size={size} color={color} />;
+            return <Icon i="mi" name="electrical-services" color="#27f"/>;
           },
         }}
       />
       <Tab.Screen
-        name="Settings"
-        component={SettingsScreen}
+        name="Customers"
+        component={Routes.Customers}
         options={{
-          tabBarLabel: 'Settings',
+          tabBarLabel: 'Clientes',
           tabBarIcon: ({ color, size }) => {
-            return <Icon name="cog" size={size} color={color} />;
+            return <Icon i="f" name="people-group" color="#fff"/>;
+          }
+        }} 
+      />
+      <Tab.Screen
+        name="Receipts"
+        component={Routes.Receipts}
+        options={{
+          tabBarLabel: 'Recibos',
+          tabBarIcon: ({ color, size }) => {
+            return <Icon i="mc" name="receipt" color="#fff"/>;
+          },
+        }}
+      />
+      <Tab.Screen
+        name="Budgets"
+        component={Routes.Budgets}
+        options={{
+          tabBarLabel: 'Orçamentos',
+          tabBarIcon: ({ color, size }) => {
+            return <Icon i="f" name="file-invoice-dollar" color="#fff"/>;
+          },
+
+        }}
+      />
+      <Tab.Screen
+        name="Dev"
+        component={Routes.Dev}
+        options={{
+          tabBarLabel: 'Dev',
+          tabBarIcon: ({ color, size }) => {
+            return <Icon i="mi" name="devices" color="#ffab00"/>;
+          },
+        }}
+      />
+      <Tab.Screen
+        name="NewCustomer"
+        component={Routes.NewCustomer}
+        options={{
+          tabBarLabel: 'Cadastrar Cliente',
+          tabBarIcon: ({ color, size }) => {
+            return <Icon i="mi" name="people" color="#ffab00"/>;
           },
         }}
       />
     </Tab.Navigator>
-  );
-}
-
-function HomeScreen() {
-   const [ Data, setData ] = useState( "" );
-
-   useEffect( () => {
-      alert( "Olá" );
-   }, [] );
-
-  return (
-    <View style={styles.container}>
-      <Text variant="headlineMedium">Home! { Data }</Text>
-    </View>
-  );
-}
-
-function SettingsScreen() {
-  return (
-    <View style={styles.container}>
-      <Text variant="headlineMedium">Settings!</Text>
-    </View>
   );
 }
 
