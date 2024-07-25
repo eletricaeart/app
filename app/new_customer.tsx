@@ -188,7 +188,10 @@ export default function NewCustomer( { ...props } ) {
 
          await CStore.Save( props.dbs_name, props.object )
          .
-         then( r => inputs.forEach( i => i( "" ) ) );
+         // then( r => inputs.forEach( i => i( "" ) ) );
+         then( r => {
+            inputs.forEach( i => i( "" ) );
+         } );
       }
    }
 

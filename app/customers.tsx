@@ -63,16 +63,16 @@ export default function Customers( { ...props } ) {
     
       fetchData()
         .catch( console.error );
-    }, [] );
+   }, [] );
 
-   // useEffect( () => { Customers.map( customer => {
-   //    return( <>
-   //       <ea.UsersCard 
-   //          key={ customer.id }
-   //          name={ customer.Name }
-   //       />
-   //    </> );
-   // } ) }, [ Customers ] )
+   useEffect( () => { Customers && Customers.map( customer => {
+      return( <>
+         <ea.UsersCard 
+            key={ customer.id }
+            name={ customer.Name }
+         />
+      </> );
+   } ) }, [ Customers ] )
 
    useEffect( () => { Customers && Customers.map( customer => {
       return( <>

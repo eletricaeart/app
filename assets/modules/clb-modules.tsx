@@ -31,6 +31,7 @@ import Homepage from "../../app/homepage";
 import Customers from "../../app/customers";
 import Index from "@/app";
 import Receipts from "@/app/receipts";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 /* == [ AppBar ]
 == == == == == == == == == */
@@ -373,7 +374,8 @@ export function BottomNavigationBar() {
          { 
             key: 'customers', title: 'Clientes', 
             focusedIcon: () => ( <Icon i="f" name="people-group" color="#27f"/> ),  
-            unfocusedIcon: () => ( <Icon i="f" name="people-group" color="#fff"/> ),  
+            unfocusedIcon: () => ( <Icon i="f" name="people-group" color="#fff"/> ), 
+            
          },
          { 
             key: 'receipts', title: 'Recibos', 

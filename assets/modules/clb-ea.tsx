@@ -60,7 +60,15 @@ export function UsersCard( { ...props } ) {
                      overflow: "hidden",
                   }}
                /> */}
-               <Avatar.Image source={ profile }/>
+               <Avatar.Image source={ profile }
+               size={ "100%" }
+               style={{
+                  borderRadius: 1100,
+                  overflow: "hidden",
+                  borderColor: "#0cf",
+                  borderWidth: 3,
+               }}
+               />
             </View>
             <View style={{
                justifyContent: "center",

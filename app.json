@@ -6,7 +6,7 @@
     "orientation": "portrait",
    //  "scheme": "myapp",
     "userInterfaceStyle": "automatic",
-    "icon": "./assets/images/EA/globo-de-plasma-300.png",
+    "icon": "./assets/images/EA/ic_launcher.png",
     "splash": {
       "image": "./assets/images/EA/EA-splash.png",
       "resizeMode": "contain",
@@ -17,7 +17,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/EA/globo-de-plasma-300.png",
+        "foregroundImage": "./assets/images/EA/ic_launcher.png",
         "backgroundColor": "#044a84"
       },
       "package": "com.dfellon.eletricaeart"

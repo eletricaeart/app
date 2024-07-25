@@ -41,6 +41,7 @@ export function H2( { ...props } ) {
          fontSize: 1.5*16,
          fontWeight: "bold",
          color: color,
+         paddingLeft: 0,
       } }> { text } </Text>
    </> );
 }

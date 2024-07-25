@@ -1,10 +1,6 @@
 
 
 import React, { useState, useEffect } from "react";
-import firebase from "@/assets/services/FBConnection";
-import {
-   Database,
-} from "@react-native-firebase/database";
 
 import {
    Header,
@@ -32,8 +28,6 @@ export default function Home( { ...props } ) {
       [ Subtitle, setSubtitle ] = useState( "" )
    ;
  
-
-
 
    return( <>
       <c.Header bg="#f5f5f5">
