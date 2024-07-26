@@ -1,7 +1,7 @@
 
 
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Stack } from "expo-router";
 import {
    View,
@@ -9,6 +9,12 @@ import {
    Image,
    Button,
 } from "react-native";
+
+import { FirebaseAuth } from "@/FirebaseConfig";
+import {
+   onAuthStateChanged,
+   User,
+} from "firebase/auth";
 
 import {
    AppBar,
@@ -21,6 +27,17 @@ import {
 import { Icon } from "@/assets/modules/clb-icons";
 
 export default function RootLayout() {
+   const 
+      [ User, setUser ] = useState<User | null>( null )
+   ;
+
+   useEffect( () => {
+      onAuthStateChanged( FirebaseAuth, user => {
+         console.log( { User } );
+         setUser( User ); 
+      } );
+   }, [] );
+
    return( <>
       <Stack 
          screenOptions={

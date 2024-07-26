@@ -8,20 +8,30 @@ import {
    StyleSheet,
    View, Text,
    TextInput,
-   Pressable, /* Button, */
+   Pressable,
+   KeyboardAvoidingView, /* Button, */
 } from "react-native";
 
-import { FirebaseAuth } from "@/FirebaseConfig";
+import { ActivityIndicator, Button } from "react-native-paper";
 
 import { router } from "expo-router";
 import TabLayout from "@/app/(tabs)/_layout";
-import { ActivityIndicator, Button } from "react-native-paper";
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
+
+import { FirebaseAuth } from "@/FirebaseConfig";
+import { 
+   signInWithEmailAndPassword, 
+   createUserWithEmailAndPassword,
+   onAuthStateChanged,
+   User, 
+} from "firebase/auth";
+
 import { Press } from "@/assets/modules/clb-modules";
 
 
 export default function Index() {
    const 
+      [ User, setUser ] = useState<User | null>( null )
+      ,
       [ Email, setEmail ] = useState( "" )
       ,
       [ Password, setPassword ] = useState( "" )
@@ -71,51 +81,64 @@ export default function Index() {
       }
    ;
 
+   useEffect( () => {
+      onAuthStateChanged( FirebaseAuth, user => {
+         console.log( { User } );
+         setUser( User ); 
+      } );
+   }, [] );
+
    return( <>
-      <View 
-      style={ s.root }
-      >
-         <Text style={ s.tt }>Login Page</Text>
-         
-         <View style={ s.form }>
-            <View style={ s.Label }>
-               <Text style={ s.label }>Email</Text>
-               <TextInput 
-               style={ s.input }
-               placeholder="Email"
-               value={ Email }
-               onChangeText={ ( text ) => setEmail( text ) }
-               keyboardType="email-address"
-               />
-            </View>
-            <View style={ s.Label }>
-               <Text style={ s.label }>Password</Text>
-               <TextInput 
-               style={ s.input }
-               placeholder="Password"
-               secureTextEntry={ true }
-               value={ Password }
-               onChangeText={ ( text ) => setPassword( text ) }
-               keyboardType="default"
-               />
-            </View>
+      { User ? 
+      (
+         <View style={ s.root } >
+            <KeyboardAvoidingView behavior="padding" style={ [ s.root, { width: "100%", } ]}>
+               <Text style={ s.tt }>Login Page</Text>
+            
+               <View style={ s.form }>
+                  <View style={ s.Label }>
+                     <Text style={ s.label }>Email</Text>
+                     <TextInput 
+                     style={ s.input }
+                     placeholder="Email"
+                     value={ Email }
+                     onChangeText={ ( text ) => setEmail( text ) }
+                     keyboardType="email-address"
+                     />
+                  </View>
+                  <View style={ s.Label }>
+                     <Text style={ s.label }>Password</Text>
+                     <TextInput 
+                     style={ s.input }
+                     placeholder="Password"
+                     secureTextEntry={ true }
+                     value={ Password }
+                     onChangeText={ ( text ) => setPassword( text ) }
+                     keyboardType="default"
+                     />
+                  </View>
+               </View>
+               <View style={ s.footer }>
+                  {
+                     Loading ? (
+                        <ActivityIndicator 
+                        size="large" color="#fc0fc0"
+                        /> )
+                        : 
+                        ( <>
+                           <Press text="Login" onPress={ SignIn } style={ s. btn } />
+                           <Press text="Se Cadastrar" onPress={ SignUp } style={ s. btn } />
+                        </> )
+                  }
+               </View>
+            </KeyboardAvoidingView>
          </View>
-            <View style={ s.footer }>
-               {
-                  Loading ? (
-                     <ActivityIndicator 
-                     size="large" color="#fc0fc0"
-                     /> )
-                     : 
-                     ( <>
-                        <Press text="Login" onPress={ SignIn } style={ s. btn } />
-                        <Press text="Sign up" onPress={ SignUp } style={ s. btn } />
-                     </> )
-               }
-            </View>
-      </View>
-      {/* <TabLayout /> */}
-      {/* <BottomNavigationBar /> */}
+      )
+      : 
+      (
+         <TabLayout />
+         /* <BottomNavigationBar /> */
+      ) }
    </> );
 }
 
