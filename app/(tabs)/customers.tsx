@@ -56,195 +56,6 @@ async function InsertDBs() {
 // InsertDBs();
 
 
-/* == [ Modal's properties ]
-== == == == == == == == == */
-const [ customersDB, setcustomersDB ] = useState( [] );
-const 
-   [ Name, setName ] = useState( "" )
-   ,
-   [ Cellphone, setCellphone ] = useState( "" )
-   ,
-   [ Whatsapp, setWhatsapp ] = useState( "" )
-   ,
-   [ Phone, setPhone ] = useState( "" )
-   ,
-   [ Phone2, setPhone2 ] = useState( "" )
-   ,
-   [ Email, setEmail ] = useState( "" )
-   ,
-   [ Rg, setRg ] = useState( "" )
-   ,
-   [ Cpf, setCpf ] = useState( "" )
-   ,
-   [ Cep, setCep ] = useState( "" )
-   ,
-   [ Estate, setEstate ] = useState( "" )
-   ,
-   [ Logradouro, setLogradouro ] = useState( "" )
-   ,
-   [ Number, setNumber ] = useState( "" )
-   ,
-   [ Complemento, setComplemento ] = useState( "" )
-   ,
-   [ District, setDistrict ] = useState( "" )
-   ,
-   [ City, setCity ] = useState( "" )
-   ,
-   [ Note, setNote ] = useState( "" )
-   ,
-   [ DBS, setDBS ] = useState( [] )
-;
-
-const 
-   inputs = [
-      setName,
-      setCellphone,
-      setWhatsapp,
-      setPhone,
-      setPhone2,
-      setEmail,
-      setRg,
-      setCpf,
-      setCep,
-      setEstate,
-      setLogradouro,
-      setNumber,
-      setComplemento,
-      setDistrict,
-      setCity,
-      setNote
-   ]
-   ,
-   customersList = {
-      id: `c:${ Math.round( Math.random() * 999 ) }-${ Math.round( Math.random() * 999 ) }`,
-      Name: Name,
-      Cellphone: Cellphone,
-      Whatsapp: Whatsapp,
-      Phone: Phone,
-      Phone2: Phone2,
-      Email: Email,
-      Rg: Rg,
-      Cpf: Cpf,
-      Cep: Cep,
-      Estate: Estate,
-      Logradouro: Logradouro,
-      Number: Number,
-      Complemento: Complemento,
-      District: District,
-      City: City,
-      Note: Note 
-   }
-   ,
-   id_Name = useRef( null )
-;
-
-async function GetNSaveData( dbs_name ) {
-   let data = {
-      Name: Name,
-      Cellphone: Cellphone,
-      Whatsapp: Whatsapp,
-      Phone: Phone,
-      Phone2: Phone2,
-      Email: Email,
-      Rg: Rg,
-      Cpf: Cpf,
-      Cep: Cep,
-      Estate: Estate,
-      Logradouro: Logradouro,
-      Number: Number,
-      Complemento: Complemento,
-      District: District,
-      City: City,
-      Note: Note 
-   };
-
-   try {
-      if( await AsyncStorage.getItem( dbs_name ) ) {
-         const 
-            customersDBs = await AsyncStorage.getItem( dbs_name )
-         ;
-         setcustomersDB( await JSON.parse( customersDBs ) );
-      }
-
-      customersDB.push( data );
-
-      const jsonValue = JSON.stringify( customersDB );
-      await AsyncStorage.setItem( dbs_name, jsonValue );
-   } catch( err ) {
-     console.log( "\n\n== == == == == ==\nsaving error: \n", err );
-   }
-}
-
-async function GetData( dbs_name ) {
-   try {
-      const data = await AsyncStorage.getItem( dbs_name );
-
-   if( data !== undefined ) {
-      console.log( "Congrats! here is your prize: ", data );
-      setDBS( data );
-   }
-
-      return data != null ? JSON.parse( data ) : null;
-   } catch( err ) {
-      console.log( "GetData err: ", err );
-   }
-}
-
-
-async function SaveDBs( props ) {
-   Keyboard.dismiss();
-   if( Name != "" ) {
-      async function Load() {
-         setTimeout( async () => {
-            console.log( "SaveDBs" );
-         }, 500 );
-      }
-      
-      Load().then( v => {
-         async () => {
-            await CStore.Save( props.dbs_name, props.object )
-            .
-            then( r => {
-               inputs.forEach( i => i( "" ) );
-            } );
-         }
-      } );
-   }
-}
-
-async function EraseData() {
-   try {
-      await AsyncStorage.removeItem( "customer_dbs" );
-      id_Name.current.focus();
-   } catch( err ) {
-     console.log( "\n\n== == == == == ==\nsaving error: \n", err );
-   }
-}
-
-async function GetCEP() {
-   if( Cep == "" ) {
-      alert( "o cep digitado não existe" );
-      setCep( "" );
-      return;
-   }
-
-   try {
-      const 
-         response = await api_GetCEP.get( `/${ Cep }/json` )
-      ;
-      _( response.data );
-
-      setCep( response.data.cep );
-      setEstate( response.data.uf );
-      setLogradouro( response.data.logradouro );
-      setDistrict( response.data.bairro );
-      setCity( response.data.localidade );
-
-   } catch( err ) {
-      console.log( "api_GetCEP err: \n", err );
-   }
-}
-
 
 /* == [ exports ]
 == == == == == == == == == */
@@ -269,6 +80,200 @@ export default function Customers( { ...props } ) {
       }
       fetchData();
    }, [] ); 
+   
+
+
+
+   /* == [ Modal's properties ]
+   == == == == == == == == == */
+   const [ customersDB, setcustomersDB ] = useState( [] );
+   const 
+      [ Name, setName ] = useState( "" )
+      ,
+      [ Cellphone, setCellphone ] = useState( "" )
+      ,
+      [ Whatsapp, setWhatsapp ] = useState( "" )
+      ,
+      [ Phone, setPhone ] = useState( "" )
+      ,
+      [ Phone2, setPhone2 ] = useState( "" )
+      ,
+      [ Email, setEmail ] = useState( "" )
+      ,
+      [ Rg, setRg ] = useState( "" )
+      ,
+      [ Cpf, setCpf ] = useState( "" )
+      ,
+      [ Cep, setCep ] = useState( "" )
+      ,
+      [ Estate, setEstate ] = useState( "" )
+      ,
+      [ Logradouro, setLogradouro ] = useState( "" )
+      ,
+      [ Number, setNumber ] = useState( "" )
+      ,
+      [ Complemento, setComplemento ] = useState( "" )
+      ,
+      [ District, setDistrict ] = useState( "" )
+      ,
+      [ City, setCity ] = useState( "" )
+      ,
+      [ Note, setNote ] = useState( "" )
+      ,
+      [ DBS, setDBS ] = useState( [] )
+   ;
+   
+   const 
+      inputs = [
+         setName,
+         setCellphone,
+         setWhatsapp,
+         setPhone,
+         setPhone2,
+         setEmail,
+         setRg,
+         setCpf,
+         setCep,
+         setEstate,
+         setLogradouro,
+         setNumber,
+         setComplemento,
+         setDistrict,
+         setCity,
+         setNote
+      ]
+      ,
+      customersList = {
+         id: `c:${ Math.round( Math.random() * 999 ) }-${ Math.round( Math.random() * 999 ) }`,
+         Name: Name,
+         Cellphone: Cellphone,
+         Whatsapp: Whatsapp,
+         Phone: Phone,
+         Phone2: Phone2,
+         Email: Email,
+         Rg: Rg,
+         Cpf: Cpf,
+         Cep: Cep,
+         Estate: Estate,
+         Logradouro: Logradouro,
+         Number: Number,
+         Complemento: Complemento,
+         District: District,
+         City: City,
+         Note: Note 
+      }
+      ,
+      id_Name = useRef( null )
+   ;
+   
+   async function GetNSaveData( dbs_name ) {
+      let data = {
+         Name: Name,
+         Cellphone: Cellphone,
+         Whatsapp: Whatsapp,
+         Phone: Phone,
+         Phone2: Phone2,
+         Email: Email,
+         Rg: Rg,
+         Cpf: Cpf,
+         Cep: Cep,
+         Estate: Estate,
+         Logradouro: Logradouro,
+         Number: Number,
+         Complemento: Complemento,
+         District: District,
+         City: City,
+         Note: Note 
+      };
+   
+      try {
+         if( await AsyncStorage.getItem( dbs_name ) ) {
+            const 
+               customersDBs = await AsyncStorage.getItem( dbs_name )
+            ;
+            setcustomersDB( await JSON.parse( customersDBs ) );
+         }
+   
+         customersDB.push( data );
+   
+         const jsonValue = JSON.stringify( customersDB );
+         await AsyncStorage.setItem( dbs_name, jsonValue );
+      } catch( err ) {
+         console.log( "\n\n== == == == == ==\nsaving error: \n", err );
+      }
+   }
+   
+   async function GetData( dbs_name ) {
+      try {
+         const data = await AsyncStorage.getItem( dbs_name );
+   
+      if( data !== undefined ) {
+         console.log( "Congrats! here is your prize: ", data );
+         setDBS( data );
+      }
+   
+         return data != null ? JSON.parse( data ) : null;
+      } catch( err ) {
+         console.log( "GetData err: ", err );
+      }
+   }
+   
+   
+   async function SaveDBs( props ) {
+      Keyboard.dismiss();
+      if( Name != "" ) {
+         async function Load() {
+            setTimeout( async () => {
+               console.log( "SaveDBs" );
+            }, 500 );
+         }
+         
+         Load().then( v => {
+            async () => {
+               await CStore.Save( props.dbs_name, props.object )
+               .
+               then( r => {
+                  inputs.forEach( i => i( "" ) );
+                  setModalVisibility( false );
+               } );
+            }
+         } );
+      }
+   }
+   
+   async function EraseData() {
+      try {
+         await AsyncStorage.removeItem( "customer_dbs" );
+         id_Name.current.focus();
+      } catch( err ) {
+         console.log( "\n\n== == == == == ==\nsaving error: \n", err );
+      }
+   }
+   
+   async function GetCEP() {
+      if( Cep == "" ) {
+         alert( "o cep digitado não existe" );
+         setCep( "" );
+         return;
+      }
+   
+      try {
+         const 
+            response = await api_GetCEP.get( `/${ Cep }/json` )
+         ;
+         _( response.data );
+   
+         setCep( response.data.cep );
+         setEstate( response.data.uf );
+         setLogradouro( response.data.logradouro );
+         setDistrict( response.data.bairro );
+         setCity( response.data.localidade );
+   
+      } catch( err ) {
+         console.log( "api_GetCEP err: \n", err );
+      }
+   } 
+
    
 
    return( <>
@@ -311,6 +316,8 @@ export default function Customers( { ...props } ) {
          presentationStyle="formSheet"
          style={ [] }
       >
+
+      <ScrollView>
          <View style={ [] }>
             <Text style={ [] }>Modal Screen</Text>
          </View>
@@ -324,7 +331,6 @@ export default function Customers( { ...props } ) {
 
    
    
-      {/* <ScrollView> */}
          <c.Section bg="#f3f3f3">
             <c.Header>
                <c.Content>
@@ -528,9 +534,9 @@ export default function Customers( { ...props } ) {
                </c.Content>
             </c.Section>
          </c.Section>
-      {/* </ScrollView> */}
-
          </View>
+      </ScrollView>
+
       </Modal>
    </> );
 }
