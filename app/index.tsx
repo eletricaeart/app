@@ -82,7 +82,7 @@ export default function Index() {
    ;
 
    useEffect( () => {
-      onAuthStateChanged( FirebaseAuth, user => {
+      onAuthStateChanged( FirebaseAuth, User => {
          console.log( { User } );
          setUser( User ); 
       } );
