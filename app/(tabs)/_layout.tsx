@@ -72,15 +72,15 @@ export default function MyComponent() {
          // headerShadowVisible: true
          // ,
          // headerShown: true
-         // ,
-         // headerSearchBarOptions: {
-         //    barTintColor: "#fff0",
-         //    tintColor: "#fff",
-         //    headerIconColor: "#fff",
-         //    hintTextColor: "#eee",
-         //    textColor: "#eee",
+         ,
+         headerSearchBarOptions: {
+            barTintColor: "#fff0",
+            tintColor: "#fff",
+            headerIconColor: "#fff",
+            hintTextColor: "#eee",
+            textColor: "#eee",
 
-         // }
+         }
          // ,
          // navigationBarColor: "#16181c"
       }}
@@ -151,7 +151,7 @@ export default function MyComponent() {
                return <Icon i="mi" name="electrical-services" color="#27f"/>;
             },
             unmountOnBlur: true,
-            headerTitle: () => <HeaderTitle />,
+            headerTitle: () => <HeaderTitle />, 
         }}
       />
       <Tab.Screen

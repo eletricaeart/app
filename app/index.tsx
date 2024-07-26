@@ -18,6 +18,10 @@ import { router } from "expo-router";
 import TabLayout from "@/app/(tabs)/_layout";
 
 import { FirebaseAuth } from "@/FirebaseConfig";
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as CStore from "@/assets/modules/clb-dbs";
+
 import { 
    signInWithEmailAndPassword, 
    createUserWithEmailAndPassword,
@@ -79,12 +83,34 @@ export default function Index() {
             setLoading( false );
          }
       }
+      ,
+      SaveUser2DBs = async () => {
+         try {
+            const 
+               data = JSON.stringify( User )
+            ;
+            await AsyncStorage.setItem( "User", data );
+            
+            console.log( "SaveUser2DBs() User: \n\n\n", User );
+            alert( `SaveUser2DBs() User: \n\n\n ${ User }` );
+            
+            alert( "Bem Vindo" );
+            
+         } catch( err ) {
+            console.log( "\n\n== == == == == ==\nSaveUser2DBs() saving error: \n", err );
+         }
+      }
    ;
 
    useEffect( () => {
       onAuthStateChanged( FirebaseAuth, User => {
-         console.log( { User } );
+         console.log( "aquiS: ", User );
          setUser( User ); 
+         // if( User != null ) {
+         //    SaveUser2DBs().then( v => alert( "savedInEffect" ) );
+         // } else {
+         //    alert( `SaveInEffect() User = null` );
+         // }
       } );
    }, [] );
 

@@ -12,7 +12,7 @@ import { FirebaseAuth } from "@/FirebaseConfig";
 
 
 
-export default function Login() {
+export default function LoadingScreen() {
    const 
       [ Email, setEmail ] = useState( "" )
       ,

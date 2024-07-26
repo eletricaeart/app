@@ -26,12 +26,8 @@ import {
 } from "react-native-paper";
 import { createMaterialBottomTabNavigator } from "react-native-paper/react-navigation";
 
-import Routes from "@/app/pages";
-import Homepage from "../../app/homepage";
-import Customers from "../../app/(tabs)/customers";
-import Index from "@/app";
-import Receipts from "@/app/receipts";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import Routes from "@/app/routes";
+import Homepage from "@/app/homepage";
 
 /* == [ AppBar ]
 == == == == == == == == == */
@@ -43,8 +39,9 @@ export function AppBar( { ...props } ) {
          style={ {
             backgroundColor: "#00559C",
             elevation: 10,
-            borderColor: "#ff0",
-            borderBottomColor: "#0005",
+            borderColor: "#3333",
+            borderBottomColor: "#000",
+            borderBottomWidth: 2,
             zIndex: 9,
          } }
       >
@@ -206,15 +203,6 @@ export function Fab( { ...props } ) {
       [ isExtended, setIsExtended ] = React.useState( false )
       ,
       isIOS = Platform.OS === "ios"
-      // ,
-      // onClick = ({ nativeEvent }) => {
-      //    const currentScrollPosition =
-      //       Math.floor( nativeEvent?.contentOffset?.y ) ?? 0
-      //    ;
-
-      //    setIsExtended(currentScrollPosition <= 0);
-      //    setIsExtended( !isExtended );
-      // } 
       ,
       styles = StyleSheet.create({
          container: {
@@ -256,6 +244,8 @@ export function Press( { ...props } ) {
       ,
       color = props.color || "#0075BD"
       ,
+      width = props.width
+      ,
       styles = StyleSheet.create( {
          root: {
             height: 56,
@@ -264,6 +254,7 @@ export function Press( { ...props } ) {
             borderWidth: 1,
             borderStyle: "solid",
             borderRadius: 16,
+            width: width,
             paddingTop: 16,
             paddingBottom: 16,
             paddingLeft: 16,
@@ -278,8 +269,6 @@ export function Press( { ...props } ) {
             color: color,
          },
       } )
-      // ,
-      // f = props.f || ( () => console.log( "" ) )
       ,
       text = props.text || "Press Me"
       ,
@@ -288,9 +277,6 @@ export function Press( { ...props } ) {
 
    return( <>
       <Pressable
-         // onPress={ () => {
-         //    { f() };
-         // } }
          { ...props }
          onPress={ props.onPress }
          onPressIn={ props.onPressIn }
@@ -300,6 +286,7 @@ export function Press( { ...props } ) {
                backgroundColor: pressed ? "#27f" : "white",
             },
             styles.root,
+            props.style
          ] }
       >
          { ({pressed}) => (
@@ -435,23 +422,6 @@ export function BottomNavigationBar() {
          navigationState={ { index, routes } }
          onIndexChange={ setIndex }
          renderScene={ renderScene }
-         /* renderIcon={ 
-            () => ( <>
-               <Text>icon</Text>
-            </> )
-         } */
-         /* renderTouchable={ () => ( <>
-            <View style={{
-               backgroundColor: "#212329",
-               flex: 1,
-               height: 50,
-               padding: 8,
-               borderColor: "#fc0fc0",
-            }} />
-         </> ) } */
-         /* barStyle={{
-            backgroundColor: "#fc0",
-         }} */
          // sceneAnimationType={ "shifting" || "opacity" }
          sceneAnimationType={ "opacity" }
          shifting={ true }
@@ -489,7 +459,6 @@ export function PageFooter( { ...props } ) {
          },
          pd: { padding: 6, },
          picture: {
-            // backgroundColor: "#27f",
             width: "100%",
             aspectRatio: "1 / .5",
             alignItems: "center",
@@ -510,9 +479,7 @@ export function PageFooter( { ...props } ) {
       <View style={ { 
          backgroundColor: "#000", 
          width: "100%",
-         // height: 400,   
          alignItems: "center",
-         // justifyContent: "center",
          gap: 3,
          paddingBottom: 36,
       } }>

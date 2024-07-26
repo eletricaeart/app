@@ -1,45 +1,15 @@
 
 
+// https://docs.expo.dev/guides/using-firebase/
 // https://react-native-async-storage.github.io/async-storage/docs/install/
 // npx expo install @react-native-async-storage/async-storage
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
-// "working getDBs_n_setDBs"
-// useEffect( () => {
-//    const fetchData = async () => {
-//       const data = await AsyncStorage.getItem( "customer_dbs" );
-//       const json = await JSON.parse( data );
-//          console.log( "json: \n\n\n", json );
-//       setCustomers( json );
-//    }
-
-//    fetchData()
-//       .catch( console.error );
-// }, [] );
 
 
 /* == [ global functions as CStore ]
 == == == == == == == == == */
 export async function Save( dbs_name, object ) {
    let list = [];
-   // let data = {
-   //    Name: Name,
-   //    Cellphone: Cellphone,
-   //    Whatsapp: Whatsapp,
-   //    Phone: Phone,
-   //    Phone2: Phone2,
-   //    Email: Email,
-   //    Rg: Rg,
-   //    Cpf: Cpf,
-   //    Cep: Cep,
-   //    Estate: Estate,
-   //    Street: Street,
-   //    Number: Number,
-   //    Complemento: Complemento,
-   //    District: District,
-   //    City: City,
-   //    Note: Note 
-   // };
 
    try {
       if( await AsyncStorage.getItem( dbs_name ) ) {

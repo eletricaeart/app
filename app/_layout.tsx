@@ -57,7 +57,9 @@ export default function RootLayout() {
                //    backgroundColor: "#00559C",
                // }
                ,
-               statusBarColor: "#00559c"
+               statusBarColor: "#00559c",
+               headerBlurEffect: "regular",
+               headerTransparent: true,
             }
          }
       >

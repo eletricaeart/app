@@ -24,6 +24,10 @@ import {
 } from "@/assets/modules/clb-modules";
 
 import * as c from "@/assets/modules/clb-html";
+import {
+   colors,
+   elevation,
+} from "@/assets/modules/clb-colors";
 import * as ea from "@/assets/modules/clb-ea";
 
 import * as Form from "@/assets/modules/clb-form";
@@ -78,16 +82,6 @@ export default function Customers( { ...props } ) {
    }
 
    useEffect( () => {
-      async function fetchData() {
-         try {
-            const data = await AsyncStorage.getItem( "customer_dbs" );
-            const json = await JSON.parse( data );
-            console.log( "json: \n\n\n", json );
-            setCustomers( json );
-         } catch( err ) {
-            console.log( "fetchData err: \n\n\n\n\n", err );
-         }
-      }
       fetchData();
    }, [] ); 
    
@@ -174,44 +168,10 @@ export default function Customers( { ...props } ) {
       }
       ,
       id_Name = useRef( null )
+      ,
+      id_form = useRef( null )
    ;
    
-   async function GetNSaveData( dbs_name ) {
-      let data = {
-         Name: Name,
-         Cellphone: Cellphone,
-         Whatsapp: Whatsapp,
-         Phone: Phone,
-         Phone2: Phone2,
-         Email: Email,
-         Rg: Rg,
-         Cpf: Cpf,
-         Cep: Cep,
-         Estate: Estate,
-         Logradouro: Logradouro,
-         Number: Number,
-         Complemento: Complemento,
-         District: District,
-         City: City,
-         Note: Note 
-      };
-   
-      try {
-         if( await AsyncStorage.getItem( dbs_name ) ) {
-            const 
-               customersDBs = await AsyncStorage.getItem( dbs_name )
-            ;
-            setcustomersDB( await JSON.parse( customersDBs ) );
-         }
-   
-         customersDB.push( data );
-   
-         const jsonValue = JSON.stringify( customersDB );
-         await AsyncStorage.setItem( dbs_name, jsonValue );
-      } catch( err ) {
-         console.log( "\n\n== == == == == ==\nsaving error: \n", err );
-      }
-   }
    
    async function GetData( dbs_name ) {
       try {
@@ -230,12 +190,12 @@ export default function Customers( { ...props } ) {
    
    
    async function SaveDBs( props ) {
+      id_form.current.focus() && 
+      Keyboard.dismiss();
       if( Name != "" ) {
-         // Keyboard.dismiss();
 
          await CStore.Save( props.dbs_name, props.object )
          .
-         // then( r => inputs.forEach( i => i( "" ) ) );
          then( r => {
             inputs.forEach( i => i( "" ) );
             setModalVisibility( false );
@@ -247,14 +207,6 @@ export default function Customers( { ...props } ) {
       // SaveDBs( { dbs_name: "customer_dbs", object: customersList } )
    }
    
-   async function EraseData() {
-      try {
-         await AsyncStorage.removeItem( "customer_dbs" );
-         id_Name.current.focus();
-      } catch( err ) {
-         console.log( "\n\n== == == == == ==\nsaving error: \n", err );
-      }
-   }
    
    async function GetCEP() {
       if( Cep == "" ) {
@@ -283,6 +235,10 @@ export default function Customers( { ...props } ) {
    
 
    return( <>
+   <View style={{
+      flex: 1,
+      backgroundColor: "#900",
+   }}>
       <ScrollView style={{ flex: 1, backgroundColor: "#e2f4fe", }}>
          <c.Section bg="#e2f4fe" style={{ flex: 1, }}>
             <c.Header>
@@ -306,243 +262,242 @@ export default function Customers( { ...props } ) {
                      console.log( "" )
                   }
                </c.Content>
-               <c.Content>
-                  <Press text="Cadastrar novo" onPress={ () => {
-                     setModalVisibility( true );
-                  } }/>
-               </c.Content>
             </c.Section>
          </c.Section>
       </ScrollView>
+   </View>
+   <Press text="Cadastrar novo" 
+   pressedText="Cadastrar agora" 
+   style={[ { position: "absolute", bottom: 16, right: 16, }, elevation.elevation ]}
+   onPress={ () => {
+      setModalVisibility( true );
+   } }/>
+   
       {/*  == [ Modal ]
       == == == == == == == == ==  */}
       <Modal visible={ ModalVisibility } 
          onRequestClose={ () => { setModalVisibility( false ) } }
          animationType="slide"
          presentationStyle="formSheet"
-         style={ [] }
       >
 
-      <ScrollView>
-         <View style={ [] }>
-            <Text style={ [] }>Modal Screen</Text>
-         </View>
-         <View>
-            <c.Content>
-               <Press 
-               onPress={ () => { setModalVisibility( !ModalVisibility ) } }
-               text="close modal" 
-               />
-            </c.Content>
+         <c.Section style={[ s.modal_root ]}>
+            <ScrollView keyboardShouldPersistTaps="handled">
+               <View style={[ s.backSheet, elevation.elevation ]} />
+               <View style={[ s.frontSheet, elevation.elevation ]} >
+                  <c.Section bg="#f3f3f3" style={{ backgroundColor: "gradient-" }}>
+                     <c.Header>
+                        <c.Content>
+                           <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
+                              <c.H3 color="#00559c99">Cadastrar cliente</c.H3>
+                              <Pressable onPress={ () => { setModalVisibility( !ModalVisibility ) } }>
+                                 <View style={[ s.btnOverlay,  ]}>
+                                    <Icon i="f0" name="close" color={ colors.error } />
+                                 </View>
+                              </Pressable>
+                           </View>
+                        </c.Content>
+                     </c.Header>
+                     <c.Section bg="#fff" style={[ s.form, elevation.elevation ]}>
+                        <c.Content gap={ 8 }>
 
-   
-   
-         <c.Section bg="#f3f3f3">
-            <c.Header>
-               <c.Content>
-                  <c.H3 color="#00559c99">Cadastrar cliente</c.H3>
-               </c.Content>
-            </c.Header>
-            <c.Section bg="#fff" style={{ borderRadius: 24 }}>
-               <c.Content gap={ 8 }>
+                           <View style={ s.form } ref={ id_form }>
+                              <c.Section style={ s.header }>
+                                 <c.H4>Cliente { Name }</c.H4>
+                              </c.Section>
 
-                  <View style={ s.form }>
-                     <c.Section style={ s.header }>
-                        <c.H4>Cliente { Name }</c.H4>
+                              <c.Section cliente section>
+                                 <Text style={ s.label }>Nome do Cliente</Text>
+                                 <TextInput style={ s.input }
+                                 value={ Name }
+                                 ref={ id_Name }
+                                 onChangeText={ setName }
+                                 />
+                              </c.Section>
+
+                              <c.Section contato section>
+                                 <View style={ s.divider }>
+                                    <Text style={ s.dividerText }>CONTATO</Text>
+                                 </View>
+                                 <View style={ s.duo }>
+                                    <View style={ s.duoBox }>
+                                       <Text style={ s.label }>Celular</Text>
+                                       <TextInput style={ s.input }
+                                    value={ Cellphone }
+                                    onChangeText={ setCellphone }
+                                 />
+                                    </View>
+                                    
+                                    <View style={ s.duoBox }>
+                                       <Text style={ s.label }>WhatsApp</Text>
+                                       <TextInput style={ s.input }
+                                    value={ Whatsapp }
+                                    onChangeText={ setWhatsapp }
+                                 />
+                                    </View>
+                                 </View>
+                                 
+                                 <View style={ [ s.duo, {  } ] }>
+                                    <View style={ s.duoBox }>
+                                       <Text style={ s.label }>Telefone</Text>
+                                       <TextInput style={ s.input }
+                                    value={ Phone }
+                                    onChangeText={ setPhone }
+                                 />
+                                    </View>
+                                    
+                                    <View style={ s.duoBox }>
+                                       <Text style={ s.label }>Telefone 2</Text>
+                                       <TextInput style={ s.input }
+                                    value={ Phone2 }
+                                    onChangeText={ setPhone2 }
+                                 />
+                                    </View>
+                                 </View>
+                                 
+                                 <Text style={ s.label }>Email</Text>
+                                 <TextInput style={ s.input }
+                                    value={ Email }
+                                    onChangeText={ setEmail }
+                                 />
+                                 
+                                 <View style={ [ s.duo, {  } ] }>
+                                    <View style={ s.duoBox }>
+                                       <Text style={ s.label }>RG/IE</Text>
+                                       <TextInput style={ s.input }
+                                    value={ Rg }
+                                    onChangeText={ setRg }
+                                 />
+                                    </View>
+                                    
+                                    <View style={ s.duoBox }>
+                                       <Text style={ s.label }>CPF</Text>
+                                       <TextInput style={ s.input }
+                                    value={ Cpf }
+                                    onChangeText={ setCpf }
+                                 />
+                                    </View>
+                                 </View>
+                              </c.Section>
+
+                              <c.Section endereço section>
+                                 <View style={ s.divider }>
+                                    <Text style={ s.dividerText }>ENDEREÇO</Text>
+                                 </View>
+                                 
+                                 <View style={ [ s.duo, {  } ] }>
+                                    <View style={ s.duoBox }>
+                                       <Text style={ s.label }>CEP</Text>
+                                       <TextInput style={ s.input }
+                                       value={  Cep }
+                                       placeholder="00.000-00"
+                                       onChangeText={ text => { 
+                                          setCep( text )
+                                       } }
+                                       onBlur={ () => { GetCEP() } }
+                                       />
+                                    </View>
+                                    
+                                    <View style={ s.duoBox }>
+                                       <Text style={ s.label }>UF</Text>
+                                       <TextInput style={ s.input }
+                                    value={ Estate }
+                                    onChangeText={ setEstate }
+                                 />
+                                    </View>
+                                 </View>
+                                 
+                                 <Text style={ s.label }>Rua</Text>
+                                 <TextInput style={ s.input }
+                                    value={ Logradouro }
+                                    onChangeText={ setLogradouro }
+                                 />
+                                 
+                                 <View style={ [ s.duo, {  } ] }>
+                                    <View style={ s.duoBox }>
+                                       <Text style={ s.label }>Número</Text>
+                                       <TextInput style={ s.input }
+                                    value={ Number }
+                                    onChangeText={ setNumber }
+                                 />
+                                    </View>
+                                    
+                                    <View style={ s.duoBox }>
+                                       <Text style={ s.label }>Complemento</Text>
+                                       <TextInput style={ s.input }
+                                          value={ Complemento }
+                                          onChangeText={ setComplemento }
+                                       />
+                                    </View>
+                                 </View>
+                                 
+                                 <Text style={ s.label }>Bairro</Text>
+                                 <TextInput style={ s.input }
+                                    value={ District }
+                                    onChangeText={ setDistrict }
+                                 />
+                                 
+                                 <Text style={ s.label }>Cidade</Text>
+                                 <TextInput style={ s.input }
+                                    value={ City }
+                                    onChangeText={ setCity }
+                                 />
+                              </c.Section>
+
+                              <c.Section observações section>
+                                 <View style={ s.divider }>
+                                    <Text style={ s.dividerText }>OBSERVAÇÕES</Text>
+                                 </View>
+                                 <Text style={ s.label }>Observação</Text>
+                                 <TextInput style={ s.input }
+                                    value={ Note }
+                                    onChangeText={ setNote }
+                                 />
+                              </c.Section>
+                              <c.Section style={ {
+                                 gap: 16,
+                                 marginTop: 24,
+                                 marginBottom: 66,
+                              } }>
+
+                                 <Touch 
+                                    txt="apagar tudo"
+                                    onPressIn={ () => { Keyboard.dismiss() } }
+                                    onPressOut={ () => { 
+                                       Form.ClearInputs( inputs ); 
+                                       id_Name.current.focus(); 
+                                    } }
+                                 />
+                                 <Touch 
+                                    touchSty={{
+                                       backgroundColor: "#9c5500",
+                                    }}
+                                    txtSty={{
+                                       color: "#fff",
+                                    }}
+                                    txt="erase DBs"
+                                    onPress={ async () => { await AsyncStorage.removeItem( "customer_dbs" ) } }
+                                 />
+                                 <Touch 
+                                    touchSty={{
+                                       backgroundColor: "#00559C",
+                                    }}
+                                    txtSty={{
+                                       color: "#fff",
+                                    }}
+                                    txt="cadastrar"
+                                    onPress={ () => { SaveDBs( { dbs_name: "customer_dbs", object: customersList } ) } }
+                                 />
+
+                              </c.Section>
+                              
+                           </View>
+                        </c.Content>
                      </c.Section>
-
-                     <c.Section cliente section>
-                        <Text style={ s.label }>Nome do Cliente</Text>
-                        <TextInput style={ s.input }
-                        value={ Name }
-                        ref={ id_Name }
-                        onChangeText={ setName }
-                        />
-                     </c.Section>
-
-                     <c.Section contato section>
-                        <View style={ s.divider }>
-                           <Text style={ s.dividerText }>CONTATO</Text>
-                        </View>
-                        <View style={ s.duo }>
-                           <View style={ s.duoBox }>
-                              <Text style={ s.label }>Celular</Text>
-                              <TextInput style={ s.input }
-                           value={ Cellphone }
-                           onChangeText={ setCellphone }
-                        />
-                           </View>
-                           
-                           <View style={ s.duoBox }>
-                              <Text style={ s.label }>WhatsApp</Text>
-                              <TextInput style={ s.input }
-                           value={ Whatsapp }
-                           onChangeText={ setWhatsapp }
-                        />
-                           </View>
-                        </View>
-                        
-                        <View style={ [ s.duo, {  } ] }>
-                           <View style={ s.duoBox }>
-                              <Text style={ s.label }>Telefone</Text>
-                              <TextInput style={ s.input }
-                           value={ Phone }
-                           onChangeText={ setPhone }
-                        />
-                           </View>
-                           
-                           <View style={ s.duoBox }>
-                              <Text style={ s.label }>Telefone 2</Text>
-                              <TextInput style={ s.input }
-                           value={ Phone2 }
-                           onChangeText={ setPhone2 }
-                        />
-                           </View>
-                        </View>
-                        
-                        <Text style={ s.label }>Email</Text>
-                        <TextInput style={ s.input }
-                           value={ Email }
-                           onChangeText={ setEmail }
-                        />
-                        
-                        <View style={ [ s.duo, {  } ] }>
-                           <View style={ s.duoBox }>
-                              <Text style={ s.label }>RG/IE</Text>
-                              <TextInput style={ s.input }
-                           value={ Rg }
-                           onChangeText={ setRg }
-                        />
-                           </View>
-                           
-                           <View style={ s.duoBox }>
-                              <Text style={ s.label }>CPF</Text>
-                              <TextInput style={ s.input }
-                           value={ Cpf }
-                           onChangeText={ setCpf }
-                        />
-                           </View>
-                        </View>
-                     </c.Section>
-
-                     <c.Section endereço section>
-                        <View style={ s.divider }>
-                           <Text style={ s.dividerText }>ENDEREÇO</Text>
-                        </View>
-                        
-                        <View style={ [ s.duo, {  } ] }>
-                           <View style={ s.duoBox }>
-                              <Text style={ s.label }>CEP</Text>
-                              <TextInput style={ s.input }
-                              value={  Cep }
-                              placeholder="00.000-00"
-                              onChangeText={ text => { 
-                                 setCep( text )
-                              } }
-                              onBlur={ () => { GetCEP() } }
-                              />
-                           </View>
-                           
-                           <View style={ s.duoBox }>
-                              <Text style={ s.label }>UF</Text>
-                              <TextInput style={ s.input }
-                           value={ Estate }
-                           onChangeText={ setEstate }
-                        />
-                           </View>
-                        </View>
-                        
-                        <Text style={ s.label }>Rua</Text>
-                        <TextInput style={ s.input }
-                           value={ Logradouro }
-                           onChangeText={ setLogradouro }
-                        />
-                        
-                        <View style={ [ s.duo, {  } ] }>
-                           <View style={ s.duoBox }>
-                              <Text style={ s.label }>Número</Text>
-                              <TextInput style={ s.input }
-                           value={ Number }
-                           onChangeText={ setNumber }
-                        />
-                           </View>
-                           
-                           <View style={ s.duoBox }>
-                              <Text style={ s.label }>Complemento</Text>
-                              <TextInput style={ s.input }
-                                 value={ Complemento }
-                                 onChangeText={ setComplemento }
-                              />
-                           </View>
-                        </View>
-                        
-                        <Text style={ s.label }>Bairro</Text>
-                        <TextInput style={ s.input }
-                           value={ District }
-                           onChangeText={ setDistrict }
-                        />
-                        
-                        <Text style={ s.label }>Cidade</Text>
-                        <TextInput style={ s.input }
-                           value={ City }
-                           onChangeText={ setCity }
-                        />
-                     </c.Section>
-
-                     <c.Section observações section>
-                        <View style={ s.divider }>
-                           <Text style={ s.dividerText }>OBSERVAÇÕES</Text>
-                        </View>
-                        <Text style={ s.label }>Observação</Text>
-                        <TextInput style={ s.input }
-                           value={ Note }
-                           onChangeText={ setNote }
-                        />
-                     </c.Section>
-                     <c.Section style={ {
-                        gap: 16,
-                        marginTop: 24,
-                        marginBottom: 66,
-                     } }>
-
-                        <Touch 
-                           txt="apagar tudo"
-                           onPressIn={ () => { Keyboard.dismiss() } }
-                           onPressOut={ () => { 
-                              Form.ClearInputs( inputs ); 
-                              id_Name.current.focus(); 
-                           } }
-                        />
-                        <Touch 
-                           touchSty={{
-                              backgroundColor: "#9c5500",
-                           }}
-                           txtSty={{
-                              color: "#fff",
-                           }}
-                           txt="erase DBs"
-                           onPress={ async () => { await AsyncStorage.removeItem( "customer_dbs" ) } }
-                        />
-                        <Touch 
-                           touchSty={{
-                              backgroundColor: "#00559C",
-                           }}
-                           txtSty={{
-                              color: "#fff",
-                           }}
-                           txt="cadastrar"
-                           onPress={ () => { SaveDBs( { dbs_name: "customer_dbs", object: customersList } ) } }
-                        />
-
-                     </c.Section>
-                     
-                  </View>
-               </c.Content>
-            </c.Section>
+                  </c.Section>
+               </View>
+            </ScrollView>
          </c.Section>
-         </View>
-      </ScrollView>
-
       </Modal>
    </> );
 }
@@ -552,6 +507,31 @@ const s = StyleSheet.create( {
    root: {
       // paddingTop: StatusBar.currentHeight,
    },
+   modal_root: {
+      backgroundColor: "#00559c",
+      flex: 1,
+   },
+   backSheet: {
+      backgroundColor: "#959595",
+      borderTopStartRadius: 24,
+      borderTopEndRadius: 24,
+      width: "90%",
+      height: 15,
+      marginTop: 10,
+      alignSelf: "center",
+   },
+   frontSheet: {
+      backgroundColor: "#f5f5f5",
+      borderTopStartRadius: 24,
+      borderTopEndRadius: 24,
+      width: "100%",
+      flex: 1,
+      alignSelf: "center",
+      overflow: "hidden",
+   },
+   modal_body: {
+      backgroundColor: "#f5f5f5",
+   },
    container: {
       flex: 1,
       justifyContent: 'center',
@@ -559,10 +539,18 @@ const s = StyleSheet.create( {
       backgroundColor: '#0e101c',
    },
    form: {
+      borderRadius: 24,
    },
    header: {
       marginTop: 16,
       marginBottom: 24,
+   },
+   btnOverlay: { backgroundColor: "#0001", 
+      padding: 8,
+      borderRadius: 100,
+      aspectRatio: 1,
+      alignItems: "center",
+      justifyContent: "center",
    },
    divider: {
       borderBottomColor: "#009ee6",

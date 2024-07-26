@@ -12,7 +12,7 @@ import {
 
 } from "react-native";
 
-import { FontAwesome6 } from '@expo/vector-icons';
+import { FontAwesome, FontAwesome6 } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 // <MaterialCommunityIcons name="receipt" size={24} color="black" />
 import { MaterialIcons } from '@expo/vector-icons';
@@ -34,28 +34,35 @@ export function Icon( { ...props } ) {
       size = props.size || 24
       ,
       color = props.color || "black"
+      ,
+      style = props.style 
+      ,
+      onPress = props.onPress 
    ;
 
    switch( props.i ) {
-      case "f": return( <FontAwesome6 name={ name } size={ size } color= { color } /> );
+      case "f0": return( <FontAwesome name={ name } size={ size } color={ color } /> );
       break;
 
-      case "mc": return( <MaterialCommunityIcons name={ name } size={ size } color= { color } /> );
+      case "f": return( <FontAwesome6 name={ name } size={ size } color={ color } /> );
       break;
 
-      case "mi": return( <MaterialIcons name={ name } size={ size } color= { color } /> );
+      case "mc": return( <MaterialCommunityIcons name={ name } size={ size } color={ color } /> );
       break;
 
-      case "a": return( <AntDesign name={ name } size={ size } color= { color } /> );
+      case "mi": return( <MaterialIcons name={ name } size={ size } color={ color } /> );
       break;
 
-      case "i": return( <Ionicons name={ name } size={ size } color= { color } /> );
+      case "a": return( <AntDesign name={ name } size={ size } color={ color } /> );
       break;
 
-      case "l": return( <SimpleLineIcons name={ name } size={ size } color= { color } /> );
+      case "i": return( <Ionicons name={ name } size={ size } color={ color } /> );
+      break;
+
+      case "l": return( <SimpleLineIcons name={ name } size={ size } color={ color } /> );
       break;
    }
    // return( <>
-   //    <FontAwesome6 name={ name } size={ size } color= { color } />
+   //    <FontAwesome6 name={ name } size={ size } color={ color } />
    // </> );
 }

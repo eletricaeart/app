@@ -1,6 +1,7 @@
 {
   "expo": {
-    "name": "app",
+    "owner": "devfellon",
+    "name": "eletricaeart",
     "slug": "app",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -20,7 +21,7 @@
         "foregroundImage": "./assets/images/EA/ic_launcher.png",
         "backgroundColor": "#044a84"
       },
-      "package": "com.dfellon.eletricaeart"
+      "package": "com.devfellon.eletricaeart"
     },
     "web": {
       "bundler": "metro",
