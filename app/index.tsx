@@ -89,7 +89,7 @@ export default function Index() {
    }, [] );
 
    return( <>
-      { User ? 
+      { !User ? 
       (
          <View style={ s.root } >
             <KeyboardAvoidingView behavior="padding" style={ [ s.root, { width: "100%", } ]}>
