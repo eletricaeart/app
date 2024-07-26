@@ -46,7 +46,8 @@ export async function Save( dbs_name, object ) {
          const 
             listDBs = await AsyncStorage.getItem( dbs_name )
          ;
-         list = [ ...await JSON.parse( listDBs ) ]
+         list = [ ...await JSON.parse( listDBs ) ];
+         console.log( "Save() list: \n\n\n", list );
       }
 
       list.push( object );
@@ -54,9 +55,11 @@ export async function Save( dbs_name, object ) {
       const jsonValue = JSON.stringify( list );
       await AsyncStorage.setItem( dbs_name, jsonValue );
 
+      console.log( "Save() jsonValue: \n\n\n", jsonValue );
+
       return( jsonValue );
    } catch( err ) {
-     console.log( "\n\n== == == == == ==\nsaving error: \n", err );
+     console.log( "\n\n== == == == == ==\nSave() saving error: \n", err );
    }
 }
 

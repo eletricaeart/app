@@ -183,24 +183,19 @@ export default function NewCustomer( { ...props } ) {
 
 
    async function SaveDBs( props ) {
-      Keyboard.dismiss();
       if( Name != "" ) {
-         async function Load() {
-            setTimeout( async () => {
-               console.log( "SaveDBs" );
-            }, 500 );
-         }
-         
-         Load().then( v => {
-            async () => {
-               await CStore.Save( props.dbs_name, props.object )
-               .
-               then( r => {
-                  inputs.forEach( i => i( "" ) );
-               } );
-            }
+         // Keyboard.dismiss();
+
+         await CStore.Save( props.dbs_name, props.object )
+         .
+         // then( r => inputs.forEach( i => i( "" ) ) );
+         then( r => {
+            inputs.forEach( i => i( "" ) );
          } );
+      } else {
+         alert( "Digite o nome do seu cliente" );
       }
+      // SaveDBs( { dbs_name: "customer_dbs", object: customersList } )
    }
 
    async function EraseData() {

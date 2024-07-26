@@ -66,6 +66,16 @@ export default function Customers( { ...props } ) {
       [ ModalVisibility, setModalVisibility ] = useState( false )
    ;
 
+   async function fetchData() {
+      try {
+         const data = await AsyncStorage.getItem( "customer_dbs" );
+         const json = await JSON.parse( data );
+         console.log( "json: \n\n\n", json );
+         setCustomers( json );
+      } catch( err ) {
+         console.log( "fetchData err: \n\n\n\n\n", err );
+      }
+   }
 
    useEffect( () => {
       async function fetchData() {
@@ -220,25 +230,21 @@ export default function Customers( { ...props } ) {
    
    
    async function SaveDBs( props ) {
-      Keyboard.dismiss();
       if( Name != "" ) {
-         async function Load() {
-            setTimeout( async () => {
-               console.log( "SaveDBs" );
-            }, 500 );
-         }
-         
-         Load().then( v => {
-            async () => {
-               await CStore.Save( props.dbs_name, props.object )
-               .
-               then( r => {
-                  inputs.forEach( i => i( "" ) );
-                  setModalVisibility( false );
-               } );
-            }
+         // Keyboard.dismiss();
+
+         await CStore.Save( props.dbs_name, props.object )
+         .
+         // then( r => inputs.forEach( i => i( "" ) ) );
+         then( r => {
+            inputs.forEach( i => i( "" ) );
+            setModalVisibility( false );
+            fetchData();
          } );
+      } else {
+         alert( "Digite o nome do seu cliente" );
       }
+      // SaveDBs( { dbs_name: "customer_dbs", object: customersList } )
    }
    
    async function EraseData() {

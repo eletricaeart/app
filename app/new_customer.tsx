@@ -183,16 +183,18 @@ export default function NewCustomer( { ...props } ) {
 
 
    async function SaveDBs( props ) {
+      alert( "SaveDBs()" );
       if( Name != "" ) {
-         Keyboard.dismiss();
+         // Keyboard.dismiss();
 
          await CStore.Save( props.dbs_name, props.object )
          .
-         // then( r => inputs.forEach( i => i( "" ) ) );
-         then( r => {
-            inputs.forEach( i => i( "" ) );
-         } );
+         then( r => inputs.forEach( i => i( "" ) ) );
+         // then( r => {
+         //    inputs.forEach( i => i( "" ) );
+         // } );
       }
+      // SaveDBs( { dbs_name: "customer_dbs", object: customersList } )
    }
 
    async function EraseData() {
@@ -417,17 +419,16 @@ export default function NewCustomer( { ...props } ) {
                            txt="erase DBs"
                            onPress={ async () => { await AsyncStorage.removeItem( "customer_dbs" ) } }
                         />
-                        <Touch 
+                        <Press 
                            touchSty={{
                               backgroundColor: "#00559C",
                            }}
                            txtSty={{
                               color: "#fff",
                            }}
-                           txt="cadastrar"
-                           // onPress={ () => { GetNSaveData( "customer_dbs" ) } }
-                           // onPress={ () => { CStore.Save( "customer_dbs", customersList ) } }
-                           onPress={ () => { SaveDBs( { dbs_name: "customer_dbs", object: customersList } ) } }
+                           text="cadastrare"
+                           // onPress={ () => { SaveDBs( { dbs_name: "customer_dbs", object: customersList } ) } }
+                           onPress={ () => { () => { alert( "Saving(): " ); } } }
                         />
 
                      </c.Section>
