@@ -68,6 +68,7 @@ export default function Dev( { ...props } ) {
                      textAlign: "center",
                      fontWeight: "bold",
                      textTransform: "uppercase",
+                     fontFamily: "GodOfThunder",
                   }}>
                      open modal
                      </Text>

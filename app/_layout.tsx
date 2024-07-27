@@ -38,6 +38,7 @@ export default function RootLayout() {
       , 
       [loaded] = useFonts( {
         SpaceMono: require('@/assets/fonts/SpaceMono-Regular.ttf'),
+        GodOfThunder: require('@/assets/fonts/GodOfThunder.ttf'),
       } )   
    ;
 
@@ -46,15 +47,16 @@ export default function RootLayout() {
          SplashScreen.hideAsync();
      }
    }, [loaded] );
- 
-   if( !loaded ) { return null; }
 
    useEffect( () => {
       onAuthStateChanged( FirebaseAuth, user => {
-         console.log( { User } );
-         setUser( User ); 
+         console.log( { user } );
+         setUser( user ); 
       } );
    }, [] );
+ 
+   if( !loaded ) { return null; }
+
 
    return( <>
       <Stack screenOptions={ { ...stack_screenOptions } } >

@@ -25,9 +25,26 @@ import { Icon } from "./clb-icons";
 /* == [ exports ]
 == == == == == == == == == */
 export function HeaderTitle( { ...props } ) {
-
+   const hs = StyleSheet.create( {
+      text: {
+         fontFamily: "GodOfThunder",
+         textAlign: "center",
+         fontWeight: "bold",
+         fontSize: 18,
+         margin: 0,
+         padding: 0,
+         lineHeight: 16,
+         color: "#fff",
+         textShadowColor: "#0005",
+         textShadowRadius: 8,
+         textShadowOffset: {
+            width: 2, height: 3
+         },
+      },
+      text_e: { color: "#daa520" }
+   } );
    return( <>
-      <Image source={ require( "@/assets/images/EA/EA-logo-appbar-2.png" ) }
+      {/* <Image source={ require( "@/assets/images/EA/EA-logo-appbar-2.png" ) }
          style={ {
             resizeMode: "contain",
             width: 140,
@@ -35,7 +52,12 @@ export function HeaderTitle( { ...props } ) {
             alignSelf: "center",
             
          } }
-      />
+      /> */}
+      <View>
+         <Text style={[ hs.text,  ]}>Eletrica</Text>
+         <Text style={[ hs.text, hs.text_e ]}>&</Text>
+         <Text style={[ hs.text,  ]}>Art</Text>
+      </View>
    </> );
 }
 
