@@ -54,9 +54,9 @@ export function HeaderTitle( { ...props } ) {
          } }
       /> */}
       <View>
-         <Text style={[ hs.text,  ]}>Eletrica</Text>
+         <Text style={[ hs.text, ]}>Eletrica</Text>
          <Text style={[ hs.text, hs.text_e ]}>&</Text>
-         <Text style={[ hs.text,  ]}>Art</Text>
+         <Text style={[ hs.text, ]}>Art</Text>
       </View>
    </> );
 }

@@ -11,3 +11,12 @@ npx expo install react-native-screens react-native-safe-area-context
 
 # after installing and config FirebaseConfig.tsx
 npx expo customize metro.config.js
+
+
+
+# FIREBASE 2 with expo
+
+npx expo install @react-native-firebase/app
+
+npx expo install @react-native-firebase/auth @react-native-firebase/crashlytics
+

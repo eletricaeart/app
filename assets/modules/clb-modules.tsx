@@ -38,10 +38,10 @@ export function AppBar( { ...props } ) {
       <View 
          style={ {
             backgroundColor: "#00559C",
-            elevation: 10,
+            elevation: 5,
             borderColor: "#3333",
             borderBottomColor: "#3333",
-            borderBottomWidth: 2,
+            borderBottomWidth: 0,
             zIndex: 9,
          } }
       >
@@ -244,7 +244,7 @@ export function Press( { ...props } ) {
       ,
       color = props.color || "#0075BD"
       ,
-      width = props.width || "auto"
+      width = props.width 
       ,
       styles = StyleSheet.create( {
          root: {
@@ -335,6 +335,19 @@ export function Touch( { ...props } ) {
             { props.txt }
          </Text>
       </TouchableOpacity>
+   </> );
+}
+
+
+
+/* == [ sheet ]
+== == == == == == == == == */
+export function Sheet( { ...props } ) {
+
+   return( <>
+      <View  style={[ props.style, { flex: 1, width: "100%", } ]}>
+         { props.children }
+      </View>
    </> );
 }
 

@@ -1,6 +1,7 @@
 
 
 import React, { useState} from "react";
+import Svg, { Path, Polygon, ClipPath, SvgProps, } from "react-native-svg";
 
 import {
    Header,
@@ -9,10 +10,13 @@ import {
    Press,
    Drawer,
 } from "@/assets/modules/clb-modules";
+import * as c from "@/assets/modules/clb-html";
+import {
+   BtnSquare01,
+} from "@/assets/modules/clb-svg";
 
 import api from "@/assets/services/api";
 
-import * as c from "@/assets/modules/clb-html";
 
 import {
    StatusBar,
@@ -34,6 +38,26 @@ import {
 } from "@/assets/modules/clb-icons";
 
 
+export const SvgComponent = ( props: SvgProps ) => (
+   <Svg
+     xmlns="http://www.w3.org/2000/svg"
+     shapeRendering="geometricPrecision"
+     textRendering="geometricPrecision"
+     viewBox="0 0 400 100"
+     {...props}
+   //   width={ "100%" }
+   //   height={ 100 }
+   >
+     <Path
+       fill="#00559c"
+       stroke="#3f5787"
+       strokeWidth={ 2 }
+       d="M0 24.499 18.075 0H400v77.151L378.782 100H0V24.499Z"
+     />
+   </Svg>
+);
+
+
 export default function Dev( { ...props } ) {
    const 
       [ ModalVisibility, setModalVisibility ] = useState( false )
@@ -45,13 +69,13 @@ export default function Dev( { ...props } ) {
 
    {/* modal */}
    return( <>
-      <c.Section bg="#245" style={{
+      <c.Section bg="#2450" style={{
          flex: 1,
          // minHeight: 750,
       }}>
          <c.Header>
             <c.Content>
-            <c.H2 color="#fff">Modal: RN</c.H2>
+            <c.H2 >Modal: RN</c.H2>
             </c.Content>
          </c.Header>
          <c.Content>
@@ -133,11 +157,19 @@ export default function Dev( { ...props } ) {
                            <c.H3>
                               { LoginFormActivated ? "Login here" : "Sign up here" }
                            </c.H3>
-                     
                   </c.Content>
+                  
 
                </View>
             </Modal>
+
+            <Pressable style={{ elevation: 10, width: "100%", }} onPress={ () => { alert( "oi" );  } }>
+               <BtnSquare01 fill="#00559c" bg="#fff0">
+                  <Text style={{ fontSize: 18, fontWeight: "bold", color: "#fff", }}>
+                     mfionsoin
+                  </Text>
+               </BtnSquare01> 
+            </Pressable>
 
          </c.Content>
       </c.Section>

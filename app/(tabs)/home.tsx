@@ -6,6 +6,7 @@ import {
    Header,
    PageFooter,
    BottomNavigationBar,
+   Sheet,
 } from "@/assets/modules/clb-modules";
 
 import {
@@ -32,64 +33,12 @@ export default function Home( { ...props } ) {
  
 
    return( <>
-      <c.Header bg="#f5f5f5">
-         <c.Content style={{ alignItems: "start", }}>
-            <c.H2 color="#00559C">Home</c.H2>
-            <c.H4 color="#777">{ Subtitle }</c.H4>
-         </c.Content>
-      </c.Header>
-      <c.Section bg="#f5f5f5" style={{ flex: 1, }}>
-         <c.Content>
-            <c.Tiles style={{ flexDirection: "row", justifyContent: "space-between" }}>
-
-               <c.Tile>
-                  <c.Content bg="#fff">
-                     <c.H4 >Nome</c.H4>
-                     <c.P color="#000">
-                        hfu ufufsdufhs
-                     </c.P>
-                  </c.Content>
-               </c.Tile>
-
-               <c.Tile>
-                  <c.Content bg="#fff">
-                     <c.H4 >Nome</c.H4>
-                     <c.P color="#000">
-                        hfu ufufsdufhs
-                     </c.P>
-                  </c.Content>
-               </c.Tile>
-               
-               <c.Tile>
-                  <c.Content bg="#fff">
-                     <c.H4 >Nome</c.H4>
-                     <c.P color="#000">
-                        hfu ufufsdufhs
-                     </c.P>
-                  </c.Content>
-               </c.Tile>
-               
-               <c.Tile>
-                  <c.Content bg="#fff" style={{ minHeight: 50, }}>
-                     <c.H4 >Nome</c.H4>
-                     <c.P color="#000">
-                        hfu ufufsdufhs
-                     </c.P>
-                  </c.Content>
-               </c.Tile>
-               
-               <c.Tile>
-                  <c.Content bg="#fff">
-                     <c.H4 >Nome</c.H4>
-                     <c.P color="#000">
-                        hfu ufufsdufhs
-                     </c.P>
-                  </c.Content>
-               </c.Tile>
-
-            </c.Tiles>
-         </c.Content>
-      </c.Section>
+      <Sheet 
+         style={{ backgroundColor: "#0000", 
+            alignItems: "center", justifyContent: "center",
+         }}>
+         <Text>Home</Text>
+      </Sheet>
    </> );
 }
 

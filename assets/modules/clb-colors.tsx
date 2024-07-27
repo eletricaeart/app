@@ -15,6 +15,9 @@ export const
          elevation: 10,
          shadowColor: "#0003",
          shadowRadius: 15,
+         shadowOffset: {
+            width: 3, height: 4
+         },
       },
    } )
 ;
