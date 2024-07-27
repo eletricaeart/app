@@ -13,7 +13,7 @@ export const
    elevation = StyleSheet.create( {
       elevation: {
          elevation: 10,
-         shadowColor: "#0005",
+         shadowColor: "#0003",
          shadowRadius: 15,
       },
    } )

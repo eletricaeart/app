@@ -17,7 +17,7 @@ import { ActivityIndicator, Button } from "react-native-paper";
 import { router } from "expo-router";
 import TabLayout from "@/app/(tabs)/_layout";
 
-import { FirebaseApp, FirebaseAuth } from "@/FirebaseConfig";
+import { FirebaseApp, FirebaseAuth,  } from "@/FirebaseConfig";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as CStore from "@/assets/modules/clb-dbs";
@@ -178,7 +178,7 @@ export default function Index() {
                   {
                      Loading ? (
                         <ActivityIndicator 
-                        size="large" color="#fc0fc0"
+                        size="large" color="#00559c"
                         /> )
                         : 
                         ( <>
@@ -235,11 +235,16 @@ const
          padding: 16,   
       },
       footer: {
+         // backgroundColor: "#fc0",
+         width: "100%",
          margin: 16,
+         padding: 16,
          gap: 16,
+         alignItems: "center",
       },
       btn: {
-         width: "50%",
+         // width: "50%",
+         elevation: 1,
       },
    } )
 ;

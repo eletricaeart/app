@@ -240,7 +240,7 @@ export default function Customers( { ...props } ) {
       backgroundColor: "#900",
    }}>
       <ScrollView style={{ flex: 1, backgroundColor: "#e2f4fe", }}>
-         <c.Section bg="#e2f4fe" style={{ flex: 1, }}>
+         <c.Section bg="#e2f4fe" style={{ flex: 1, paddingBottom: 75, }}>
             <c.Header>
                <c.Content>
                   <c.H2>Clientes</c.H2>
@@ -268,7 +268,7 @@ export default function Customers( { ...props } ) {
    </View>
    <Press text="Cadastrar novo" 
    pressedText="Cadastrar agora" 
-   style={[ { position: "absolute", bottom: 16, right: 16, }, elevation.elevation ]}
+   style={[ s.fab, elevation.elevation ]}
    onPress={ () => {
       setModalVisibility( true );
    } }/>
@@ -607,6 +607,7 @@ const s = StyleSheet.create( {
       backgroundColor: '#ec5990',
       borderRadius: 4,
    },
+   fab: { position: "absolute", bottom: 16, right: 16, width: "auto" },
 } );
 
 

@@ -40,7 +40,7 @@ export function AppBar( { ...props } ) {
             backgroundColor: "#00559C",
             elevation: 10,
             borderColor: "#3333",
-            borderBottomColor: "#000",
+            borderBottomColor: "#3333",
             borderBottomWidth: 2,
             zIndex: 9,
          } }
@@ -244,7 +244,7 @@ export function Press( { ...props } ) {
       ,
       color = props.color || "#0075BD"
       ,
-      width = props.width
+      width = props.width || "auto"
       ,
       styles = StyleSheet.create( {
          root: {

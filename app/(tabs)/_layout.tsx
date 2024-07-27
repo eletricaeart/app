@@ -196,7 +196,7 @@ export default function MyComponent() {
           },
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="NewCustomer"
         component={Routes.NewCustomer}
         options={{
@@ -205,7 +205,7 @@ export default function MyComponent() {
             return <Icon i="mi" name="people" color="#ffab00"/>;
           },
         }}
-      />
+      /> */}
     </Tab.Navigator>
   );
 }
