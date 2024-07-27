@@ -39,6 +39,8 @@ export default function Dev( { ...props } ) {
       [ ModalVisibility, setModalVisibility ] = useState( false )
       ,
       [ CEP, setCEP ] = useState( "" )
+      ,
+      [ LoginFormActivated, setLoginFormActivated ] = useState( true )
    ;
 
    {/* modal */}
@@ -111,9 +113,12 @@ export default function Dev( { ...props } ) {
 
                         <c.Section style={ s.formFooter }>
 
+
                            <Press text="oi"
                            bg="#fc05" color="#fffc"
-                           onPress={ () => {} }
+                           onPress={ () => {
+                              setLoginFormActivated( !LoginFormActivated );
+                           } }
                            />
 
                            <Press text="oi"
@@ -124,6 +129,9 @@ export default function Dev( { ...props } ) {
 
                         </c.Section>
                      </c.Section>
+                           <c.H3>
+                              { LoginFormActivated ? "Login here" : "Sign up here" }
+                           </c.H3>
                      
                   </c.Content>
 

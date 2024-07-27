@@ -17,7 +17,7 @@ import { ActivityIndicator, Button } from "react-native-paper";
 import { router } from "expo-router";
 import TabLayout from "@/app/(tabs)/_layout";
 
-import { FirebaseAuth } from "@/FirebaseConfig";
+import { FirebaseApp, FirebaseAuth } from "@/FirebaseConfig";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as CStore from "@/assets/modules/clb-dbs";
@@ -26,10 +26,12 @@ import {
    signInWithEmailAndPassword, 
    createUserWithEmailAndPassword,
    onAuthStateChanged,
-   User, 
+   User,
+   getAuth, 
 } from "firebase/auth";
 
 import { Press } from "@/assets/modules/clb-modules";
+import { firebase } from "@react-native-firebase/database";
 
 
 export default function Index() {
@@ -45,6 +47,8 @@ export default function Index() {
       auth = FirebaseAuth
       ,
       SignIn = async () => {
+         let userCredential = {};
+
          setLoading( true );
          try {
             const 
@@ -52,14 +56,29 @@ export default function Index() {
             ;
 
             console.log( "SigIn() response: \n\n\n", response );
+            userCredential = { ...response };
          }
          catch( err: any ) {
-            console.log( "SignIn() err: \n\n\n", err );
+            console.log( "SignIn() catch err: \n\n\n", err );
             alert(
                `Não consegui fazer seu login!\naconteceu esse erro aqui: \n${ err.message }`
             );
          }
          finally {
+            console.log( `finally UserCredential: \n\n\n`, userCredential );
+
+            // if( JSON.stringify( userCredential ) == "{}" ) {
+            if( User ) {
+               const json = JSON.stringify( User );
+               await AsyncStorage.setItem( "User", json );   
+               
+               // const json = JSON.stringify( userCredential );
+               // await AsyncStorage.setItem( "User", json ); 
+               // setUser( userCredential );
+            } else {
+               console.log( "{ empty }" );
+            }
+
             setLoading( false );
          }
       }
@@ -102,17 +121,28 @@ export default function Index() {
       }
    ;
 
+
+
+
    useEffect( () => {
       onAuthStateChanged( FirebaseAuth, User => {
-         console.log( "aquiS: ", User );
+         console.log( "aqui[]: ", User );
          setUser( User ); 
-         // if( User != null ) {
-         //    SaveUser2DBs().then( v => alert( "savedInEffect" ) );
-         // } else {
-         //    alert( `SaveInEffect() User = null` );
-         // }
       } );
    }, [] );
+
+   useEffect( () => {
+      async function load() {
+         if( User ) {
+            const jsn = JSON.stringify( User );
+            await AsyncStorage.setItem( "User", jsn );
+         }
+      }
+      load();
+   }, [ User ] );
+
+   // firebase.database().ref( "users" ).child( value.user.uid ).set( { name: name } );
+
 
    return( <>
       { !User ? 

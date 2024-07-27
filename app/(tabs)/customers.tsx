@@ -323,17 +323,19 @@ export default function Customers( { ...props } ) {
                                     <View style={ s.duoBox }>
                                        <Text style={ s.label }>Celular</Text>
                                        <TextInput style={ s.input }
-                                    value={ Cellphone }
-                                    onChangeText={ setCellphone }
-                                 />
+                                          value={ Cellphone }
+                                          onChangeText={ setCellphone }
+                                          keyboardType="number-pad"
+                                       />
                                     </View>
                                     
                                     <View style={ s.duoBox }>
                                        <Text style={ s.label }>WhatsApp</Text>
                                        <TextInput style={ s.input }
-                                    value={ Whatsapp }
-                                    onChangeText={ setWhatsapp }
-                                 />
+                                          value={ Whatsapp }
+                                          onChangeText={ setWhatsapp }
+                                          keyboardType="number-pad"
+                                       />
                                     </View>
                                  </View>
                                  
@@ -341,17 +343,19 @@ export default function Customers( { ...props } ) {
                                     <View style={ s.duoBox }>
                                        <Text style={ s.label }>Telefone</Text>
                                        <TextInput style={ s.input }
-                                    value={ Phone }
-                                    onChangeText={ setPhone }
-                                 />
+                                          value={ Phone }
+                                          onChangeText={ setPhone }
+                                          keyboardType="number-pad"
+                                       />
                                     </View>
                                     
                                     <View style={ s.duoBox }>
                                        <Text style={ s.label }>Telefone 2</Text>
                                        <TextInput style={ s.input }
-                                    value={ Phone2 }
-                                    onChangeText={ setPhone2 }
-                                 />
+                                          value={ Phone2 }
+                                          onChangeText={ setPhone2 }
+                                          keyboardType="number-pad"
+                                       />
                                     </View>
                                  </View>
                                  
@@ -359,23 +363,26 @@ export default function Customers( { ...props } ) {
                                  <TextInput style={ s.input }
                                     value={ Email }
                                     onChangeText={ setEmail }
+                                    keyboardType="email-address"
                                  />
                                  
                                  <View style={ [ s.duo, {  } ] }>
                                     <View style={ s.duoBox }>
                                        <Text style={ s.label }>RG/IE</Text>
                                        <TextInput style={ s.input }
-                                    value={ Rg }
-                                    onChangeText={ setRg }
-                                 />
+                                          value={ Rg }
+                                          onChangeText={ setRg }
+                                          keyboardType="number-pad"
+                                       />
                                     </View>
                                     
                                     <View style={ s.duoBox }>
                                        <Text style={ s.label }>CPF</Text>
                                        <TextInput style={ s.input }
-                                    value={ Cpf }
-                                    onChangeText={ setCpf }
-                                 />
+                                          value={ Cpf }
+                                          onChangeText={ setCpf }
+                                          keyboardType="number-pad"
+                                       />
                                     </View>
                                  </View>
                               </c.Section>
@@ -389,6 +396,7 @@ export default function Customers( { ...props } ) {
                                     <View style={ s.duoBox }>
                                        <Text style={ s.label }>CEP</Text>
                                        <TextInput style={ s.input }
+                                       keyboardType="number-pad"
                                        value={  Cep }
                                        placeholder="00.000-00"
                                        onChangeText={ text => { 
@@ -417,9 +425,10 @@ export default function Customers( { ...props } ) {
                                     <View style={ s.duoBox }>
                                        <Text style={ s.label }>Número</Text>
                                        <TextInput style={ s.input }
-                                    value={ Number }
-                                    onChangeText={ setNumber }
-                                 />
+                                          keyboardType="number-pad"
+                                          value={ Number }
+                                          onChangeText={ setNumber }
+                                       />
                                     </View>
                                     
                                     <View style={ s.duoBox }>
