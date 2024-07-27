@@ -13,10 +13,46 @@ npx expo install react-native-screens react-native-safe-area-context
 npx expo customize metro.config.js
 
 
+# Native Wind
+yarn add nativewind
+yarn add --dev tailwindcss@3.3.2
+
+// Run npx tailwindcss init to create a tailwind.config.js file
+npx tailwindcss init
+// tailwind.config.js
+module.exports = {
+- content: [],
++ content: ["./App.{js,jsx,ts,tsx}", "./<custom directory>/**/*.{js,jsx,ts,tsx}"],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}
+
 
 # FIREBASE 2 with expo
 
 npx expo install @react-native-firebase/app
 
 npx expo install @react-native-firebase/auth @react-native-firebase/crashlytics
+
+
+
+
+# rn dark login screen
+https://github.com/sevvaleygul0/react-native-dark-login-screen
+
+npm i react-native-dark-login-screen
+
+"react": ">= 16.x.x",
+"react-native": ">= 0.55.x",
+
+import DarkLoginScreen from "react-native-dark-login-screen";
+
+<DarkLoginScreen
+  handleSignInButton={() => {}}
+  handleGoogleLogIn={() => {}}
+  handleFacebookLogIn={() => {}}
+  handleSignInButton={() => {}}
+/>
 

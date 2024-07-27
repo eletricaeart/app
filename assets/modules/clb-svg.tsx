@@ -52,7 +52,7 @@ export const SvgSquare02 = ( { ...props } ) => {
          <Path
             fill={ fill }
             stroke="#3f5787"
-            strokeWidth={0.8}
+            strokeWidth={0}
             d="M0 16.287 14.931 0H400v40.648L382.711 60H0V16.287Z"
          />
       </Svg>
@@ -78,9 +78,10 @@ export const BtnSquare01 = ( { ...props } ) => {
          width: "100%",
          // height: 50,
          aspectRatio: "4 / .6",
-         position: "relative"
+         position: "relative",
+         
       }}>
-         <SvgSquare02 style={ [ { padding: Pressed ? 8 : 0  }, svgSty, ]} fill={ fill } />
+         <SvgSquare02 style={ [ { padding: Pressed ? 8 : 0 }, svgSty, ]} fill={ fill } />
          <View style={{ position: "absolute", backgroundColor: "#fc00", 
             width: "100%", height: "100%", 
             alignItems: "center", justifyContent: "center",

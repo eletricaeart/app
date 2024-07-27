@@ -1,7 +1,6 @@
 
 
 import React, { useState} from "react";
-import Svg, { Path, Polygon, ClipPath, SvgProps, } from "react-native-svg";
 
 import {
    Header,
@@ -36,26 +35,6 @@ import {
 import {
    Icon,
 } from "@/assets/modules/clb-icons";
-
-
-export const SvgComponent = ( props: SvgProps ) => (
-   <Svg
-     xmlns="http://www.w3.org/2000/svg"
-     shapeRendering="geometricPrecision"
-     textRendering="geometricPrecision"
-     viewBox="0 0 400 100"
-     {...props}
-   //   width={ "100%" }
-   //   height={ 100 }
-   >
-     <Path
-       fill="#00559c"
-       stroke="#3f5787"
-       strokeWidth={ 2 }
-       d="M0 24.499 18.075 0H400v77.151L378.782 100H0V24.499Z"
-     />
-   </Svg>
-);
 
 
 export default function Dev( { ...props } ) {
