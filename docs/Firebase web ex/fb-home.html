@@ -33,7 +33,181 @@
 
    <form action="" id="form">
       <h2>Wellcome</h2>
+
+      <section>
+         <p>output_UserName</p>
+         <input type="text" id="output_UserName">
+      </section>
+      <section>
+         <style>
+            section:has( section ) {
+               display: flex;
+               flex-direction: column;
+               gap: 2em;
+               padding: 2em 0;
+            }
+
+            input {
+               border-radius: 24px;
+               border: transparent;
+               height: 35px;
+               padding: 1em;
+               outline-color: #fc0;
+            }
+            input[type="button"] {
+               background: #29f5;
+               cursor: pointer;
+            }
+         </style>
+         <section><input type="button" id="btn_save" value="save "></section>
+         <section><input type="button" id="btn_update" value="update "></section>
+         <section><input type="button" id="btn_get" value="get "></section>
+         <section><input type="button" id="btn_delete" value="delete"></section>
+      </section>
    </form>
    
+   <script type="module">
+      /**
+       * https://firebase.google.com/docs/web/setup
+       * 
+       * https://firebase.google.com/docs/auth/web/start#web_2
+       * 
+       * https://firebase.google.com/docs/web/learn-more#available-libraries
+       * 
+       * 
+       */
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+      // import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-analytics.js";
+      // import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+      import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+      import { getDatabase, ref, child, get, set, update, remove } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js"
+      // TODO: Add SDKs for Firebase products that you want to use
+      // https://firebase.google.com/docs/web/setup#available-libraries
 
+      // Your web app's Firebase configuration
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      const firebaseConfig = {
+         apiKey: "AIzaSyAOJfkU9SdDNkhZD426G0jGW5tsMRoDkyw",
+         authDomain: "eletrica-e-art.firebaseapp.com",
+         databaseURL: "https://eletrica-e-art-default-rtdb.firebaseio.com",
+         projectId: "eletrica-e-art",
+         storageBucket: "eletrica-e-art.appspot.com",
+         messagingSenderId: "443777007460",
+         appId: "1:443777007460:web:df8295ae5566e2130ac471",
+         measurementId: "G-LWKXMFZSE5"
+      };
+
+      /**
+       * https://www.youtube.com/@HassaanRaza
+       * https://www.youtube.com/watch?v=7hB2ASYBkXo
+       */
+      addEventListener( "load", () => {
+         // Initialize Firebase
+         const 
+            fbApp = initializeApp( firebaseConfig )
+            ,
+            fbAuth = getAuth()
+         ;
+
+         async function SaveData2FbDB( props ) {
+            await set( 
+               ref( getDatabase(), "Users" ), 
+               {
+                  name: "Anselmo",
+                  gender: "Masculino",
+                  vampire: ( true ),
+                  age: ( 38 ),
+               }
+            ).then( () => {
+               alert( "data has been added on fb");
+            } ).catch( err => {
+               alert( "deu ruim no envio" );
+            } );
+         }
+
+         async function GetDataFromFbDB( props ) {
+            try {
+               const dbRef = ref( getDatabase() );
+               const data = "";
+               console.log( "data 1: ", data );
+               get(
+                  child( dbRef, "Users" ).then( snapshot => {
+                     if( snapshot.exists() ) {
+                        // data = ( snapshot.val().vampire ) ? "Sim" : "Não";
+                        output_UserName.value = ( snapshot.val().vampire ) ? "Sim" : "Não";
+                        console.log( "data if: ", data );
+                     } else {
+                        alert( "User doens't exist" );
+                     }
+                  } )
+               );
+
+               return data;
+            } catch( err ) {
+               alert( "Unsuccessful" );
+            }
+         }
+
+         async function UpdateDataOnFbDB( props ) {
+            await update( 
+               ref( getDatabase(), "Users" ),  
+               {
+
+                  // name: "Anselmo",
+                  // gender: "Masculino",
+                  // vampire: ( true ),
+                  // age: ( 38 ),
+                  
+                  name: "Noely",
+                  gender: "Feminino",
+                  vampire: ( true ),
+                  age: ( 28 ),
+               }
+            ).then( () => {
+               alert( "data has been updated on fb");
+            } ).catch( err => {
+               alert( "deu ruim no envio" );
+            } );
+         }
+
+         async function RemoveDataOnFbDB( props ) {
+            await remove( 
+               ref( getDatabase(), 
+               "Users"
+            ) ).then( () => {
+               alert( "data has been updated on fb");
+            } ).catch( err => {
+               alert( "deu ruim no envio" );
+            } );
+         }
+
+
+
+         btn_save.addEventListener( "click", () => {
+            SaveData2FbDB();
+         } );
+         btn_update.addEventListener( "click", () => {
+            UpdateDataOnFbDB();
+         } );
+         btn_get.addEventListener( "click", () => {
+            GetDataFromFbDB().then( response => output_UserName.value = response );
+         } );
+         btn_delete.addEventListener( "click", () => {
+            RemoveDataOnFbDB();
+         } );
+
+
+         console.log( "signup" );
+
+         form.addEventListener( "submit", () => {
+            event.preventDefault();
+
+            SignUp(
+               fbAuth, input_email.value, input_password.value
+            ).then( () => {
+            } );
+         } );
+      } );
+   </script>
 </body>
