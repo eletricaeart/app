@@ -99,9 +99,7 @@ export default function Index() {
          }
          catch( err: any ) {
             console.log( "SignUp() err: \n\n\n", err );
-            alert(
-               `Não consegui fazer seu cadastro!\ndeu esse erro aqui: \n${ err.message }`
-            );
+            alert( `Deu ruim no cadastro!\n\ncódigo do erro: ${ err.code }\n${ err.message }` );
          }
          finally {
             setLoading( false );

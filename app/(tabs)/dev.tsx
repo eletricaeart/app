@@ -3,40 +3,21 @@
 import React, { useState} from "react";
 
 import {
-   StatusBar,
-   StyleSheet,
-   ScrollView,
-   View,
-   Text,
-   Image,
-   Modal,
-   Pressable,
-   Button,
-   ActivityIndicator,
-   Alert,
-   TextInput,
-} from "react-native";
+   StatusBar, StyleSheet, ScrollView, View, Text,
+   Image, Modal, Pressable, Button, ActivityIndicator,
+   Alert, TextInput, } from "react-native";
 
 import { FirebaseApp, FirebaseDB, } from "@/FirebaseConfig";
-import database from '@react-native-firebase/database';
 
 import {
-   Header,
-   PageFooter,
-   BottomNavigationBar,
-   Press,
-   Drawer,
-} from "@/assets/modules/clb-modules";
+   Header, PageFooter, BottomNavigationBar,
+   Press, Drawer, } from "@/assets/modules/clb-modules";
 
 import * as c from "@/assets/modules/clb-html";
 
-import {
-   BtnSquare01,
-} from "@/assets/modules/clb-svg";
+import { BtnSquare01, } from "@/assets/modules/clb-svg";
 
-import {
-   Icon,
-} from "@/assets/modules/clb-icons";
+import { Icon, } from "@/assets/modules/clb-icons";
 
 
 FirebaseApp;
@@ -52,20 +33,14 @@ export default function Dev( { ...props } ) {
 
    async function InsertRefInDB( props ) {
       try {
-         // database().ref( props.ref ).child( props.data );
-         // FirebaseDB()
       } catch( err: any ) {
          console.log( "InsertInDB() err:\n\n\n", err );
       }
-      
    }
    
    {/* modal */}
    return( <>
-      <c.Section bg="#2450" style={{
-         flex: 1,
-         // minHeight: 750,
-      }}>
+      <c.Section bg="#2450" style={{ flex: 1, }}>
          <c.Header>
             <c.Content>
             <c.H2 >Modal: RN</c.H2>
@@ -92,73 +67,12 @@ export default function Dev( { ...props } ) {
                </View>
             </Pressable>
 
-
-            {/*  == [ Modal ]
-            == == == == == == == == ==  */}
-            <Modal visible={ ModalVisibility } 
-               onRequestClose={ () => { setModalVisibility( false ) } }
-               animationType="slide"
-               presentationStyle="formSheet"
-               style={ s.modal }
+            <Pressable 
+               style={{ elevation: 10, width: "100%", }} 
+               onPress={ () => { InsertRefInDB( {
+                  ref: "produtos", data: "name"
+               } ).then( () => { console.log( "produtos enviados ao db" ) } );  } }
             >
-               <View style={ s.modalHead }>
-                  <Text style={ s.modalHeadTT }>Modal Screen</Text>
-               </View>
-               <View>
-                  <c.Content>
-                     <Pressable 
-                        onPress={ () => { setModalVisibility( !ModalVisibility ) } }
-                     >
-                        <View style={ s.btn }>
-                           <Text style={ s.btnTxt}>
-                              close modal
-                           </Text>
-                        </View>
-                     </Pressable>
-                  </c.Content>
-
-                  <c.Content style={ s.modalContent }>
-                     {/* npx expo install axios */}
-
-                     <c.Section style={ s.form }>
-                        <c.H4 color="#fc0">cep</c.H4>
-                        <TextInput style={ s.input }
-                        placeholder="11.702-600"
-                        value=""
-                        onChangeText={ text => setCEP( text ) }
-                        keyboardType="name-phone-pad"
-                        />
-
-                        <c.Section style={ s.formFooter }>
-
-
-                           <Press text="oi"
-                           bg="#fc05" color="#fffc"
-                           onPress={ () => {
-                              setLoginFormActivated( !LoginFormActivated );
-                           } }
-                           />
-
-                           <Press text="oi"
-                           style={ s.press }
-                           bg="#f27" color="#fffc"
-                           onPress={ () => {} }
-                           />
-
-                        </c.Section>
-                     </c.Section>
-                           <c.H3>
-                              { LoginFormActivated ? "Login here" : "Sign up here" }
-                           </c.H3>
-                  </c.Content>
-                  
-
-               </View>
-            </Modal>
-
-            <Pressable style={{ elevation: 10, width: "100%", }} onPress={ () => { InsertRefInDB( {
-               ref: "produtos", data: "name"
-            } ).then( () => { console.log( "produtos enviados ao db" ) } );  } }>
                <BtnSquare01 fill="#00559c" bg="#fff0">
                   <Text style={{ fontSize: 18, fontWeight: "bold", color: "#fff", }}>
                      mfionsoin
@@ -168,6 +82,70 @@ export default function Dev( { ...props } ) {
 
          </c.Content>
       </c.Section>
+
+
+      {/*  == [ Modal ]
+      == == == == == == == == ==  */}
+      <Modal visible={ ModalVisibility } 
+         onRequestClose={ () => { setModalVisibility( false ) } }
+         animationType="slide"
+         presentationStyle="formSheet"
+         style={ s.modal }
+      >
+         <View style={ s.modalHead }>
+            <Text style={ s.modalHeadTT }>Modal Screen</Text>
+         </View>
+         <View>
+            <c.Content>
+               <Pressable 
+                  onPress={ () => { setModalVisibility( !ModalVisibility ) } }
+               >
+                  <View style={ s.btn }>
+                     <Text style={ s.btnTxt}>
+                        close modal
+                     </Text>
+                  </View>
+               </Pressable>
+            </c.Content>
+
+            <c.Content style={ s.modalContent }>
+               {/* npx expo install axios */}
+
+               <c.Section style={ s.form }>
+                  <c.H4 color="#fc0">cep</c.H4>
+                  <TextInput style={ s.input }
+                  placeholder="11.702-600"
+                  value=""
+                  onChangeText={ text => setCEP( text ) }
+                  keyboardType="name-phone-pad"
+                  />
+
+                  <c.Section style={ s.formFooter }>
+
+
+                     <Press text="oi"
+                     bg="#fc05" color="#fffc"
+                     onPress={ () => {
+                        setLoginFormActivated( !LoginFormActivated );
+                     } }
+                     />
+
+                     <Press text="oi"
+                     style={ s.press }
+                     bg="#f27" color="#fffc"
+                     onPress={ () => {} }
+                     />
+
+                  </c.Section>
+               </c.Section>
+               <c.H3>
+                  { LoginFormActivated ? "Login here" : "Sign up here" }
+               </c.H3>
+            </c.Content>
+            
+
+         </View>
+      </Modal>
    </> );
 }
 
