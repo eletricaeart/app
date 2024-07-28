@@ -159,9 +159,7 @@ export default function Index() {
                      { IsLogin ? "Entre" : "Cadastre-se" }
                   </Text>
                
-
                   <View style={ s.form }>
-
                      <View style={ s.Label }>
                         <Text style={ s.label }>Email</Text>
                         <TextInput 

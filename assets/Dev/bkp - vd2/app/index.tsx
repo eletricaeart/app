@@ -39,7 +39,7 @@ import {
 } from "@/assets/modules/clb-svg";
 
 
-export default function Index() {
+export default function StartPage() {
    const 
       // bgImage = require( "@/assets/images/bgs/bg_09.jpeg" )
       // ,
@@ -150,6 +150,7 @@ export default function Index() {
 
 
    return( <>
+      <ActivityIndicator size={"large"} style={[ { flex: 1, justifyContent: "center", alignItems: "center", } ]}/>
       { !User ? 
       (
          <View style={ s.root } >
@@ -159,9 +160,7 @@ export default function Index() {
                      { IsLogin ? "Entre" : "Cadastre-se" }
                   </Text>
                
-
                   <View style={ s.form }>
-
                      <View style={ s.Label }>
                         <Text style={ s.label }>Email</Text>
                         <TextInput 
@@ -208,8 +207,6 @@ export default function Index() {
                                  </BtnSquare01> 
                               </Pressable>
 
-                              {/* <Press text="Login" onPress={ SignIn } style={ s. btn } />
-                              <Press text="Se Cadastrar" onPress={ SignUp } style={ s. btn } /> */}
                            </> )
                      }
                   </View>
@@ -231,14 +228,11 @@ const
          flex: 1,
          alignItems: "center",
          justifyContent: "center",
-         // backgroundColor: "#270"
-         
       },
       bgImage: {
          flex: 1,
          alignItems: "center",
          justifyContent: "center",
-         // backgroundColor: "#270"
          width: "100%",
       },
       tt: {
@@ -271,7 +265,6 @@ const
          padding: 16,   
       },
       footer: {
-         // backgroundColor: "#fc0",
          width: "100%",
          margin: 16,
          padding: 16,
@@ -279,7 +272,6 @@ const
          alignItems: "center",
       },
       btn: {
-         // width: "50%",
          elevation: 1,
       },
    } )

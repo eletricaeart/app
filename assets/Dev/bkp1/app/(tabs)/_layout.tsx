@@ -81,6 +81,8 @@ export default function MyComponent() {
             textColor: "#eee",
 
          }
+         // ,
+         // navigationBarColor: "#16181c"
       }}
       tabBar={({ navigation, state, descriptors, insets }) => (
         <BottomNavigation.Bar

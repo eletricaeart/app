@@ -66,7 +66,8 @@ export const BtnSquare01 = ( { ...props } ) => {
       color = props.color || "#fff",
       text = props.text,
       svgSty = props.svgSty,
-      IsPressed = props.IsPressed
+      IsPressed = props.IsPressed,
+      ratio = props.ratio || "4 / .6"
    ;
    const 
       [ Pressed, setPressed ] = useState( IsPressed )
@@ -77,7 +78,8 @@ export const BtnSquare01 = ( { ...props } ) => {
          backgroundColor: bg,
          width: "100%",
          // height: 50,
-         aspectRatio: "4 / .6",
+         // aspectRatio: "4 / .6",
+         aspectRatio: ratio,
          position: "relative",
          
       }}>
