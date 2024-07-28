@@ -3,21 +3,6 @@
 import React, { useState} from "react";
 
 import {
-   Header,
-   PageFooter,
-   BottomNavigationBar,
-   Press,
-   Drawer,
-} from "@/assets/modules/clb-modules";
-import * as c from "@/assets/modules/clb-html";
-import {
-   BtnSquare01,
-} from "@/assets/modules/clb-svg";
-
-import api from "@/assets/services/api";
-
-
-import {
    StatusBar,
    StyleSheet,
    ScrollView,
@@ -32,10 +17,29 @@ import {
    TextInput,
 } from "react-native";
 
+import { FirebaseApp, FirebaseDB, } from "@/FirebaseConfig";
+import database from '@react-native-firebase/database';
+
+import {
+   Header,
+   PageFooter,
+   BottomNavigationBar,
+   Press,
+   Drawer,
+} from "@/assets/modules/clb-modules";
+
+import * as c from "@/assets/modules/clb-html";
+
+import {
+   BtnSquare01,
+} from "@/assets/modules/clb-svg";
+
 import {
    Icon,
 } from "@/assets/modules/clb-icons";
 
+
+FirebaseApp;
 
 export default function Dev( { ...props } ) {
    const 
@@ -46,6 +50,16 @@ export default function Dev( { ...props } ) {
       [ LoginFormActivated, setLoginFormActivated ] = useState( true )
    ;
 
+   async function InsertRefInDB( props ) {
+      try {
+         // database().ref( props.ref ).child( props.data );
+         // FirebaseDB()
+      } catch( err: any ) {
+         console.log( "InsertInDB() err:\n\n\n", err );
+      }
+      
+   }
+   
    {/* modal */}
    return( <>
       <c.Section bg="#2450" style={{
@@ -142,7 +156,9 @@ export default function Dev( { ...props } ) {
                </View>
             </Modal>
 
-            <Pressable style={{ elevation: 10, width: "100%", }} onPress={ () => { alert( "oi" );  } }>
+            <Pressable style={{ elevation: 10, width: "100%", }} onPress={ () => { InsertRefInDB( {
+               ref: "produtos", data: "name"
+            } ).then( () => { console.log( "produtos enviados ao db" ) } );  } }>
                <BtnSquare01 fill="#00559c" bg="#fff0">
                   <Text style={{ fontSize: 18, fontWeight: "bold", color: "#fff", }}>
                      mfionsoin
