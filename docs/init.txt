@@ -13,21 +13,12 @@ npx expo install react-native-screens react-native-safe-area-context
 npx expo customize metro.config.js
 
 
-# Native Wind
-yarn add nativewind
-yarn add --dev tailwindcss@3.3.2
+# react native uuid
+yarn add react-native-uuid
 
-// Run npx tailwindcss init to create a tailwind.config.js file
-npx tailwindcss init
-// tailwind.config.js
-module.exports = {
-- content: [],
-+ content: ["./App.{js,jsx,ts,tsx}", "./<custom directory>/**/*.{js,jsx,ts,tsx}"],
-  theme: {
-    extend: {},
-  },
-  plugins: [],
-}
+import uuid from "react-native-uuid";
+uuid.v4(); // ⇨ "11edc52b-2918-4d71-9058-f7285e29d894"
+
 
 
 # FIREBASE 2 with expo

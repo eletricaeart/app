@@ -29,6 +29,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { FirebaseDB, SaveDataOnFbRDB } from "@/FirebaseConfig";
 // import { ref, set } from "firebase/database";
 
+import uuid from "react-native-uuid";
+
+
 
 /* == [ properties ]
 == == == == == == == == == */
@@ -139,7 +142,8 @@ export default function Customers( { ...props } ) {
       ]
       ,
       customersList = {
-         id: `c:${ Math.round( Math.random() * 999 ) }-${ Math.round( Math.random() * 999 ) }`,
+         // id: `c:${ Math.round( Math.random() * 999 ) }-${ Math.round( Math.random() * 999 ) }`,
+         id: uuid.v4(),
          Name: Name,
          Cellphone: Cellphone,
          Whatsapp: Whatsapp,
