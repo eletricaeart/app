@@ -3,33 +3,21 @@
 import React, { useState, useEffect, useRef } from "react";
 
 import {
-   StyleSheet,
-   ScrollView,
-   FlatList,
-   Modal,
-   View,
-   Text,
-   Image,
-   Pressable,
-   TextInput,
-   Keyboard,
+   StyleSheet, ScrollView, FlatList, Modal, View,
+   Text, Image, Pressable, TextInput, Keyboard,
 } from "react-native";
 
 import {
-   PageFooter,
-   BottomNavigationBar,
-   Fab,
-   Press,
-   Touch,
+   PageFooter, BottomNavigationBar, Fab, Press,
+   Touch, 
 } from "@/assets/modules/clb-modules";
 
-import * as c from "@/assets/modules/clb-html";
 import {
-   colors,
-   elevation,
+   colors, elevation,
 } from "@/assets/modules/clb-colors";
-import * as ea from "@/assets/modules/clb-ea";
 
+import * as c from "@/assets/modules/clb-html";
+import * as ea from "@/assets/modules/clb-ea";
 import * as Form from "@/assets/modules/clb-form";
 import * as CStore from "@/assets/modules/clb-dbs";
 import { Icon } from "@/assets/modules/clb-icons";
@@ -37,6 +25,9 @@ import { _ } from "@/assets/modules/clb";
 
 import { api_GetCEP } from "@/assets/services/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+
+import { FirebaseDB } from "@/FirebaseConfig";
+import { ref, set } from "firebase/database";
 
 
 /* == [ properties ]
@@ -194,13 +185,24 @@ export default function Customers( { ...props } ) {
       Keyboard.dismiss();
       if( Name != "" ) {
 
-         await CStore.Save( props.dbs_name, props.object )
-         .
-         then( r => {
+         // Insert data to AsyncStorage
+         await CStore.Save( 
+            props.dbs_name, props.object 
+         ).then( r => {
             inputs.forEach( i => i( "" ) );
             setModalVisibility( false );
             fetchData();
          } );
+
+         // Insert data into Firebase Realtime Dtabase
+         await set( ref( FirebaseDB, `customers/${ props.object.id }` ), 
+            props.object
+         ).then( () => {
+            alert( "SaveDBs() data has been added on fb");
+         } ).catch( err => {
+            alert( "SaveDBs() deu ruim no envio" );
+         } );
+         
       } else {
          alert( "Digite o nome do seu cliente" );
       }

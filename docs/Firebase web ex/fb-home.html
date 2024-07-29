@@ -37,6 +37,7 @@
       <section>
          <p>output_UserName</p>
          <input type="text" id="output_UserName">
+         <p><a href="./fb-signup.html">Cadastrar um novo usuário</a></p>
       </section>
       <section>
          <style>
@@ -130,13 +131,12 @@
             try {
                const dbRef = ref( getDatabase() );
                const data = "";
-               console.log( "data 1: ", data );
+
                get(
                   child( dbRef, "Users" ).then( snapshot => {
                      if( snapshot.exists() ) {
-                        // data = ( snapshot.val().vampire ) ? "Sim" : "Não";
                         output_UserName.value = ( snapshot.val().vampire ) ? "Sim" : "Não";
-                        console.log( "data if: ", data );
+
                      } else {
                         alert( "User doens't exist" );
                      }
