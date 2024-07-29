@@ -18,9 +18,9 @@ import * as c from "@/assets/modules/clb-html";
 import { BtnSquare01, } from "@/assets/modules/clb-svg";
 
 import { Icon, } from "@/assets/modules/clb-icons";
+import Svg, { Polygon } from "react-native-svg";
 
-
-FirebaseApp;
+// FirebaseApp;
 
 export default function Dev( { ...props } ) {
    const 
@@ -81,6 +81,15 @@ export default function Dev( { ...props } ) {
             </Pressable>
 
          </c.Content>
+
+         <View style={{ width: "100%", backgroundColor: "#00559c",  }}>
+            <Svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" style={{ }}> 
+               <Polygon points="0 14, 14 0, 100 0, 100 86, 86 100, 0 100" fill={ "#0055c9" } 
+               fillOpacity={ 1 }
+               /> 
+            </Svg> 
+         </View>
+
       </c.Section>
 
 

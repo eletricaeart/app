@@ -80,14 +80,19 @@ export function UsersCard( { ...props } ) {
             backgroundColor: "#fff",
             borderRadius: 16,
             padding: 16,
-            borderColor: "#7777",
+            borderColor: "#fc0",
             borderWidth: 0,
+            elevation: .2,
          }}>
             <View style={{
                borderRadius: 100,
-               width: 70,
+               // width: "70%",
+               width: "100%",
                aspectRatio: 1,
                flex: .20,
+               alignItems: "center",
+               justifyContent: "center",
+               backgroundColor: "#7777"
             }}>
                <Avatar.Image source={ profile }
                // size={ 70 }

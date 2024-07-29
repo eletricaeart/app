@@ -1,0 +1,10 @@
+
+
+# SHARE on https://... 
+
+facebook
+/?share=facebook&nb=1
+
+X
+/?share=x&nb=1
+

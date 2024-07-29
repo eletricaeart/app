@@ -5,15 +5,18 @@ npx create-expo-app name -t expo-template-blank-typescript
 cd ./name
 npx expo install firebase
 
-# navigation
+/** 
+ *  navigation
 npm install @create-navigation/native @react-navigation/native-stack
 npx expo install react-native-screens react-native-safe-area-context
 
-# after installing and config FirebaseConfig.tsx
+/** 
+ *  after installing and config FirebaseConfig.tsx
 npx expo customize metro.config.js
 
 
-# react native uuid
+/** 
+ *  react native uuid
 yarn add react-native-uuid
 
 import uuid from "react-native-uuid";
@@ -21,7 +24,8 @@ uuid.v4(); // ⇨ "11edc52b-2918-4d71-9058-f7285e29d894"
 
 
 
-# FIREBASE 2 with expo
+/** 
+ *  FIREBASE 2 with expo
 
 npx expo install @react-native-firebase/app
 
@@ -29,8 +33,21 @@ npx expo install @react-native-firebase/auth @react-native-firebase/crashlytics
 
 
 
+/**
+ * linear-gradient
+ * npx expo install expo-linear-gradient
+ * 
+import { LinearGradient } from "expo-linear-gradient";
+<LinearGradient
+   colors={[ "rgba(0,0,0,0.8)", "transparent" ]}
+   style={ styles.background }
+/>
+</LinearGradient>
 
-# rn dark login screen
+
+
+/** 
+ *  rn dark login screen
 https://github.com/sevvaleygul0/react-native-dark-login-screen
 
 npm i react-native-dark-login-screen

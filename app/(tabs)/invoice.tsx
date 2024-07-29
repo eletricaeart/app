@@ -23,8 +23,6 @@ import * as CStore from "@/assets/modules/clb-dbs";
 import { Icon } from "@/assets/modules/clb-icons";
 import { _ } from "@/assets/modules/clb";
 
-import { LinearGradient } from "expo-linear-gradient";
-
 import { api_GetCEP } from "@/assets/services/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -200,12 +198,20 @@ export default function Customers( { ...props } ) {
             fetchData();
          } );
 
-         SaveDataOnFbRDB( {
+         // Insert data into Firebase Realtime Dtabase
+         /* await set( ref( FirebaseDB, `customers/${ props.object.id }` ), 
+            props.object
+         ).then( () => {
+            alert( "SaveDBs() data has been added on fb");
+         } ).catch( err => {
+            alert( "SaveDBs() deu ruim no envio" );
+         } ); */
+          SaveDataOnFbRDB( {
             ref: `customers/${ props.object.id }`,
             data: props.object,
             okMsg: "Enviado pra nuvem!",
             errMsg: "Deu ruim no envio mano!"
-         } );
+          } );
          
       } else {
          alert( "Digite o nome do seu cliente" );
@@ -241,50 +247,43 @@ export default function Customers( { ...props } ) {
    
 
    return( <>
-      <LinearGradient
-         colors={[ "#f5f5f5", "#e5e5e5", ]}
-         style={[ { flex: 1, } ]}
-      >
-         <ScrollView style={{ flex: 1, backgroundColor: "transparent", }}>
-            <c.Section bg="#e2f4fe00" style={{ flex: 1, paddingBottom: 75, }}>
-               <c.Header>
-                  <c.Content>
-                     <c.H2>Clientes</c.H2>
-                  </c.Content>
-               </c.Header>
-               <c.Section>
-                  <c.Content gap={ 16 }>
+   <View style={{
+      flex: 1,
+      backgroundColor: "#900",
+   }}>
+      <ScrollView style={{ flex: 1, backgroundColor: "#e2f4fe", }}>
+         <c.Section bg="#e2f4fe" style={{ flex: 1, paddingBottom: 75, }}>
+            <c.Header>
+               <c.Content>
+                  <c.H2>Clientes</c.H2>
+               </c.Content>
+            </c.Header>
+            <c.Section>
+               <c.Content gap={ 16 }>
 
-                     { Customers != null ? 
-                        Customers.map( customer => {
-                           return( <>
-                              <ea.UsersCard 
-                                 key={ customer.id }
-                                 name={ customer.Name }
-                              />
-                           </> );
-                        } )
-                        : 
-                        console.log( "" )
-                     }
-                  </c.Content>
-               </c.Section>
+                  { Customers != null ? 
+                     Customers.map( customer => {
+                        return( <>
+                           <ea.UsersCard 
+                              key={ customer.id }
+                              name={ customer.Name }
+                           />
+                        </> );
+                     } )
+                     : 
+                     console.log( "" )
+                  }
+               </c.Content>
             </c.Section>
-         </ScrollView>
-      </LinearGradient>
-
-
-      {/**
-       * Fab btn
-       * 
-       */}
-      <Press text="Cadastrar novo" 
-      pressedText="Cadastrar agora" 
-      style={[ s.fab, elevation.elevation ]}
-      onPress={ () => {
-         setModalVisibility( true );
-      } }/>
-
+         </c.Section>
+      </ScrollView>
+   </View>
+   <Press text="Cadastrar novo" 
+   pressedText="Cadastrar agora" 
+   style={[ s.fab, elevation.elevation ]}
+   onPress={ () => {
+      setModalVisibility( true );
+   } }/>
    
       {/*  == [ Modal ]
       == == == == == == == == ==  */}
