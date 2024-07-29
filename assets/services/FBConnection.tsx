@@ -8,14 +8,15 @@ import database, { firebase } from '@react-native-firebase/database';
 const reference = database().ref('/users/123');
 
 const firebaseConfig = {
-   apiKey: "AIzaSyAOJfkU9SdDNkhZD426G0jGW5tsMRoDkyw",
-   authDomain: "eletrica-e-art.firebaseapp.com",
-   projectId: "eletrica-e-art",
-   storageBucket: "eletrica-e-art.appspot.com",
-   messagingSenderId: "443777007460",
-   appId: "1:443777007460:web:df8295ae5566e2130ac471",
-   measurementId: "G-LWKXMFZSE5",
-   databaseURL: "https://DATABASE_NAME.firebaseio.com",
+   apiKey: process.env.EXPO_PUBLIC_firebaseConfig_apiKey,
+   authDomain: process.env.EXPO_PUBLIC_firebaseConfig_authDomain,
+   databaseURL: process.env.EXPO_PUBLIC_firebaseConfig_databaseURL,
+   projectId: process.env.EXPO_PUBLIC_firebaseConfig_projectId,
+   storageBucket: process.env.EXPO_PUBLIC_firebaseConfig_storageBucket,
+   messagingSenderId: process.env.EXPO_PUBLIC_firebaseConfig_messagingSenderId,
+   appId: process.env.EXPO_PUBLIC_firebaseConfig_appId,
+   measurementId: process.env.EXPO_PUBLIC_firebaseConfig_measurementId
+   // databaseURL: "https://DATABASE_NAME.firebaseio.com",
 };
 
 const FBApp = firebase.initializeApp( firebaseConfig );
