@@ -32,3 +32,73 @@ export const FirebaseAuth = getAuth( FirebaseApp );
 export const FirebaseDB = getDatabase( FirebaseApp );
 export const FirestoreDB = getFirestore( FirebaseApp );
 // const analytics = getAnalytics(app);
+
+
+
+/**
+ * firebase realtime database crud
+ * 
+ * == html implementation
+ * import { getDatabase, ref, child, get, set, update, remove } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
+ * 
+ * == app implementation
+ * import { getDatabase, ref, child, get, set, update, remove } from "firebase/database";
+ * export const FirebaseDB = getDatabase( FirebaseApp );
+ * 
+ * == app usage
+ * import { FirebaseDB } from "@/FirebaseConfig";
+ * import { ref, set } from "firebase/database";
+ * 
+ */
+export async function SaveDataOnFbRDB( { ...props } ) {
+   await set( ref( FirebaseDB, props.ref ), 
+      props.data
+   ).then( () => {
+      alert( props.okMsg || "data has been sent to the cloud" );
+   } ).catch( err => {
+      alert( props.errMsg || "deu ruim no envio pra nuvem" );
+   } );
+}
+
+async function GetDataFromFbRDB( { ...props } ) {
+   try {
+      // const dbRef = ref( getDatabase() );
+      const dbRef = ref( FirebaseDB );
+      const data = "";
+
+      get(
+         child( dbRef, props.ref ).then( snapshot => {
+            if( snapshot.exists() ) {
+               props.dataHolder = ( snapshot.val().vampire ) ? "Sim" : "Não";
+
+            } else {
+               alert( "User doens't exist" );
+            }
+         } )
+      );
+
+      return data;
+   } catch( err ) {
+      alert( "Unsuccessful" );
+   }
+}
+
+async function UpdateDataOnFbRDB( { ...props } ) {
+   await update( 
+      ref( FirebaseDB, props.ref ),  
+      props.data
+   ).then( () => {
+      alert( props.okMsg || "data has been updated on the cloud" );
+   } ).catch( err => {
+      alert( props.errMsg || "deu ruim pra atualizar na nuvem" );
+   } );
+}
+
+async function RemoveDataOnFbRDB( { ...props } ) {
+   await remove( ref( FirebaseDB, props.ref
+   ) ).then( () => {
+      alert( props.okMsg || "data has been destroyed on the cloud");
+   } ).catch( err => {
+      alert( props.errMsg || "deu ruim pra deletar da nuvem" );
+   } );
+}

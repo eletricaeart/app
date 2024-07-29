@@ -26,8 +26,8 @@ import { _ } from "@/assets/modules/clb";
 import { api_GetCEP } from "@/assets/services/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { FirebaseDB } from "@/FirebaseConfig";
-import { ref, set } from "firebase/database";
+import { FirebaseDB, SaveDataOnFbRDB } from "@/FirebaseConfig";
+// import { ref, set } from "firebase/database";
 
 
 /* == [ properties ]
@@ -195,13 +195,19 @@ export default function Customers( { ...props } ) {
          } );
 
          // Insert data into Firebase Realtime Dtabase
-         await set( ref( FirebaseDB, `customers/${ props.object.id }` ), 
+         /* await set( ref( FirebaseDB, `customers/${ props.object.id }` ), 
             props.object
          ).then( () => {
             alert( "SaveDBs() data has been added on fb");
          } ).catch( err => {
             alert( "SaveDBs() deu ruim no envio" );
-         } );
+         } ); */
+          SaveDataOnFbRDB( {
+            ref: `customers/${ props.object.id }`,
+            data: props.object,
+            okMsg: "Enviado pra nuvem!",
+            errMsg: "Deu ruim no envio mano!"
+          } );
          
       } else {
          alert( "Digite o nome do seu cliente" );
