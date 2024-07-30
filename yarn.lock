@@ -4875,6 +4875,11 @@ expo-modules-core@1.12.19:
   dependencies:
     invariant "^2.2.4"
 
+expo-print@~13.0.1:
+  version "13.0.1"
+  resolved "https://registry.yarnpkg.com/expo-print/-/expo-print-13.0.1.tgz#2fe419593aa812642f4ad7057928d2e712578e97"
+  integrity sha512-o8LuCguGrkyC5RaWEfL5N2J0V9mfbZ3GVzLpaf3KU5RrdYzGEjoiv4xlhVVzh/++hMUqOgnIrtF7tzWYhwu/7g==
+
 expo-router@~3.5.14:
   version "3.5.18"
   resolved "https://registry.yarnpkg.com/expo-router/-/expo-router-3.5.18.tgz#d8843578eed3b0b3c6c0f5a5c975a54436b2551a"
@@ -4894,6 +4899,11 @@ expo-secure-store@~13.0.2:
   version "13.0.2"
   resolved "https://registry.yarnpkg.com/expo-secure-store/-/expo-secure-store-13.0.2.tgz#ba8f6076fc38062a28bb2ce5edab9cd28ef88598"
   integrity sha512-3QYgoneo8p8yeeBPBiAfokNNc2xq6+n8+Ob4fAlErEcf4H7Y72LH+K/dx0nQyWau2ZKZUXBxyyfuHFyVKrEVLg==
+
+expo-sharing@~12.0.1:
+  version "12.0.1"
+  resolved "https://registry.yarnpkg.com/expo-sharing/-/expo-sharing-12.0.1.tgz#6c4d951beda47dac47112e679d60fc06c233b7aa"
+  integrity sha512-wBT+WeXwapj/9NWuLJO01vi9bdlchYu/Q/xD8slL/Ls4vVYku8CPqzkTtDFcjLrjtlJqyeHsdQXwKLvORmBIew==
 
 expo-splash-screen@0.27.5, expo-splash-screen@~0.27.4:
   version "0.27.5"

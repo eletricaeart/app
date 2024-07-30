@@ -46,6 +46,24 @@ import { LinearGradient } from "expo-linear-gradient";
 
 
 
+/**
+ * print to pdf
+ * npx expo install expo-print expo-sharing
+ *
+ * */
+
+
+/**
+ * share
+ * npx expo install expo-sharing
+ * 
+ * import * as Print from 'expo-print';
+ * import { shareAsync } from 'expo-sharing';
+ * 
+ * 
+ * */
+
+
 /** 
  *  rn dark login screen
 https://github.com/sevvaleygul0/react-native-dark-login-screen

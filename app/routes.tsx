@@ -6,6 +6,8 @@ import Budgets from "@/app/(tabs)/budgets";
 import Receipts from "@/app/(tabs)/receipts";
 import Dev from "@/app/(tabs)/dev";
 import Invoice from "@/app/(tabs)/invoice";
+import SignInView from "./(auth)/sign-in";
+import SignUpView from "./(auth)/sign-up";
 
 const Routes = {
    Home,
@@ -16,6 +18,10 @@ const Routes = {
    tabs: {
       Invoice,
       
+   },
+   auth: {
+      SignInView,
+      SignUpView,
    }
 };
 
