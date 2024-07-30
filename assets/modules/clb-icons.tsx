@@ -47,7 +47,7 @@ export function Icon( { ...props } ) {
       case "f": return( <FontAwesome6 name={ name } size={ size } color={ color } /> );
       break;
 
-      case "mc": return( <MaterialCommunityIcons name={ name } size={ size } color={ color } /> );
+      case "mc": return( <MaterialCommunityIcons name={ name } size={ size } color={ color } style={[ props.style ]} /> );
       break;
 
       case "mi": return( <MaterialIcons name={ name } size={ size } color={ color } /> );

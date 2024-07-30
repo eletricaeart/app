@@ -72,57 +72,64 @@ export function UsersCard( { ...props } ) {
       ,
       tel = props.tel || "(13) 99148-6078"
    ;
+   const s = StyleSheet.create( {
+      card: {
+         flexDirection: "row",
+         backgroundColor: "#fff",
+         borderRadius: 16,
+         padding: 16,
+         borderColor: "#fc0",
+         borderWidth: 0,
+         // elevation: .2,
+         height: 93,
+      },
+      picture: {
+         aspectRatio: 1, 
+         backgroundColor: "#009ee6",
+         // backgroundColor: "#00559c",
+         borderRadius: 1000,
+         alignItems: "center",
+         justifyContent: "center",
+         height: "100%",
+      },
+      img: {
+         width: "100%", height: "100%",
+         borderRadius: 1000,
+      },
+      customerInfo: {
+         justifyContent: "center",
+         flex: 1,
+         width: 70,
+         paddingLeft: 16,
+         // backgroundColor: "#4565",
+      },
+      sideBtn: {
+         width: "auto",
+         // paddingRight: 8,
+         alignItems: "center",
+         justifyContent: "center",
+         // backgroundColor: "#456",
+      },
+   } )
 
    return( <>
-      <View>
-         <View style={{
-            flexDirection: "row",
-            backgroundColor: "#fff",
-            borderRadius: 16,
-            padding: 16,
-            borderColor: "#fc0",
-            borderWidth: 0,
-            elevation: .2,
-         }}>
-            <View style={{
-               borderRadius: 100,
-               // width: "70%",
-               width: "100%",
-               aspectRatio: 1,
-               flex: .20,
-               alignItems: "center",
-               justifyContent: "center",
-               backgroundColor: "#7777"
-            }}>
-               <Avatar.Image source={ profile }
-               // size={ 70 }
-               style={{
-                  borderRadius: 1100,
-                  // overflow: "hidden",
-                  // borderColor: "#0cf",
-                  // borderWidth: 3,
-               }}
-               />
-            </View>
-            <View style={{
-               justifyContent: "center",
-               flex: .75,
-               width: 70,
-               paddingLeft: 16,
-               // backgroundColor: "#4565",
-            }}>
-               {/* <c.H4>Anselmo Sammarco Nunes</c.H4> */}
-               <c.H4 color="#242526">{ name }</c.H4>
-               {/* <c.T>(13) 99148-6078</c.T> */}
-               <c.T color="#777">{ tel }</c.T>
-            </View>
-            <View style={{
-               flex: .05,
-               justifyContent: "center",
-            }}>
-               <Icon i="mc" name="dots-vertical" color="#333"/>
-            </View>
+      <View style={ s.card }>
+
+         <View style={[ s.picture ]}>
+            <Image source={ profile } style={[ s.img ]} resizeMode="contain"/>
          </View>
+
+         <View style={ s.customerInfo }>
+            {/* <c.H4>Anselmo Sammarco Nunes</c.H4> */}
+            <c.H4 color="#242526">{ name }</c.H4>
+            {/* <c.T>(13) 99148-6078</c.T> */}
+            <c.T color="#777">{ tel }</c.T>
+         </View>
+
+         <View style={ s.sideBtn }>
+            <Icon i="mc" name="dots-vertical" color="#777"/>
+         </View>
+
       </View>
    </> );
 }
