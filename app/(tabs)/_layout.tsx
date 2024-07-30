@@ -194,6 +194,16 @@ export default function MyComponent() {
           },
         }}
       />
+      <Tab.Screen
+        name="invoice"
+        component={Routes.tabs.Invoice}
+        options={{
+          tabBarLabel: 'Dev',
+          tabBarIcon: ({ color, size }) => {
+            return <Icon i="mi" name="devices" color="#ffab00"/>;
+          },
+        }}
+      />
       {/* <Tab.Screen
         name="NewCustomer"
         component={Routes.NewCustomer}

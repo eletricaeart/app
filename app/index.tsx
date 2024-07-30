@@ -159,10 +159,11 @@ export default function Index() {
             {/* <ImageBackground source={ require( "@/assets/images/bgs/Dark Phone Wallpapers.jpeg" ) } resizeMode="cover" style={ s.bgImage }> */}
             {/* <ImageBackground source={ require( "@/assets/images/bgs/F8Sesbci.jpeg" ) } resizeMode="cover" style={ s.bgImage }> */}
             {/* <ImageBackground source={ require( "@/assets/images/bgs/tAeAw3a7.jpeg" ) } resizeMode="cover" style={ s.bgImage }> */}
-            <ImageBackground source={ require( "@/assets/images/bgs/1wNXXu1b.jpeg" ) } resizeMode="cover" style={ s.bgImage }>
-               <KeyboardAvoidingView behavior="padding" style={ [ s.root, { width: "100%", backgroundColor: "#fc0fc000", alignItems: "center", justifyContent: "space-between", } ]}>
+            {/* <ImageBackground source={ require( "@/assets/images/bgs/1wNXXu1b.jpeg" ) } resizeMode="cover" style={ s.bgImage }> */}
+            <ImageBackground source={ require( "@/assets/images/bgs/1wNXXu1sdv.png" ) } resizeMode="cover" style={ s.bgImage }>
+               <KeyboardAvoidingView behavior="padding" style={ [ s.root, { width: "100%", backgroundColor: "#fc0fc000", alignItems: "center", justifyContent: "flex-start", } ]}>
 
-                  <View  style={{ backgroundColor: "#fc00", width: "100%", height: "25%", alignItems: "center", justifyContent: "center", marginTop: 56, }}>
+                  <View  style={{ backgroundColor: "#fc00", width: "100%", height: "25%", alignItems: "center", justifyContent: "center", marginTop: 56, marginBottom: 56, }}>
                      {/* <Image source={ require( "@/assets/images/EA/EA-login-logo.png" ) } style={ { width: "40%", resizeMode: "contain", } }/> */}
                      {/* <Image source={ require( "@/assets/images/EA/EA logo 123.png" ) } style={ { width: "90%", resizeMode: "contain", } }/> */}
                      <Image source={ require( "@/assets/images/EA/globo-de-plasma-700.png" ) } style={ { height: "100%", resizeMode: "contain", } }/>
