@@ -60,7 +60,8 @@ export default function RootLayout() {
 
    return( <>
       <Stack screenOptions={ { ...stack_screenOptions } } >
-         <Stack.Screen name="jf" options={ { ...screen_00_options } } />
+         <Stack.Screen name="home" options={ { ...screen_tabs_options } } />
+         <Stack.Screen name="index" options={ { ...screen_00_options } } />
          <Stack.Screen name="+not-found" />
       </Stack>
    </> );
@@ -91,5 +92,9 @@ const
    screen_00_options = {
       // headerTitle: "Eletrica & Art",
       headerShown: false,
+      // statusBarColor: "#1b1d22",
+   },
+   screen_tabs_options = {
+      statusBarColor: "#fc0",
    }
 ;

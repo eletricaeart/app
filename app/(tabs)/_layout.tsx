@@ -28,10 +28,12 @@ const Tab = createBottomTabNavigator();
 export default function MyComponent() {
   return (
     <Tab.Navigator
-      // initialRouteName="Login"
+      // initialRouteName="Login" 
       screenOptions={{
          headerShown: true,
-         tabBarStyle: { backgroundColor: "#27f" },
+         tabBarStyle: { backgroundColor: "#27f" }, 
+         headerShadowVisible: true,
+         
          headerBackground: () => ( <>
             <AppBar />
          </> )
@@ -63,9 +65,6 @@ export default function MyComponent() {
          }
          ,
          title: "Eletrica & Art"
-         ,
-         
-         statusBarColor: "#00559C"
          // ,
          // headerBlurEffect: "light"
          // ,
@@ -79,13 +78,14 @@ export default function MyComponent() {
             headerIconColor: "#fff",
             hintTextColor: "#eee",
             textColor: "#eee",
-
-         }
+            
+         },
+         
       }}
       tabBar={({ navigation, state, descriptors, insets }) => (
         <BottomNavigation.Bar
          navigationState={state}
-
+         
          sceneAnimationType={ "opacity" }
          shifting={ true }
          labeled={ true }

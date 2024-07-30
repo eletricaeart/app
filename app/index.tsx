@@ -11,7 +11,11 @@ import {
    Pressable,
    KeyboardAvoidingView,
    ImageBackground,
+   Image,
 } from "react-native";
+
+import { BlurView } from 'expo-blur';
+
 
 import { ActivityIndicator, Button } from "react-native-paper";
 
@@ -151,14 +155,25 @@ export default function Index() {
       { !User ? 
       (
          <View style={ s.root } >
-            {/* <ImageBackground source={ bgImage } resizeMode="cover" style={ s.bgImage }> */}
-               <KeyboardAvoidingView behavior="padding" style={ [ s.root, { width: "100%", } ]}>
-                  <Text style={ s.tt }>
-                     { IsLogin ? "Entre" : "Cadastre-se" }
-                  </Text>
-               
+            {/* <ImageBackground source={ require( "@/assets/images/bgs/1wNXXu1b.jpeg" ) } resizeMode="cover" style={ s.bgImage }> */}
+            {/* <ImageBackground source={ require( "@/assets/images/bgs/Dark Phone Wallpapers.jpeg" ) } resizeMode="cover" style={ s.bgImage }> */}
+            {/* <ImageBackground source={ require( "@/assets/images/bgs/F8Sesbci.jpeg" ) } resizeMode="cover" style={ s.bgImage }> */}
+            {/* <ImageBackground source={ require( "@/assets/images/bgs/tAeAw3a7.jpeg" ) } resizeMode="cover" style={ s.bgImage }> */}
+            <ImageBackground source={ require( "@/assets/images/bgs/1wNXXu1b.jpeg" ) } resizeMode="cover" style={ s.bgImage }>
+               <KeyboardAvoidingView behavior="padding" style={ [ s.root, { width: "100%", backgroundColor: "#fc0fc000", alignItems: "center", justifyContent: "space-between", } ]}>
 
-                  <View style={ s.form }>
+                  <View  style={{ backgroundColor: "#fc00", width: "100%", height: "25%", alignItems: "center", justifyContent: "center", marginTop: 56, }}>
+                     {/* <Image source={ require( "@/assets/images/EA/EA-login-logo.png" ) } style={ { width: "40%", resizeMode: "contain", } }/> */}
+                     {/* <Image source={ require( "@/assets/images/EA/EA logo 123.png" ) } style={ { width: "90%", resizeMode: "contain", } }/> */}
+                     <Image source={ require( "@/assets/images/EA/globo-de-plasma-700.png" ) } style={ { height: "100%", resizeMode: "contain", } }/>
+                  </View>
+               
+                  {/* <Text style={ s.tt }>
+                     { IsLogin ? "Entre" : "Cadastre-se" }
+                  </Text> */}
+
+               {/* <BlurView intensity={ 30 } style={ s.formBlur }> */}
+                  <View style={[ s.form, { backgroundColor: "#fff5", borderColor: "#fff", borderWidth: 2, } ]}>
 
                      <View style={ s.Label }>
                         <Text style={ s.label }>Email</Text>
@@ -179,10 +194,13 @@ export default function Index() {
                         value={ Password }
                         onChangeText={ ( text ) => setPassword( text ) }
                         keyboardType="default"
+
                         />
                      </View>
-                  </View>
-                  <View style={ s.footer } className="bg-slate-500">
+                  </View> 
+
+               {/* </BlurView> */}
+                  <View style={ s.footer }>
                      {
                         Loading ? (
                            <ActivityIndicator 
@@ -212,7 +230,7 @@ export default function Index() {
                      }
                   </View>
                </KeyboardAvoidingView>
-            {/* </ImageBackground> */}
+            </ImageBackground>
          </View>
       )
       : 
@@ -230,7 +248,6 @@ const
          alignItems: "center",
          justifyContent: "center",
          // backgroundColor: "#270"
-         
       },
       bgImage: {
          flex: 1,
@@ -246,27 +263,41 @@ const
       },
       form: {
          backgroundColor: "#e5e5e5",
-         
          width: "90%",
          borderRadius: 13,
          paddingBottom: 18,
       },
+      formBlur: {
+         // backgroundColor: "#e5e5e5",
+         width: "90%",
+         borderRadius: 13,
+         paddingBottom: 18,
+         alignItems: "center",
+         justifyContent: "center",
+         overflow: "hidden",
+      },
       label: {
-         fontSize: 14,
-         color: "#777",
+         fontSize: 16,
+         // color: "#777",
+         // color: "#000",
+         color: "#160767",
+         fontWeight: "bold",
          paddingLeft: 14,
       },
       input: {
          borderRadius: 13,
+         backgroundColor: "#fff9",
          borderColor: "#7777",
          borderWidth: 1,
          paddingLeft: 14,
          paddingRight: 14,
          paddingTop: 8,
          paddingBottom: 8,
+         color: "#000",
       },
       Label: {
-         padding: 16,   
+         padding: 16, 
+         gap: 7, 
       },
       footer: {
          // backgroundColor: "#fc0",

@@ -114,7 +114,7 @@ export function UsersCard( { ...props } ) {
                {/* <c.H4>Anselmo Sammarco Nunes</c.H4> */}
                <c.H4 color="#242526">{ name }</c.H4>
                {/* <c.T>(13) 99148-6078</c.T> */}
-               <c.T color="#a5a5a5">{ tel }</c.T>
+               <c.T color="#777">{ tel }</c.T>
             </View>
             <View style={{
                flex: .05,
