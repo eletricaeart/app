@@ -28,8 +28,8 @@ import { LinearGradient } from "expo-linear-gradient";
 import { api_GetCEP } from "@/assets/services/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { FirebaseDB, SaveDataOnFbRDB } from "@/FirebaseConfig";
-// import { ref, set } from "firebase/database";
+import { FirebaseDB, SaveDataOnFbRDB, GetDataFromFbRDB } from "@/FirebaseConfig";
+import { GetFBData } from "@/assets/modules/clb-fb";
 
 import uuid from "react-native-uuid";
 
@@ -63,6 +63,8 @@ export default function Customers( { ...props } ) {
    const 
       [ Customers, setCustomers ] = useState( [] )
       ,
+      [ Clientes, setClientes ] = useState( [] )
+      ,
       [ ModalVisibility, setModalVisibility ] = useState( false )
    ;
 
@@ -79,8 +81,16 @@ export default function Customers( { ...props } ) {
 
    useEffect( () => {
       fetchData();
+
+      GetFBData( {
+         ref: "customersc8ee2bdd-850f-47d2-8ee3-c672ab9b57b2/name"
+      } ).then( response => {
+         response ? setClientes( [ response ] ) : console.log("");
+         console.log( "response: \n\n\n\n\n\n", response );
+      } );
    }, [] ); 
    
+
 
 
 
@@ -249,7 +259,7 @@ export default function Customers( { ...props } ) {
             <c.Section bg="#e2f4fe00" style={{ flex: 1, paddingBottom: 75, }}>
                <c.Header>
                   <c.Content>
-                     <c.H2>Clientes</c.H2>
+                     <c.H2>Clientes { Clientes }</c.H2>
                   </c.Content>
                </c.Header>
                <c.Section>

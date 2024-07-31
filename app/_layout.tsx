@@ -60,6 +60,8 @@ export default function RootLayout() {
 
    return( <>
       <Stack screenOptions={ { ...stack_screenOptions } } >
+         <Stack.Screen name="(auth)" options={ { ...screen_auth_options } } />
+         <Stack.Screen name="(tabs)" options={ { ...screen_tabs_options } } />
          <Stack.Screen name="home" options={ { ...screen_tabs_options } } />
          <Stack.Screen name="index" options={ { ...screen_00_options } } />
          <Stack.Screen name="+not-found" />
@@ -94,7 +96,10 @@ const
       headerShown: false,
       // statusBarColor: "#1b1d22",
    },
+   screen_auth_options = {
+      statusBarColor: "#16181c",
+   },
    screen_tabs_options = {
-      statusBarColor: "#fc0",
+      statusBarColor: "#00559c",
    }
 ;

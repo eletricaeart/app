@@ -60,7 +60,7 @@ export async function SaveDataOnFbRDB( { ...props } ) {
    } );
 }
 
-async function GetDataFromFbRDB( { ...props } ) {
+export async function GetDataFromFbRDB( { ...props } ) {
    try {
       // const dbRef = ref( getDatabase() );
       const dbRef = ref( FirebaseDB );
@@ -83,7 +83,7 @@ async function GetDataFromFbRDB( { ...props } ) {
    }
 }
 
-async function UpdateDataOnFbRDB( { ...props } ) {
+export async function UpdateDataOnFbRDB( { ...props } ) {
    await update( 
       ref( FirebaseDB, props.ref ),  
       props.data

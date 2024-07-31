@@ -99,27 +99,28 @@ export function EACard() {
          },
 
          description: {
-            flex: 1,
+            flex: 1 / 1.1,
             alignItems: "center",
          },
          tt: {
             color: "#fff",
             fontSize: width / 22,
             fontWeight: "bold",
-            marginBottom: 8,
+            marginBottom: 6,
          },
          sbt: {
             color: "#fff",
-            fontSize: width / 32,
+            fontSize: width / 39,
             fontWeight: "bold",
+            marginBottom: 8,
          },
          txt: {
             color: "#fff",
-            fontSize: width / 36,
+            fontSize: width / 45,
          },
          b: {
             color: "#fff",
-            fontSize: width / 36,
+            fontSize: width / 45,
             fontWeight: "bold",
          },
          row: {

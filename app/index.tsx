@@ -209,6 +209,7 @@ export default function Index() {
                            /> )
                            : 
                            ( <>
+                           
                               <Pressable style={{ elevation: 10, width: "100%", }} onPress={ SignIn }>
                                  <BtnSquare01 fill="#00559c" bg="#fff0">
                                     <Text style={{ fontSize: 18, fontWeight: "bold", color: "#fff", }}>
@@ -225,8 +226,6 @@ export default function Index() {
                                  </BtnSquare01> 
                               </Pressable>
 
-                              {/* <Press text="Login" onPress={ SignIn } style={ s. btn } />
-                              <Press text="Se Cadastrar" onPress={ SignUp } style={ s. btn } /> */}
                            </> )
                      }
                   </View>
