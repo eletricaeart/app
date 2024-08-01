@@ -32,6 +32,7 @@ import { FirebaseDB, SaveDataOnFbRDB, GetDataFromFbRDB } from "@/FirebaseConfig"
 import { GetFBData } from "@/assets/modules/clb-fb";
 
 import uuid from "react-native-uuid";
+import { ref, get, child, getDatabase } from "firebase/database";
 
 
 
@@ -80,7 +81,7 @@ export default function CustomersView( { ...props } ) {
    const 
       [ Customers, setCustomers ] = useState( [] )
       ,
-      [ Clientes, setClientes ] = useState( [] )
+      [ Clientes, setClientes ] = useState( "" )
       ,
       [ ModalVisibility, setModalVisibility ] = useState( false )
    ;
@@ -99,11 +100,10 @@ export default function CustomersView( { ...props } ) {
    useEffect( () => {
       fetchData();
 
-      GetFBData( {
-         ref: "customers/c8ee2bdd-850f-47d2-8ee3-c672ab9b57b2/name"
-      } ).then( response => {
-         response ? setClientes( [ response ] ) : console.log("");
-         console.log( "response: \n\n\n\n\n\n", response );
+      GetFBData( { 
+         // ref: "customers/c8ee2bdd-850f-47d2-8ee3-c672ab9b57b2/Name",
+         ref: "customers/c:32-904/Name",
+         putValue: setClientes
       } );
    }, [] ); 
    
@@ -148,6 +148,9 @@ export default function CustomersView( { ...props } ) {
       [ Note, setNote ] = useState( "" )
       ,
       [ DBS, setDBS ] = useState( [] )
+      ,
+
+      [ CustomerName, setCustomerName ] = useState( "" )
    ;
    
    const 
@@ -265,6 +268,32 @@ export default function CustomersView( { ...props } ) {
       }
    } 
 
+
+
+
+
+   async function GetFBCustomerName( { ...props } ) {
+      const output_value = ";"
+      try {
+         const 
+            dbRef = ref( getDatabase() )
+         ;
+
+         await get( child( 
+            dbRef, 
+            props.PathsRef 
+         ) )
+         . 
+         then( snapshot => {
+            if( snapshot.exists() ) {
+               // output_value = snapshot.val().name;
+               setCustomerName( snapshot.val().name );
+            } else { console.log( props.PathsRef ); }
+         } );
+      } catch( err ) {
+         console.log( "GetData() err: ", err );
+      }
+   }
    
 
    return( <>
@@ -276,7 +305,10 @@ export default function CustomersView( { ...props } ) {
             <c.Section bg="#e2f4fe00" style={{ flex: 1, paddingBottom: 75, }}>
                <c.Header>
                   <c.Content>
-                     <c.H2>Clientes { Clientes }</c.H2>
+                     <Pressable onPress={ () => { GetFBCustomerName( { PathsRef: "customers/c:32-904/Name" } ) } }>
+                        {/* <c.H2 >Clientes { CustomerName }</c.H2> */}
+                        <c.H2 >Clientes { Clientes }</c.H2>
+                     </Pressable>
                   </c.Content>
                </c.Header>
                <c.Section>

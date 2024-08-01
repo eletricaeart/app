@@ -37,6 +37,9 @@ async function RegisterUser( { ...props } ) {
  * 
  * import { getDatabase, ref, child, get } from "firebase/database";
  * 
+ * props.ref: users/${userId}`,
+ * props.putValue: setValue,
+ * props.errMsg: "",
  */
 export async function GetFBData( { ...props } ) {
    async function GetData() {
@@ -48,9 +51,10 @@ export async function GetFBData( { ...props } ) {
             ) 
          ).then( snapshot => {
             if( snapshot.exists() ) {
-               console.log( snapshot.val() );
+               console.log( ": ", snapshot.val() );
+               props.putValue( snapshot.val() )
             } else {
-               console.log( props.errMsg || "No data available" );
+               console.log( "oi err: ", props.errMsg || "No data available" );
             }
          } )
       } catch( err ) {
