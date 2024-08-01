@@ -83,7 +83,7 @@ export default function Customers( { ...props } ) {
       fetchData();
 
       GetFBData( {
-         ref: "customersc8ee2bdd-850f-47d2-8ee3-c672ab9b57b2/name"
+         ref: "customers/c8ee2bdd-850f-47d2-8ee3-c672ab9b57b2/name"
       } ).then( response => {
          response ? setClientes( [ response ] ) : console.log("");
          console.log( "response: \n\n\n\n\n\n", response );

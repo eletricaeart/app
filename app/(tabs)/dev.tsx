@@ -1,6 +1,6 @@
 
 
-import React, { useState} from "react";
+import React, { useEffect, useState} from "react";
 
 import {
    StatusBar, StyleSheet, ScrollView, View, Text,
@@ -8,6 +8,7 @@ import {
    Alert, TextInput, } from "react-native";
 
 import { FirebaseApp, FirebaseDB, } from "@/FirebaseConfig";
+import { getDatabase, get, child, ref, } from "firebase/database";
 
 import {
    Header, PageFooter, BottomNavigationBar,
@@ -29,6 +30,12 @@ export default function Dev( { ...props } ) {
       [ CEP, setCEP ] = useState( "" )
       ,
       [ LoginFormActivated, setLoginFormActivated ] = useState( true )
+      ,
+      [ InputRef, setInputRef ] = useState( "" )
+      ,
+      [ OutputRef, setOutputRef ] = useState( "" )
+      ,
+      [ InputData, setInputData ] = useState( "" )
    ;
 
    async function InsertRefInDB( props ) {
@@ -36,6 +43,26 @@ export default function Dev( { ...props } ) {
       } catch( err: any ) {
          console.log( "InsertInDB() err:\n\n\n", err );
       }
+   }
+
+   async function GetData() {
+      try {
+         const rs = await get( child( 
+            ref( getDatabase() ),
+            "Subtitle" 
+         ) );
+
+         return rs;
+      } catch( err: any ) {
+         console.log( err );
+      }
+   }
+
+   useEffect( () => {
+   }, [] );
+
+   function HandleBtn() {
+
    }
    
    {/* modal */}
@@ -69,17 +96,33 @@ export default function Dev( { ...props } ) {
 
             <Pressable 
                style={{ elevation: 10, width: "100%", }} 
-               onPress={ () => { InsertRefInDB( {
-                  ref: "produtos", data: "name"
-               } ).then( () => { console.log( "produtos enviados ao db" ) } );  } }
+               // onPress={ () => { InsertRefInDB( {
+               //    ref: "produtos", data: "name"
+               // } ).then( () => { console.log( "produtos enviados ao db" ) } );  } }
+               onPress={ () => { GetData().then( v => setOutputRef( v ) ) } }
             >
-               <BtnSquare01 fill="#00559c" bg="#fff0">
+               <BtnSquare01 fill="#00559c" bg="#fff0"
+               >
                   <Text style={{ fontSize: 18, fontWeight: "bold", color: "#fff", }}>
                      mfionsoin
                   </Text>
                </BtnSquare01> 
             </Pressable>
 
+         </c.Content>
+
+         <c.Content bg="#16181c">
+            <c.Section>
+               <c.T color="#fff">Ref</c.T>
+               <TextInput placeholder="ref" value={ InputRef } onChangeText={ setInputRef }
+               style={{ color: "#777", backgroundColor: "#212329", height: 56, borderRadius: 18, marginTop: 8, marginBottom: 16, padding: 16, }}/>
+            </c.Section>
+            <c.Section>
+               <c.T color="#fff">Data</c.T>
+               <TextInput placeholder="data" value={ InputData } onChangeText={ setInputData }
+               style={{ color: "#777", backgroundColor: "#212329", height: 56, borderRadius: 18, marginTop: 8, marginBottom: 16, padding: 16, }}/>
+            </c.Section>
+            <c.H4 color="#27f">ref: { OutputRef }</c.H4>
          </c.Content>
 
          <View style={{ width: "100%", backgroundColor: "#00559c",  }}>

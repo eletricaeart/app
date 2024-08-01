@@ -1,9 +1,29 @@
 
 
-import { getDatabase, ref, child, get } from "firebase/database";
+// import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
+import { getDatabase, get, child, ref, } from "firebase/database";
 
 
+// const fbConfig = { ... };
+// const fbApp = initializeApp( fbApp );
 
+/**
+ * == == == == == Register User
+ * 
+ * import { getDatabase, get, child, ref, } from "firebase/database";
+ */
+async function RegisterUser( { ...props } ) {
+   try {
+      createUserWithEmailAndPassword( getAuth(), props.email, props.password )
+      .
+      then( userCredential => {
+         const user = userCredential.user;
+      } )
+   } catch( err: any ) {
+      console.log( err.code, err.message );
+   }
+}
 
 
 
