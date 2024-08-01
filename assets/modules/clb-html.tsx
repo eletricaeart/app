@@ -16,123 +16,116 @@ import {
 /* == [ texts ]
 == == == == == == == == == */
 export function H1( { ...props } ) {
-   const 
-      text = props.children
-      ,
-      color = props.color || "#333"
-   ;
    return( <>
-     <Text style={ {
+     <Text style={ [ props.style, {
+         marginLeft: 0,
+         marginRight: 0,
+         paddingLeft: 0,
+         paddingRight: 0,
          fontSize: 2*16,
          fontWeight: "bold",
-         color: color,
-      } }> { text } </Text>
+         color: props.color || "#333",
+      } ] }> { props.children } </Text>
    </> );
 }
 
 export function H2( { ...props } ) {
-   const 
-      text = props.children
-      ,
-      color = props.color || "#333"
-   ;
    return( <>
-     <Text style={ {
+     <Text style={ [ props.style, {
+         marginLeft: 0,
+         marginRight: 0,
+         paddingLeft: 0,
+         paddingRight: 0,
          fontSize: 1.5*16,
          fontWeight: "bold",
-         color: color,
-         paddingLeft: 0,
-      } }> { text } </Text>
+         color: props.color || "#333",
+         textAlign: "start",
+      } ] }> { props.children } </Text>
    </> );
 }
 
 export function H3( { ...props } ) {
-   const 
-      text = props.children
-      ,
-      color = props.color || "#333"
-   ;
    return( <>
-     <Text style={ {
+     <Text style={ [ props.style, {
+         marginLeft: 0,
+         marginRight: 0,
+         paddingLeft: 0,
+         paddingRight: 0,
          fontSize: 1.3*16,
          fontWeight: "bold",
-         color: color,
-      } }> { text } </Text>
+         color: props.color || "#333",
+      } ] }> { props.children } </Text>
    </> );
 }
 
 export function H4( { ...props } ) {
-   const 
-      text = props.children
-      ,
-      color = props.color || "#333"
-   ;
    return( <>
-     <Text style={ {
+     <Text style={ [ props.style, {
+         marginLeft: 0,
+         marginRight: 0,
+         paddingLeft: 0,
+         paddingRight: 0,
          fontSize: 18,
          fontWeight: "bold",
-         color: color,
-      } }> { text } </Text>
+         color: props.color || "#333",
+      } ] }> { props.children } </Text>
    </> );
 }
 
 export function H5( { ...props } ) {
-   const 
-      text = props.children
-      ,
-      color = props.color || "#333"
-   ;
    return( <>
-     <Text style={ {
+     <Text style={ [ props.style, {
+         marginLeft: 0,
+         marginRight: 0,
+         paddingLeft: 0,
+         paddingRight: 0,
          fontSize: .9*16,
          fontWeight: "bold",
-         color: color,
-      } }> { text } </Text>
+         color: props.color || "#333",
+      } ] }> { props.children } </Text>
    </> );
 }
 
 export function H6( { ...props } ) {
-   const 
-      text = props.children
-      ,
-      color = props.color || "#333"
-   ;
    return( <>
-     <Text style={ {
+     <Text style={ [ props.style, {
+         marginLeft: 0,
+         marginRight: 0,
+         paddingLeft: 0,
+         paddingRight: 0,
          fontSize: .8*16,
          fontWeight: "bold",
-         color: color,
-      } }> { text } </Text>
+         color: props.color || "#333",
+      } ] }> { props.children } </Text>
    </> );
 }
 
 export function P( { ...props } ) {
-   const 
-      text = props.children
-      ,
-      color = props.color || "#333"
-   ;
    return( <>
-     <Text style={ {
+     <Text style={ [ props.style, {
+         marginLeft: 0,
+         marginRight: 0,
+         paddingLeft: 0,
+         paddingRight: 0,
          fontSize: 1*16,
          fontWeight: "regular",
-         color: color,
-      } }> { text } </Text>
+         color: props.color || "#333",
+      } ] }> { props.children } </Text>
    </> );
 }
 
 export function T( { ...props } ) {
-   const 
-      text = props.children
-      ,
-      color = props.color || "#333"
-   ;
    return( <>
-     <Text style={ {
+     <Text style={ [ props.style, {
+         marginLeft: 0,
+         marginRight: 0,
+         paddingLeft: 0,
+         paddingRight: 0,
          fontSize: 1*16, 
          fontWeight: "normal",
-         color: color,
-      } }> { text } </Text>
+         color: props.color || "#333",
+         textAlign: "start",
+      } ] }> { props.children } </Text>
    </> );
 }
 
@@ -141,16 +134,12 @@ export function T( { ...props } ) {
 == == == == == == == == == */
 export const Header = ( { ...props } ) => {
    const 
-      child = props.children
-      ,
       s = StyleSheet.create( {
          view: {
             paddingTop: 24,
             paddingBottom: 24,
          }
       } )
-      ,
-      bg = props.bg || "transparent"
    ;
 
    return( <>
@@ -159,26 +148,22 @@ export const Header = ( { ...props } ) => {
             s.view
             ,
             {
-               backgroundColor: bg
+               backgroundColor: props.bg || "transparent"
                ,
             },
             props.style,
          ]
       }>
-         { child }
+         { props.children }
       </View>
    </> );
 }
 
 export const Section = ( { ...props } ) => {
    const 
-      child = props.children
-      ,
       s = StyleSheet.create( {
          view: {}
       } )
-      ,
-      bg = props.bg || "transparent"
    ;
 
    return( <>
@@ -187,41 +172,35 @@ export const Section = ( { ...props } ) => {
             s.view
             ,
             {
-               backgroundColor: bg
+               backgroundColor: props.bg || "transparent"
             },
             props.style,
          ]
       }>
-         { child }
+         { props.children }
       </View>
    </> );
 }
 
 export const Content = ( { ...props } ) => {
    const 
-      child = props.children
-      ,
       s = StyleSheet.create( {
          view: {
             padding: 16,
          }
       } )
-      ,
-      bg = props.bg || "transparent"
-      ,
-      gap = props.gap || 0
    ;
 
    return( <>
       <View style={ [ 
          s.view, 
          {
-            backgroundColor: bg,
-            gap: gap,
+            backgroundColor: props.bg || "transparent",
+            gap: props.gap || 0,
          },
          props.style,
       ] }>
-         { child }
+         { props.children }
       </View>
    </> );
 }
@@ -232,13 +211,9 @@ export const Content = ( { ...props } ) => {
 
 export const Card = ( { ...props } ) => {
    const 
-      child = props.children
-      ,
       s = StyleSheet.create( {
          view: {}
       } )
-      ,
-      bg = props.bg || "transparent"
    ;
 
    return( <>
@@ -247,32 +222,26 @@ export const Card = ( { ...props } ) => {
             s.view
             ,
             {
-               backgroundColor: bg
+               backgroundColor: props.bg || "transparent"
             }
          ]
       }>
-         { child }
+         { props.children }
       </View>
    </> );
 }
 
 export const Tiles = ( { ...props } ) => {
    const 
-      child = props.children
-      ,
       s = StyleSheet.create( {
          view: {
             flexDirection: "row",
             flexWrap: "wrap",
             backgroundColor: "#fff0",
-            // gap: 22,
             rowGap: 24,
             justifyContent: "space-between",
-            // justifyContent: "center",
          }
       } )
-      ,
-      bg = props.bg || "transparent"
    ;
 
    return( <>
@@ -281,19 +250,17 @@ export const Tiles = ( { ...props } ) => {
             s.view
             ,
             {
-               backgroundColor: bg
+               backgroundColor: props.bg || "transparent"
             }
          ]
       }>
-         { child }
+         { props.children }
       </View>
    </> );
 }
 
 export const Tile = ( { ...props } ) => {
    const 
-      child = props.children
-      ,
       s = StyleSheet.create( {
          view: {
             flexBasis: "47%",
@@ -305,8 +272,6 @@ export const Tile = ( { ...props } ) => {
             overflow: "hidden",
          }
       } )
-      ,
-      bg = props.bg || "transparent"
    ;
 
    return( <>
@@ -315,11 +280,11 @@ export const Tile = ( { ...props } ) => {
             s.view
             ,
             {
-               backgroundColor: bg
+               backgroundColor: props.bg || "transparent"
             }
          ]
       }>
-         { child }
+         { props.children }
       </View>
    </> );
 }

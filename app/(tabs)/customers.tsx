@@ -29,7 +29,7 @@ import { api_GetCEP } from "@/assets/services/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { FirebaseDB, SaveDataOnFbRDB, GetDataFromFbRDB } from "@/FirebaseConfig";
-import { GetFBData } from "@/assets/modules/clb-fb";
+import { GetFBData, DeleteFBData, } from "@/assets/modules/clb-fb";
 
 import uuid from "react-native-uuid";
 import { ref, get, child, getDatabase } from "firebase/database";
@@ -103,10 +103,11 @@ export default function CustomersView( { ...props } ) {
       GetFBData( { 
          // ref: "customers/c8ee2bdd-850f-47d2-8ee3-c672ab9b57b2/Name",
          ref: "customers/c:32-904/Name",
-         putValue: setClientes
+         putValueOn: setClientes
       } );
    }, [] ); 
    
+
 
 
 
@@ -176,22 +177,22 @@ export default function CustomersView( { ...props } ) {
       customersList = {
          // id: `c:${ Math.round( Math.random() * 999 ) }-${ Math.round( Math.random() * 999 ) }`,
          id: uuid.v4(),
-         Name: Name,
-         Cellphone: Cellphone,
-         Whatsapp: Whatsapp,
-         Phone: Phone,
-         Phone2: Phone2,
-         Email: Email,
-         Rg: Rg,
-         Cpf: Cpf,
-         Cep: Cep,
-         Estate: Estate,
-         Logradouro: Logradouro,
-         Number: Number,
-         Complemento: Complemento,
-         District: District,
-         City: City,
-         Note: Note 
+         name: Name,
+         cellphone: Cellphone,
+         whatsapp: Whatsapp,
+         phone: Phone,
+         phone2: Phone2,
+         email: Email,
+         rg: Rg,
+         cpf: Cpf,
+         cep: Cep,
+         estate: Estate,
+         logradouro: Logradouro,
+         number: Number,
+         complemento: Complemento,
+         district: District,
+         city: City,
+         note: Note 
       }
       ,
       id_Name = useRef( null )
@@ -286,7 +287,6 @@ export default function CustomersView( { ...props } ) {
          . 
          then( snapshot => {
             if( snapshot.exists() ) {
-               // output_value = snapshot.val().name;
                setCustomerName( snapshot.val().name );
             } else { console.log( props.PathsRef ); }
          } );
@@ -305,10 +305,12 @@ export default function CustomersView( { ...props } ) {
             <c.Section bg="#e2f4fe00" style={{ flex: 1, paddingBottom: 75, }}>
                <c.Header>
                   <c.Content>
+
                      <Pressable onPress={ () => { GetFBCustomerName( { PathsRef: "customers/c:32-904/Name" } ) } }>
-                        {/* <c.H2 >Clientes { CustomerName }</c.H2> */}
-                        <c.H2 >Clientes { Clientes }</c.H2>
+                        <c.H2 >Clientes</c.H2>
+                        <c.T>{ Clientes }</c.T> 
                      </Pressable>
+
                   </c.Content>
                </c.Header>
                <c.Section>

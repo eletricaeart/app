@@ -46,16 +46,26 @@ export default function Dev( { ...props } ) {
    }
 
    async function GetData() {
-      try {
-         const rs = await get( child( 
-            ref( getDatabase() ),
-            "Subtitle" 
-         ) );
+      // try {
+      //    const rs = await get( child( 
+      //       ref( getDatabase() ),
+      //       "Subtitle" 
+      //    ) );
 
-         return rs;
-      } catch( err: any ) {
-         console.log( err );
+      //    return rs;
+      // } catch( err: any ) {
+      //    console.log( err );
+      // }
+      async function Load() {
+         try {
+            await get( child( ref( getDatabase() ), "Users" ) );
+         } catch( err ) {
+            alert( err );
+         }
       }
+      Load().then( rsp => {
+         
+      });
    }
 
    useEffect( () => {
@@ -96,9 +106,6 @@ export default function Dev( { ...props } ) {
 
             <Pressable 
                style={{ elevation: 10, width: "100%", }} 
-               // onPress={ () => { InsertRefInDB( {
-               //    ref: "produtos", data: "name"
-               // } ).then( () => { console.log( "produtos enviados ao db" ) } );  } }
                onPress={ () => { GetData().then( v => setOutputRef( v ) ) } }
             >
                <BtnSquare01 fill="#00559c" bg="#fff0"
