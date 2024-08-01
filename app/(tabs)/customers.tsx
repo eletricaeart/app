@@ -55,11 +55,28 @@ async function InsertDBs() {
 }
 // InsertDBs();
 
-
+interface customer {
+   name: string; 
+   email?: string; 
+   cellphone?: string;
+   whatsapp?: string;
+   phone?: string;
+   phone2?: string;
+   rg?: string;
+   cpf?: string;
+   cep?: string;
+   estate?: string;
+   logradouro?: string;
+   number?: string;
+   complemento?: string;
+   district?: string;
+   city?: string;
+   note?: string;
+}
 
 /* == [ exports ]
 == == == == == == == == == */
-export default function Customers( { ...props } ) {
+export default function CustomersView( { ...props } ) {
    const 
       [ Customers, setCustomers ] = useState( [] )
       ,

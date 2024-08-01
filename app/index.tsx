@@ -278,9 +278,8 @@ const
       },
       label: {
          fontSize: 16,
-         // color: "#777",
-         // color: "#000",
-         color: "#160767",
+         // color: "#160767",
+         color: "#fff",
          fontWeight: "bold",
          paddingLeft: 14,
       },
