@@ -38,23 +38,6 @@ import { ref, get, child, getDatabase } from "firebase/database";
 
 /* == [ properties ]
 == == == == == == == == == */
-async function InsertDBs() {
-   await AsyncStorage.setItem( "customer_dbs", JSON.stringify( [
-      {
-         name: "Débora", gender: "feminino"
-      },
-      {
-         name: "Noely", gender: "feminino"
-      },
-      {
-         name: "Bernardo", gender: "masculino"
-      },
-      {
-         name: "Anselmo", gender: "masculino"
-      },
-   ] ) );
-}
-// InsertDBs();
 
 interface customer {
    name: string; 
@@ -101,8 +84,8 @@ export default function CustomersView( { ...props } ) {
       fetchData();
 
       GetFBData( { 
-         // ref: "customers/c8ee2bdd-850f-47d2-8ee3-c672ab9b57b2/Name",
-         ref: "customers/c:32-904/Name",
+         // ref: "customers/c8ee2bdd-850f-47d2-8ee3-c672ab9b57b2/name",
+         ref: "customers/c:32-904/name",
          putValueOn: setClientes
       } );
    }, [] ); 
@@ -306,7 +289,7 @@ export default function CustomersView( { ...props } ) {
                <c.Header>
                   <c.Content>
 
-                     <Pressable onPress={ () => { GetFBCustomerName( { PathsRef: "customers/c:32-904/Name" } ) } }>
+                     <Pressable onPress={ () => { GetFBCustomerName( { PathsRef: "customers/c:32-904/name" } ) } }>
                         <c.H2 >Clientes</c.H2>
                         <c.T>{ Clientes }</c.T> 
                      </Pressable>
@@ -321,7 +304,7 @@ export default function CustomersView( { ...props } ) {
                            return( <>
                               <ea.UsersCard 
                                  key={ customer.id }
-                                 name={ customer.Name }
+                                 name={ customer.name }
                               />
                            </> );
                         } )

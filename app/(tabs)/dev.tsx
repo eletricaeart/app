@@ -38,37 +38,53 @@ export default function Dev( { ...props } ) {
       [ InputData, setInputData ] = useState( "" )
    ;
 
-   async function InsertRefInDB( props ) {
-      try {
-      } catch( err: any ) {
-         console.log( "InsertInDB() err:\n\n\n", err );
-      }
-   }
+   const 
+      [ CardCustomer, setCardCustomer ] = useState( {
+         id: "",
+         name: "",
+         email: "",
+      } )
+      ,
+      [ CustomersList, setCustomersList ] = useState( [] )
+   ;
 
-   async function GetData() {
-      // try {
-      //    const rs = await get( child( 
-      //       ref( getDatabase() ),
-      //       "Subtitle" 
-      //    ) );
 
-      //    return rs;
-      // } catch( err: any ) {
-      //    console.log( err );
-      // }
+   async function GetCustomers() {
       async function Load() {
          try {
-            await get( child( ref( getDatabase() ), "Users" ) );
+            const tempList: any[] | PromiseLike<any[]> = [];
+
+            await get( child( ref( getDatabase() ), "customers" ) )
+            . 
+            then( Users => {
+               Users.forEach( user => {
+                  let 
+                     key = user.key,
+                     value = user.val()
+                  ;
+
+                  tempList.push( {
+                     id: value.id,
+                     name: value.name,
+                     email: value.email,
+                  } );
+               } );
+
+               return tempList;
+            } )
+            . 
+            then( returned => {
+               setCustomersList( returned );
+            } );
          } catch( err ) {
             alert( err );
          }
       }
-      Load().then( rsp => {
-         
-      });
+      Load();
    }
 
    useEffect( () => {
+      GetCustomers();
    }, [] );
 
    function HandleBtn() {
@@ -106,7 +122,7 @@ export default function Dev( { ...props } ) {
 
             <Pressable 
                style={{ elevation: 10, width: "100%", }} 
-               onPress={ () => { GetData().then( v => setOutputRef( v ) ) } }
+               // onPress={  }
             >
                <BtnSquare01 fill="#00559c" bg="#fff0"
                >
@@ -118,8 +134,22 @@ export default function Dev( { ...props } ) {
 
          </c.Content>
 
-         <c.Content bg="#16181c">
-            <c.Section>
+         <c.Content bg="#16181c" gap={ 16 }>
+            { 
+               CustomersList && 
+               CustomersList.map( customer => {
+                  return( <>
+                     <View style={{ backgroundColor: "#e5e5e5",
+                        padding: 16, borderRadius: 22, gap: 14,
+                      }}>
+                        <Text style={{ fontSize: 20, fontWeight: "bold", }}>{ customer.name }</Text>
+                        <Text style={{ fontSize: 16, }}>{ customer.email }</Text>
+                        <Text style={{ fontSize: 16, }}>{ customer.id }</Text>
+                      </View>
+                  </> );
+               } )
+            }
+            {/* <c.Section>
                <c.T color="#fff">Ref</c.T>
                <TextInput placeholder="ref" value={ InputRef } onChangeText={ setInputRef }
                style={{ color: "#777", backgroundColor: "#212329", height: 56, borderRadius: 18, marginTop: 8, marginBottom: 16, padding: 16, }}/>
@@ -129,16 +159,16 @@ export default function Dev( { ...props } ) {
                <TextInput placeholder="data" value={ InputData } onChangeText={ setInputData }
                style={{ color: "#777", backgroundColor: "#212329", height: 56, borderRadius: 18, marginTop: 8, marginBottom: 16, padding: 16, }}/>
             </c.Section>
-            <c.H4 color="#27f">ref: { OutputRef }</c.H4>
+            <c.H4 color="#27f">ref: { OutputRef }</c.H4> */}
          </c.Content>
 
-         <View style={{ width: "100%", backgroundColor: "#00559c",  }}>
+         {/* <View style={{ width: "100%", backgroundColor: "#00559c",  }}>
             <Svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" style={{ }}> 
                <Polygon points="0 14, 14 0, 100 0, 100 86, 86 100, 0 100" fill={ "#0055c9" } 
                fillOpacity={ 1 }
                /> 
             </Svg> 
-         </View>
+         </View> */}
 
       </c.Section>
 
