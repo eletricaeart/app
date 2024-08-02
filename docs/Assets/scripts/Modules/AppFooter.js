@@ -17,8 +17,8 @@ function AppFooter( props ) {
                aspect-ratio: 1;
                background-size: cover;
             }
-            ic[whatsapp] { background-image: url( "../Assets/imgs/icons/whatsapp.png" ); }
-            ic[phone] { background-image: url( "../Assets/imgs/icons/phone.png" ); }
+            ic[whatsapp] { background-image: url( "../src/imgs/icons/whatsapp.png" ); }
+            ic[phone] { background-image: url( "../src/imgs/icons/phone.png" ); }
          </style>
          <content>
             <header center>

@@ -11,8 +11,8 @@ import {
 } from "react-native";
 import * as Print from "expo-print";
 import { shareAsync } from 'expo-sharing';
-import * as Colores from "@/assets/modules/clb-colors";
-import { EACard } from "@/assets/modules/clb-ea";
+import * as Colores from "@/src/widgets/clb-colors";
+import { EACard } from "@/src/widgets/clb-ea";
 
 
 /* == [ properties ] == == == == == == == == == */

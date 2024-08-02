@@ -13,37 +13,37 @@ function Drawer( props ) {
       items = [
          {
             name: "Home",
-            icon: "../Assets/imgs/icons/contacts.svg",
+            icon: "../src/imgs/icons/contacts.svg",
             link: "./home.html",
          },
          {
             name: "Clientes",
-            icon: "../Assets/imgs/icons/contacts.svg",
+            icon: "../src/imgs/icons/contacts.svg",
             link: "./customers.html",
          },
          {
             name: "Orçamentos",
-            icon: "../Assets/imgs/icons/contacts.svg",
+            icon: "../src/imgs/icons/contacts.svg",
             link: "./budgets.html",
          },
          {
             name: "Recibos",
-            icon: "../Assets/imgs/icons/contacts.svg",
+            icon: "../src/imgs/icons/contacts.svg",
             link: "./receipts.html",
          },
          {
             name: "Serviços",
-            icon: "../Assets/imgs/icons/contacts.svg",
+            icon: "../src/imgs/icons/contacts.svg",
             link: "./services.html",
          },
          {
             name: "Criar Orçamento",
-            icon: "../Assets/imgs/icons/invoice.svg",
+            icon: "../src/imgs/icons/invoice.svg",
             link: "./print-page.html",
          },
          {
             name: "Suporte",
-            icon: "../Assets/imgs/icons/contacts.svg",
+            icon: "../src/imgs/icons/contacts.svg",
             link: "./support.html",
          },
       ]

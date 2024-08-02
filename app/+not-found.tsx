@@ -1,13 +1,13 @@
 
 
 import React, { useState, useEffect } from "react";
-import firebase from "@/assets/services/FBConnection";
+import firebase from "@/src/services/FBConnection";
 
 import {
    Header,
    PageFooter,
    BottomNavigationBar,
-} from "@/assets/modules/clb-modules";
+} from "@/src/widgets/clb-widgets";
 
 import {
    StyleSheet,
@@ -20,9 +20,9 @@ import {
 
 import {
    Icon,
-} from "@/assets/modules/clb-icons";
+} from "@/src/widgets/clb-icons";
 
-import * as c from "@/assets/modules/clb-html";
+import * as c from "@/src/widgets/clb-html";
 
 
 export default function Home( { ...props } ) {
@@ -41,7 +41,7 @@ export default function Home( { ...props } ) {
       </View>
 
       <View style={{ backgroundColor: "#27f", height: 50, }}>
-         <Image source={ require( "@/assets/images/_404.png" ) } resizeMode="contain" style={{ width: "100%" }}/>
+         <Image source={ require( "@/src/images/_404.png" ) } resizeMode="contain" style={{ width: "100%" }}/>
       </View>
 
       <View style={{ backgroundColor: "#00f" }}>

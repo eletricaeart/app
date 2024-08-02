@@ -7,9 +7,9 @@
       "orientation": "portrait",
       "userInterfaceStyle": "light",
       "repo": "github",
-      "icon": "./assets/images/icon.png",
+      "icon": "./src/images/icon.png",
       "splash": {
-         "image": "./app/assets/splash.png",
+         "image": "./app/src/splash.png",
          "resizeMode": "contain",
          "backgroundColor": "#00559c"
       },

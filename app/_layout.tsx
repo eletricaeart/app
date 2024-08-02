@@ -25,9 +25,9 @@ import {
    AppBarRight,
    BottomNavigationBar,
    PageFooter,
-} from "@/assets/modules/clb-modules";
+} from "@/src/widgets/clb-widgets";
 
-import { Icon } from "@/assets/modules/clb-icons";
+import { Icon } from "@/src/widgets/clb-icons";
 
 
 SplashScreen.preventAutoHideAsync();
@@ -37,8 +37,8 @@ export default function RootLayout() {
       [ User, setUser ] = useState<User | null>( null )
       , 
       [loaded] = useFonts( {
-        SpaceMono: require('@/assets/fonts/SpaceMono-Regular.ttf'),
-        GodOfThunder: require('@/assets/fonts/GodOfThunder.ttf'),
+        SpaceMono: require('@/src/fonts/SpaceMono-Regular.ttf'),
+        GodOfThunder: require('@/src/fonts/GodOfThunder.ttf'),
       } )   
    ;
 

@@ -22,8 +22,8 @@ import { ActivityIndicator, Button } from "react-native-paper";
 import { router } from "expo-router";
 import TabLayout from "@/app/(tabs)/_layout";
 
-import * as CStore from "@/assets/modules/clb-dbs";
-import { colors } from "@/assets/modules/clb-colors";
+import * as CStore from "@/src/widgets/clb-dbs";
+import { colors } from "@/src/widgets/clb-colors";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -40,12 +40,12 @@ import { firebase } from "@react-native-firebase/database";
 
 import {
    BtnSquare01,
-} from "@/assets/modules/clb-svg";
+} from "@/src/widgets/clb-svg";
 
 
 export default function Index() {
    const 
-      // bgImage = require( "@/assets/images/bgs/bg_09.jpeg" )
+      // bgImage = require( "@/src/images/bgs/bg_09.jpeg" )
       // ,
       [ User, setUser ] = useState<User | null>( null )
       ,
@@ -155,18 +155,18 @@ export default function Index() {
       { !User ? 
       (
          <View style={ s.root } >
-            {/* <ImageBackground source={ require( "@/assets/images/bgs/1wNXXu1b.jpeg" ) } resizeMode="cover" style={ s.bgImage }> */}
-            {/* <ImageBackground source={ require( "@/assets/images/bgs/Dark Phone Wallpapers.jpeg" ) } resizeMode="cover" style={ s.bgImage }> */}
-            {/* <ImageBackground source={ require( "@/assets/images/bgs/F8Sesbci.jpeg" ) } resizeMode="cover" style={ s.bgImage }> */}
-            {/* <ImageBackground source={ require( "@/assets/images/bgs/tAeAw3a7.jpeg" ) } resizeMode="cover" style={ s.bgImage }> */}
-            {/* <ImageBackground source={ require( "@/assets/images/bgs/1wNXXu1b.jpeg" ) } resizeMode="cover" style={ s.bgImage }> */}
-            <ImageBackground source={ require( "@/assets/images/bgs/1wNXXu1sdv.png" ) } resizeMode="cover" style={ s.bgImage }>
+            {/* <ImageBackground source={ require( "@/src/images/bgs/1wNXXu1b.jpeg" ) } resizeMode="cover" style={ s.bgImage }> */}
+            {/* <ImageBackground source={ require( "@/src/images/bgs/Dark Phone Wallpapers.jpeg" ) } resizeMode="cover" style={ s.bgImage }> */}
+            {/* <ImageBackground source={ require( "@/src/images/bgs/F8Sesbci.jpeg" ) } resizeMode="cover" style={ s.bgImage }> */}
+            {/* <ImageBackground source={ require( "@/src/images/bgs/tAeAw3a7.jpeg" ) } resizeMode="cover" style={ s.bgImage }> */}
+            {/* <ImageBackground source={ require( "@/src/images/bgs/1wNXXu1b.jpeg" ) } resizeMode="cover" style={ s.bgImage }> */}
+            <ImageBackground source={ require( "@/src/images/bgs/1wNXXu1sdv.png" ) } resizeMode="cover" style={ s.bgImage }>
                <KeyboardAvoidingView behavior="padding" style={ [ s.root, { width: "100%", backgroundColor: "#fc0fc000", alignItems: "center", justifyContent: "flex-start", } ]}>
 
                   <View  style={{ backgroundColor: "#fc00", width: "100%", height: "25%", alignItems: "center", justifyContent: "center", marginTop: 56, marginBottom: 56, }}>
-                     {/* <Image source={ require( "@/assets/images/EA/EA-login-logo.png" ) } style={ { width: "40%", resizeMode: "contain", } }/> */}
-                     {/* <Image source={ require( "@/assets/images/EA/EA logo 123.png" ) } style={ { width: "90%", resizeMode: "contain", } }/> */}
-                     <Image source={ require( "@/assets/images/EA/globo-de-plasma-700.png" ) } style={ { height: "100%", resizeMode: "contain", } }/>
+                     {/* <Image source={ require( "@/src/images/EA/EA-login-logo.png" ) } style={ { width: "40%", resizeMode: "contain", } }/> */}
+                     {/* <Image source={ require( "@/src/images/EA/EA logo 123.png" ) } style={ { width: "90%", resizeMode: "contain", } }/> */}
+                     <Image source={ require( "@/src/images/EA/globo-de-plasma-700.png" ) } style={ { height: "100%", resizeMode: "contain", } }/>
                   </View>
                
                   {/* <Text style={ s.tt }>

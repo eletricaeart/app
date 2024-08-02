@@ -7,9 +7,9 @@
     "orientation": "portrait",
     "scheme": "ceo",
     "userInterfaceStyle": "automatic",
-    "icon": "./assets/images/EA/ic_launcher.png",
+    "icon": "./src/images/EA/ic_launcher.png",
     "splash": {
-      "image": "./assets/images/EA/EA-splash.png",
+      "image": "./src/images/EA/EA-splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#044a84"
     },
@@ -18,7 +18,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/EA/ic_launcher.png",
+        "foregroundImage": "./src/images/EA/ic_launcher.png",
         "backgroundColor": "#044a84"
       },
       "package": "com.devfellon.eletricaeart"
@@ -26,7 +26,7 @@
     "web": {
       "bundler": "metro",
       "output": "single",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./src/images/favicon.png"
     },
     "plugins": [
       "expo-router",
@@ -34,7 +34,7 @@
         "expo-font",
         {
           "fonts": [
-            "./assets/fonts/GodOfThunder.ttf"
+            "./src/fonts/GodOfThunder.ttf"
           ]
         }
       ],

@@ -7,7 +7,7 @@ import {
    PageFooter,
    BottomNavigationBar,
    Sheet,
-} from "@/assets/modules/clb-modules";
+} from "@/src/widgets/clb-widgets";
 
 import {
    StyleSheet,
@@ -21,9 +21,9 @@ import { Appbar, } from "react-native-paper";
 
 import {
    Icon,
-} from "@/assets/modules/clb-icons";
+} from "@/src/widgets/clb-icons";
 
-import * as c from "@/assets/modules/clb-html";
+import * as c from "@/src/widgets/clb-html";
 
 
 export default function Home( { ...props } ) {

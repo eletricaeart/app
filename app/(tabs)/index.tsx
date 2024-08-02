@@ -1,10 +1,10 @@
 
 
 import React from "react";
-import firebase from "@/assets/services/FBConnection";
+import firebase from "@/src/services/FBConnection";
 import {
    BottomNavigationBar,
-} from "@/assets/modules/clb-modules";
+} from "@/src/widgets/clb-widgets";
 import { Text } from "react-native";
 
 

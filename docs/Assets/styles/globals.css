@@ -390,7 +390,7 @@ drawer-inside {
    height: 100dvh;
    overflow-y: scroll;
    background: var( --card-lv5, #fff );
-   background-image: url( ../../Assets/imgs/bgs/2c7.jpg );
+   background-image: url( ../../src/imgs/bgs/2c7.jpg );
    box-shadow: #0005 0 0 5px;
 }
 drawer[opened] > drawer-inside {
@@ -411,8 +411,8 @@ drawer-inside > header {
    width: 100%;
    background: var( --drawer-header, #21232910 );
    background: var( --drawer-header, #225 );
-   background-image: url( ../../Assets/imgs/bgs/8fb-h.jpg );
-   background-image: url( ../../Assets/imgs/bgs/8fb2-h.jpeg );
+   background-image: url( ../../src/imgs/bgs/8fb-h.jpg );
+   background-image: url( ../../src/imgs/bgs/8fb2-h.jpeg );
    background-size: cover;
    backdrop-filter: blur( 13px );
    aspect-ratio: 16 / 9;

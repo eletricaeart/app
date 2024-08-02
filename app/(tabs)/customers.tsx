@@ -10,26 +10,26 @@ import {
 import {
    PageFooter, BottomNavigationBar, Fab, Press,
    Touch, 
-} from "@/assets/modules/clb-modules";
+} from "@/src/widgets/clb-widgets";
 
 import {
    colors, elevation,
-} from "@/assets/modules/clb-colors";
+} from "@/src/widgets/clb-colors";
 
-import * as c from "@/assets/modules/clb-html";
-import * as ea from "@/assets/modules/clb-ea";
-import * as Form from "@/assets/modules/clb-form";
-import * as CStore from "@/assets/modules/clb-dbs";
-import { Icon } from "@/assets/modules/clb-icons";
-import { _ } from "@/assets/modules/clb";
+import * as c from "@/src/widgets/clb-html";
+import * as ea from "@/src/widgets/clb-ea";
+import * as Form from "@/src/widgets/clb-form";
+import * as CStore from "@/src/widgets/clb-dbs";
+import { Icon } from "@/src/widgets/clb-icons";
+import { _ } from "@/src/widgets/clb";
 
 import { LinearGradient } from "expo-linear-gradient";
 
-import { api_GetCEP } from "@/assets/services/api";
+import { api_GetCEP } from "@/src/services/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { FirebaseDB, SaveDataOnFbRDB, GetDataFromFbRDB } from "@/FirebaseConfig";
-import { GetFBData, DeleteFBData, } from "@/assets/modules/clb-fb";
+import { GetFBData, DeleteFBData, } from "@/src/widgets/clb-fb";
 
 import uuid from "react-native-uuid";
 import { ref, get, child, getDatabase } from "firebase/database";
@@ -239,6 +239,7 @@ export default function CustomersView( { ...props } ) {
          const 
             response = await api_GetCEP.get( `/${ Cep }/json` )
          ;
+         
          _( response.data );
    
          setCep( response.data.cep );

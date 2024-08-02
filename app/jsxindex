@@ -18,11 +18,11 @@ import {
    useSafeAreaInsets,
 } from 'react-native-safe-area-context';
 
-import AppBar from "./modules/Appbar";
-import EA_AppBar from "./modules/EA_AppBar";
-import HomePage from "./modules/HomePage";
-import BottomNavBar from "./modules/BottomNavBar";
-import colors from "./assets/stylesheets/globals/colors";
+import AppBar from "./widgets/Appbar";
+import EA_AppBar from "./widgets/EA_AppBar";
+import HomePage from "./widgets/HomePage";
+import BottomNavBar from "./widgets/BottomNavBar";
+import colors from "./src/stylesheets/globals/colors";
 
 export default function App( props ) {
    

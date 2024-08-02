@@ -8,12 +8,12 @@ import {
    BottomNavigationBar,
    Fab,
    Press,
-} from "../../assets/modules/clb-modules";
+} from "../../src/widgets/clb-widgets";
 
-import * as c from "../../assets/modules/clb-html";
-import * as ea from "../../assets/modules/clb-ea";
+import * as c from "../../src/widgets/clb-html";
+import * as ea from "../../src/widgets/clb-ea";
 
-import { Icon } from "@/assets/modules/clb-icons";
+import { Icon } from "@/src/widgets/clb-icons";
 
 import {
    StyleSheet,

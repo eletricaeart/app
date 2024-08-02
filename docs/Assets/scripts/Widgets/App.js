@@ -258,19 +258,19 @@ const
                <main-menu section>
                   <menu-item>
                      <icon>
-                        <img src="./Assets/imgs/icons/contacts.svg" alt="">
+                        <img src="./src/imgs/icons/contacts.svg" alt="">
                      </icon>
                      <t>Contatos</t>
                   </menu-item>
                   <menu-item>
                      <icon>
-                        <img src="./Assets/imgs/icons/contacts.svg" alt="">
+                        <img src="./src/imgs/icons/contacts.svg" alt="">
                      </icon>
                      <t>Cadastrar Usuário</t>
                   </menu-item>
                   <menu-item>
                      <icon>
-                        <img src="./Assets/imgs/icons/invoice.svg" alt="">
+                        <img src="./src/imgs/icons/invoice.svg" alt="">
                      </icon>
                      <t>Criar Orçamento</t>
                   </menu-item>

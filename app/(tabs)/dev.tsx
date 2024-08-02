@@ -12,13 +12,13 @@ import { getDatabase, get, child, ref, } from "firebase/database";
 
 import {
    Header, PageFooter, BottomNavigationBar,
-   Press, Drawer, } from "@/assets/modules/clb-modules";
+   Press, Drawer, } from "@/src/widgets/clb-widgets";
 
-import * as c from "@/assets/modules/clb-html";
+import * as c from "@/src/widgets/clb-html";
 
-import { BtnSquare01, } from "@/assets/modules/clb-svg";
+import { BtnSquare01, } from "@/src/widgets/clb-svg";
 
-import { Icon, } from "@/assets/modules/clb-icons";
+import { Icon, } from "@/src/widgets/clb-icons";
 import Svg, { Polygon } from "react-native-svg";
 
 // FirebaseApp;

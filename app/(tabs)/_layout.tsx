@@ -13,13 +13,13 @@ import {
    AppBarRight,
    BottomNavigationBar,
    PageFooter,
-} from "@/assets/modules/clb-modules";
+} from "@/src/widgets/clb-widgets";
 
 import {
    HeaderTitle,
-} from "@/assets/modules/clb-ea";
+} from "@/src/widgets/clb-ea";
 
-import { Icon } from "@/assets/modules/clb-icons";
+import { Icon } from "@/src/widgets/clb-icons";
 import Routes from "@/app/routes";
 import Login from "./login";
 

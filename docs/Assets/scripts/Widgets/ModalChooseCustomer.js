@@ -95,9 +95,9 @@ function ModalChooseCustomer( props  ) {
                      <picture>
                         <img src=${
                            customer.gender == "feminino" ?
-                              "../Assets/imgs/Avatar/default_avatar_fem_ico.webp"
+                              "../src/imgs/Avatar/default_avatar_fem_ico.webp"
                               : 
-                              "../Assets/imgs/Avatar/default_avatar_masc_ico.webp"
+                              "../src/imgs/Avatar/default_avatar_masc_ico.webp"
                         } alt="">
                      </picture>
                   </content>

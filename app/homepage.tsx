@@ -6,7 +6,7 @@ import {
    PageFooter,
    BottomNavigationBar,
    Fab,
-} from "@/assets/modules/clb-modules";
+} from "@/src/widgets/clb-widgets";
 
 import {
    StyleSheet,
