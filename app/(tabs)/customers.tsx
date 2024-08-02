@@ -133,7 +133,6 @@ export default function CustomersView( { ...props } ) {
       ,
       [ DBS, setDBS ] = useState( [] )
       ,
-
       [ CustomerName, setCustomerName ] = useState( "" )
    ;
    
