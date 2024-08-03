@@ -33,7 +33,7 @@ export default function useCustomersFB( { ...props } ) {
                         value = data.val()
                      ;
                      list.push( {
-                        key: key,
+                        key: value.id,
                         id: value.id,
                         name: value.name,
                         email: value.email,

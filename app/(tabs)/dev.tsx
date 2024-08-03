@@ -7,6 +7,7 @@ import {
    Image, Modal, Pressable, Button, ActivityIndicator,
    Alert, TextInput, } from "react-native";
 
+// import { FirebaseApp, FirebaseDB, } from "@/FirebaseConfig";
 import { FirebaseApp, FirebaseDB, } from "@/FirebaseConfig";
 import { getDatabase, get, child, ref, } from "firebase/database";
 
@@ -97,15 +98,15 @@ export default function Dev( { ...props } ) {
             { 
                CustomersFB && 
                CustomersFB.map( customer => {
-                  return( <>
-                     <View key={ customer.id } style={{ backgroundColor: "#e5e5e5",
+                  return( 
+                     <View key={ customer.key } style={{ backgroundColor: "#e5e5e5",
                         padding: 16, borderRadius: 22, gap: 14,
                       }}>
                         <Text style={{ fontSize: 20, fontWeight: "bold", }}>{ customer.name }</Text>
                         <Text style={{ fontSize: 16, }}>{ customer.email }</Text>
                         <Text style={{ fontSize: 16, }}>{ customer.id }</Text>
-                      </View>
-                  </> );
+                     </View>
+                  );
                } )
             }
             
