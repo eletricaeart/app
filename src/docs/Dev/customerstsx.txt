@@ -40,10 +40,10 @@ async function UpdateCustomersLiveDBs( dbs_name ) {
      console.log( "\n\n== == == == == ==\nsaving error: \n", err );
    }
 }
-// UpdateCustomersLiveDBs( "customer_dbs" ).then( res => { /* customers = [ ...res ];  */console.log( "customers:: ", customers ); } );
+// UpdateCustomersLiveDBs( "customers" ).then( res => { /* customers = [ ...res ];  */console.log( "customers:: ", customers ); } );
 
 useEffect( () => {
-   UpdateCustomersLiveDBs( "customer_dbs" )
+   UpdateCustomersLiveDBs( "customers" )
    .
    then( res => {
       return customers = [ ...res ]

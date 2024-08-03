@@ -52,7 +52,7 @@ export async function GetCustomers() {
  * 
  * == == == == == == == == == */
 export async function InsertDBs() {
-   await AsyncStorage.setItem( "customer_dbs", JSON.stringify( [
+   await AsyncStorage.setItem( "customers", JSON.stringify( [
       {
          name: "Débora", gender: "feminino", 
          id: uuid.v4(),

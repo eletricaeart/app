@@ -7,6 +7,7 @@ import {
    Text, Image, Pressable, TextInput, Keyboard,
 } from "react-native";
 
+import styled from "styled-components/native";
 import {
    PageFooter, BottomNavigationBar, Fab, Press,
    Touch, 
@@ -60,11 +61,12 @@ interface customer {
    note?: string;
 }
 
+
 /* == [ exports ]
 == == == == == == == == == */
 export default function CustomersView( { ...props } ) {
    const 
-      { CustomersFB, Loading } = useCustomersFB
+      { CustomersFB, Loading } = useCustomersFB({})
       ,
       [ Customers, setCustomers ] = useState( [] )
       ,
@@ -73,25 +75,113 @@ export default function CustomersView( { ...props } ) {
       [ ModalVisibility, setModalVisibility ] = useState( false )
    ;
 
-   async function fetchData() {
+   async function FetchLocalCustomers() {
       try {
          const 
-            { CustomersFB } = useCustomersFB({})
+            data = await AsyncStorage.getItem( "customers" )
             ,
-            data = await AsyncStorage.getItem( "customer_dbs" )
-            ,
-            json = await JSON.parse( data )
+            jsonData = await JSON.parse( data )
          ;
-
-         console.log( "json: \n\n\n", json );
-         setCustomers( json );
-      } catch( err ) {
-         console.log( "fetchData err: \n\n\n\n\n", err );
+         return jsonData;
+      } catch( err: any ) {
+         console.error( "FetchLocalCustomers() err: \n\n\n", err );
       }
    }
 
+   async function SetCustomers() {
+      try {
+         await FetchLocalCustomers().then(
+            returned => setCustomers( returned )
+         );
+      } catch( err: any ) {
+         console.error( "SetCustomers() err: \n\n\n", err );
+      }
+   }
+
+
+   async function UpdateCustomersBase() {
+      // const 
+      //    { CustomersFB } = useCustomersFB({})
+      // ;
+      try {
+         let 
+            tempCustomersFB = CustomersFB
+            ,
+            tempCustomersFBJson = JSON.stringify( CustomersFB )
+            ,
+            tempLocalCustomersString = await AsyncStorage.getItem( "customers" )
+            ,
+            tempLocalCustomers = await JSON.parse( tempLocalCustomersString )
+         ;
+         // console.log(
+         //    "tempCustomersFB: ",tempCustomersFB,
+         //    "tempCustomersFB type: ", typeof tempCustomersFB,
+         //    "\n\ntempLocalCustomers: ",tempLocalCustomers,
+         //    "\ntempLocalCustomers type: ", typeof tempLocalCustomers
+         // );
+         // setCustomers( CustomersFB );
+
+         await AsyncStorage.setItem( "customers", tempCustomersFBJson );
+         SetCustomers();
+
+      } catch( err: any ) {
+         console.error( "UpdateCustomersBase() err: \n\n\n", err );
+      }
+   }
+
+   
+   async function GetData( dbs_name ) {
+      try {
+         const data = await AsyncStorage.getItem( dbs_name );
+   
+      if( data !== undefined ) {
+         console.log( "Congrats! here is your prize: ", data );
+         setDBS( data );
+      }
+   
+         return data != null ? JSON.parse( data ) : null;
+      } catch( err ) {
+         console.log( "GetData err: ", err );
+      }
+   }
+   
+   
+   async function RegisterCustomerOnBase( props ) {
+      id_form.current.focus() && 
+      Keyboard.dismiss();
+      if( Name != "" ) {
+
+         // Insert data to AsyncStorage
+         await CStore.Save( 
+            props.dbs_name, props.object 
+         ).then( r => {
+            // reset inputs
+            inputs.forEach( i => i( "" ) );
+            // close modal
+            setModalVisibility( false );
+            // fetch local customers
+            // FetchLocalCustomers();
+            SetCustomers();
+         } );
+
+         SaveDataOnFbRDB( {
+            ref: `customers/${ props.object.id }`,
+            data: props.object,
+            okMsg: "Enviado pra nuvem!",
+            errMsg: "Deu ruim no envio mano!"
+         } );
+         
+      } else {
+         alert( "Digite o nome do seu cliente" );
+      }
+      // RegisterCustomerOnBase( { dbs_name: "customers", object: customersList } )
+   }
+
+
    useEffect( () => {
-      fetchData();
+      // fetchData();
+      // FetchLocalCustomers().then( returned => setCustomers( returned ) );
+      SetCustomers();
 
       GetFBData( { 
          // ref: "customers/c8ee2bdd-850f-47d2-8ee3-c672ab9b57b2/name",
@@ -193,49 +283,6 @@ export default function CustomersView( { ...props } ) {
    ;
    
    
-   async function GetData( dbs_name ) {
-      try {
-         const data = await AsyncStorage.getItem( dbs_name );
-   
-      if( data !== undefined ) {
-         console.log( "Congrats! here is your prize: ", data );
-         setDBS( data );
-      }
-   
-         return data != null ? JSON.parse( data ) : null;
-      } catch( err ) {
-         console.log( "GetData err: ", err );
-      }
-   }
-   
-   
-   async function SaveDBs( props ) {
-      id_form.current.focus() && 
-      Keyboard.dismiss();
-      if( Name != "" ) {
-
-         // Insert data to AsyncStorage
-         await CStore.Save( 
-            props.dbs_name, props.object 
-         ).then( r => {
-            inputs.forEach( i => i( "" ) );
-            setModalVisibility( false );
-            fetchData();
-         } );
-
-         SaveDataOnFbRDB( {
-            ref: `customers/${ props.object.id }`,
-            data: props.object,
-            okMsg: "Enviado pra nuvem!",
-            errMsg: "Deu ruim no envio mano!"
-         } );
-         
-      } else {
-         alert( "Digite o nome do seu cliente" );
-      }
-      // SaveDBs( { dbs_name: "customer_dbs", object: customersList } )
-   }
-   
    
    async function GetCEP() {
       if( Cep == "" ) {
@@ -290,40 +337,41 @@ export default function CustomersView( { ...props } ) {
    
 
    return( <>
-      <LinearGradient
-         colors={[ "#f5f5f5", "#e5e5e5", ]}
-         style={[ { flex: 1, } ]}
-      >
-         <ScrollView style={{ flex: 1, backgroundColor: "transparent", }}>
-            <c.Section bg="#e2f4fe00" style={{ flex: 1, paddingBottom: 75, }}>
-               <c.Header>
-                  <c.Content>
+      <LinearGradient colors={[ "#f5f5f5", "#e5e5e5", ]} style={[ { flex: 1, } ]} >
+         <ScrollView style={{ flex: 1,  }}>
+            <HomePage style={{  }}>
+               <Header>
+                  <Content>
+                     <c.H2 >Clientes</c.H2>
 
-                     <Pressable onPress={ () => { GetFBCustomerName( { PathsRef: "customers/c:32-904/name" } ) } }>
-                        <c.H2 >Clientes</c.H2>
-                        <c.T>{ Clientes }</c.T> 
+                     <Pressable onPress={ () => UpdateCustomersBase() }>
+                        <Text>update customers</Text>
                      </Pressable>
+                  </Content>
+               </Header>
 
-                  </c.Content>
-               </c.Header>
-               <c.Section>
-                  <c.Content gap={ 16 }>
+               <Section bg="#e2f4fe00" style={{ flex: 1, paddingBottom: 75, }}>
+                  <Content style={{ gap: 16 }}>
 
                      { Customers != null ? 
                         Customers.map( customer => {
-                           return( <>
+                           return( 
                               <ea.UsersCard 
                                  key={ customer.id }
                                  name={ customer.name }
                               />
-                           </> );
+                           );
                         } )
                         : 
-                        console.log( "" )
+                        <View style={{ flex: 1, }}>
+                           <Text>No customers yet</Text>
+                        </View>
                      }
-                  </c.Content>
-               </c.Section>
-            </c.Section>
+                     
+                  </Content>
+               </Section>
+            </HomePage> 
+
          </ScrollView>
       </LinearGradient>
 
@@ -552,7 +600,7 @@ export default function CustomersView( { ...props } ) {
                                        color: "#fff",
                                     }}
                                     txt="erase DBs"
-                                    onPress={ async () => { await AsyncStorage.removeItem( "customer_dbs" ) } }
+                                    onPress={ async () => { await AsyncStorage.removeItem( "customers" ) } }
                                  />
                                  <Touch 
                                     touchSty={{
@@ -562,7 +610,7 @@ export default function CustomersView( { ...props } ) {
                                        color: "#fff",
                                     }}
                                     txt="cadastrar"
-                                    onPress={ () => { SaveDBs( { dbs_name: "customer_dbs", object: customersList } ) } }
+                                    onPress={ () => { RegisterCustomerOnBase( { dbs_name: "customers", object: customersList } ) } }
                                  />
 
                               </c.Section>
@@ -678,5 +726,102 @@ const s = StyleSheet.create( {
 } );
 
 
+const 
+   HomePage = styled.View`
+      flex: 1;
+      width: 100%;
+   `
+   ,
+   Header = styled.View`
 
-   
+   `,
+   Section = styled.View``,
+   Content = styled.View`
+      padding: 16px;
+   `,
+   Duo = styled.View`
+      flex-direction: "row";
+      gap: 8;
+   `
+   ,
+   BackSheet = styled.View`
+      background-color: #959595;
+      border-top-right-radius: 24;
+      border-top-left-radius: 24;
+      width: 90%;
+      height: 15;
+      margin-top: 10;
+      align-self: center;
+   `
+   // frontSheet: {
+   //    backgroundColor: "#f5f5f5",
+   //    borderTopStartRadius: 24,
+   //    borderTopEndRadius: 24,
+   //    width: "100%",
+   //    flex: 1,
+   //    alignSelf: "center",
+   //    overflow: "hidden",
+   // },
+   // modal_body: {
+   //    backgroundColor: "#f5f5f5",
+   // },
+   // container: {
+   //    flex: 1,
+   //    justifyContent: 'center',
+   //    padding: 8,
+   //    backgroundColor: '#0e101c',
+   // },
+   // form: {
+   //    borderRadius: 24,
+   // },
+   // header: {
+   //    marginTop: 16,
+   //    marginBottom: 24,
+   // },
+   // btnOverlay: { backgroundColor: "#0001", 
+   //    padding: 8,
+   //    borderRadius: 100,
+   //    aspectRatio: 1,
+   //    alignItems: "center",
+   //    justifyContent: "center",
+   // },
+   // divider: {
+   //    borderBottomColor: "#009ee6",
+   //    borderBottomWidth: 2,
+   //    borderStyle: "dashed",
+   //    marginTop: 16,
+   //    marginBottom: 16,  
+   // },
+   // dividerText: {
+   //    fontWeight: "bold",
+   //    marginBottom: 8,
+   //    color: "#00559c",
+   // },
+   // duo: {
+   //    flexDirection: "row",
+   //    gap: 8,
+   // },
+   // duoBox: {
+   //    flex: .5,
+   // },
+   // label: {
+   //    color: "#777",
+   //    fontWeight: "500",
+   //    marginBottom: 8,
+   //    marginLeft: 0,
+   //    paddingTop: 0,
+   //    paddingBottom: 0,
+   //    paddingLeft: 16,
+   //    paddingRight: 16,
+   // },
+   // input: {
+   //    backgroundColor: "#f3f3f3",
+   //    height: 56,
+   //    marginBottom: 16,
+   //    padding: 16,
+   //    borderRadius: 16,
+   //    borderColor: "#fff2",
+   //    borderWidth: 1,
+   //    borderStyle: "solid",
+   // },
+;

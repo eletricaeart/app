@@ -173,7 +173,7 @@ export default function NewCustomer( { ...props } ) {
 
    async function EraseData() {
       try {
-         await AsyncStorage.removeItem( "customer_dbs" );
+         await AsyncStorage.removeItem( "customers" );
    
       } catch( err ) {
         console.log( "\n\n== == == == == ==\nsaving error: \n", err );
@@ -357,9 +357,9 @@ export default function NewCustomer( { ...props } ) {
                               color: "#fff",
                            }}
                            txt="cadastrar"
-                           // onPress={ () => { GetNSaveData( "customer_dbs" ) } }
-                           // onPress={ () => { CStore.Save( "customer_dbs", customersList ) } }
-                           onPress={ () => { SaveDBs( { dbs_name: "customer_dbs", object: customersList } ) } }
+                           // onPress={ () => { GetNSaveData( "customers" ) } }
+                           // onPress={ () => { CStore.Save( "customers", customersList ) } }
+                           onPress={ () => { SaveDBs( { dbs_name: "customers", object: customersList } ) } }
                         />
 
                      </c.Section>
@@ -381,7 +381,7 @@ export default function NewCustomer( { ...props } ) {
                            color: "#fff",
                         }}
                         txt="getDbs"
-                        onPress={ () => { GetData( "customer_dbs" ) }}
+                        onPress={ () => { GetData( "customers" ) }}
                      />
 
                      <c.Section bg="#1b1d22" style={ {

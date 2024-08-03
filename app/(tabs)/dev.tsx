@@ -17,7 +17,7 @@ import {
    Header, PageFooter, BottomNavigationBar,
    Press, Drawer, } from "@/src/widgets/clb-widgets";
 
-import * as c from "@/src/widgets/clb-html";
+import * as _ from "@/src/widgets/clb-html";
 
 import { BtnSquare01, } from "@/src/widgets/clb-svg";
 
@@ -40,7 +40,6 @@ export default function Dev( { ...props } ) {
       ,
       [ InputData, setInputData ] = useState( "" )
    ;
-   // ;
 
 
    useEffect( () => {
@@ -53,13 +52,13 @@ export default function Dev( { ...props } ) {
    
    {/* modal */}
    return( <>
-      <c.Section bg="#2450" style={{ flex: 1, }}>
-         <c.Header>
-            <c.Content>
-            <c.H2 >Modal: RN</c.H2>
-            </c.Content>
-         </c.Header>
-         <c.Content>
+      <_.Section bg="#2450" style={{ flex: 1, }}>
+         <_.Header>
+            <_.Content>
+            <_.H2 >Modal: RN</_.H2>
+            </_.Content>
+         </_.Header>
+         <_.Content>
             <Pressable 
                onPress={ () => { setModalVisibility( !ModalVisibility ) } }
             >
@@ -92,9 +91,9 @@ export default function Dev( { ...props } ) {
                </BtnSquare01> 
             </Pressable>
 
-         </c.Content>
+         </_.Content>
 
-         <c.Content bg="#16181c" gap={ 16 }>
+         <_.Content bg="#16181c" gap={ 16 }>
             { 
                CustomersFB && 
                CustomersFB.map( customer => {
@@ -110,11 +109,11 @@ export default function Dev( { ...props } ) {
                } )
             }
             
-         </c.Content>
+         </_.Content>
 
          
 
-      </c.Section>
+      </_.Section>
 
 
       {/*  == [ Modal ]
@@ -129,7 +128,7 @@ export default function Dev( { ...props } ) {
             <Text style={ s.modalHeadTT }>Modal Screen</Text>
          </View>
          <View>
-            <c.Content>
+            <_.Content>
                <Pressable 
                   onPress={ () => { setModalVisibility( !ModalVisibility ) } }
                >
@@ -139,13 +138,13 @@ export default function Dev( { ...props } ) {
                      </Text>
                   </View>
                </Pressable>
-            </c.Content>
+            </_.Content>
 
-            <c.Content style={ s.modalContent }>
+            <_.Content style={ s.modalContent }>
                {/* npx expo install axios */}
 
-               <c.Section style={ s.form }>
-                  <c.H4 color="#fc0">cep</c.H4>
+               <_.Section style={ s.form }>
+                  <_.H4 color="#fc0">cep</_.H4>
                   <TextInput style={ s.input }
                   placeholder="11.702-600"
                   value=""
@@ -153,7 +152,7 @@ export default function Dev( { ...props } ) {
                   keyboardType="name-phone-pad"
                   />
 
-                  <c.Section style={ s.formFooter }>
+                  <_.Section style={ s.formFooter }>
 
 
                      <Press text="oi"
@@ -169,12 +168,12 @@ export default function Dev( { ...props } ) {
                      onPress={ () => {} }
                      />
 
-                  </c.Section>
-               </c.Section>
-               <c.H3>
+                  </_.Section>
+               </_.Section>
+               <_.H3>
                   { LoginFormActivated ? "Login here" : "Sign up here" }
-               </c.H3>
-            </c.Content>
+               </_.H3>
+            </_.Content>
             
 
          </View>
