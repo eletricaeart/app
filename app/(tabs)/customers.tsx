@@ -34,6 +34,8 @@ import { GetFBData, DeleteFBData, } from "@/src/widgets/clb-fb";
 import uuid from "react-native-uuid";
 import { ref, get, child, getDatabase } from "firebase/database";
 
+import useCustomersFB from "@/src/hooks/useCustomersFB";
+
 
 
 /* == [ properties ]
@@ -62,6 +64,8 @@ interface customer {
 == == == == == == == == == */
 export default function CustomersView( { ...props } ) {
    const 
+      { CustomersFB, Loading } = useCustomersFB
+      ,
       [ Customers, setCustomers ] = useState( [] )
       ,
       [ Clientes, setClientes ] = useState( "" )
@@ -71,8 +75,14 @@ export default function CustomersView( { ...props } ) {
 
    async function fetchData() {
       try {
-         const data = await AsyncStorage.getItem( "customer_dbs" );
-         const json = await JSON.parse( data );
+         const 
+            { CustomersFB } = useCustomersFB({})
+            ,
+            data = await AsyncStorage.getItem( "customer_dbs" )
+            ,
+            json = await JSON.parse( data )
+         ;
+
          console.log( "json: \n\n\n", json );
          setCustomers( json );
       } catch( err ) {

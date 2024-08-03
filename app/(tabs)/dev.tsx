@@ -10,7 +10,7 @@ import {
 import { FirebaseApp, FirebaseDB, } from "@/FirebaseConfig";
 import { getDatabase, get, child, ref, } from "firebase/database";
 
-import useCustomers from "@/src/hooks/useCustomers";
+import useCustomersFB from "@/src/hooks/useCustomersFB";
 
 import {
    Header, PageFooter, BottomNavigationBar,
@@ -27,7 +27,7 @@ import Svg, { Polygon } from "react-native-svg";
 
 export default function Dev( { ...props } ) {
    const 
-      { Customers, Loading } = useCustomers( {} )
+      { CustomersFB, Loading } = useCustomersFB( {} )
       ,
       [ ModalVisibility, setModalVisibility ] = useState( false )
       ,
@@ -95,8 +95,8 @@ export default function Dev( { ...props } ) {
 
          <c.Content bg="#16181c" gap={ 16 }>
             { 
-               Customers && 
-               Customers.map( customer => {
+               CustomersFB && 
+               CustomersFB.map( customer => {
                   return( <>
                      <View key={ customer.id } style={{ backgroundColor: "#e5e5e5",
                         padding: 16, borderRadius: 22, gap: 14,

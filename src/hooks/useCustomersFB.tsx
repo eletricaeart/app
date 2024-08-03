@@ -4,9 +4,9 @@ import { useState, useEffect, SetStateAction, } from "react";
 import { get, child, ref,getDatabase, } from "firebase/database";
 
 
-export default function useCustomers( { ...props } ) {
+export default function useCustomersFB( { ...props } ) {
    const 
-      [ Customers, setCustomers ] = useState( [] /* {
+      [ CustomersFB, setCustomersFB ] = useState( [] /* {
          id: "",
          name: "",
          email: "",
@@ -39,7 +39,7 @@ export default function useCustomers( { ...props } ) {
                         email: value.email,
                      } );
                   } );
-                  setCustomers( list );
+                  setCustomersFB( list );
                   setLoading( false );
                }
             );
@@ -50,5 +50,5 @@ export default function useCustomers( { ...props } ) {
       FetchData();
    }, [  ] );
 
-   return { Customers, Loading };
+   return { CustomersFB, Loading };
 }
