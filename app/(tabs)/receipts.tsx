@@ -5,11 +5,15 @@ import React, { useState, useEffect, useRef } from "react";
 import {
    StyleSheet, ScrollView, FlatList, Modal, View,
    Text, Image, Pressable, TextInput, Keyboard,
+   Switch,
+   Button,
 } from "react-native";
 
 import {
    FAB, Portal, PaperProvider,
 } from "react-native-paper";
+
+import DateTimePicker, { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
 
 import styled from "styled-components/native";
 import {
@@ -122,7 +126,36 @@ export default function ReceiptsView( { ...props } ) {
       ,
       [ Notes, setNotes ] = useState( "" )
    ;
+   const 
+      [ SwitchPaid_Enabled, setSwitchPaid_Enabled ] = useState( false )
+   ;
    
+   function ToggleSwitch_Paid() {
+      setSwitchPaid_Enabled( !SwitchPaid_Enabled );
+   }
+
+   function OnChangePayday( selectedDate ) {
+      const currentDate = selectedDate;
+      setPayday( currentDate );
+   }
+
+   const PaydayShowMode = (currentMode) => {
+      DateTimePickerAndroid.open({
+        value: Payday,
+        OnChangePayday,
+        mode: currentMode,
+        is24Hour: true,
+      });
+   };
+
+   const showDatepicker = () => {
+      PaydayShowMode('date');
+    };
+  
+    const showTimepicker = () => {
+      PaydayShowMode('time');
+    };
+
    const 
       inputs = [
          setPaid,
@@ -211,7 +244,7 @@ export default function ReceiptsView( { ...props } ) {
                      </Content>
                   </Header>
                   <View style={{ width: "100%", aspectRatio: "12 / 9", marginTop: 16, }}>
-                     <Image source={ require( "@/src/images/clipart/Receipts.svg" ) }
+                     <Image source={ require( "@/src/images/clipart/Receipts.png" ) }
                      style={{ width: "100%", height: "100%", }} resizeMode="contain"/>
                   </View>
                   <Center style={{ paddingTop: 16, }}>
@@ -239,7 +272,7 @@ export default function ReceiptsView( { ...props } ) {
                      <Section style={{ backgroundColor: "gradient-" }}>
                         <c.Header>
                            <c.Content>
-                              <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
+                              <View style={{ height: 80, flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
                                  <c.H3 color="#00559c99">Novo recibo</c.H3>
                                  <Pressable onPress={ () => { setModalVisibility( !ModalVisibility ) } }>
                                     <View style={[ s.btnOverlay,  ]}>
@@ -247,6 +280,19 @@ export default function ReceiptsView( { ...props } ) {
                                     </View>
                                  </Pressable>
                               </View>
+
+                              <Card style={{ backgroundColor: "#00559c", }}>
+                                 <Content style={{ flexDirection: "row", justifyContent: "space-between", gap: 18, height: 110, }}>
+                                    <Section style={{ justifyContent: "space-between" }}>
+                                       <H3 style={{ color: "#fff", }}>Valor do recibo</H3>
+                                       <H1 style={{ color: "#fff", }}>R$ 0,00</H1>
+                                    </Section>
+                                    <Section>
+                                       <P style={{ color: "#fff", }}>rc-155-2024-001</P>
+                                    </Section>
+                                 </Content>
+                              </Card>
+
                            </c.Content>
                         </c.Header>
                         <Section style={[ s.form, elevation.elevation, { backgroundColor: "#fff", } ]}>
@@ -255,23 +301,45 @@ export default function ReceiptsView( { ...props } ) {
                               <View style={ s.form } ref={ id_form }>
 
                                  <Content style={{  }}>
-                                    <c.H4>Valor do recibo</c.H4>
+                                    {/* <H4>Valor do recibo</H4> */}
 
                                  </Content>
 
                                  <Section >
-                                    <Text style={ s.label }>Data do recebimento</Text>
-                                    <TextInput style={ s.input }
-                                    value={ Payday }
-                                    // ref={ id_Payday }
-                                    onChangeText={ setPayday }
-                                    />
+
+                                    <Section style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
+                                       <P>Já está pago?</P>
+                                       <Switch
+                                          style={{  }}
+                                          trackColor={{ false: "#767577", true: "#00559c77" }}
+                                          thumbColor={ SwitchPaid_Enabled ? "#0088ec" : "#f4f3f4" }
+                                          ios_backgroundColor="#3e3e3e"
+                                          onValueChange={ ToggleSwitch_Paid }
+                                          value={ SwitchPaid_Enabled }
+                                       />
+                                    </Section>
+
+                                    {
+                                       SwitchPaid_Enabled && <>
+                                          <Text style={ s.label }>Data do recebimento</Text>
+                                          <TextInput style={ s.input }
+                                             value={ Payday }
+                                             // ref={ id_Payday }
+                                             onChangeText={ setPayday } 
+                                          />
+                                          <Button onPress={showDatepicker} title="Show date picker!" />
+                                          <Button onPress={showTimepicker} title="Show time picker!" />
+                                          <Text>selected: {Payday.toLocaleString()}</Text>
+                                       </>
+                                    }
                                  </Section>
 
                                  <Section>
+
                                     <View style={ s.divider }>
                                        <Text style={ s.dividerText }>Referência</Text>
                                     </View>
+
                                     <View style={ s.duo }>
                                        <View style={ s.duoBox }>
                                           <Text style={ s.label }>Referência</Text>
@@ -622,7 +690,7 @@ const
       margin: 0;
       padding: 0;
       /* font-size: calc( 1.3 * 16px ); */
-      font-size: 20;
+      font-size: 20px;
       font-weight: bold;
       color: #333;
    `,

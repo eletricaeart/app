@@ -713,7 +713,7 @@ export default function CustomersView( { ...props } ) {
             //  { icon: 'plus', onPress: () => console.log('Pressed add') },
              {
                icon: "apple-icloud", /* 'account-reactivate', */
-               label: 'Baixar pela nuvem',
+               label: 'Atualizar os dados nuvem',
                labelTextColor: "#333",
                labelStyle: { fontWeight: "bold" },
                onPress: () => {
