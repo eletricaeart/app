@@ -72,7 +72,7 @@ export default function ReceiptsView( { ...props } ) {
    const 
       [ ModalVisibility, setModalVisibility ] = useState( false )
       ,
-      [ Receipts, setReceipts ] = useState( [] )
+      [ Receipts, setReceipts ] = useState( null )
    ;
 
 
@@ -174,11 +174,11 @@ export default function ReceiptsView( { ...props } ) {
                <HomePage style={{  }}>
                   <Header>
                      <Content>
-                        <c.H2 >Recibos</c.H2>
+                        <H2>Recibos</H2>
                      </Content>
                   </Header>
 
-                  <Section bg="#e2f4fe00" style={{ flex: 1, paddingBottom: 75, }}>
+                  <Section  style={{ flex: 1, paddingBottom: 75, backgroundColor: "#e2f4fe00", }}>
                      <Content style={{ gap: 16 }}>
 
                         { Receipts != null ? 
@@ -191,9 +191,11 @@ export default function ReceiptsView( { ...props } ) {
                               );
                            } )
                            : 
-                           <View style={{ flex: 1, }}>
-                              <Text>Nenhum recibo ainda</Text>
-                           </View>
+                           <Section>
+                              <Centered>
+                                 <H5>Nenhum recibo ainda</H5>
+                              </Centered>
+                           </Section>
                         }
                         
                      </Content>
@@ -545,6 +547,15 @@ const
    Content = styled.View`
       padding: 16px;
    `,
+   Center = styled.View`
+      align-items: center;
+      justify-content: center;
+      `,
+   Centered = styled.View`
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+   `,
    Duo = styled.View`
       flex-direction: "row";
       gap: 8;
@@ -558,5 +569,90 @@ const
       height: 15;
       margin-top: 10;
       align-self: center;
+   `
+   ,
+
+   /** == == == [ text ] 
+    * 
+    * == == == == == == == == == */
+   TT = styled.Text`
+      margin: 0;
+      padding: 0;
+      font-size: calc( 2 * 16px );
+      font-weight: bold;
+      color: #333;
+   `,
+   H1 = styled.Text`
+      margin: 0;
+      padding: 0;
+      font-size: calc( 2 * 16px );
+      font-weight: bold;
+      color: #333;
+   `,
+   H2 = styled.Text`
+      margin: 0;
+      padding: 0;
+      font-size: calc( 1.5 * 16px );
+      font-weight: bold;
+      color: #333;
+   `,
+   H3 = styled.Text`
+      margin: 0;
+      padding: 0;
+      font-size: calc( 1.3 * 16px );
+      font-weight: bold;
+      color: #333;
+   `,
+   H4 = styled.Text`
+      margin: 0;
+      padding: 0;
+      font-size: calc( 18px );
+      font-weight: bold;
+      color: #333;
+   `,
+   H5 = styled.Text`
+      margin: 0;
+      padding: 0;
+      font-size: calc( .9 * 16px );
+      font-weight: bold;
+      color: #333;
+   `,
+   H6 = styled.Text`
+      margin: 0;
+      padding: 0;
+      font-size: calc( .8 * 16px );
+      font-weight: bold;
+      color: #333;
+   `,
+
+   T = styled.Text`
+      margin: 0;
+      padding: 0;
+      font-size: calc( 1 * 16px );
+      font-weight: bold;
+      color: #333;
+   `,
+   P = styled.Text`
+      margin: 0;
+      padding: 0;
+      font-size: calc( 1 * 16px );
+      font-weight: bold;
+      color: #333;
+   `,
+   PP = styled.Text`
+      margin: 0;
+      padding: 0;
+      font-size: calc( .8 * 16px );
+      font-weight: bold;
+      color: #333;
+   `,
+
+
+   /** == [ card ] 
+    * 
+    * == == == == == == == == == */
+   Card = styled.View`
+      border-radius: 24px;
+      overflow: hidden;
    `
 ;
