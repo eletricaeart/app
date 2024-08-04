@@ -13,6 +13,6 @@ export default function Index0() {
 
    return( <>
       <Text>Index BNB</Text>
-      <BottomNavigationBar />
+      {/* <BottomNavigationBar /> */}
    </> );
 }

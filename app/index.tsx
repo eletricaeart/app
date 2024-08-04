@@ -21,6 +21,7 @@ import { ActivityIndicator, Button } from "react-native-paper";
 
 import { router } from "expo-router";
 import TabLayout from "@/app/(tabs)/_layout";
+import Index0 from "./(tabs)";
 
 import * as CStore from "@/src/widgets/clb-dbs";
 import { colors } from "@/src/widgets/clb-colors";
@@ -213,7 +214,7 @@ export default function Index() {
                               <Pressable style={{ elevation: 10, width: "100%", }} onPress={ SignIn }>
                                  <BtnSquare01 fill="#00559c" bg="#fff0">
                                     <Text style={{ fontSize: 18, fontWeight: "bold", color: "#fff", }}>
-                                       Entrar
+                                       Acessar sua conta
                                     </Text>
                                  </BtnSquare01> 
                               </Pressable>
@@ -221,7 +222,7 @@ export default function Index() {
                               <Pressable style={{ elevation: 10, width: "100%", }} onPress={ SignUp }>
                                  <BtnSquare01 fill={ colors.blue2 } bg="#fff0">
                                     <Text style={{ fontSize: 18, fontWeight: "bold", color: "#fff",  }}>
-                                       Se Registrar
+                                       Criar uma conta
                                     </Text>
                                  </BtnSquare01> 
                               </Pressable>
@@ -236,6 +237,7 @@ export default function Index() {
       : 
       (
          <TabLayout />
+         // <Index0 />
          /* <BottomNavigationBar /> */
       ) }
    </> );

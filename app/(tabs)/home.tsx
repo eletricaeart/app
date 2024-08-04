@@ -37,7 +37,7 @@ export default function Home( { ...props } ) {
          style={{ backgroundColor: "#0000", 
             alignItems: "center", justifyContent: "center",
          }}>
-         <Text>Home</Text>
+         <Text>Home (tabs)</Text>
       </Sheet>
    </> );
 }

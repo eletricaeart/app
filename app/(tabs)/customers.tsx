@@ -7,6 +7,10 @@ import {
    Text, Image, Pressable, TextInput, Keyboard,
 } from "react-native";
 
+import {
+   FAB, Portal, PaperProvider,
+} from "react-native-paper";
+
 import styled from "styled-components/native";
 import {
    PageFooter, BottomNavigationBar, Fab, Press,
@@ -62,6 +66,56 @@ interface customer {
 }
 
 
+/** == [ fab ] 
+ * 
+ * == == == == == == == == == */
+export function Fabb() {
+   const 
+      [ state, setState ] = React.useState({ open: false })
+      ,
+      onStateChange = ({ open }) => setState({ open })
+      ,
+      { open } = state
+   ;
+ 
+   return (
+     <PaperProvider>
+       <Portal>
+         <FAB.Group
+           open={open}
+           visible
+           icon={open ? 'calendar-today' : 'plus'}
+           actions={[
+             { icon: 'plus', onPress: () => console.log('Pressed add') },
+             {
+               icon: 'star',
+               label: 'Star',
+               onPress: () => console.log('Pressed star'),
+             },
+             {
+               icon: 'email',
+               label: 'Email',
+               onPress: () => console.log('Pressed email'),
+             },
+             {
+               icon: 'bell',
+               label: 'Remind',
+               onPress: () => console.log('Pressed notifications'),
+             },
+           ]}
+           onStateChange={onStateChange}
+           onPress={() => {
+             if (open) {
+               // do something if the speed dial is open
+             }
+           }}
+         />
+       </Portal>
+     </PaperProvider>
+   );
+}
+
+
 /* == [ exports ]
 == == == == == == == == == */
 export default function CustomersView( { ...props } ) {
@@ -73,6 +127,8 @@ export default function CustomersView( { ...props } ) {
       [ Clientes, setClientes ] = useState( "" )
       ,
       [ ModalVisibility, setModalVisibility ] = useState( false )
+      ,
+      [ ModalMenuVisibility, setModalMenuVisibility ] = useState( false )
    ;
 
    async function FetchLocalCustomers() {
@@ -100,9 +156,6 @@ export default function CustomersView( { ...props } ) {
 
 
    async function UpdateCustomersBase() {
-      // const 
-      //    { CustomersFB } = useCustomersFB({})
-      // ;
       try {
          let 
             tempCustomersFB = CustomersFB
@@ -113,13 +166,6 @@ export default function CustomersView( { ...props } ) {
             ,
             tempLocalCustomers = await JSON.parse( tempLocalCustomersString )
          ;
-         // console.log(
-         //    "tempCustomersFB: ",tempCustomersFB,
-         //    "tempCustomersFB type: ", typeof tempCustomersFB,
-         //    "\n\ntempLocalCustomers: ",tempLocalCustomers,
-         //    "\ntempLocalCustomers type: ", typeof tempLocalCustomers
-         // );
-         // setCustomers( CustomersFB );
 
          await AsyncStorage.setItem( "customers", tempCustomersFBJson );
          SetCustomers();
@@ -179,19 +225,25 @@ export default function CustomersView( { ...props } ) {
 
 
    useEffect( () => {
-      // fetchData();
-      // FetchLocalCustomers().then( returned => setCustomers( returned ) );
       SetCustomers();
 
-      GetFBData( { 
-         // ref: "customers/c8ee2bdd-850f-47d2-8ee3-c672ab9b57b2/name",
-         ref: "customers/c:32-904/name",
-         putValueOn: setClientes
-      } );
+      // GetFBData( { 
+      //    ref: "customers/c:32-904/name",
+      //    putValueOn: setClientes
+      // } );
    }, [] ); 
    
 
-
+   /** == [ Fabb properties ] 
+    * 
+    * == == == == == == == == == */
+   const 
+      [ state, setState ] = React.useState({ open: false })
+      ,
+      onStateChange = ({ open }) => setState({ open })
+      ,
+      { open } = state
+   ;
 
 
 
@@ -337,16 +389,14 @@ export default function CustomersView( { ...props } ) {
    
 
    return( <>
+
+<PaperProvider>
       <LinearGradient colors={[ "#f5f5f5", "#e5e5e5", ]} style={[ { flex: 1, } ]} >
          <ScrollView style={{ flex: 1,  }}>
             <HomePage style={{  }}>
                <Header>
                   <Content>
                      <c.H2 >Clientes</c.H2>
-
-                     <Pressable onPress={ () => UpdateCustomersBase() }>
-                        <Text>update customers</Text>
-                     </Pressable>
                   </Content>
                </Header>
 
@@ -375,17 +425,6 @@ export default function CustomersView( { ...props } ) {
          </ScrollView>
       </LinearGradient>
 
-
-      {/**
-       * Fab btn
-       * 
-       */}
-      <Press text="Cadastrar novo" 
-      pressedText="Cadastrar agora" 
-      style={[ s.fab, elevation.elevation ]}
-      onPress={ () => {
-         setModalVisibility( true );
-      } }/>
 
    
       {/*  == [ Modal ]
@@ -623,6 +662,55 @@ export default function CustomersView( { ...props } ) {
             </ScrollView>
          </c.Section>
       </Modal>
+
+
+      {/* /** == [ ModalMenu ] 
+       * 
+       * == == == == == == == == == */}
+      <Modal visible={ ModalMenuVisibility } 
+         onRequestClose={ () => { setModalMenuVisibility( false ) } }
+         animationType="slide"
+         presentationStyle="formSheet"
+      >
+         <Text>Modal Menu</Text>
+      </Modal>
+
+      <Portal>
+         <FAB.Group
+           open={open}
+           visible
+           backdropColor="#fffb"
+
+           fabStyle={{ backgroundColor: "#00559c", }}
+           icon={open ? 'atom' : 'plus'}
+           actions={[
+            //  { icon: 'plus', onPress: () => console.log('Pressed add') },
+             {
+               icon: "apple-icloud", /* 'account-reactivate', */
+               label: 'Baixar pela nuvem',
+               labelTextColor: "#333",
+               labelStyle: { fontWeight: "bold" },
+               onPress: () => {
+                  UpdateCustomersBase();
+               },
+            },
+            {
+               icon: 'account-plus',
+               label: 'Cadastrar novo cliente',
+               labelTextColor: "#333",
+               labelStyle: { fontWeight: "bold", },
+               onPress: () => setModalVisibility( true ),
+             },
+           ]}
+           onStateChange={onStateChange}
+           onPress={() => {
+             if (open) {
+               // do something if the speed dial is open
+             }
+           }}
+         />
+       </Portal>
+     </PaperProvider>
    </> );
 }
 

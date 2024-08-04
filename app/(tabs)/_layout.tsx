@@ -1,11 +1,13 @@
 
 
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Pressable, Modal } from 'react-native';
 
 import { CommonActions } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Text, BottomNavigation, } from 'react-native-paper';
+import { Text, BottomNavigation,
+   Button, Menu, Divider, PaperProvider,
+} from 'react-native-paper';
 
 import {
    AppBar,
@@ -25,7 +27,13 @@ import Login from "./login";
 
 const Tab = createBottomTabNavigator();
 
-export default function MyComponent() {
+export default function Layout() {
+   const 
+      [ ModalMenuVisibility, setModalMenuVisibility ] = useState( false )
+      ,
+      [ MenuLeftVisibility, setMenuLeftVisibility ] = useState( false )
+   ;
+
   return (
     <Tab.Navigator
       // initialRouteName="Login" 
@@ -160,12 +168,65 @@ export default function MyComponent() {
           tabBarIcon: ({ color, size }) => {
             return <Icon i="f" name="people-group" color="#fff"/>;
           },
+          headerRight: ({}) => {
+            return( <>
+               <Pressable 
+               style={{ 
+                  borderRadius: 100,
+                  justifyContent: "center", 
+                  overflow: "hidden",
+                  marginLeft: 8,
+                  aspectRatio: 1,
+                  width: 45,
+               }}
+               android_ripple={{ color: "#fff", 
+                  radius: 24,
+                  foreground: true,
+               }}
+               onPress={ () => {
+                  setMenuLeftVisibility( !MenuLeftVisibility );
+               } }
+               >
+                  <View style={{ 
+                     alignItems: "center",
+                     justifyContent: "center",
+                  }}>
+                     <Icon i="f" name="user-circle" color="#fff"/>
+                  </View>
+               </Pressable>
+
+               {/* <Modal visible={ ModalMenuVisibility } 
+                  onRequestClose={ () => { setModalMenuVisibility( false ) } }
+                  animationType="slide"
+                  presentationStyle="formSheet"
+               >
+                  <Text>Modal Menu</Text>
+               </Modal> */}
+
+               {  MenuLeftVisibility &&
+                  <View style={{ flex: 1, position: "absolute", top: 60, left: 0,
+                     width: 165, height: 350, backgroundColor: "#f5f5f5",
+                     borderRadius: 24, elevation: 10,
+                     padding: 16,
+                  }}>
+                     <View
+                     style={{
+                        // paddingTop: 50,
+                        // flexDirection: 'row',
+                        // justifyContent: 'center',
+                     }}>
+                        
+                     </View>
+                  </View>
+               }
+            </> );
+          },
           unmountOnBlur: true,
         }} 
       />
       <Tab.Screen
         name="Receipts"
-        component={Routes.Receipts}
+        component={Routes.ReceiptsView}
         options={{
           tabBarLabel: 'Recibos',
           tabBarIcon: ({ color, size }) => {
