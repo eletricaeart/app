@@ -170,39 +170,56 @@ export default function ReceiptsView( { ...props } ) {
    return( <>
       <PaperProvider>
          <LinearGradient colors={[ "#f5f5f5", "#e5e5e5", ]} style={[ { flex: 1, } ]} >
-            <ScrollView style={{ flex: 1,  }}>
-               <HomePage style={{  }}>
+            
+            { Receipts != null ? 
+               <ScrollView style={{ flex: 1,  }}>
+                  <HomePage style={{  }}>
+                     <Header>
+                        <Content>
+                           <H2>Recibos</H2>
+                        </Content>
+                     </Header>
+   
+                     <Section  style={{ flex: 1, paddingBottom: 75, backgroundColor: "#e2f4fe00", }}>
+                        <Content style={{ gap: 16 }}>
+   
+                           {  
+                              <FlatList 
+                                 data={ Receipts }
+                                 renderItem={ ({item}) => <>
+                                    <ea.UsersCard
+                                       key={ item.id }
+                                       name={ item.name }
+                                    />
+                                 </> }
+                                 keyExtractor={ item => item.id } 
+                                 ItemSeparatorComponent={ 
+                                    () => <View style={{ height: 16, }}/>
+                                 }
+                              />
+                           }
+                           
+                        </Content>
+                     </Section>
+                  </HomePage> 
+               </ScrollView>
+               : 
+               <View style={{ flex: 1, }}>
                   <Header>
                      <Content>
                         <H2>Recibos</H2>
                      </Content>
                   </Header>
+                  <View style={{ width: "100%", aspectRatio: "12 / 9", marginTop: 16, }}>
+                     <Image source={ require( "@/src/images/clipart/Receipts.svg" ) }
+                     style={{ width: "100%", height: "100%", }} resizeMode="contain"/>
+                  </View>
+                  <Center style={{ paddingTop: 16, }}>
+                     <H3 style={{ color: "#777", }}>Nenhum recibo ainda</H3>
+                  </Center>
+               </View>
+            }
 
-                  <Section  style={{ flex: 1, paddingBottom: 75, backgroundColor: "#e2f4fe00", }}>
-                     <Content style={{ gap: 16 }}>
-
-                        { Receipts != null ? 
-                           Receipts.map( receipt => {
-                              return( 
-                                 <ea.UsersCard 
-                                    key={ receipt.id }
-                                    name={ receipt.name }
-                                 />
-                              );
-                           } )
-                           : 
-                           <Section>
-                              <Centered>
-                                 <H5>Nenhum recibo ainda</H5>
-                              </Centered>
-                           </Section>
-                        }
-                        
-                     </Content>
-                  </Section>
-               </HomePage> 
-
-            </ScrollView>
          </LinearGradient>
 
 
@@ -219,7 +236,7 @@ export default function ReceiptsView( { ...props } ) {
                <ScrollView keyboardShouldPersistTaps="handled">
                   <View style={[ s.backSheet, elevation.elevation ]} />
                   <View style={[ s.frontSheet, elevation.elevation ]} >
-                     <Section bg="#f3f3f3" style={{ backgroundColor: "gradient-" }}>
+                     <Section style={{ backgroundColor: "gradient-" }}>
                         <c.Header>
                            <c.Content>
                               <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
@@ -251,7 +268,7 @@ export default function ReceiptsView( { ...props } ) {
                                     />
                                  </Section>
 
-                                 <Section contato section>
+                                 <Section>
                                     <View style={ s.divider }>
                                        <Text style={ s.dividerText }>Referência</Text>
                                     </View>
@@ -305,7 +322,7 @@ export default function ReceiptsView( { ...props } ) {
                                     </View>
                                  </Section>
 
-                                 <Section endereço section>
+                                 <Section>
                                     <View style={ s.divider }>
                                        <Text style={ s.dividerText }>Desconto</Text>
                                     </View>
@@ -337,7 +354,7 @@ export default function ReceiptsView( { ...props } ) {
                                     
                                  </Section>
 
-                                 <Section observações section>
+                                 <Section>
                                     <View style={ s.divider }>
                                        <Text style={ s.dividerText }>Informaçoes adicionais</Text>
                                     </View>
@@ -358,7 +375,7 @@ export default function ReceiptsView( { ...props } ) {
                                        onPressIn={ () => { Keyboard.dismiss() } }
                                        onPressOut={ () => { 
                                           Form.ClearInputs( inputs ); 
-                                          id_Name.current.focus(); 
+                                          // id_Name.current.focus(); 
                                        } }
                                     />
                                     <Touch 
@@ -379,7 +396,9 @@ export default function ReceiptsView( { ...props } ) {
                                           color: "#fff",
                                        }}
                                        txt="cadastrar"
-                                       onPress={ () => { RegisterCustomerOnBase( { dbs_name: "customers", object: customersList } ) } }
+                                       onPress={ () => { 
+                                          // RegisterCustomerOnBase( { dbs_name: "customers", object: customersList } ) 
+                                       } }
                                     />
 
                                  </Section>
@@ -411,7 +430,7 @@ export default function ReceiptsView( { ...props } ) {
                   labelTextColor: "#333",
                   labelStyle: { fontWeight: "bold" },
                   onPress: () => {
-                     UpdateCustomersBase();
+                     // UpdateCustomersBase();
                   },
                },
                {
@@ -578,49 +597,55 @@ const
    TT = styled.Text`
       margin: 0;
       padding: 0;
-      font-size: calc( 2 * 16px );
+      /* font-size: calc( 2 * 16px ); */
+      font-size: 32;
       font-weight: bold;
       color: #333;
    `,
    H1 = styled.Text`
       margin: 0;
       padding: 0;
-      font-size: calc( 2 * 16px );
+      /* font-size: calc( 2 * 16px ); */
+      font-size: 32;
       font-weight: bold;
       color: #333;
    `,
    H2 = styled.Text`
       margin: 0;
       padding: 0;
-      font-size: calc( 1.5 * 16px );
+      /* font-size: calc( 1.5 * 16px ); */
+      font-size: 24;
       font-weight: bold;
       color: #333;
    `,
    H3 = styled.Text`
       margin: 0;
       padding: 0;
-      font-size: calc( 1.3 * 16px );
+      /* font-size: calc( 1.3 * 16px ); */
+      font-size: 20;
       font-weight: bold;
       color: #333;
    `,
    H4 = styled.Text`
       margin: 0;
       padding: 0;
-      font-size: calc( 18px );
+      font-size: 18;
       font-weight: bold;
       color: #333;
    `,
    H5 = styled.Text`
       margin: 0;
       padding: 0;
-      font-size: calc( .9 * 16px );
+      /* font-size: calc( .9 * 16px ); */
+      font-size: 14;
       font-weight: bold;
       color: #333;
    `,
    H6 = styled.Text`
       margin: 0;
       padding: 0;
-      font-size: calc( .8 * 16px );
+      /* font-size: calc( .8 * 16px ); */
+      font-size: 12;
       font-weight: bold;
       color: #333;
    `,
@@ -628,21 +653,21 @@ const
    T = styled.Text`
       margin: 0;
       padding: 0;
-      font-size: calc( 1 * 16px );
+      font-size: 16;
       font-weight: bold;
       color: #333;
    `,
    P = styled.Text`
       margin: 0;
       padding: 0;
-      font-size: calc( 1 * 16px );
+      font-size: 16;
       font-weight: bold;
       color: #333;
    `,
    PP = styled.Text`
       margin: 0;
       padding: 0;
-      font-size: calc( .8 * 16px );
+      font-size: 12;
       font-weight: bold;
       color: #333;
    `,

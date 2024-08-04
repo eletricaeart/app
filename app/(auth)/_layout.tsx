@@ -62,8 +62,8 @@ export default function MyComponent() {
          headerStyle: {
             backgroundColor: "#00559C",
          }
-         ,
-         title: "Eletrica & Art"
+         // ,
+         // title: "Eletrica & Art"
          // ,
          // headerBlurEffect: "light"
          // ,

@@ -71,24 +71,14 @@ export default function Layout() {
          headerStyle: {
             backgroundColor: "#00559C",
          }
-         ,
-         title: "Eletrica & Art"
+         // ,
+         // title: "Eletrica & Art"
          // ,
          // headerBlurEffect: "light"
          // ,
          // headerShadowVisible: true
          // ,
          // headerShown: true
-         ,
-         headerSearchBarOptions: {
-            barTintColor: "#fff0",
-            tintColor: "#fff",
-            headerIconColor: "#fff",
-            hintTextColor: "#eee",
-            textColor: "#eee",
-            
-         },
-         
       }}
       tabBar={({ navigation, state, descriptors, insets }) => (
         <BottomNavigation.Bar
@@ -191,7 +181,7 @@ export default function Layout() {
                      alignItems: "center",
                      justifyContent: "center",
                   }}>
-                     <Icon i="f" name="user-circle" color="#fff"/>
+                     <Icon i="mc" name="dots-vertical" color="#fff"/>
                   </View>
                </Pressable>
 
@@ -204,19 +194,13 @@ export default function Layout() {
                </Modal> */}
 
                {  MenuLeftVisibility &&
-                  <View style={{ flex: 1, position: "absolute", top: 60, left: 0,
-                     width: 165, height: 350, backgroundColor: "#f5f5f5",
+                  <View style={{ flex: 1, position: "absolute", top: 50, left: -50,
+                     width: 200, height: 350, backgroundColor: "#f5f5f5",
                      borderRadius: 24, elevation: 10,
                      padding: 16,
+                     borderColor: "#7773", borderWidth: 1,
                   }}>
-                     <View
-                     style={{
-                        // paddingTop: 50,
-                        // flexDirection: 'row',
-                        // justifyContent: 'center',
-                     }}>
-                        
-                     </View>
+                     <View style={{}}></View>
                   </View>
                }
             </> );

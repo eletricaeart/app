@@ -43,13 +43,16 @@ export function AppBar( { ...props } ) {
             borderBottomColor: "#3333",
             borderBottomWidth: 0,
             zIndex: 9,
+            height: "100%",
+            alignItems: "center",
+            justifyContent: "center",
+            overflow: "hidden",
          } }
       >
-         <View style={ {
-            backgroundColor: "#00559C",
-            height: 60,
-         } }>
-         </View>
+         {/* <Image source={ require( "@/src/images/EA/EA-appbar-title.png" ) }  */}
+         <Image source={ require( "@/src/images/EA/EA-appbar-title-bc.png" ) } 
+         style={{ width: "23%", height: "100%" }}
+         resizeMode="contain"/>
       </View>
    </> );
 } 

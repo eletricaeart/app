@@ -389,41 +389,67 @@ export default function CustomersView( { ...props } ) {
    
 
    return( <>
-
-<PaperProvider>
-      <LinearGradient colors={[ "#f5f5f5", "#e5e5e5", ]} style={[ { flex: 1, } ]} >
-         <ScrollView style={{ flex: 1,  }}>
-            <HomePage style={{  }}>
-               <Header>
-                  <Content>
-                     <c.H2 >Clientes</c.H2>
-                  </Content>
-               </Header>
-
-               <Section bg="#e2f4fe00" style={{ flex: 1, paddingBottom: 75, }}>
-                  <Content style={{ gap: 16 }}>
-
-                     { Customers != null ? 
-                        Customers.map( customer => {
-                           return( 
-                              <ea.UsersCard 
-                                 key={ customer.id }
-                                 name={ customer.name }
+      <PaperProvider>
+         <LinearGradient colors={[ "#f5f5f5", "#e5e5e5", ]} style={[ { flex: 1, } ]} >
+            
+            { Customers != null ? 
+               <ScrollView style={{ flex: 1,  }}>
+                  <HomePage style={{  }}>
+                     <Header>
+                        <Content>
+                           <H2>Clientes</H2>
+                        </Content>
+                     </Header>
+   
+                     <Section bg="#e2f4fe00" style={{ flex: 1, paddingBottom: 75, }}>
+                        <Content style={{ gap: 16 }}>
+   
+                           { 
+                              // Customers.map( customer => {
+                              //    return( 
+                              //       <ea.UsersCard 
+                              //          key={ customer.id }
+                              //          name={ customer.name }
+                              //       />
+                              //    );
+                              // } ) 
+                              <FlatList 
+                                 data={ Customers }
+                                 renderItem={ ({item}) => <>
+                                    <ea.UsersCard
+                                       key={ item.id }
+                                       name={ item.name }
+                                    />
+                                 </> }
+                                 keyExtractor={ item => item.id } 
+                                 ItemSeparatorComponent={ 
+                                    () => <View style={{ height: 16, }}/>
+                                 }
                               />
-                           );
-                        } )
-                        : 
-                        <View style={{ flex: 1, }}>
-                           <Text>No customers yet</Text>
-                        </View>
-                     }
-                     
-                  </Content>
-               </Section>
-            </HomePage> 
+                           }
+                           
+                        </Content>
+                     </Section>
+                  </HomePage> 
+               </ScrollView>
+               : 
+               <View style={{ flex: 1, }}>
+                  <Header>
+                     <Content>
+                        <H2>Clientes</H2>
+                     </Content>
+                  </Header>
+                  <View style={{ width: "100%", aspectRatio: "12 / 9", marginTop: 16, }}>
+                     <Image source={ require( "@/src/images/clipart/saying-no-to-customers.png" ) }
+                     style={{ width: "100%", height: "100%", }} resizeMode="contain"/>
+                  </View>
+                  <Center style={{ paddingTop: 16, }}>
+                     <H3 style={{ color: "#777", }}>Nenhum cliente aqui</H3>
+                  </Center>
+               </View>
+            }
 
-         </ScrollView>
-      </LinearGradient>
+         </LinearGradient>
 
 
    
@@ -827,6 +853,15 @@ const
    Content = styled.View`
       padding: 16px;
    `,
+   Center = styled.View`
+      align-items: center;
+      justify-content: center;
+      `,
+   Centered = styled.View`
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+   `,
    Duo = styled.View`
       flex-direction: "row";
       gap: 8;
@@ -841,75 +876,95 @@ const
       margin-top: 10;
       align-self: center;
    `
-   // frontSheet: {
-   //    backgroundColor: "#f5f5f5",
-   //    borderTopStartRadius: 24,
-   //    borderTopEndRadius: 24,
-   //    width: "100%",
-   //    flex: 1,
-   //    alignSelf: "center",
-   //    overflow: "hidden",
-   // },
-   // modal_body: {
-   //    backgroundColor: "#f5f5f5",
-   // },
-   // container: {
-   //    flex: 1,
-   //    justifyContent: 'center',
-   //    padding: 8,
-   //    backgroundColor: '#0e101c',
-   // },
-   // form: {
-   //    borderRadius: 24,
-   // },
-   // header: {
-   //    marginTop: 16,
-   //    marginBottom: 24,
-   // },
-   // btnOverlay: { backgroundColor: "#0001", 
-   //    padding: 8,
-   //    borderRadius: 100,
-   //    aspectRatio: 1,
-   //    alignItems: "center",
-   //    justifyContent: "center",
-   // },
-   // divider: {
-   //    borderBottomColor: "#009ee6",
-   //    borderBottomWidth: 2,
-   //    borderStyle: "dashed",
-   //    marginTop: 16,
-   //    marginBottom: 16,  
-   // },
-   // dividerText: {
-   //    fontWeight: "bold",
-   //    marginBottom: 8,
-   //    color: "#00559c",
-   // },
-   // duo: {
-   //    flexDirection: "row",
-   //    gap: 8,
-   // },
-   // duoBox: {
-   //    flex: .5,
-   // },
-   // label: {
-   //    color: "#777",
-   //    fontWeight: "500",
-   //    marginBottom: 8,
-   //    marginLeft: 0,
-   //    paddingTop: 0,
-   //    paddingBottom: 0,
-   //    paddingLeft: 16,
-   //    paddingRight: 16,
-   // },
-   // input: {
-   //    backgroundColor: "#f3f3f3",
-   //    height: 56,
-   //    marginBottom: 16,
-   //    padding: 16,
-   //    borderRadius: 16,
-   //    borderColor: "#fff2",
-   //    borderWidth: 1,
-   //    borderStyle: "solid",
-   // },
+   ,
+
+   /** == == == [ text ] 
+    * 
+    * == == == == == == == == == */
+   TT = styled.Text`
+      margin: 0;
+      padding: 0;
+      /* font-size: calc( 2 * 16px ); */
+      font-size: 32;
+      font-weight: bold;
+      color: #333;
+   `,
+   H1 = styled.Text`
+      margin: 0;
+      padding: 0;
+      /* font-size: calc( 2 * 16px ); */
+      font-size: 32;
+      font-weight: bold;
+      color: #333;
+   `,
+   H2 = styled.Text`
+      margin: 0;
+      padding: 0;
+      /* font-size: calc( 1.5 * 16px ); */
+      font-size: 24;
+      font-weight: bold;
+      color: #333;
+   `,
+   H3 = styled.Text`
+      margin: 0;
+      padding: 0;
+      /* font-size: calc( 1.3 * 16px ); */
+      font-size: 20;
+      font-weight: bold;
+      color: #333;
+   `,
+   H4 = styled.Text`
+      margin: 0;
+      padding: 0;
+      font-size: 18;
+      font-weight: bold;
+      color: #333;
+   `,
+   H5 = styled.Text`
+      margin: 0;
+      padding: 0;
+      /* font-size: calc( .9 * 16px ); */
+      font-size: 14;
+      font-weight: bold;
+      color: #333;
+   `,
+   H6 = styled.Text`
+      margin: 0;
+      padding: 0;
+      /* font-size: calc( .8 * 16px ); */
+      font-size: 12;
+      font-weight: bold;
+      color: #333;
+   `,
+
+   T = styled.Text`
+      margin: 0;
+      padding: 0;
+      font-size: 16;
+      font-weight: bold;
+      color: #333;
+   `,
+   P = styled.Text`
+      margin: 0;
+      padding: 0;
+      font-size: 16;
+      font-weight: bold;
+      color: #333;
+   `,
+   PP = styled.Text`
+      margin: 0;
+      padding: 0;
+      font-size: 12;
+      font-weight: bold;
+      color: #333;
+   `,
+
+
+   /** == [ card ] 
+    * 
+    * == == == == == == == == == */
+   Card = styled.View`
+      border-radius: 24px;
+      overflow: hidden;
+   `
 ;

@@ -23,6 +23,7 @@ import { Icon } from "./clb-icons";
 
 
 
+
 /* == [ exports ]
 == == == == == == == == == */
 export function HeaderTitle( { ...props } ) {
@@ -54,11 +55,20 @@ export function HeaderTitle( { ...props } ) {
             
          } }
       /> */}
-      <View>
+      <Image source={ require( "@/src/images/EA/EA-appbar-title.png" ) }
+         style={ {
+            resizeMode: "contain",
+            width: "23%",
+            height: "100%",
+            alignSelf: "center",
+            
+         } }
+      />
+      {/* <View>
          <Text style={[ hs.text, ]}>Eletrica</Text>
          <Text style={[ hs.text, hs.text_e ]}>&</Text>
          <Text style={[ hs.text, ]}>Art</Text>
-      </View>
+      </View> */}
    </> );
 }
 
@@ -215,7 +225,7 @@ export function UsersCard( { ...props } ) {
    } )
 
    return( <>
-      <View style={ s.card }>
+      <View style={[ s.card, props.style ]}>
 
          <View style={[ s.picture ]}>
             <Image source={ profile } style={[ s.img ]} resizeMode="contain"/>
