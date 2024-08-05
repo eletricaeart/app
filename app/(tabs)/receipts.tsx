@@ -120,7 +120,7 @@ export default function ReceiptsView( { ...props } ) {
       ,
       [ Warranty, setWarranty ] = useState( "" )
       ,
-      [ FormOfPayment, setFormOfPayment ] = useState( "" )
+      [ FormOfPayment, setFormOfPayment ] = useState( "..." )
       ,
       [ Attachment, setAttachment ] = useState( "" )
       ,
@@ -132,6 +132,8 @@ export default function ReceiptsView( { ...props } ) {
 
    const 
       [ SwitchPaid_Enabled, setSwitchPaid_Enabled ] = useState( false )
+      ,
+      [ ModalFormOfPayment, setModalFormOfPayment ] = useState( false )
    ;
 
    useEffect( () => {
@@ -262,7 +264,9 @@ export default function ReceiptsView( { ...props } ) {
                <ScrollView keyboardShouldPersistTaps="handled">
                   <View style={[ s.backSheet, elevation.elevation ]} />
                   <View style={[ s.frontSheet, elevation.elevation ]} >
-                     <Section style={{ backgroundColor: "gradient-" }}>
+
+
+                     <Section style={{ zIndex: 1 }}>
                         <c.Header>
                            <c.Content>
                               <View style={{ height: 80, flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
@@ -315,7 +319,7 @@ export default function ReceiptsView( { ...props } ) {
                                     </Section>
 
                                     {
-                                       SwitchPaid_Enabled && <>
+                                       SwitchPaid_Enabled && <Section style={{ paddingTop: 16, paddingBottom: 16, }}>
                                           <Text style={ s.label }>Data do recebimento</Text>
                                           <TextInput style={ s.input }
                                              value={ Payday }
@@ -325,7 +329,7 @@ export default function ReceiptsView( { ...props } ) {
                                           />
                                           {/* <Button onPress={showDatepicker} title="Show date picker!" />
                                           <Text>selected: {Payday.toLocaleString()}</Text> */}
-                                       </>
+                                       </Section>
                                     }
                                  </Section>
 
@@ -420,12 +424,23 @@ export default function ReceiptsView( { ...props } ) {
                                     />
                                        
                                     <Text style={ s.label }>Forma de pagamento</Text>
-                                    <TextInput style={ s.input }
+                                    {/* <TextInput style={ s.input }
                                        value={ FormOfPayment }
                                        onChangeText={ setFormOfPayment }
                                        placeholderTextColor={ "#777" }
-                                    />
+                                       editable= { false }
+                                       onPress={ () => {
+                                          setModalFormOfPayment( true );
+                                       } }
+                                    /> */}
+                                    <Text style={ s.input }
+                                    onPress={ () => {
+                                       setModalFormOfPayment( !ModalFormOfPayment );
+                                    } }>
+                                       { FormOfPayment }
+                                    </Text>
                                     
+
                                     <Text style={ s.label }>Anexo</Text>
                                     <TextInput style={ s.input }
                                        value={ Attachment }
@@ -485,13 +500,74 @@ export default function ReceiptsView( { ...props } ) {
                                     />
 
                                  </Section>
-                                 
                               </View>
                            </c.Content>
                         </Section>
                      </Section>
                   </View>
                </ScrollView>
+
+
+                  <Center style={{ 
+                     display: ModalFormOfPayment ? "flex" : "none",
+                  backgroundColor: "#21232900",  
+                  position: "absolute", zIndex: 9,  width: "100%", height: "50%",
+                  alignSelf: "center", 
+                  }}>
+                     <View style={{ 
+                     backgroundColor: "#e5e5e5", padding: 16, borderRadius: 24, 
+                     position: "absolute", zIndex: 9,  width: "90%",
+                     alignSelf: "center", elevation: 10,
+                     }}>
+                        <Centered style={{ paddingTop: 8, paddingBottom: 18, }}>
+                           <H3>Qual a forma de pagamento?</H3>
+                        </Centered>
+
+                        <Content style={{ gap: 8, }}>
+                           <Item>
+                              <H4 style={{ color: "#555", }}
+                              onPress={ () => {
+                                 setFormOfPayment( "pix" );
+                                 setModalFormOfPayment( !ModalFormOfPayment );
+                              } }
+                              >
+                                 Pix
+                              </H4>
+                           </Item>
+                           <Item>
+                              <H4 style={{ color: "#555", }}
+                              onPress={ () => {
+                                 setFormOfPayment( "débito" );
+                                 setModalFormOfPayment( !ModalFormOfPayment );
+                              } }
+                              >
+                                 Cartão de débito
+                              </H4>
+                           </Item>
+                           <Item>
+                              <H4 style={{ color: "#555", }}
+                              onPress={ () => {
+                                 setFormOfPayment( "crédito" );
+                                 setModalFormOfPayment( !ModalFormOfPayment );
+                              } }
+                              >
+                                 Cartão de crédito
+                              </H4>
+                           </Item>
+                           <Item>
+                              <H4 style={{ color: "#555", }}
+                              onPress={ () => {
+                                 setFormOfPayment( "dinheiro" );
+                                 setModalFormOfPayment( !ModalFormOfPayment );
+                              } }
+                              >
+                                 Em dinheiro
+                              </H4>
+                           </Item>
+                        </Content>
+                     </View>
+                  </Center>
+                                 
             </Section>
          </Modal>
 
@@ -659,6 +735,11 @@ const
       text-align: center;
    `,
    Duo = styled.View`
+      flex-direction: "row";
+      gap: 8;
+   `
+   ,
+   Item = styled.View`
       flex-direction: "row";
       gap: 8;
    `
