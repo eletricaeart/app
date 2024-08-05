@@ -507,66 +507,72 @@ export default function ReceiptsView( { ...props } ) {
                   </View>
                </ScrollView>
 
-
-                  <Center style={{ 
-                     display: ModalFormOfPayment ? "flex" : "none",
-                  backgroundColor: "#21232900",  
-                  position: "absolute", zIndex: 9,  width: "100%", height: "50%",
+                  
+                  <Pressable style={{ 
+                  display: ModalFormOfPayment ? "flex" : "none",
+                  backgroundColor: "#21232955",  
+                  position: "absolute", zIndex: 9,  width: "100%", height: "100%",
                   alignSelf: "center", 
-                  }}>
-                     <View style={{ 
-                     backgroundColor: "#e5e5e5", padding: 16, borderRadius: 24, 
-                     position: "absolute", zIndex: 9,  width: "90%",
-                     alignSelf: "center", elevation: 10,
+                  }}
+                  onPress={ () => { setModalFormOfPayment( !ModalFormOfPayment ); } }>
+                     <Section style={{
+                        backgroundColor: "#27f0", flex: 1,
+                        alignItems: "center", justifyContent: "center",
                      }}>
-                        <Centered style={{ paddingTop: 8, paddingBottom: 18, }}>
-                           <H3>Qual a forma de pagamento?</H3>
-                        </Centered>
+                        <View style={{ 
+                        backgroundColor: "#e5e5e5", padding: 16, borderRadius: 24, 
+                        position: "absolute", zIndex: 9,  width: "90%",
+                        alignSelf: "center", elevation: 10,
+                        }}>
+                           <Centered style={{ paddingTop: 8, paddingBottom: 18, }}>
+                              <H3>Qual a forma de pagamento?</H3>
+                           </Centered>
 
-                        <Content style={{ gap: 8, }}>
-                           <Item>
-                              <H4 style={{ color: "#555", }}
-                              onPress={ () => {
-                                 setFormOfPayment( "pix" );
-                                 setModalFormOfPayment( !ModalFormOfPayment );
-                              } }
-                              >
-                                 Pix
-                              </H4>
-                           </Item>
-                           <Item>
-                              <H4 style={{ color: "#555", }}
-                              onPress={ () => {
-                                 setFormOfPayment( "débito" );
-                                 setModalFormOfPayment( !ModalFormOfPayment );
-                              } }
-                              >
-                                 Cartão de débito
-                              </H4>
-                           </Item>
-                           <Item>
-                              <H4 style={{ color: "#555", }}
-                              onPress={ () => {
-                                 setFormOfPayment( "crédito" );
-                                 setModalFormOfPayment( !ModalFormOfPayment );
-                              } }
-                              >
-                                 Cartão de crédito
-                              </H4>
-                           </Item>
-                           <Item>
-                              <H4 style={{ color: "#555", }}
-                              onPress={ () => {
-                                 setFormOfPayment( "dinheiro" );
-                                 setModalFormOfPayment( !ModalFormOfPayment );
-                              } }
-                              >
-                                 Em dinheiro
-                              </H4>
-                           </Item>
-                        </Content>
-                     </View>
-                  </Center>
+                           <Content style={{ gap: 8, }}>
+                              <Item>
+                                 <P style={{ color: "#555", }}
+                                 onPress={ () => {
+                                    setFormOfPayment( "pix" );
+                                    setModalFormOfPayment( !ModalFormOfPayment );
+                                 } }
+                                 >
+                                    Pix
+                                 </P>
+                              </Item>
+                              <Item>
+                                 <P style={{ color: "#555", }}
+                                 onPress={ () => {
+                                    setFormOfPayment( "débito" );
+                                    setModalFormOfPayment( !ModalFormOfPayment );
+                                 } }
+                                 >
+                                    Cartão de débito
+                                 </P>
+                              </Item>
+                              <Item>
+                                 <P style={{ color: "#555", }}
+                                 onPress={ () => {
+                                    setFormOfPayment( "crédito" );
+                                    setModalFormOfPayment( !ModalFormOfPayment );
+                                 } }
+                                 >
+                                    Cartão de crédito
+                                 </P>
+                              </Item>
+                              <Item>
+                                 <P style={{ color: "#555", }}
+                                 onPress={ () => {
+                                    setFormOfPayment( "dinheiro" );
+                                    setModalFormOfPayment( !ModalFormOfPayment );
+                                 } }
+                                 >
+                                    Em dinheiro
+                                 </P>
+                              </Item>
+                           </Content>
+                        </View>
+                     </Section>
+                  </Pressable>
                                  
             </Section>
          </Modal>
