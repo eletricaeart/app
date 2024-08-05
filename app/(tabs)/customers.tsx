@@ -856,7 +856,7 @@ const
    Center = styled.View`
       align-items: center;
       justify-content: center;
-      `,
+   `,
    Centered = styled.View`
       align-items: center;
       justify-content: center;
@@ -884,7 +884,6 @@ const
    TT = styled.Text`
       margin: 0;
       padding: 0;
-      /* font-size: calc( 2 * 16px ); */
       font-size: 32;
       font-weight: bold;
       color: #333;
@@ -892,7 +891,6 @@ const
    H1 = styled.Text`
       margin: 0;
       padding: 0;
-      /* font-size: calc( 2 * 16px ); */
       font-size: 32;
       font-weight: bold;
       color: #333;
@@ -900,7 +898,6 @@ const
    H2 = styled.Text`
       margin: 0;
       padding: 0;
-      /* font-size: calc( 1.5 * 16px ); */
       font-size: 24;
       font-weight: bold;
       color: #333;
@@ -908,8 +905,7 @@ const
    H3 = styled.Text`
       margin: 0;
       padding: 0;
-      /* font-size: calc( 1.3 * 16px ); */
-      font-size: 20;
+      font-size: 20px;
       font-weight: bold;
       color: #333;
    `,
@@ -923,7 +919,6 @@ const
    H5 = styled.Text`
       margin: 0;
       padding: 0;
-      /* font-size: calc( .9 * 16px ); */
       font-size: 14;
       font-weight: bold;
       color: #333;
@@ -931,7 +926,6 @@ const
    H6 = styled.Text`
       margin: 0;
       padding: 0;
-      /* font-size: calc( .8 * 16px ); */
       font-size: 12;
       font-weight: bold;
       color: #333;

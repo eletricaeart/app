@@ -5,11 +5,11 @@ import React, { useState, useEffect, useRef } from "react";
 import {
    StyleSheet, ScrollView, FlatList, Modal, View,
    Text, Image, Pressable, TextInput, Keyboard,
-   Switch,
    Button,
 } from "react-native";
 
 import {
+   Switch,
    FAB, Portal, PaperProvider,
 } from "react-native-paper";
 
@@ -102,13 +102,13 @@ export default function ReceiptsView( { ...props } ) {
    == == == == == == == == == */
    const [ customersDB, setcustomersDB ] = useState( [] );
    const 
-      [ Paid, setPaid ] = useState( "" )
+      [ Paid, setPaid ] = useState( false )
       ,
       [ Payday, setPayday ] = useState( "" )
       ,
-      [ Ref, setRef ] = useState( "" )
+      [ Ref, setRef ] = useState( "rc-155-2024-0" )
       ,
-      [ Subtotal, setSubtotal ] = useState( "" )
+      [ Subtotal, setSubtotal ] = useState( "0,00" )
       ,
       [ DueDate, setDueDate ] = useState( "" )
       ,
@@ -116,7 +116,7 @@ export default function ReceiptsView( { ...props } ) {
       ,
       [ Services, setServices ] = useState( "" )
       ,
-      [ Discount, setDiscount ] = useState( "" )
+      [ Discount, setDiscount ] = useState( 100 )
       ,
       [ Warranty, setWarranty ] = useState( "" )
       ,
@@ -125,13 +125,26 @@ export default function ReceiptsView( { ...props } ) {
       [ Attachment, setAttachment ] = useState( "" )
       ,
       [ Notes, setNotes ] = useState( "" )
+
+      ,
+      [ ReceiptValue, setReceiptValue ] = useState( "1800.00" )
    ;
+
    const 
       [ SwitchPaid_Enabled, setSwitchPaid_Enabled ] = useState( false )
    ;
+
+   useEffect( () => {
+      setSubtotal( ReceiptValue - Discount )
+   }, [ ReceiptValue ] );
    
    function ToggleSwitch_Paid() {
       setSwitchPaid_Enabled( !SwitchPaid_Enabled );
+      if( SwitchPaid_Enabled ) {
+         setPaid( true );
+      } else {
+         setPaid( false );
+      }
    }
 
    function OnChangePayday( selectedDate ) {
@@ -173,26 +186,6 @@ export default function ReceiptsView( { ...props } ) {
       ]
       ,
       id_form = useRef( null )
-      // ,
-      // receiptsList = {
-      //    id: uuid.v4(),
-      //    name: Name,
-      //    cellphone: Cellphone,
-      //    whatsapp: Whatsapp,
-      //    phone: Phone,
-      //    phone2: Phone2,
-      //    email: Email,
-      //    rg: Rg,
-      //    cpf: Cpf,
-      //    cep: Cep,
-      //    estate: Estate,
-      //    logradouro: Logradouro,
-      //    number: Number,
-      //    complemento: Complemento,
-      //    district: District,
-      //    city: City,
-      //    note: Note 
-      // }
    ;
    
    
@@ -285,10 +278,10 @@ export default function ReceiptsView( { ...props } ) {
                                  <Content style={{ flexDirection: "row", justifyContent: "space-between", gap: 18, height: 110, }}>
                                     <Section style={{ justifyContent: "space-between" }}>
                                        <H3 style={{ color: "#fff", }}>Valor do recibo</H3>
-                                       <H1 style={{ color: "#fff", }}>R$ 0,00</H1>
+                                       <H1 style={{ color: "#fff", }}>R$ { ReceiptValue }</H1>
                                     </Section>
                                     <Section>
-                                       <P style={{ color: "#fff", }}>rc-155-2024-001</P>
+                                       <P style={{ color: "#fff", }}>{ Ref }</P>
                                     </Section>
                                  </Content>
                               </Card>
@@ -301,11 +294,13 @@ export default function ReceiptsView( { ...props } ) {
                               <View style={ s.form } ref={ id_form }>
 
                                  <Content style={{  }}>
-                                    {/* <H4>Valor do recibo</H4> */}
-
                                  </Content>
 
                                  <Section >
+
+                                    <View style={ s.divider }>
+                                       <Text style={ s.dividerText }>Status do recibo</Text>
+                                    </View>
 
                                     <Section style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
                                        <P>Já está pago?</P>
@@ -324,12 +319,12 @@ export default function ReceiptsView( { ...props } ) {
                                           <Text style={ s.label }>Data do recebimento</Text>
                                           <TextInput style={ s.input }
                                              value={ Payday }
-                                             // ref={ id_Payday }
                                              onChangeText={ setPayday } 
+                                             placeholderTextColor={ "#777" }
+                                             // ref={ id_Payday }
                                           />
-                                          <Button onPress={showDatepicker} title="Show date picker!" />
-                                          <Button onPress={showTimepicker} title="Show time picker!" />
-                                          <Text>selected: {Payday.toLocaleString()}</Text>
+                                          {/* <Button onPress={showDatepicker} title="Show date picker!" />
+                                          <Text>selected: {Payday.toLocaleString()}</Text> */}
                                        </>
                                     }
                                  </Section>
@@ -347,6 +342,7 @@ export default function ReceiptsView( { ...props } ) {
                                              value={ Ref }
                                              onChangeText={ setRef }
                                              keyboardType="number-pad"
+                                             placeholderTextColor={ "#777" }
                                           />
                                        </View>
                                        
@@ -354,8 +350,12 @@ export default function ReceiptsView( { ...props } ) {
                                           <Text style={ s.label }>Subtotal</Text>
                                           <TextInput style={ s.input }
                                              value={ Subtotal }
-                                             onChangeText={ setSubtotal }
+                                             // onChangeText={ () => {
+                                             //    setSubtotal( ReceiptValue - Discount )
+                                             // } }
+                                             editable={ false }
                                              keyboardType="number-pad"
+                                             placeholderTextColor={ "#777" }
                                           />
                                        </View>
                                     </View>
@@ -366,27 +366,30 @@ export default function ReceiptsView( { ...props } ) {
                                     <TextInput style={ s.input }
                                        value={ DueDate }
                                        onChangeText={ setDueDate }
-                                       keyboardType="email-address"
+                                       keyboardType="number-pad"
+                                       placeholderTextColor={ "#777" }
                                     />
                                     
-                                    <View style={ [ s.duo, {  } ] }>
-                                       <View style={ s.duoBox }>
-                                          <Text style={ s.label }>Cliente</Text>
-                                          <TextInput style={ s.input }
-                                             value={ Customer }
-                                             onChangeText={ setCustomer }
-                                             keyboardType="number-pad"
-                                          />
-                                       </View>
-                                       
-                                       <View style={ s.duoBox }>
-                                          <Text style={ s.label }>Serviços</Text>
-                                          <TextInput style={ s.input }
-                                             value={ Services }
-                                             onChangeText={ setServices }
-                                             keyboardType="number-pad"
-                                          />
-                                       </View>
+                                    <View style={ s.duoBox }>
+                                       <Text style={ s.label }>Cliente</Text>
+                                       <TextInput style={ s.input }
+                                          value={ Customer }
+                                          onChangeText={ setCustomer }
+                                          keyboardType="number-pad"
+                                          placeholder="Nome do cliente"
+                                          placeholderTextColor={ "#777" }
+                                       />
+                                    </View>
+                                    
+                                    <View style={ s.duoBox }>
+                                       <Text style={ s.label }>Serviços</Text>
+                                       <TextInput style={ s.input }
+                                          value={ Services }
+                                          onChangeText={ setServices }
+                                          keyboardType="number-pad"
+                                          placeholder="Valor dos serviços"
+                                          placeholderTextColor={ "#777" }
+                                       />
                                     </View>
                                  </Section>
 
@@ -397,8 +400,15 @@ export default function ReceiptsView( { ...props } ) {
                                     
                                     <Text style={ s.label }>Desconto</Text>
                                     <TextInput style={ s.input }
+                                       inputMode="decimal"
                                        value={ Discount }
-                                       onChangeText={ setDiscount }
+                                       onChangeText={ text => {
+                                          const 
+                                             t = text.toString()
+                                          ;   
+                                          setDiscount( parseFloat( text ) )
+                                       } }
+                                       placeholderTextColor={ "#777" }
                                     />
                                     
                                     <Text style={ s.label }>Garantia</Text>
@@ -406,18 +416,21 @@ export default function ReceiptsView( { ...props } ) {
                                        keyboardType="number-pad"
                                        value={ Warranty }
                                        onChangeText={ setWarranty }
+                                       placeholderTextColor={ "#777" }
                                     />
                                        
                                     <Text style={ s.label }>Forma de pagamento</Text>
                                     <TextInput style={ s.input }
                                        value={ FormOfPayment }
                                        onChangeText={ setFormOfPayment }
+                                       placeholderTextColor={ "#777" }
                                     />
                                     
                                     <Text style={ s.label }>Anexo</Text>
                                     <TextInput style={ s.input }
                                        value={ Attachment }
                                        onChangeText={ setAttachment }
+                                       placeholderTextColor={ "#777" }
                                     />
                                     
                                  </Section>
@@ -430,6 +443,8 @@ export default function ReceiptsView( { ...props } ) {
                                     <TextInput style={ s.input }
                                        value={ Notes }
                                        onChangeText={ setNotes }
+                                       placeholder="Anotações"
+                                       placeholderTextColor={ "#777" }
                                     />
                                  </Section>
                                  <Section style={ {
@@ -637,7 +652,7 @@ const
    Center = styled.View`
       align-items: center;
       justify-content: center;
-      `,
+   `,
    Centered = styled.View`
       align-items: center;
       justify-content: center;
@@ -665,7 +680,6 @@ const
    TT = styled.Text`
       margin: 0;
       padding: 0;
-      /* font-size: calc( 2 * 16px ); */
       font-size: 32;
       font-weight: bold;
       color: #333;
@@ -673,7 +687,6 @@ const
    H1 = styled.Text`
       margin: 0;
       padding: 0;
-      /* font-size: calc( 2 * 16px ); */
       font-size: 32;
       font-weight: bold;
       color: #333;
@@ -681,7 +694,6 @@ const
    H2 = styled.Text`
       margin: 0;
       padding: 0;
-      /* font-size: calc( 1.5 * 16px ); */
       font-size: 24;
       font-weight: bold;
       color: #333;
@@ -689,7 +701,6 @@ const
    H3 = styled.Text`
       margin: 0;
       padding: 0;
-      /* font-size: calc( 1.3 * 16px ); */
       font-size: 20px;
       font-weight: bold;
       color: #333;
@@ -704,7 +715,6 @@ const
    H5 = styled.Text`
       margin: 0;
       padding: 0;
-      /* font-size: calc( .9 * 16px ); */
       font-size: 14;
       font-weight: bold;
       color: #333;
@@ -712,7 +722,6 @@ const
    H6 = styled.Text`
       margin: 0;
       padding: 0;
-      /* font-size: calc( .8 * 16px ); */
       font-size: 12;
       font-weight: bold;
       color: #333;
