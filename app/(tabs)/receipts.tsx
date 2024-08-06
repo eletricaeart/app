@@ -433,7 +433,7 @@ export default function ReceiptsView( { ...props } ) {
                                           setModalFormOfPayment( true );
                                        } }
                                     /> */}
-                                    <Text style={ s.input }
+                                    <Text style={ [ s.input, { paddingTop: 18,  } ] }
                                     onPress={ () => {
                                        setModalFormOfPayment( !ModalFormOfPayment );
                                     } }>
@@ -532,37 +532,40 @@ export default function ReceiptsView( { ...props } ) {
                               <Item>
                                  <P style={{ color: "#555", }}
                                  onPress={ () => {
-                                    setFormOfPayment( "pix" );
+                                    setFormOfPayment( "Pix" );
                                     setModalFormOfPayment( !ModalFormOfPayment );
                                  } }
                                  >
                                     Pix
                                  </P>
                               </Item>
+                              <Div />
                               <Item>
                                  <P style={{ color: "#555", }}
                                  onPress={ () => {
-                                    setFormOfPayment( "débito" );
+                                    setFormOfPayment( "Cartão de débito" );
                                     setModalFormOfPayment( !ModalFormOfPayment );
                                  } }
                                  >
                                     Cartão de débito
                                  </P>
                               </Item>
+                              <Div />
                               <Item>
                                  <P style={{ color: "#555", }}
                                  onPress={ () => {
-                                    setFormOfPayment( "crédito" );
+                                    setFormOfPayment( "Cartão de crédito" );
                                     setModalFormOfPayment( !ModalFormOfPayment );
                                  } }
                                  >
                                     Cartão de crédito
                                  </P>
                               </Item>
+                              <Div />
                               <Item>
                                  <P style={{ color: "#555", }}
                                  onPress={ () => {
-                                    setFormOfPayment( "dinheiro" );
+                                    setFormOfPayment( "Em dinheiro" );
                                     setModalFormOfPayment( !ModalFormOfPayment );
                                  } }
                                  >
@@ -747,7 +750,14 @@ const
    ,
    Item = styled.View`
       flex-direction: "row";
+      padding: 8px;
       gap: 8;
+   `
+   ,
+   Div = styled.View`
+      border-color: #333;
+      border-width: 1;
+      border-style: dashed;
    `
    ,
    BackSheet = styled.View`
@@ -818,21 +828,18 @@ const
       margin: 0;
       padding: 0;
       font-size: 16;
-      font-weight: bold;
       color: #333;
    `,
    P = styled.Text`
       margin: 0;
       padding: 0;
       font-size: 16;
-      font-weight: bold;
       color: #333;
    `,
    PP = styled.Text`
       margin: 0;
       padding: 0;
       font-size: 12;
-      font-weight: bold;
       color: #333;
    `,
 
