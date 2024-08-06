@@ -21,6 +21,8 @@ import {
    Touch, 
 } from "@/src/widgets/clb-widgets";
 
+import { ModalFullPage, ModalCardCenter, } from "@/src/widgets/ui/modal";
+
 import {
    colors, elevation,
 } from "@/src/widgets/clb-colors";
@@ -254,331 +256,294 @@ export default function ReceiptsView( { ...props } ) {
    
          {/*  == [ Modal ]
          == == == == == == == == ==  */}
-         <Modal visible={ ModalVisibility } 
-            onRequestClose={ () => { setModalVisibility( false ) } }
-            animationType="slide"
-            presentationStyle="formSheet"
-         >
+         <ModalFullPage ModalVisibility={ ModalVisibility }
+         overlay={
+            <ModalCardCenter 
+            setState={ setModalFormOfPayment } 
+            useState={ ModalFormOfPayment }
+            trigger={ ModalFormOfPayment }
+            >
+               <Centered style={{ paddingTop: 8, paddingBottom: 18, }}>
+                  <H3>Qual a forma de pagamento?</H3>
+               </Centered>
 
-            <Section style={[ s.modal_root ]}>
-               <ScrollView keyboardShouldPersistTaps="handled">
-                  <View style={[ s.backSheet, elevation.elevation ]} />
-                  <View style={[ s.frontSheet, elevation.elevation ]} >
+               <Content style={{ gap: 8, }}>
+                  <Item>
+                     <P style={{ color: "#555", }}
+                     onPress={ () => {
+                        setFormOfPayment( "Pix" );
+                        setModalFormOfPayment( !ModalFormOfPayment );
+                     } }
+                     >
+                        Pix
+                     </P>
+                  </Item>
+                  <Div />
+                  <Item>
+                     <P style={{ color: "#555", }}
+                     onPress={ () => {
+                        setFormOfPayment( "Cartão de débito" );
+                        setModalFormOfPayment( !ModalFormOfPayment );
+                     } }
+                     >
+                        Cartão de débito
+                     </P>
+                  </Item>
+                  <Div />
+                  <Item>
+                     <P style={{ color: "#555", }}
+                     onPress={ () => {
+                        setFormOfPayment( "Cartão de crédito" );
+                        setModalFormOfPayment( !ModalFormOfPayment );
+                     } }
+                     >
+                        Cartão de crédito
+                     </P>
+                  </Item>
+                  <Div />
+                  <Item>
+                     <P style={{ color: "#555", }}
+                     onPress={ () => {
+                        setFormOfPayment( "Em dinheiro" );
+                        setModalFormOfPayment( !ModalFormOfPayment );
+                     } }
+                     >
+                        Em dinheiro
+                     </P>
+                  </Item>
+               </Content>
+            </ModalCardCenter>
+         }>
+            <Section style={{ zIndex: 1, }}>
+               <c.Header>
+                  <c.Content>
+                     <View style={{ height: 80, flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
+                        <c.H3 color="#00559c99">Novo recibo</c.H3>
+                        <Pressable onPress={ () => { setModalVisibility( !ModalVisibility ) } }>
+                           <View style={[ s.btnOverlay,  ]}>
+                              <Icon i="f0" name="close" color={ colors.error } />
+                           </View>
+                        </Pressable>
+                     </View>
 
+                     <Card style={{ backgroundColor: "#00559c", }}>
+                        <Content style={{ flexDirection: "row", justifyContent: "space-between", gap: 18, height: 110, }}>
+                           <Section style={{ justifyContent: "space-between" }}>
+                              <H3 style={{ color: "#fff", }}>Valor do recibo</H3>
+                              <H1 style={{ color: "#fff", }}>R$ { ReceiptValue }</H1>
+                           </Section>
+                           <Section>
+                              <P style={{ color: "#fff", }}>{ Ref }</P>
+                           </Section>
+                        </Content>
+                     </Card>
 
-                     <Section style={{ zIndex: 1 }}>
-                        <c.Header>
-                           <c.Content>
-                              <View style={{ height: 80, flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
-                                 <c.H3 color="#00559c99">Novo recibo</c.H3>
-                                 <Pressable onPress={ () => { setModalVisibility( !ModalVisibility ) } }>
-                                    <View style={[ s.btnOverlay,  ]}>
-                                       <Icon i="f0" name="close" color={ colors.error } />
-                                    </View>
-                                 </Pressable>
-                              </View>
+                  </c.Content>
+               </c.Header>
+               <Section style={[ s.form, elevation.elevation, { backgroundColor: "#fff", } ]}>
+                  <c.Content gap={ 8 }>
 
-                              <Card style={{ backgroundColor: "#00559c", }}>
-                                 <Content style={{ flexDirection: "row", justifyContent: "space-between", gap: 18, height: 110, }}>
-                                    <Section style={{ justifyContent: "space-between" }}>
-                                       <H3 style={{ color: "#fff", }}>Valor do recibo</H3>
-                                       <H1 style={{ color: "#fff", }}>R$ { ReceiptValue }</H1>
-                                    </Section>
-                                    <Section>
-                                       <P style={{ color: "#fff", }}>{ Ref }</P>
-                                    </Section>
-                                 </Content>
-                              </Card>
+                     <View style={ s.form } ref={ id_form }>
 
-                           </c.Content>
-                        </c.Header>
-                        <Section style={[ s.form, elevation.elevation, { backgroundColor: "#fff", } ]}>
-                           <c.Content gap={ 8 }>
+                        <Content style={{  }}>
+                        </Content>
 
-                              <View style={ s.form } ref={ id_form }>
+                        <Section >
 
-                                 <Content style={{  }}>
-                                 </Content>
+                           <View style={ s.divider }>
+                              <Text style={ s.dividerText }>Status do recibo</Text>
+                           </View>
 
-                                 <Section >
+                           <Section style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
+                              <P>Já está pago?</P>
+                              <Switch
+                                 style={{  }}
+                                 trackColor={{ false: "#767577", true: "#00559c77" }}
+                                 thumbColor={ SwitchPaid_Enabled ? "#0088ec" : "#f4f3f4" }
+                                 ios_backgroundColor="#3e3e3e"
+                                 onValueChange={ ToggleSwitch_Paid }
+                                 value={ SwitchPaid_Enabled }
+                              />
+                           </Section>
 
-                                    <View style={ s.divider }>
-                                       <Text style={ s.dividerText }>Status do recibo</Text>
-                                    </View>
-
-                                    <Section style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
-                                       <P>Já está pago?</P>
-                                       <Switch
-                                          style={{  }}
-                                          trackColor={{ false: "#767577", true: "#00559c77" }}
-                                          thumbColor={ SwitchPaid_Enabled ? "#0088ec" : "#f4f3f4" }
-                                          ios_backgroundColor="#3e3e3e"
-                                          onValueChange={ ToggleSwitch_Paid }
-                                          value={ SwitchPaid_Enabled }
-                                       />
-                                    </Section>
-
-                                    {
-                                       SwitchPaid_Enabled && <Section style={{ paddingTop: 16, paddingBottom: 16, }}>
-                                          <Text style={ s.label }>Data do recebimento</Text>
-                                          <TextInput style={ s.input }
-                                             value={ Payday }
-                                             onChangeText={ setPayday } 
-                                             placeholderTextColor={ "#777" }
-                                             // ref={ id_Payday }
-                                          />
-                                          {/* <Button onPress={showDatepicker} title="Show date picker!" />
-                                          <Text>selected: {Payday.toLocaleString()}</Text> */}
-                                       </Section>
-                                    }
-                                 </Section>
-
-                                 <Section>
-
-                                    <View style={ s.divider }>
-                                       <Text style={ s.dividerText }>Referência</Text>
-                                    </View>
-
-                                    <View style={ s.duo }>
-                                       <View style={ s.duoBox }>
-                                          <Text style={ s.label }>Referência</Text>
-                                          <TextInput style={ s.input }
-                                             value={ Ref }
-                                             onChangeText={ setRef }
-                                             keyboardType="number-pad"
-                                             placeholderTextColor={ "#777" }
-                                          />
-                                       </View>
-                                       
-                                       <View style={ s.duoBox }>
-                                          <Text style={ s.label }>Subtotal</Text>
-                                          <TextInput style={ s.input }
-                                             value={ Subtotal }
-                                             // onChangeText={ () => {
-                                             //    setSubtotal( ReceiptValue - Discount )
-                                             // } }
-                                             editable={ false }
-                                             keyboardType="number-pad"
-                                             placeholderTextColor={ "#777" }
-                                          />
-                                       </View>
-                                    </View>
-                                    
-                                    
-                                    
-                                    <Text style={ s.label }>Vencimento</Text>
-                                    <TextInput style={ s.input }
-                                       value={ DueDate }
-                                       onChangeText={ setDueDate }
-                                       keyboardType="number-pad"
-                                       placeholderTextColor={ "#777" }
-                                    />
-                                    
-                                    <View style={ s.duoBox }>
-                                       <Text style={ s.label }>Cliente</Text>
-                                       <TextInput style={ s.input }
-                                          value={ Customer }
-                                          onChangeText={ setCustomer }
-                                          keyboardType="number-pad"
-                                          placeholder="Nome do cliente"
-                                          placeholderTextColor={ "#777" }
-                                       />
-                                    </View>
-                                    
-                                    <View style={ s.duoBox }>
-                                       <Text style={ s.label }>Serviços</Text>
-                                       <TextInput style={ s.input }
-                                          value={ Services }
-                                          onChangeText={ setServices }
-                                          keyboardType="number-pad"
-                                          placeholder="Valor dos serviços"
-                                          placeholderTextColor={ "#777" }
-                                       />
-                                    </View>
-                                 </Section>
-
-                                 <Section>
-                                    <View style={ s.divider }>
-                                       <Text style={ s.dividerText }>Desconto</Text>
-                                    </View>
-                                    
-                                    <Text style={ s.label }>Desconto</Text>
-                                    <TextInput style={ s.input }
-                                       inputMode="decimal"
-                                       value={ Discount }
-                                       onChangeText={ text => {
-                                          const 
-                                             t = text.toString()
-                                          ;   
-                                          setDiscount( parseFloat( text ) )
-                                       } }
-                                       placeholderTextColor={ "#777" }
-                                    />
-                                    
-                                    <Text style={ s.label }>Garantia</Text>
-                                    <TextInput style={ s.input }
-                                       keyboardType="number-pad"
-                                       value={ Warranty }
-                                       onChangeText={ setWarranty }
-                                       placeholderTextColor={ "#777" }
-                                    />
-                                       
-                                    <Text style={ s.label }>Forma de pagamento</Text>
-                                    {/* <TextInput style={ s.input }
-                                       value={ FormOfPayment }
-                                       onChangeText={ setFormOfPayment }
-                                       placeholderTextColor={ "#777" }
-                                       editable= { false }
-                                       onPress={ () => {
-                                          setModalFormOfPayment( true );
-                                       } }
-                                    /> */}
-                                    <Text style={ [ s.input, { paddingTop: 18,  } ] }
-                                    onPress={ () => {
-                                       setModalFormOfPayment( !ModalFormOfPayment );
-                                    } }>
-                                       { FormOfPayment }
-                                    </Text>
-                                    
-
-                                    <Text style={ s.label }>Anexo</Text>
-                                    <TextInput style={ s.input }
-                                       value={ Attachment }
-                                       onChangeText={ setAttachment }
-                                       placeholderTextColor={ "#777" }
-                                    />
-                                    
-                                 </Section>
-
-                                 <Section>
-                                    <View style={ s.divider }>
-                                       <Text style={ s.dividerText }>Informaçoes adicionais</Text>
-                                    </View>
-                                    <Text style={ s.label }>Informaçoes adicionais</Text>
-                                    <TextInput style={ s.input }
-                                       value={ Notes }
-                                       onChangeText={ setNotes }
-                                       placeholder="Anotações"
-                                       placeholderTextColor={ "#777" }
-                                    />
-                                 </Section>
-                                 <Section style={ {
-                                    gap: 16,
-                                    marginTop: 24,
-                                    marginBottom: 66,
-                                 } }>
-
-                                    <Touch 
-                                       txt="apagar tudo"
-                                       onPressIn={ () => { Keyboard.dismiss() } }
-                                       onPressOut={ () => { 
-                                          Form.ClearInputs( inputs ); 
-                                          // id_Name.current.focus(); 
-                                       } }
-                                    />
-                                    <Touch 
-                                       touchSty={{
-                                          backgroundColor: "#9c5500",
-                                       }}
-                                       txtSty={{
-                                          color: "#fff",
-                                       }}
-                                       txt="erase DBs"
-                                       onPress={ async () => { await AsyncStorage.removeItem( "customers" ) } }
-                                    />
-                                    <Touch 
-                                       touchSty={{
-                                          backgroundColor: "#00559C",
-                                       }}
-                                       txtSty={{
-                                          color: "#fff",
-                                       }}
-                                       txt="cadastrar"
-                                       onPress={ () => { 
-                                          // RegisterCustomerOnBase( { dbs_name: "customers", object: customersList } ) 
-                                       } }
-                                    />
-
-                                 </Section>
-                              </View>
-                           </c.Content>
+                           {
+                              SwitchPaid_Enabled && <Section style={{ paddingTop: 16, paddingBottom: 16, }}>
+                                 <Text style={ s.label }>Data do recebimento</Text>
+                                 <TextInput style={ s.input }
+                                    value={ Payday }
+                                    onChangeText={ setPayday } 
+                                    placeholderTextColor={ "#777" }
+                                    // ref={ id_Payday }
+                                 />
+                                 {/* <Button onPress={showDatepicker} title="Show date picker!" />
+                                 <Text>selected: {Payday.toLocaleString()}</Text> */}
+                              </Section>
+                           }
                         </Section>
-                     </Section>
-                  </View>
-               </ScrollView>
 
-                  
-                  <Pressable style={{ 
-                  display: ModalFormOfPayment ? "flex" : "none",
-                  backgroundColor: "#21232955",  
-                  position: "absolute", zIndex: 9,  width: "100%", height: "100%",
-                  alignSelf: "center", 
-                  }}
-                  onPress={ () => { setModalFormOfPayment( !ModalFormOfPayment ); } }>
-                     <Section style={{
-                        backgroundColor: "#27f0", flex: 1,
-                        alignItems: "center", justifyContent: "center",
-                     }}>
-                        <View style={{ 
-                        backgroundColor: "#e5e5e5", padding: 16, borderRadius: 24, 
-                        position: "absolute", zIndex: 9,  width: "90%",
-                        alignSelf: "center", elevation: 10,
-                        }}>
-                           <Centered style={{ paddingTop: 8, paddingBottom: 18, }}>
-                              <H3>Qual a forma de pagamento?</H3>
-                           </Centered>
+                        <Section>
 
-                           <Content style={{ gap: 8, }}>
-                              <Item>
-                                 <P style={{ color: "#555", }}
-                                 onPress={ () => {
-                                    setFormOfPayment( "Pix" );
-                                    setModalFormOfPayment( !ModalFormOfPayment );
-                                 } }
-                                 >
-                                    Pix
-                                 </P>
-                              </Item>
-                              <Div />
-                              <Item>
-                                 <P style={{ color: "#555", }}
-                                 onPress={ () => {
-                                    setFormOfPayment( "Cartão de débito" );
-                                    setModalFormOfPayment( !ModalFormOfPayment );
-                                 } }
-                                 >
-                                    Cartão de débito
-                                 </P>
-                              </Item>
-                              <Div />
-                              <Item>
-                                 <P style={{ color: "#555", }}
-                                 onPress={ () => {
-                                    setFormOfPayment( "Cartão de crédito" );
-                                    setModalFormOfPayment( !ModalFormOfPayment );
-                                 } }
-                                 >
-                                    Cartão de crédito
-                                 </P>
-                              </Item>
-                              <Div />
-                              <Item>
-                                 <P style={{ color: "#555", }}
-                                 onPress={ () => {
-                                    setFormOfPayment( "Em dinheiro" );
-                                    setModalFormOfPayment( !ModalFormOfPayment );
-                                 } }
-                                 >
-                                    Em dinheiro
-                                 </P>
-                              </Item>
-                           </Content>
-                        </View>
-                     </Section>
-                  </Pressable>
-                                 
+                           <View style={ s.divider }>
+                              <Text style={ s.dividerText }>Referência</Text>
+                           </View>
+
+                           <View style={ s.duo }>
+                              <View style={ s.duoBox }>
+                                 <Text style={ s.label }>Referência</Text>
+                                 <TextInput style={ s.input }
+                                    value={ Ref }
+                                    onChangeText={ setRef }
+                                    keyboardType="number-pad"
+                                    placeholderTextColor={ "#777" }
+                                 />
+                              </View>
+                              
+                              <View style={ s.duoBox }>
+                                 <Text style={ s.label }>Subtotal</Text>
+                                 <TextInput style={ s.input }
+                                    value={ Subtotal }
+                                    // onChangeText={ () => {
+                                    //    setSubtotal( ReceiptValue - Discount )
+                                    // } }
+                                    editable={ false }
+                                    keyboardType="number-pad"
+                                    placeholderTextColor={ "#777" }
+                                 />
+                              </View>
+                           </View>
+                           
+                           
+                           
+                           <Text style={ s.label }>Vencimento</Text>
+                           <TextInput style={ s.input }
+                              value={ DueDate }
+                              onChangeText={ setDueDate }
+                              keyboardType="number-pad"
+                              placeholderTextColor={ "#777" }
+                           />
+                           
+                           <View style={ s.duoBox }>
+                              <Text style={ s.label }>Cliente</Text>
+                              <TextInput style={ s.input }
+                                 value={ Customer }
+                                 onChangeText={ setCustomer }
+                                 keyboardType="number-pad"
+                                 placeholder="Nome do cliente"
+                                 placeholderTextColor={ "#777" }
+                              />
+                           </View>
+                           
+                           <View style={ s.duoBox }>
+                              <Text style={ s.label }>Serviços</Text>
+                              <TextInput style={ s.input }
+                                 value={ Services }
+                                 onChangeText={ setServices }
+                                 keyboardType="number-pad"
+                                 placeholder="Valor dos serviços"
+                                 placeholderTextColor={ "#777" }
+                              />
+                           </View>
+                        </Section>
+
+                        <Section>
+                           <View style={ s.divider }>
+                              <Text style={ s.dividerText }>Desconto</Text>
+                           </View>
+                           
+                           <Text style={ s.label }>Desconto</Text>
+                           <TextInput style={ s.input }
+                              inputMode="decimal"
+                              value={ Discount }
+                              onChangeText={ text => {
+                                 const 
+                                    t = text.toString()
+                                 ;   
+                                 setDiscount( parseFloat( text ) )
+                              } }
+                              placeholderTextColor={ "#777" }
+                           />
+                           
+                           <Text style={ s.label }>Garantia</Text>
+                           <TextInput style={ s.input }
+                              keyboardType="number-pad"
+                              value={ Warranty }
+                              onChangeText={ setWarranty }
+                              placeholderTextColor={ "#777" }
+                           />
+                              
+                           <Text style={ s.label }>Forma de pagamento</Text>
+                           <Text style={ [ s.input, { paddingTop: 18,  } ] }
+                           onPress={ () => {
+                              setModalFormOfPayment( !ModalFormOfPayment );
+                           } }>
+                              { FormOfPayment }
+                           </Text>
+                           
+
+                           <Text style={ s.label }>Anexo</Text>
+                           <TextInput style={ s.input }
+                              value={ Attachment }
+                              onChangeText={ setAttachment }
+                              placeholderTextColor={ "#777" }
+                           />
+                           
+                        </Section>
+
+                        <Section>
+                           <View style={ s.divider }>
+                              <Text style={ s.dividerText }>Informaçoes adicionais</Text>
+                           </View>
+                           <Text style={ s.label }>Informaçoes adicionais</Text>
+                           <TextInput style={ s.input }
+                              value={ Notes }
+                              onChangeText={ setNotes }
+                              placeholder="Anotações"
+                              placeholderTextColor={ "#777" }
+                           />
+                        </Section>
+                        <Section style={ {
+                           gap: 16,
+                           marginTop: 24,
+                           marginBottom: 66,
+                        } }>
+
+                           <Touch 
+                              txt="apagar tudo"
+                              onPressIn={ () => { Keyboard.dismiss() } }
+                              onPressOut={ () => { 
+                                 Form.ClearInputs( inputs ); 
+                                 // id_Name.current.focus(); 
+                              } }
+                           />
+                           <Touch 
+                              touchSty={{
+                                 backgroundColor: "#9c5500",
+                              }}
+                              txtSty={{
+                                 color: "#fff",
+                              }}
+                              txt="erase DBs"
+                              onPress={ async () => { await AsyncStorage.removeItem( "customers" ) } }
+                           />
+                           <Touch 
+                              touchSty={{
+                                 backgroundColor: "#00559C",
+                              }}
+                              txtSty={{
+                                 color: "#fff",
+                              }}
+                              txt="cadastrar"
+                              onPress={ () => { 
+                                 // RegisterCustomerOnBase( { dbs_name: "customers", object: customersList } ) 
+                              } }
+                           />
+
+                        </Section>
+                     </View>
+                  </c.Content>
+               </Section>
             </Section>
-         </Modal>
+         </ModalFullPage>
 
 
 
