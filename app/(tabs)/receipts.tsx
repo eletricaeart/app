@@ -575,7 +575,7 @@ export default function ReceiptsView( { ...props } ) {
 
          { ModalServicesVisibility && 
             <ModalFullPage>
-               <Header style={{ backgroundColor: "#f5f5f5", elevation: 10, }}>
+               <Header style={{ backgroundColor: "#e5e5e5", }}>
                   <Content>
                      <Duo style={{ flexDirection: "row", justifyContent: "space-between", 
                         alignItems: "center",
@@ -595,18 +595,47 @@ export default function ReceiptsView( { ...props } ) {
                </Header>
                <Section style={{
                   flex: 1, height: "100%",
-                  padding: 16,
+                  backgroundColor: "#e5e5e5",
                }}>
                   
-                  <Section style={{ flex: 1, }}>
-                     <ScrollView>
-                        <Header>
-                           <H2> { ServiceDescription || "Novo serviço" } </H2>
-                        </Header>
+                  <Section style={{ flex: 1, borderRadius: 24, overflow: "hidden", elevation: 3, }}>
+                     <ScrollView style={{ padding: 16, backgroundColor: "#f5f5f5", }}>
+                        <Section style={{  }}>
+                           <Header>
+                              <H2> { ServiceDescription || "Novo serviço" } </H2>
+                           </Header>
+                           <Section style={{
+                              paddingTop: 24, paddingBottom: "100%",
+                           }}>
+                              
+                              <Section style={{ paddingTop: 16, paddingBottom: 16,
+                                 paddingLeft: 8, paddingRight: 8, gap: 8, 
+                              }}>
+                                 <T style={{ fontSize: 18 }}>Forro de DryWall</T>
+                                 <Duo style={{ alignItems: "center", justifyContent: "space-between" }}>
+                                    <T style={{ color: "#666", }}>1 x R$ 3.550,00</T>
+                                    <Duo style={{ alignItems: "center", gap: 0, }}>
+                                       <T style={{ fontWeight: 700, color: "#777", }}>Total </T>
+                                       <T style={{ color: "#666", }}>R$ 3.550,00</T>
+                                    </Duo>
+                                 </Duo>
+                              </Section>
+
+
+
+
+                              <Section style={{ borderTopColor: "#7777", borderTopWidth: 1, paddingTop: 24, }}>
+                                 <Duo style={{ paddingLeft: 8, paddingRight: 8, alignItems: "center", justifyContent: "space-between", }}>
+                                    <H3>TOTAL</H3>
+                                    <T style={{ color: "#666", fontSize: 22, fontWeight: 500, }}>R$ 3.550,00</T>
+                                 </Duo>
+                              </Section>
+                           </Section>
+                        </Section>
                      </ScrollView>
                   </Section>
 
-                  <Section style={ {
+                  <Section style={ { position: "absolute", bottom: 0, width: "100%", 
                      borderRadius: 24, backgroundColor: "#fff",
                      padding: 16,
                   } }>
