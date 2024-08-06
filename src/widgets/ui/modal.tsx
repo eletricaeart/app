@@ -51,12 +51,20 @@ export function ModalFullPage( { ...props } ) {
       >
 
       <Root style={[  ]}>
-         <ScrollView keyboardShouldPersistTaps="handled">
-            <BackSheet style={[ elevation.elevation ]} />
-            <FrontSheet style={[ elevation.elevation, { backgroundColor: "#f5f5f5", flex: 1, } ]} >
+         {/* <ModalBody>
+            <ScrollView keyboardShouldPersistTaps="handled">
+               <BackSheet style={[ elevation.elevation ]} />
+               <FrontSheet style={[ elevation.elevation, { backgroundColor: "#f5f5f5", flex: 1, } ]} >
+                  { props.children }
+               </FrontSheet>
+            </ScrollView>  
+               { props.overlay }    
+         </ModalBody> */}
+         <BackSheet style={[ elevation.elevation ]} />
+         <FrontSheet style={[ elevation.elevation, { backgroundColor: "#f5f5f5", flex: 1, overflow: "hidden" } ]} >
+            {/* <ScrollView keyboardShouldPersistTaps="handled"></ScrollView>   */}
                { props.children }
-            </FrontSheet>
-         </ScrollView>  
+         </FrontSheet>
             { props.overlay }    
       </Root>
    </Modal>
@@ -88,5 +96,11 @@ const
    Root = styled.View`
       background-color: #00559c;
       flex: 1;
+      `,
+   ModalBody = styled.View`
+      flex: 1;
+      width: 100%;
+      height: 100%;
+      background-color: #fff;
    `
 ;

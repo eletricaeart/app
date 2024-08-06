@@ -78,6 +78,10 @@ export default function ReceiptsView( { ...props } ) {
    const 
       [ ModalVisibility, setModalVisibility ] = useState( false )
       ,
+      [ ModalServicesVisibility, setModalServicesVisibility ] = useState( false )
+      ,
+      [ ModalCustomerVisibility, setModalCustomerVisibility ] = useState( false )
+      ,
       [ Receipts, setReceipts ] = useState( null )
    ;
 
@@ -136,6 +140,10 @@ export default function ReceiptsView( { ...props } ) {
       [ SwitchPaid_Enabled, setSwitchPaid_Enabled ] = useState( false )
       ,
       [ ModalFormOfPayment, setModalFormOfPayment ] = useState( false )
+      ,
+      [ ModalServices, setModalServices ] = useState( false )
+      ,
+      [ ModalCustomer, setModalCustomer ] = useState( false )
    ;
 
    useEffect( () => {
@@ -192,6 +200,16 @@ export default function ReceiptsView( { ...props } ) {
       id_form = useRef( null )
    ;
    
+
+   /** == [ Modal Services ] 
+    * 
+    * == == == == == == == == == */
+   const 
+      [ Quantity, setQuantity ] = useState( 0.0 )
+      ,
+      [ Value, setValue ] = useState( 0.0 )
+      
+   ;
    
 
 
@@ -314,6 +332,7 @@ export default function ReceiptsView( { ...props } ) {
                </Content>
             </ModalCardCenter>
          }>
+            <ScrollView keyboardShouldPersistTaps="handled">
             <Section style={{ zIndex: 1, }}>
                <c.Header>
                   <c.Content>
@@ -424,24 +443,22 @@ export default function ReceiptsView( { ...props } ) {
                            
                            <View style={ s.duoBox }>
                               <Text style={ s.label }>Cliente</Text>
-                              <TextInput style={ s.input }
-                                 value={ Customer }
-                                 onChangeText={ setCustomer }
-                                 keyboardType="number-pad"
-                                 placeholder="Nome do cliente"
-                                 placeholderTextColor={ "#777" }
-                              />
+                              <Text style={ [ s.input, { paddingTop: 18,  } ] }
+                              onPress={ () => {
+                                 setModalCustomerVisibility( !ModalCustomerVisibility );
+                              } }>
+                                 { Customer }
+                              </Text>
                            </View>
                            
                            <View style={ s.duoBox }>
                               <Text style={ s.label }>Serviços</Text>
-                              <TextInput style={ s.input }
-                                 value={ Services }
-                                 onChangeText={ setServices }
-                                 keyboardType="number-pad"
-                                 placeholder="Valor dos serviços"
-                                 placeholderTextColor={ "#777" }
-                              />
+                              <Text style={ [ s.input, { paddingTop: 18,  } ] }
+                              onPress={ () => {
+                                 setModalServicesVisibility( !ModalServicesVisibility );
+                              } }>
+                                 { Services }
+                              </Text>
                            </View>
                         </Section>
 
@@ -543,9 +560,128 @@ export default function ReceiptsView( { ...props } ) {
                   </c.Content>
                </Section>
             </Section>
+            </ScrollView>
          </ModalFullPage>
 
+         { ModalServicesVisibility && 
+            <ModalFullPage>
+               <Header style={{ backgroundColor: "#f5f5f5", elevation: 10, }}>
+                  <Content>
+                     <Duo style={{ flexDirection: "row", justifyContent: "space-between", 
+                        alignItems: "center",
+                     }}>
+                        <Pressable onPress={ () => { setModalServicesVisibility( !ModalServicesVisibility ) } }
+                        style={{
+                           position: "absolute",
+                           zIndex: 9, paddingLeft: 8,
+                        }}>
+                           <Icon i="mi" name="arrow-back-ios" color="#555"/>
+                        </Pressable>
+                        <H4 style={{ flex: 1, textAlign: "center", }}>
+                           Serviços
+                        </H4>
+                     </Duo>
+                  </Content>
+               </Header>
+               <Section style={{
+                  flex: 1, height: "100%",
+                  padding: 16,
+               }}>
+                  <ScrollView></ScrollView>
+                  <Section style={ {
+                     borderRadius: 24, backgroundColor: "#fff",
+                     padding: 16,
+                  } }>
 
+                     <Label>
+                        <LabelText>Descrição</LabelText>
+                        <TextInput style={ s.input }
+                        />
+                     </Label>
+
+                     <Duo style={{
+                        gap: 16, 
+                     }}>
+                        <Label style={{
+                           flex: 1,
+                        }}>
+                           <LabelText>Quantidade</LabelText>
+                           <TextInput style={[ s.input, {} ]}
+                           inputMode="decimal"
+                           value={ Quantity }
+                           onChangeText={ text => setQuantity( text ) }
+                           />
+                        </Label>
+                        <Label style={{
+                           flex: 1,
+                        }}>
+                           <LabelText>Valor</LabelText>
+                           <TextInput style={ s.input }
+                           inputMode="decimal"
+                           value={ Value }
+                           onChangeText={ text => setValue( text ) }
+                           />
+                        </Label>
+                     </Duo>
+
+                     <Duo style={{
+                        gap: 16, 
+                     }}>
+                        <Btn style={{
+                           flex: 1, elevation: 1,
+                        }}>
+                           <Text style={{ color:"#0075bd",
+                              fontSize: 18, 
+                              textTransform: "uppercase",
+                              fontWeight: "bold", textAlign: "center",
+                           }}>
+                              Adicionar
+                           </Text>
+                        </Btn>
+                        <Btn style={{
+                           flex: 1, elevation: 1, backgroundColor: "#00559C",
+                        }}>
+                           <Text style={{ color:"#fffe",
+                              fontSize: 18, 
+                              textTransform: "uppercase",
+                              fontWeight: "bold", textAlign: "center",
+                           }}>
+                              Salvar
+                           </Text>
+                        </Btn>
+                     </Duo>
+
+                  </Section>
+               </Section>
+            </ModalFullPage> 
+         }
+
+         { ModalCustomerVisibility && 
+            <ModalFullPage>
+               <Header style={{ backgroundColor: "#f5f5f5", elevation: 10, }}>
+                  <Content>
+                     <Duo style={{ flexDirection: "row", justifyContent: "space-between", 
+                        alignItems: "center",
+                     }}>
+                        <Pressable onPress={ () => { setModalCustomerVisibility( !ModalCustomerVisibility ) } }
+                        style={{
+                           position: "absolute",
+                           zIndex: 9, paddingLeft: 8,
+                        }}>
+                           <Icon i="mi" name="arrow-back-ios" color="#555"/>
+                        </Pressable>
+                        <H4 style={{ flex: 1, textAlign: "center", }}>Catálogo de clientes</H4>
+                     </Duo>
+                  </Content>
+               </Header>
+               <Section style={{
+                  flex: 1, height: "100%",
+                  padding: 16,
+               }}>
+                  <Text>Customer Modal</Text>
+               </Section>
+            </ModalFullPage> 
+         }
 
          <Portal>
             <FAB.Group
@@ -688,7 +824,7 @@ const s = StyleSheet.create( {
 
 const 
    HomePage = styled.View`
-      flex: 1;
+      flex: 1px;
       width: 100%;
    `
    ,
@@ -709,32 +845,74 @@ const
       text-align: center;
    `,
    Duo = styled.View`
-      flex-direction: "row";
-      gap: 8;
+      flex-direction: row;
+      gap: 8px;
    `
    ,
    Item = styled.View`
-      flex-direction: "row";
+      flex-direction: row;
       padding: 8px;
-      gap: 8;
+      gap: 8px;
    `
    ,
    Div = styled.View`
-      border-color: #333;
-      border-width: 1;
+      border-color: #9997;
+      border-width: 1px;
       border-style: dashed;
    `
    ,
    BackSheet = styled.View`
       background-color: #959595;
-      border-top-right-radius: 24;
-      border-top-left-radius: 24;
+      border-top-right-radius: 24px;
+      border-top-left-radius: 24px;
       width: 90%;
-      height: 15;
-      margin-top: 10;
+      height: 15px;
+      margin-top: 10px;
       align-self: center;
    `
    ,
+
+   /** == [ form ] 
+    * 
+    * == == == == == == == == == */
+   Label = styled.View`
+      color: #777;
+      font-weight: 500;
+      margin-bottom: 8px;
+      margin-left: 0;
+      padding-top: 0px;
+      padding-bottom: 0;
+   `,
+   LabelText = styled.Text`
+      color: #777;
+      font-weight: 500;
+      margin-bottom: 8px;
+      margin-left: 0;
+      padding-top: 0;
+      padding-bottom: 0;
+      padding-left: 16px;
+      padding-right: 16px;
+   `,
+   Input = styled.TextInput`
+      background-color: #f3f3f3;
+      height: 56px;
+      margin-bottom: 16px;
+      padding: 16px;
+      border-radius: 16px;
+      border-color: #fff2;
+      border-width: 1px;
+      border-style: solid;
+   `,
+   Btn = styled.Pressable`
+      background-color: #cbdcf7;
+      height: 56px;
+      margin-bottom: 16px;
+      padding: 16px;
+      border-radius: 16px;
+      border-color: #fff2;
+      border-width: 1px;
+      border-style: solid;
+   `,
 
    /** == == == [ text ] 
     * 
@@ -742,21 +920,21 @@ const
    TT = styled.Text`
       margin: 0;
       padding: 0;
-      font-size: 32;
+      font-size: 32px;
       font-weight: bold;
       color: #333;
    `,
    H1 = styled.Text`
       margin: 0;
       padding: 0;
-      font-size: 32;
+      font-size: 32px;
       font-weight: bold;
       color: #333;
    `,
    H2 = styled.Text`
       margin: 0;
       padding: 0;
-      font-size: 24;
+      font-size: 24px;
       font-weight: bold;
       color: #333;
    `,
@@ -770,21 +948,21 @@ const
    H4 = styled.Text`
       margin: 0;
       padding: 0;
-      font-size: 18;
+      font-size: 18px;
       font-weight: bold;
       color: #333;
    `,
    H5 = styled.Text`
       margin: 0;
       padding: 0;
-      font-size: 14;
+      font-size: 14px;
       font-weight: bold;
       color: #333;
    `,
    H6 = styled.Text`
       margin: 0;
       padding: 0;
-      font-size: 12;
+      font-size: 12px;
       font-weight: bold;
       color: #333;
    `,
@@ -792,19 +970,19 @@ const
    T = styled.Text`
       margin: 0;
       padding: 0;
-      font-size: 16;
+      font-size: 16px;
       color: #333;
    `,
    P = styled.Text`
       margin: 0;
       padding: 0;
-      font-size: 16;
+      font-size: 16px;
       color: #333;
    `,
    PP = styled.Text`
       margin: 0;
       padding: 0;
-      font-size: 12;
+      font-size: 12px;
       color: #333;
    `,
 
