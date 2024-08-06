@@ -114,15 +114,25 @@ export default function ReceiptsView( { ...props } ) {
       ,
       [ Ref, setRef ] = useState( "rc-155-2024-0" )
       ,
-      [ Subtotal, setSubtotal ] = useState( "0,00" )
+      [ Subtotal, setSubtotal ] = useState( "" )
       ,
       [ DueDate, setDueDate ] = useState( "" )
       ,
       [ Customer, setCustomer ] = useState( "" )
       ,
-      [ Services, setServices ] = useState( "" )
+      [ Services, setServices ] = useState( [] )
       ,
-      [ Discount, setDiscount ] = useState( 100 )
+      [ ServiceDescription, setServiceDescription ] = useState( "" )
+      ,
+      [ ServiceTotalValue, setServiceTotalValue ] = useState( "" )
+      ,
+      [ Service, setService ] = useState( {
+         description: ServiceDescription,
+         services: Services,
+         total: ServiceTotalValue,
+      } )
+      ,
+      [ Discount, setDiscount ] = useState( null )
       ,
       [ Warranty, setWarranty ] = useState( "" )
       ,
@@ -133,7 +143,7 @@ export default function ReceiptsView( { ...props } ) {
       [ Notes, setNotes ] = useState( "" )
 
       ,
-      [ ReceiptValue, setReceiptValue ] = useState( "1800.00" )
+      [ ReceiptValue, setReceiptValue ] = useState( null )
    ;
 
    const 
@@ -205,9 +215,9 @@ export default function ReceiptsView( { ...props } ) {
     * 
     * == == == == == == == == == */
    const 
-      [ Quantity, setQuantity ] = useState( 0.0 )
+      [ Quantity, setQuantity ] = useState( "" )
       ,
-      [ Value, setValue ] = useState( 0.0 )
+      [ Value, setValue ] = useState( "" )
       
    ;
    
@@ -587,7 +597,15 @@ export default function ReceiptsView( { ...props } ) {
                   flex: 1, height: "100%",
                   padding: 16,
                }}>
-                  <ScrollView></ScrollView>
+                  
+                  <Section style={{ flex: 1, }}>
+                     <ScrollView>
+                        <Header>
+                           <H2> { ServiceDescription || "Novo serviço" } </H2>
+                        </Header>
+                     </ScrollView>
+                  </Section>
+
                   <Section style={ {
                      borderRadius: 24, backgroundColor: "#fff",
                      padding: 16,
@@ -596,6 +614,11 @@ export default function ReceiptsView( { ...props } ) {
                      <Label>
                         <LabelText>Descrição</LabelText>
                         <TextInput style={ s.input }
+                           placeholder="Nome do serviço"
+                        value={ ServiceDescription }
+                        onChangeText={ text => {
+                           setServiceDescription( text ) 
+                        } }
                         />
                      </Label>
 
@@ -608,8 +631,28 @@ export default function ReceiptsView( { ...props } ) {
                            <LabelText>Quantidade</LabelText>
                            <TextInput style={[ s.input, {} ]}
                            inputMode="decimal"
+                           placeholder="0.00"
                            value={ Quantity }
-                           onChangeText={ text => setQuantity( text ) }
+                           onChangeText={ text => {
+                              setQuantity( text );
+                           } }
+                           onBlur={ () => {
+                              let
+                                 handledText = Quantity == "0" ? "1" : Quantity
+                              ;
+                              switch( Quantity ) {
+                                 case "0" : setQuantity( "1" );
+                                 break;
+
+                                 case "" : setQuantity( "1" );
+                                 break;
+
+                                 case null : setQuantity( "1" );
+                                 break;
+                                 
+                              }
+                              setQuantity( handledText );
+                           } }
                            />
                         </Label>
                         <Label style={{
@@ -618,6 +661,7 @@ export default function ReceiptsView( { ...props } ) {
                            <LabelText>Valor</LabelText>
                            <TextInput style={ s.input }
                            inputMode="decimal"
+                           placeholder="0.00"
                            value={ Value }
                            onChangeText={ text => setValue( text ) }
                            />
@@ -627,9 +671,20 @@ export default function ReceiptsView( { ...props } ) {
                      <Duo style={{
                         gap: 16, 
                      }}>
-                        <Btn style={{
-                           flex: 1, elevation: 1,
-                        }}>
+                        <Btn style={{ flex: 1, elevation: 1, }}
+                        onPress={ () => {           
+                           if( Quantity == "" ) {
+                              setQuantity( "1" );
+                           }                
+                           if( Value != "" && ServiceDescription != "" ) {
+                              alert( "congrats!" );
+                           } else if( Value == "" ) {
+                              alert( "Value = null" );
+                           } else if( ServiceDescription == "" ) {
+                              alert( "ServiceDescription = null" );
+                           }
+                        } }
+                        >
                            <Text style={{ color:"#0075bd",
                               fontSize: 18, 
                               textTransform: "uppercase",
