@@ -218,7 +218,8 @@ export default function ReceiptsView( { ...props } ) {
       [ Quantity, setQuantity ] = useState( "" )
       ,
       [ Value, setValue ] = useState( "" )
-      
+      ,
+      [ TempList, setTempList ] = useState( [] )
    ;
    
 
@@ -543,22 +544,14 @@ export default function ReceiptsView( { ...props } ) {
                               } }
                            />
                            <Touch 
-                              touchSty={{
-                                 backgroundColor: "#9c5500",
-                              }}
-                              txtSty={{
-                                 color: "#fff",
-                              }}
+                              touchSty={{ backgroundColor: "#9c5500", }}
+                              txtSty={{ color: "#fff", }}
                               txt="erase DBs"
                               onPress={ async () => { await AsyncStorage.removeItem( "customers" ) } }
                            />
                            <Touch 
-                              touchSty={{
-                                 backgroundColor: "#00559C",
-                              }}
-                              txtSty={{
-                                 color: "#fff",
-                              }}
+                              touchSty={{ backgroundColor: "#00559C", }}
+                              txtSty={{ color: "#fff", }}
                               txt="cadastrar"
                               onPress={ () => { 
                                  // RegisterCustomerOnBase( { dbs_name: "customers", object: customersList } ) 
@@ -608,18 +601,22 @@ export default function ReceiptsView( { ...props } ) {
                               paddingTop: 24, paddingBottom: "100%",
                            }}>
                               
-                              <Section style={{ paddingTop: 16, paddingBottom: 16,
-                                 paddingLeft: 8, paddingRight: 8, gap: 8, 
-                              }}>
-                                 <T style={{ fontSize: 18 }}>Forro de DryWall</T>
-                                 <Duo style={{ alignItems: "center", justifyContent: "space-between" }}>
-                                    <T style={{ color: "#666", }}>1 x R$ 3.550,00</T>
-                                    <Duo style={{ alignItems: "center", gap: 0, }}>
-                                       <T style={{ fontWeight: 700, color: "#777", }}>Total </T>
-                                       <T style={{ color: "#666", }}>R$ 3.550,00</T>
+                              { 
+                                 Service.services.length > 0 
+                                 &&
+                                 <Section style={{ paddingTop: 16, paddingBottom: 16,
+                                    paddingLeft: 8, paddingRight: 8, gap: 8, 
+                                 }}>
+                                    <T style={{ fontSize: 18 }}>Forro de DryWall</T>
+                                    <Duo style={{ alignItems: "center", justifyContent: "space-between" }}>
+                                       <T style={{ color: "#666", }}>1 x R$ 3.550,00</T>
+                                       <Duo style={{ alignItems: "center", gap: 0, }}>
+                                          <T style={{ fontWeight: 700, color: "#777", }}>Total </T>
+                                          <T style={{ color: "#666", }}>R$ 3.550,00</T>
+                                       </Duo>
                                     </Duo>
-                                 </Duo>
-                              </Section>
+                                 </Section>
+                              }
 
 
 
@@ -701,17 +698,51 @@ export default function ReceiptsView( { ...props } ) {
                         gap: 16, 
                      }}>
                         <Btn style={{ flex: 1, elevation: 1, }}
-                        onPress={ () => {           
-                           if( Quantity == "" ) {
-                              setQuantity( "1" );
-                           }                
-                           if( Value != "" && ServiceDescription != "" ) {
-                              alert( "congrats!" );
-                           } else if( Value == "" ) {
-                              alert( "Value = null" );
-                           } else if( ServiceDescription == "" ) {
-                              alert( "ServiceDescription = null" );
+                        onPress={ () => {  
+                           async function HandleData() {
+                              try {
+                                 const 
+                                    data = [ ...Service.services ]
+                                    ,
+                                    serviceBKP = { ...Service }
+                                 ,
+                                 list = {
+                                    description: ServiceDescription,
+                                    quantity: Quantity,
+                                    value: Value,
+                                    total: parseFloat( Value ) * parseFloat( Quantity ),
+                                 }
+                                 ;
+                                 data.push( list );
+                                 return data;
+                              } catch( err: any ) { console.error( err ); }
                            }
+
+                           async function HandleInputs() {
+                              try {
+                                 if( Quantity == "" ) {
+                                    setQuantity( "1" );
+                                 }                
+                                 if( Value != "" && ServiceDescription != "" ) {
+                                    await HandleData().then( res => {
+                                       setServices( res );
+                                       alert( res );
+                                       console.log( "res: ", res );
+                                    } ).then( () => {
+                                       console.log( "Services: ", Services );
+                                    } ); 
+                                 } else if( Value == "" ) {
+                                    alert( "Value = null" );
+                                 } else if( ServiceDescription == "" ) {
+                                    alert( "ServiceDescription = null" );
+                                 }
+                              } catch( err: any ) {
+                                 console.error( err );
+                              }
+                           }
+
+                           HandleInputs();
+
                         } }
                         >
                            <Text style={{ color:"#0075bd",
