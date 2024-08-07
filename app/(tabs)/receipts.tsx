@@ -704,7 +704,7 @@ export default function ReceiptsView( { ...props } ) {
                                  const 
                                     data = [ ...Service.services ]
                                     ,
-                                    serviceBKP = { ...Service }
+                                    serviceBKP = { ...Service } // here
                                  ,
                                  list = {
                                     description: ServiceDescription,
