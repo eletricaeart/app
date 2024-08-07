@@ -630,7 +630,11 @@ export default function ReceiptsView( { ...props } ) {
                               <Section style={{ borderTopColor: "#7777", borderTopWidth: 1, paddingTop: 24, }}>
                                  <Duo style={{ paddingLeft: 8, paddingRight: 8, alignItems: "center", justifyContent: "space-between", }}>
                                     <H3>TOTAL</H3>
-                                    <T style={{ color: "#666", fontSize: 22, fontWeight: 500, }}>R$ 3.550,00</T>
+                                    <T style={{ color: "#666", fontSize: 22, fontWeight: 500, }}>
+                                       { Str2Brl( 
+                                          "3500"
+                                       ) }
+                                       </T>
                                  </Duo>
                               </Section>
                            </Section>
