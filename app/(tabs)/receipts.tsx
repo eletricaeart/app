@@ -47,6 +47,7 @@ import uuid from "react-native-uuid";
 import { ref, get, child, getDatabase } from "firebase/database";
 
 import useCustomersFB from "@/src/hooks/useCustomersFB";
+import { GetTotal } from "@/src/scripts/receipts";
 
 
 
@@ -84,6 +85,8 @@ export default function ReceiptsView( { ...props } ) {
       [ ModalCustomerVisibility, setModalCustomerVisibility ] = useState( false )
       ,
       [ Receipts, setReceipts ] = useState( null )
+      ,
+      [ InputInterface, setInputInterface ] = useState( true )
    ;
 
 
@@ -221,6 +224,8 @@ export default function ReceiptsView( { ...props } ) {
       [ Value, setValue ] = useState( "" )
       ,
       [ TempList, setTempList ] = useState( [] )
+      ,
+      [ TempTotal, setTempTotal ] = useState( 0 )
    ;
    
 
@@ -598,7 +603,6 @@ export default function ReceiptsView( { ...props } ) {
                            <Header>
                               <H2> { ServiceDescription || "Novo serviço" } </H2>
                            </Header>
-                           { "TempList: " + TempList.length }
                            <Section style={{
                               paddingTop: 24, paddingBottom: "100%",
                            }}>
@@ -620,7 +624,6 @@ export default function ReceiptsView( { ...props } ) {
                                           </Duo>
                                        </Duo>
                                     </Section>
-                                    // here
                                  ) } )
                               }
 
@@ -631,10 +634,8 @@ export default function ReceiptsView( { ...props } ) {
                                  <Duo style={{ paddingLeft: 8, paddingRight: 8, alignItems: "center", justifyContent: "space-between", }}>
                                     <H3>TOTAL</H3>
                                     <T style={{ color: "#666", fontSize: 22, fontWeight: 500, }}>
-                                       { Str2Brl( 
-                                          "3500"
-                                       ) }
-                                       </T>
+                                       { Str2Brl( TempTotal ) }
+                                    </T>
                                  </Duo>
                               </Section>
                            </Section>
@@ -642,15 +643,34 @@ export default function ReceiptsView( { ...props } ) {
                      </ScrollView>
                   </Section>
 
-                  <Section style={ { position: "absolute", bottom: 0, width: "100%", 
-                     borderRadius: 24, backgroundColor: "#fff",
-                     padding: 16,
-                  } }>
+                  <Section style={[ { position: "absolute", bottom: 0, width: "100%", 
+                     borderTopEndRadius: 24, 
+                     borderTopStartRadius: 24, 
+                     backgroundColor: "#212329",
+                     paddingLeft: 16, paddingRight: 16, paddingBottom: 16,
+                     height: InputInterface ? "auto" : 33,
+                  },
+                  ]}>
+                     <Header>
+                        <Pressable onPress={ () => {
+                           setInputInterface( !InputInterface );
+                        } }>
+                           <Section style={{ height: 30,
+                              alignItems: "center", justifyContent: "center",
+                           }}>
+                              <View style={{
+                                 backgroundColor: "#7777", borderRadius: 24,
+                                 width: "20%", height: 5,
+                              }}></View>
+                           </Section>
+                        </Pressable>
+                     </Header>
 
                      <Label>
-                        <LabelText>Descrição</LabelText>
-                        <TextInput style={ s.input }
-                           placeholder="Nome do serviço"
+                        <LabelText style={{ color: "#daa520", fontSize: 16, fontWeight: 700, }}>Descrição</LabelText>
+                        <TextInput style={[ s.input, { backgroundColor: "#1b1d22", } ]}
+                        placeholder="Nome do serviço"
+                        placeholderTextColor={ "#777" }
                         value={ ServiceDescription }
                         onChangeText={ text => {
                            setServiceDescription( text ) 
@@ -664,10 +684,11 @@ export default function ReceiptsView( { ...props } ) {
                         <Label style={{
                            flex: 1,
                         }}>
-                           <LabelText>Quantidade</LabelText>
-                           <TextInput style={[ s.input, {} ]}
+                           <LabelText style={{ color: "#daa520",fontSize: 16, fontWeight: 700, }}>Quantidade</LabelText>
+                           <TextInput style={[ s.input, { backgroundColor: "#1b1d22", } ]}
                            inputMode="decimal"
-                           placeholder="0.00"
+                           placeholder="1"
+                           placeholderTextColor={ "#777" }
                            value={ Quantity }
                            onChangeText={ text => {
                               setQuantity( text );
@@ -694,10 +715,11 @@ export default function ReceiptsView( { ...props } ) {
                         <Label style={{
                            flex: 1,
                         }}>
-                           <LabelText>Valor</LabelText>
-                           <TextInput style={ s.input }
+                           <LabelText style={{ color: "#daa520",fontSize: 16, fontWeight: 700, }}>Valor</LabelText>
+                           <TextInput style={[ s.input, { backgroundColor: "#1b1d22", color: "#fff", } ]}
                            inputMode="decimal"
                            placeholder="0.00"
+                           placeholderTextColor={ "#777" }
                            value={ Value }
                            onChangeText={ text => setValue( text ) }
                            />
@@ -707,7 +729,7 @@ export default function ReceiptsView( { ...props } ) {
                      <Duo style={{
                         gap: 16, 
                      }}>
-                        <Btn style={{ flex: 1, elevation: 1, }}
+                        <Btn style={{ flex: 1, elevation: 1, backgroundColor: "#0075bd", }}
                         onPress={ () => {  
                            async function HandleData() {
                               try {
@@ -719,6 +741,8 @@ export default function ReceiptsView( { ...props } ) {
                                        total: parseFloat( Value ) * parseFloat( Quantity )
                                     },
                                     services = []
+                                    ,
+                                    total = 0
                                  ;
 
                                  if( TempList.length > 0 ) {
@@ -727,7 +751,13 @@ export default function ReceiptsView( { ...props } ) {
 
                                  services.push( data );
 
+                                 services.forEach( item => {
+                                    total = total + item.total
+                                 } );
+
                                  setTempList( services );
+
+                                 setTempTotal( total );
 
                                  return services;
                                  
@@ -751,11 +781,16 @@ export default function ReceiptsView( { ...props } ) {
                               }
                            }
 
-                           HandleInputs();
+                           HandleInputs().then( () => {
+                              setServiceDescription( "" );
+                              setValue( "" );
+                              setQuantity( "" );
+                           } );
 
                         } }
                         >
-                           <Text style={{ color:"#0075bd",
+                           <Text style={{ 
+                              color:"#eee",
                               fontSize: 18, 
                               textTransform: "uppercase",
                               fontWeight: "bold", textAlign: "center",
@@ -935,6 +970,7 @@ const s = StyleSheet.create( {
       borderColor: "#fff2",
       borderWidth: 1,
       borderStyle: "solid",
+      color: "#eee",
    },
    button: {
       marginTop: 40,

@@ -41,28 +41,28 @@ export function Icon( { ...props } ) {
    ;
 
    switch( props.i ) {
-      case "f0": return( <FontAwesome name={ name } size={ size } color={ color } /> );
+      case "f0": return( <FontAwesome name={ name } size={ size } color={ color } style={[ props.style ]}/> );
       break;
 
-      case "f": return( <FontAwesome6 name={ name } size={ size } color={ color } /> );
+      case "f": return( <FontAwesome6 name={ name } size={ size } color={ color } style={[ props.style ]}/> );
       break;
 
-      case "mc": return( <MaterialCommunityIcons name={ name } size={ size } color={ color } style={[ props.style ]} /> );
+      case "mc": return( <MaterialCommunityIcons name={ name } size={ size } color={ color } style={[ props.style ]}/> );
       break;
 
-      case "mi": return( <MaterialIcons name={ name } size={ size } color={ color } /> );
+      case "mi": return( <MaterialIcons name={ name } size={ size } color={ color } style={[ props.style ]}/> );
       break;
 
-      case "a": return( <AntDesign name={ name } size={ size } color={ color } /> );
+      case "a": return( <AntDesign name={ name } size={ size } color={ color } style={[ props.style ]}/> );
       break;
 
-      case "i": return( <Ionicons name={ name } size={ size } color={ color } /> );
+      case "i": return( <Ionicons name={ name } size={ size } color={ color } style={[ props.style ]}/> );
       break;
 
-      case "l": return( <SimpleLineIcons name={ name } size={ size } color={ color } /> );
+      case "l": return( <SimpleLineIcons name={ name } size={ size } color={ color } style={[ props.style ]}/> );
       break;
    }
    // return( <>
-   //    <FontAwesome6 name={ name } size={ size } color={ color } />
+   //    <FontAwesome6 name={ name } size={ size } color={ color } style={[ props.style ]}/>
    // </> );
 }
