@@ -33,6 +33,7 @@ import * as Form from "@/src/widgets/clb-form";
 import * as CStore from "@/src/widgets/clb-dbs";
 import { Icon } from "@/src/widgets/clb-icons";
 import { _ } from "@/src/widgets/clb";
+import { Str2Brl, } from "@/src/utils";
 
 import { LinearGradient } from "expo-linear-gradient";
 
@@ -597,25 +598,30 @@ export default function ReceiptsView( { ...props } ) {
                            <Header>
                               <H2> { ServiceDescription || "Novo serviço" } </H2>
                            </Header>
+                           { "TempList: " + TempList.length }
                            <Section style={{
                               paddingTop: 24, paddingBottom: "100%",
                            }}>
                               
                               { 
-                                 Service.services.length > 0 
+                                 // Service.services.length > 0 
+                                 TempList.length > 0 
                                  &&
-                                 <Section style={{ paddingTop: 16, paddingBottom: 16,
-                                    paddingLeft: 8, paddingRight: 8, gap: 8, 
-                                 }}>
-                                    <T style={{ fontSize: 18 }}>Forro de DryWall</T>
-                                    <Duo style={{ alignItems: "center", justifyContent: "space-between" }}>
-                                       <T style={{ color: "#666", }}>1 x R$ 3.550,00</T>
-                                       <Duo style={{ alignItems: "center", gap: 0, }}>
-                                          <T style={{ fontWeight: 700, color: "#777", }}>Total </T>
-                                          <T style={{ color: "#666", }}>R$ 3.550,00</T>
+                                 TempList.map( item => { return(
+                                    <Section style={{ paddingTop: 16, paddingBottom: 16,
+                                       paddingLeft: 8, paddingRight: 8, gap: 8, 
+                                    }}>
+                                       <T style={{ fontSize: 18 }}>{ item.description }</T>
+                                       <Duo style={{ alignItems: "center", justifyContent: "space-between" }}>
+                                          <T style={{ color: "#666", }}>{ item.quantity } x { Str2Brl( item.value ) }</T>
+                                          <Duo style={{ alignItems: "center", gap: 0, }}>
+                                             <T style={{ fontWeight: 700, color: "#777", }}>Total </T>
+                                             <T style={{ color: "#666", }}>{ Str2Brl( item.total ) }</T>
+                                          </Duo>
                                        </Duo>
-                                    </Duo>
-                                 </Section>
+                                    </Section>
+                                    // here
+                                 ) } )
                               }
 
 
@@ -730,12 +736,7 @@ export default function ReceiptsView( { ...props } ) {
                                     setQuantity( "1" );
                                  }                
                                  if( Value != "" && ServiceDescription != "" ) {
-                                    await HandleData().then( res => {
-                                       // setServices( res );
-                                       // alert( res );
-                                       console.log( "res: ", res );
-                                       console.log( "TempList: ", TempList );
-                                    } ); 
+                                    await HandleData(); 
                                  } else if( Value == "" ) {
                                     alert( "Value = null" );
                                  } else if( ServiceDescription == "" ) {
