@@ -701,20 +701,26 @@ export default function ReceiptsView( { ...props } ) {
                         onPress={ () => {  
                            async function HandleData() {
                               try {
-                                 const 
-                                    data = [ ...Service.services ]
-                                    ,
-                                    serviceBKP = { ...Service } // here
-                                 ,
-                                 list = {
-                                    description: ServiceDescription,
-                                    quantity: Quantity,
-                                    value: Value,
-                                    total: parseFloat( Value ) * parseFloat( Quantity ),
-                                 }
+                                 let 
+                                    data = {
+                                       description: ServiceDescription,
+                                       value: Value,
+                                       quantity: Quantity,
+                                       total: parseFloat( Value ) * parseFloat( Quantity )
+                                    },
+                                    services = []
                                  ;
-                                 data.push( list );
-                                 return data;
+
+                                 if( TempList.length > 0 ) {
+                                    services = [ ...TempList ]
+                                 }
+
+                                 services.push( data );
+
+                                 setTempList( services );
+
+                                 return services;
+                                 
                               } catch( err: any ) { console.error( err ); }
                            }
 
@@ -725,11 +731,10 @@ export default function ReceiptsView( { ...props } ) {
                                  }                
                                  if( Value != "" && ServiceDescription != "" ) {
                                     await HandleData().then( res => {
-                                       setServices( res );
-                                       alert( res );
+                                       // setServices( res );
+                                       // alert( res );
                                        console.log( "res: ", res );
-                                    } ).then( () => {
-                                       console.log( "Services: ", Services );
+                                       console.log( "TempList: ", TempList );
                                     } ); 
                                  } else if( Value == "" ) {
                                     alert( "Value = null" );
