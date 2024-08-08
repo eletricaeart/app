@@ -45,7 +45,7 @@ import { FirebaseDB, SaveDataOnFbRDB, GetDataFromFbRDB } from "@/FirebaseConfig"
 import { GetFBData, DeleteFBData, } from "@/src/widgets/clb-fb";
 
 import uuid from "react-native-uuid";
-import { ref, get, child, getDatabase } from "firebase/database";
+import { ref, get, child, getDatabase, set } from "firebase/database";
 
 import useCustomersFB from "@/src/hooks/useCustomersFB";
 import { GetTotal } from "@/src/scripts/receipts";
@@ -135,6 +135,7 @@ export default function ReceiptsView( { ...props } ) {
          description: ServiceDescription,
          services: Services,
          total: ServiceTotalValue,
+         customer: Customer,
       } )
       ,
       [ Discount, setDiscount ] = useState( null )
@@ -803,7 +804,20 @@ export default function ReceiptsView( { ...props } ) {
                         </Btn>
                         <Btn style={{
                            flex: 1, elevation: 1, backgroundColor: "#00559C",
-                        }}>
+                        }}
+                        onPress={ () => {
+                           async function SaveData() {
+                              const 
+                                 bkp = [ ...Service ]
+                              ;
+
+                              bkp.services = [ ...TempList ]
+                              bkp.total = TempTotal;
+
+                              setService( bkp );
+                           }
+                           set
+                        } }>
                            <Text style={{ color:"#fffe",
                               fontSize: 18, 
                               textTransform: "uppercase",
