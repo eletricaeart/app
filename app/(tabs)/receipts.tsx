@@ -476,7 +476,7 @@ export default function ReceiptsView( { ...props } ) {
                               onPress={ () => {
                                  setModalServicesVisibility( !ModalServicesVisibility );
                               } }>
-                                 { Services }
+                                 { TempTotal && TempTotal }
                               </Text>
                            </View>
                         </Section>
@@ -807,16 +807,25 @@ export default function ReceiptsView( { ...props } ) {
                         }}
                         onPress={ () => {
                            async function SaveData() {
-                              const 
-                                 bkp = [ ...Service ]
-                              ;
+                              try {
+                                 const 
+                                    bkp = [ ...Service ]
+                                 ;
+                                 
+                                 bkp.services = [ ...TempList ]
+                                 bkp.total = TempTotal;
+                                 
+                                 console.log( Service.total );
+                                 setService( bkp );
+                              } catch( err: any ) { console.error( err ) }
 
-                              bkp.services = [ ...TempList ]
-                              bkp.total = TempTotal;
-
-                              setService( bkp );
-                           }
-                           set
+                           } SaveData().then( () => {
+                                 setServiceDescription( "" );
+                              setQuantity( 1 ),
+                              setValue( "" );
+                              setModalServicesVisibility( !ModalServicesVisibility );
+                              console.log( Service.total );
+                           } );
                         } }>
                            <Text style={{ color:"#fffe",
                               fontSize: 18, 
