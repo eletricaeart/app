@@ -775,6 +775,8 @@ export default function ReceiptsView( { ...props } ) {
                                     alert( "Value = null" );
                                  } else if( ServiceDescription == "" ) {
                                     alert( "ServiceDescription = null" );
+                                 } else if( typeof Quantity == string ) {
+                                    setQuantity( Quantity.toString() );
                                  }
                               } catch( err: any ) {
                                  console.error( err );
@@ -784,7 +786,7 @@ export default function ReceiptsView( { ...props } ) {
                            HandleInputs().then( () => {
                               setServiceDescription( "" );
                               setValue( "" );
-                              setQuantity( "" );
+                              setQuantity( 1 );
                            } );
 
                         } }
