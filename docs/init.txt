@@ -82,3 +82,6 @@ import DarkLoginScreen from "react-native-dark-login-screen";
   handleSignInButton={() => {}}
 />
 
+
+
+yarn add @rneui/themed @rneui/base

@@ -6,6 +6,7 @@ import {
    StyleSheet, ScrollView, FlatList, Modal, View,
    Text, Image, Pressable, TextInput, Keyboard,
    Button,
+   KeyboardAvoidingView,
 } from "react-native";
 
 import {
@@ -219,7 +220,7 @@ export default function ReceiptsView( { ...props } ) {
     * 
     * == == == == == == == == == */
    const 
-      [ Quantity, setQuantity ] = useState( "" )
+      [ Quantity, setQuantity ] = useState( 1 )
       ,
       [ Value, setValue ] = useState( "" )
       ,
@@ -492,7 +493,7 @@ export default function ReceiptsView( { ...props } ) {
                                  const 
                                     t = text.toString()
                                  ;   
-                                 setDiscount( parseFloat( text ) )
+                                 setDiscount( parseFloat( text ) );
                               } }
                               placeholderTextColor={ "#777" }
                            />
@@ -695,16 +696,16 @@ export default function ReceiptsView( { ...props } ) {
                            } }
                            onBlur={ () => {
                               let
-                                 handledText = Quantity == "0" ? "1" : Quantity
+                                 handledText = Quantity == 0 ? 1 : Quantity
                               ;
                               switch( Quantity ) {
-                                 case "0" : setQuantity( "1" );
+                                 case 0 : setQuantity( 1 );
                                  break;
 
-                                 case "" : setQuantity( "1" );
+                                 case "" : setQuantity( 1 );
                                  break;
 
-                                 case null : setQuantity( "1" );
+                                 case null : setQuantity( 1 );
                                  break;
                                  
                               }
@@ -766,8 +767,8 @@ export default function ReceiptsView( { ...props } ) {
 
                            async function HandleInputs() {
                               try {
-                                 if( Quantity == "" ) {
-                                    setQuantity( "1" );
+                                 if( Quantity == 0 ) {
+                                    setQuantity( 1 );
                                  }                
                                  if( Value != "" && ServiceDescription != "" ) {
                                     await HandleData(); 
