@@ -94,6 +94,11 @@ export default function ReceiptsView( { ...props } ) {
 
    useEffect( () => {
    }, [] ); 
+
+   // useEffect( () => {
+   //    const n = Str2Brl( TempTotal - Discount );
+   //    setSubtotal(  );
+   // }, [ TempTotal ] );
    
 
    /** == [ Fabb properties ] 
@@ -152,17 +157,20 @@ export default function ReceiptsView( { ...props } ) {
          customer: Customer,
       } )
       ,
-      [ Discount, setDiscount ] = useState( null )
+      [ Discount, setDiscount ] = useState( 0 )
       ,
       [ Warranty, setWarranty ] = useState( () => {
          // pintura: 2 e 5 anos 
          // eletrica: 30 dias p/ não duráveis e 90 dias p/ duráveis
          // drywall: 6 meses ?
+         const 
+            month = new Date().getMonth() + 7
+         ;
          return `${ 
             new Date().getDate() 
          }/${ 
-            new Date().getMonth() + 7 
-         }/${ new Date().getFullYear() }`;
+            month > 12 ? month - 12 : month
+         }/${ month > 12 ? new Date().getFullYear() + 1 : new Date().getFullYear() }`;
       } )
       ,
       [ FormOfPayment, setFormOfPayment ] = useState( "..." )
@@ -498,7 +506,7 @@ export default function ReceiptsView( { ...props } ) {
                               onPress={ () => {
                                  setModalServicesVisibility( !ModalServicesVisibility );
                               } }>
-                                 { TempTotal && TempTotal }
+                                 { TempTotal && Str2Brl( TempTotal ) }
                               </Text>
                            </View>
                         </Section>
