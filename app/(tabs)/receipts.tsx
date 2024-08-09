@@ -117,11 +117,20 @@ export default function ReceiptsView( { ...props } ) {
       ,
       [ Payday, setPayday ] = useState( "" )
       ,
-      [ Ref, setRef ] = useState( "rc-155-2024-0" )
+      [ Ref, setRef ] = useState( () => {
+         let tempReceipts = [ 1, 2, 3 ];
+         return `rc-${ new Date().getFullYear() }-00${ new Date().getMonth() + 1 }-${ tempReceipts.length + 1 }`         
+      } )
       ,
-      [ Subtotal, setSubtotal ] = useState( "" )
+      [ Subtotal, setSubtotal ] = useState( 0 )
       ,
-      [ DueDate, setDueDate ] = useState( "" )
+      [ DueDate, setDueDate ] = useState( () => {
+         return `${ 
+            new Date().getDate() 
+         }/${ 
+            new Date().getMonth() + 2 
+         }/${ new Date().getFullYear() }`;
+      } )
       ,
       [ Customer, setCustomer ] = useState( "" )
       ,
@@ -145,7 +154,16 @@ export default function ReceiptsView( { ...props } ) {
       ,
       [ Discount, setDiscount ] = useState( null )
       ,
-      [ Warranty, setWarranty ] = useState( "" )
+      [ Warranty, setWarranty ] = useState( () => {
+         // pintura: 2 e 5 anos 
+         // eletrica: 30 dias p/ não duráveis e 90 dias p/ duráveis
+         // drywall: 6 meses ?
+         return `${ 
+            new Date().getDate() 
+         }/${ 
+            new Date().getMonth() + 7 
+         }/${ new Date().getFullYear() }`;
+      } )
       ,
       [ FormOfPayment, setFormOfPayment ] = useState( "..." )
       ,
@@ -356,16 +374,16 @@ export default function ReceiptsView( { ...props } ) {
          }>
             <ScrollView keyboardShouldPersistTaps="handled">
             <Section style={{ zIndex: 1, }}>
-               <c.Header>
-                  <c.Content>
-                     <View style={{ height: 80, flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
-                        <c.H3 color="#00559c99">Novo recibo</c.H3>
-                        <Pressable onPress={ () => { setModalVisibility( !ModalVisibility ) } }>
-                           <View style={[ s.btnOverlay,  ]}>
-                              <Icon i="f0" name="close" color={ colors.error } />
-                           </View>
-                        </Pressable>
-                     </View>
+               <Header>
+                  <View style={{ height: 80, flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingLeft: 16, paddingRight: 16, }}>
+                     <H3 style={{ color: "#00559c99" }}>Novo recibo</H3>
+                     <Pressable onPress={ () => { setModalVisibility( !ModalVisibility ) } }>
+                        <View style={[ s.btnOverlay,  ]}>
+                           <Icon i="f0" name="close" color={ colors.error } />
+                        </View>
+                     </Pressable>
+                  </View>
+                  <Content>
 
                      <Card style={{ backgroundColor: "#00559c", }}>
                         <Content style={{ flexDirection: "row", justifyContent: "space-between", gap: 18, height: 110, }}>
@@ -379,8 +397,8 @@ export default function ReceiptsView( { ...props } ) {
                         </Content>
                      </Card>
 
-                  </c.Content>
-               </c.Header>
+                  </Content>
+               </Header>
                <Section style={[ s.form, elevation.elevation, { backgroundColor: "#fff", } ]}>
                   <c.Content gap={ 8 }>
 
@@ -436,6 +454,7 @@ export default function ReceiptsView( { ...props } ) {
                                     onChangeText={ setRef }
                                     keyboardType="number-pad"
                                     placeholderTextColor={ "#777" }
+                                    editable={ false }
                                  />
                               </View>
                               
@@ -532,13 +551,18 @@ export default function ReceiptsView( { ...props } ) {
                            <View style={ s.divider }>
                               <Text style={ s.dividerText }>Informaçoes adicionais</Text>
                            </View>
-                           <Text style={ s.label }>Informaçoes adicionais</Text>
-                           <TextInput style={ s.input }
-                              value={ Notes }
-                              onChangeText={ setNotes }
-                              placeholder="Anotações"
-                              placeholderTextColor={ "#777" }
-                           />
+                           <Text style={ s.label }>Anotações</Text>
+                           <TextInput multiline={ true } style={{ backgroundColor: "#fff", borderRadius: 16, borderColor: "#7773", borderWidth: 1, height: 136, padding: 16, }}
+                           value={ Notes } onChangeText={ text => {
+                              setNotes( text );
+                           } }
+                           onBlur={ () => {
+                              const bkp = { ...Service };
+                              bkp.notes = Notes;
+                              setService( bkp );
+                              console.log( Service );
+                           } }
+                           textAlignVertical="top"/>
                         </Section>
                         <Section style={ {
                            gap: 16,
@@ -656,22 +680,7 @@ export default function ReceiptsView( { ...props } ) {
                                     <T style={{ color: "#666", fontSize: 22, fontWeight: 500, }}>
                                        { Str2Brl( TempTotal ) }
                                     </T>
-                                 </Duo>
-
-                                 <View style={[ s.divider, { paddingTop: 33, } ]}>
-                                    <Text style={ s.dividerText }>Informaçoes adicionais</Text>
-                                 </View>
-                                 <TextInput multiline={ true } style={{ backgroundColor: "#fff", borderRadius: 16, borderColor: "#7773", borderWidth: 1, height: 136, padding: 16, }}
-                                 value={ Notes } onChangeText={ text => {
-                                    setNotes( text );
-                                 } }
-                                 onBlur={ () => {
-                                    const bkp = { ...Service };
-                                    bkp.notes = Notes;
-                                    setService( bkp );
-                                    console.log( Service );
-                                 } }/>
-                                 
+                                 </Duo>                                 
                               </Section>
                            </Section>
                         </Section>
@@ -703,7 +712,7 @@ export default function ReceiptsView( { ...props } ) {
 
                      <Label>
                         <LabelText style={{ color: "#daa520", fontSize: 16, fontWeight: 700, }}>Descrição</LabelText>
-                        <TextInput style={[ s.input, { backgroundColor: "#1b1d22", } ]}
+                        <TextInput style={[ s.input, { backgroundColor: "#1b1d22", color: "#eee", } ]}
                         placeholder="Nome do serviço"
                         placeholderTextColor={ "#777" }
                         value={ ServicesDescription }
@@ -716,7 +725,7 @@ export default function ReceiptsView( { ...props } ) {
                      <Duo style={{ gap: 16, }}>
                         <Label style={{ flex: 1, }}>
                            <LabelText style={{ color: "#daa520",fontSize: 16, fontWeight: 700, }}>Quantidade</LabelText>
-                           <TextInput style={[ s.input, { backgroundColor: "#1b1d22", } ]}
+                           <TextInput style={[ s.input, { backgroundColor: "#1b1d22", color: "#eee", } ]}
                            inputMode="decimal"
                            placeholder="1"
                            placeholderTextColor={ "#777" }
@@ -841,7 +850,6 @@ export default function ReceiptsView( { ...props } ) {
                                  
                                  bkp.services = [ ...TempList ];
                                  bkp.notes = Notes;
-                                 bkp.description = ServiceDescription;
                                  bkp.total = TempTotal;
                                  
                                  console.log( Service.total );
@@ -1025,7 +1033,7 @@ const s = StyleSheet.create( {
       borderColor: "#fff2",
       borderWidth: 1,
       borderStyle: "solid",
-      color: "#eee",
+      // color: "#eee",
    },
    button: {
       marginTop: 40,
