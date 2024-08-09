@@ -129,11 +129,16 @@ export default function ReceiptsView( { ...props } ) {
       ,
       [ ServiceDescription, setServiceDescription ] = useState( "" )
       ,
+      [ ServicesDescription, setServicesDescription ] = useState( "" )
+      ,
       [ ServiceTotalValue, setServiceTotalValue ] = useState( "" )
+      ,
+      [ Notes, setNotes ] = useState( "" )
       ,
       [ Service, setService ] = useState( {
          description: ServiceDescription,
          services: Services,
+         notes: Notes,
          total: ServiceTotalValue,
          customer: Customer,
       } )
@@ -145,8 +150,6 @@ export default function ReceiptsView( { ...props } ) {
       [ FormOfPayment, setFormOfPayment ] = useState( "..." )
       ,
       [ Attachment, setAttachment ] = useState( "" )
-      ,
-      [ Notes, setNotes ] = useState( "" )
 
       ,
       [ ReceiptValue, setReceiptValue ] = useState( null )
@@ -558,6 +561,12 @@ export default function ReceiptsView( { ...props } ) {
                               onPress={ async () => { await AsyncStorage.removeItem( "customers" ) } }
                            />
                            <Touch 
+                              touchSty={{ backgroundColor: "#9c5500", }}
+                              txtSty={{ color: "#fff", }}
+                              txt="show Service"
+                              onPress={ () => { console.log( "Service: ", Service ) } }
+                           />
+                           <Touch 
                               touchSty={{ backgroundColor: "#00559C", }}
                               txtSty={{ color: "#fff", }}
                               txt="cadastrar"
@@ -603,7 +612,16 @@ export default function ReceiptsView( { ...props } ) {
                      <ScrollView style={{ padding: 16, backgroundColor: "#f5f5f5", }}>
                         <Section style={{  }}>
                            <Header>
-                              <H2> { ServiceDescription || "Novo serviço" } </H2>
+                              <TextInput 
+                              placeholder="Novo serviço"
+                              value={ ServiceDescription } 
+                              onChangeText={ setServiceDescription }
+                              onBlur={ () => {
+                                 const bkp = { ...Service };
+                                 bkp.description = ServiceDescription;
+                                 setService( bkp );
+                              } }
+                              style={{ fontSize: 24, fontWeight: "bold", color: "#00559c", paddingLeft: 8, }}/>
                            </Header>
                            <Section style={{
                               paddingTop: 24, paddingBottom: "100%",
@@ -639,6 +657,21 @@ export default function ReceiptsView( { ...props } ) {
                                        { Str2Brl( TempTotal ) }
                                     </T>
                                  </Duo>
+
+                                 <View style={[ s.divider, { paddingTop: 33, } ]}>
+                                    <Text style={ s.dividerText }>Informaçoes adicionais</Text>
+                                 </View>
+                                 <TextInput multiline={ true } style={{ backgroundColor: "#fff", borderRadius: 16, borderColor: "#7773", borderWidth: 1, height: 136, padding: 16, }}
+                                 value={ Notes } onChangeText={ text => {
+                                    setNotes( text );
+                                 } }
+                                 onBlur={ () => {
+                                    const bkp = { ...Service };
+                                    bkp.notes = Notes;
+                                    setService( bkp );
+                                    console.log( Service );
+                                 } }/>
+                                 
                               </Section>
                            </Section>
                         </Section>
@@ -673,19 +706,15 @@ export default function ReceiptsView( { ...props } ) {
                         <TextInput style={[ s.input, { backgroundColor: "#1b1d22", } ]}
                         placeholder="Nome do serviço"
                         placeholderTextColor={ "#777" }
-                        value={ ServiceDescription }
+                        value={ ServicesDescription }
                         onChangeText={ text => {
-                           setServiceDescription( text ) 
+                           setServicesDescription( text ) 
                         } }
                         />
                      </Label>
 
-                     <Duo style={{
-                        gap: 16, 
-                     }}>
-                        <Label style={{
-                           flex: 1,
-                        }}>
+                     <Duo style={{ gap: 16, }}>
+                        <Label style={{ flex: 1, }}>
                            <LabelText style={{ color: "#daa520",fontSize: 16, fontWeight: 700, }}>Quantidade</LabelText>
                            <TextInput style={[ s.input, { backgroundColor: "#1b1d22", } ]}
                            inputMode="decimal"
@@ -696,7 +725,7 @@ export default function ReceiptsView( { ...props } ) {
                               setQuantity( text );
                            } }
                            onBlur={ () => {
-                              let
+                              let 
                                  handledText = Quantity == 0 ? 1 : Quantity
                               ;
                               switch( Quantity ) {
@@ -728,19 +757,17 @@ export default function ReceiptsView( { ...props } ) {
                         </Label>
                      </Duo>
 
-                     <Duo style={{
-                        gap: 16, 
-                     }}>
+                     <Duo style={{ gap: 16, }}>
                         <Btn style={{ flex: 1, elevation: 1, backgroundColor: "#0075bd", }}
                         onPress={ () => {  
                            async function HandleData() {
                               try {
                                  let 
                                     data = {
-                                       description: ServiceDescription,
+                                       description: ServicesDescription,
                                        value: Value,
                                        quantity: Quantity,
-                                       total: parseFloat( Value ) * parseFloat( Quantity )
+                                       total: parseFloat( Value ) * parseFloat( Quantity ),
                                     },
                                     services = []
                                     ,
@@ -771,12 +798,12 @@ export default function ReceiptsView( { ...props } ) {
                                  if( Quantity == 0 ) {
                                     setQuantity( 1 );
                                  }                
-                                 if( Value != "" && ServiceDescription != "" ) {
+                                 if( Value != "" && ServicesDescription != "" ) {
                                     await HandleData(); 
                                  } else if( Value == "" ) {
                                     alert( "Value = null" );
-                                 } else if( ServiceDescription == "" ) {
-                                    alert( "ServiceDescription = null" );
+                                 } else if( ServicesDescription == "" ) {
+                                    alert( "ServicesDescription = null" );
                                  } else if( typeof Quantity == string ) {
                                     setQuantity( Quantity.toString() );
                                  }
@@ -786,7 +813,7 @@ export default function ReceiptsView( { ...props } ) {
                            }
 
                            HandleInputs().then( () => {
-                              setServiceDescription( "" );
+                              setServicesDescription( "" );
                               setValue( "" );
                               setQuantity( 1 );
                            } );
@@ -809,10 +836,12 @@ export default function ReceiptsView( { ...props } ) {
                            async function SaveData() {
                               try {
                                  const 
-                                    bkp = [ ...Service ]
+                                    bkp = { ...Service }
                                  ;
                                  
-                                 bkp.services = [ ...TempList ]
+                                 bkp.services = [ ...TempList ];
+                                 bkp.notes = Notes;
+                                 bkp.description = ServiceDescription;
                                  bkp.total = TempTotal;
                                  
                                  console.log( Service.total );
@@ -820,7 +849,7 @@ export default function ReceiptsView( { ...props } ) {
                               } catch( err: any ) { console.error( err ) }
 
                            } SaveData().then( () => {
-                                 setServiceDescription( "" );
+                              setServicesDescription( "" );
                               setQuantity( 1 ),
                               setValue( "" );
                               setModalServicesVisibility( !ModalServicesVisibility );
@@ -1077,8 +1106,7 @@ const
       margin-left: 0;
       padding-top: 0;
       padding-bottom: 0;
-      padding-left: 16px;
-      padding-right: 16px;
+      padding-left: 8px;
    `,
    Input = styled.TextInput`
       background-color: #f3f3f3;
