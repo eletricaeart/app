@@ -17,6 +17,8 @@ import {
 import DateTimePicker, { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
 
 import styled from "styled-components/native";
+import { MaskedTextInput, MaskedText, mask, } from "react-native-mask-text";
+
 import {
    PageFooter, BottomNavigationBar, Fab, Press,
    Touch, 
@@ -521,7 +523,7 @@ export default function ReceiptsView( { ...props } ) {
                            </View>
                            
                            <Text style={ s.label }>Desconto</Text>
-                           <TextInput style={ s.input }
+                           { /* <TextInput style={ s.input }
                               inputMode="decimal"
                               value={ Discount }
                               onChangeText={ text => {
@@ -531,6 +533,21 @@ export default function ReceiptsView( { ...props } ) {
                                  setDiscount( parseFloat( text ) );
                               } }
                               placeholderTextColor={ "#777" }
+                           /> */ }
+                           <MaskedTextInput
+                              type="currency" 
+                              options={{
+                                 prefix: 'R$ ',
+                                 decimalSeparator: '.',
+                                 groupSeparator: ',',
+                                 precision: 2
+                              }}
+                              onChangeText={(text, rawText) => {
+                                 console.log(text);
+                                 console.log(rawText);
+                              }}
+                              style={ s.input }
+                              keyboardType="numeric"
                            />
                            
                            <Text style={ s.label }>Garantia</Text>
