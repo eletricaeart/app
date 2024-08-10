@@ -94,11 +94,6 @@ export default function ReceiptsView( { ...props } ) {
 
    useEffect( () => {
    }, [] ); 
-
-   // useEffect( () => {
-   //    const n = Str2Brl( TempTotal - Discount );
-   //    setSubtotal(  );
-   // }, [ TempTotal ] );
    
 
    /** == [ Fabb properties ] 
@@ -127,7 +122,7 @@ export default function ReceiptsView( { ...props } ) {
          return `rc-${ new Date().getFullYear() }-00${ new Date().getMonth() + 1 }-${ tempReceipts.length + 1 }`         
       } )
       ,
-      [ Subtotal, setSubtotal ] = useState( 0 )
+      [ Subtotal, setSubtotal ] = useState( Str2Brl( "0" ) )
       ,
       [ DueDate, setDueDate ] = useState( () => {
          return `${ 
@@ -157,7 +152,7 @@ export default function ReceiptsView( { ...props } ) {
          customer: Customer,
       } )
       ,
-      [ Discount, setDiscount ] = useState( 0 )
+      [ Discount, setDiscount ] = useState( Str2Brl( "0" ) )
       ,
       [ Warranty, setWarranty ] = useState( () => {
          // pintura: 2 e 5 anos 
@@ -178,7 +173,7 @@ export default function ReceiptsView( { ...props } ) {
       [ Attachment, setAttachment ] = useState( "" )
 
       ,
-      [ ReceiptValue, setReceiptValue ] = useState( null )
+      [ ReceiptValue, setReceiptValue ] = useState( Str2Brl( "0" ) )
    ;
 
    const 
@@ -192,7 +187,11 @@ export default function ReceiptsView( { ...props } ) {
    ;
 
    useEffect( () => {
-      setSubtotal( ReceiptValue - Discount )
+      setSubtotal( 
+         Str2Brl(
+            parseFloat( ReceiptValue ) - parseFloat( Discount ) 
+         )
+      )
    }, [ ReceiptValue ] );
    
    function ToggleSwitch_Paid() {
@@ -260,6 +259,11 @@ export default function ReceiptsView( { ...props } ) {
    ;
    
 
+
+   useEffect( () => {
+      const n = Str2Brl( ( TempTotal - Discount ).toString() );
+      setSubtotal( n );
+   }, [ TempTotal ] );
 
    
 

@@ -113,3 +113,69 @@ function Example() {
       </Actionsheet>
     </Center>;
 }
+
+
+
+/**
+ * react-native-mask-text
+ */
+https://github.com/akinncar/react-native-mask-text
+yarn add react-native-mask-text
+
+
+    9 - accept digit.
+    A - accept alpha.
+    S - accept alphanumeric.
+import { MaskedTextInput } from "react-native-mask-text";
+
+<MaskedTextInput
+  mask="AAA-9999"
+  onChangeText={(text, rawText) => {
+    console.log(text);
+    console.log(rawText);
+  }}
+  style={styles.input}
+/>;
+
+import { MaskedText } from "react-native-mask-text";
+<MaskedText mask="99/99/9999">30081990</MaskedText>;
+
+# Currency Mask input
+import { MaskedTextInput } from "react-native-mask-text";
+
+<MaskedTextInput
+  type="currency"
+  options={{
+    prefix: '$',
+    decimalSeparator: '.',
+    groupSeparator: ',',
+    precision: 2
+  }}
+  onChangeText={(text, rawText) => {
+    console.log(text);
+    console.log(rawText);
+  }}
+  style={styles.input}
+  keyboardType="numeric"
+/>
+
+# Currency Mask text
+import { MaskedText } from "react-native-mask-text";
+<MaskedText
+  type="currency"
+  options={{
+    prefix: '$',
+    decimalSeparator: '.',
+    groupSeparator: ',',
+    precision: 2
+  }}
+>
+  5999
+</MaskedText>;
+
+
+
+# mask function
+import { mask, unMask, } from "react-native-mask-text";
+const code = mask("ABC1234","AAA-9999") // return ABC-1234
+const code = unMask("ABC-1234") // return ABC1234
