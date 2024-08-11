@@ -50,6 +50,7 @@
       "react-dom": "18.2.0",
       "react-native": "^0.74.2",
       "react-native-gesture-handler": "~2.16.1",
+      "react-native-mask-input": "^1.2.3",
       "react-native-mask-text": "^0.14.2",
       "react-native-paper": "^5.12.3",
       "react-native-reanimated": "~3.10.1",

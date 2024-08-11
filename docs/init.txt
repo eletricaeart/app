@@ -194,3 +194,82 @@ import { MaskedText } from "react-native-mask-text";
 import { mask, unMask, } from "react-native-mask-text";
 const code = mask("ABC1234","AAA-9999") // return ABC-1234
 const code = unMask("ABC-1234") // return ABC1234
+
+
+
+
+
+-------------------------------
+yarn add react-native-mask-input
+
+import MaskInput from 'react-native-mask-input';
+
+-------------- phone
+const [phone, setPhone] = React.useState('');
+
+<MaskInput
+   value={ phone }
+   onChangeText={(masked, unmasked) => {
+      setPhone(masked); // you can use the unmasked value as well
+      console.log(masked); // (99) 99999-9999
+      console.log(unmasked); // 99999999999
+   }}
+   mask={['(', /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
+/>
+
+
+
+------------ real
+import MaskInput, { createNumberMask } from 'react-native-mask-input';
+
+const dollarMask = createNumberMask({
+  prefix: ['R', '$', ' '],
+  delimiter: '.',
+  separator: ',',
+  precision: 2,
+})
+
+const [value, setValue] = React.useState('');
+<MaskInput
+   value={value}
+   mask={dollarMask}
+   onChangeText={(masked, unmasked) => {
+   setValue(unmasked); // you can use the masked value as well
+
+   // assuming you typed "123456":
+   console.log(masked); // "R$ 1.234,56"
+   console.log(unmasked); // "123456"
+   }}
+/>
+
+------------ cep
+const zipCodeMask = [/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/];
+
+
+import MaskInput, { Masks } from 'react-native-mask-input';
+Mask 	               Use case
+Masks.BRL_CAR_PLATE 	ABC-1234
+Masks.BRL_CPNJ 	   33.594.232/0001-00
+Masks.BRL_CPF 	      903.549.000-21
+Masks.BRL_CURRENCY 	R$ 1.234,56
+Masks.BRL_PHONE 	   (61) 99966-7746
+Masks.USA_PHONE 	   (415) 555-0132
+Masks.CREDIT_CARD 	9999 **** **** 9999
+Masks.DATE_DDMMYYYY 	12/04/1995
+Masks.DATE_MMDDYYYY 	04/12/1995
+Masks.DATE_YYYYMMDD 	1995/04/12
+Masks.ZIP_CODE 	   71680-345
+<MaskInput
+   value={creditCard}
+   onChangeText={setCreditCard}
+   mask={Masks.CREDIT_CARD}
+/>
+
+------------- mask
+const mask = {
+   cpf = [/\d/, /\d/, /\d/, ".", /\d/, /\d/, /\d/, ".", /\d/, /\d/, /\d/, "-", /\d/, /\d/]
+   cnpj = [/\d/, /\d/, ".", /\d/, /\d/, /\d/, ".", /\d/, /\d/, /\d/, "/", /\d/, /\d/, /\d/, "-", /\d/, /\d/]
+   cep = [/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/]
+   phone = ['(', /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+   creditCardMask = [/\d/, /\d/, /\d/, /\d/, " " [/\d/], [/\d/], [/\d/], [/\d/], " ", [/\d/], [/\d/], [/\d/], [/\d/], " ", /\d/, /\d/, /\d/, /\d/]
+};

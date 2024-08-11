@@ -51,6 +51,7 @@ import { ref, get, child, getDatabase, set } from "firebase/database";
 
 import useCustomersFB from "@/src/hooks/useCustomersFB";
 import { GetTotal } from "@/src/scripts/receipts";
+import MaskInput, { formatWithMask, Masks } from "react-native-mask-input";
 
 
 
@@ -126,13 +127,7 @@ export default function ReceiptsView( { ...props } ) {
       ,
       [ Subtotal, setSubtotal ] = useState( Str2Brl( "0" ) )
       ,
-      [ DueDate, setDueDate ] = useState( () => {
-         return `${ 
-            new Date().getDate() 
-         }/${ 
-            new Date().getMonth() + 2 
-         }/${ new Date().getFullYear() }`;
-      } )
+      [ DueDate, setDueDate ] = useState( "" )
       ,
       [ Customer, setCustomer ] = useState( "" )
       ,
@@ -161,14 +156,7 @@ export default function ReceiptsView( { ...props } ) {
          // pintura: 2 e 5 anos 
          // eletrica: 30 dias p/ não duráveis e 90 dias p/ duráveis
          // drywall: 6 meses ?
-         const 
-            month = new Date().getMonth() + 7
-         ;
-         return `${ 
-            new Date().getDate() 
-         }/${ 
-            month > 12 ? month - 12 : month
-         }/${ month > 12 ? new Date().getFullYear() + 1 : new Date().getFullYear() }`;
+         ""
       } )
       ,
       [ FormOfPayment, setFormOfPayment ] = useState( "..." )
@@ -209,22 +197,6 @@ export default function ReceiptsView( { ...props } ) {
       setPayday( currentDate );
    }
 
-   const PaydayShowMode = currentMode => {
-      DateTimePickerAndroid.open({
-        value: Payday,
-        OnChangePayday,
-        mode: currentMode,
-        is24Hour: true,
-      });
-   };
-
-   const showDatepicker = () => {
-      PaydayShowMode('date');
-    };
-  
-    const showTimepicker = () => {
-      PaydayShowMode('time');
-    };
 
    const 
       inputs = [
@@ -259,16 +231,6 @@ export default function ReceiptsView( { ...props } ) {
       [ TempTotal, setTempTotal ] = useState( "0" )
    ;
    
-
-
-   // useEffect( () => {
-   // }, [ TempTotal ] );
-
-   // useEffect( () => {
-   //    const n = Str2Brl( TempTotal - Discount );
-   //    setSubtotal( n );
-   // }, [ Discount ] );
-
    
 
    return( <>
@@ -444,11 +406,25 @@ export default function ReceiptsView( { ...props } ) {
                            {
                               SwitchPaid_Enabled && <Section style={{ paddingTop: 16, paddingBottom: 16, }}>
                                  <Text style={ s.label }>Data do recebimento</Text>
-                                 <TextInput style={ s.input }
+                                 <MaskInput
                                     value={ Payday }
-                                    onChangeText={ setPayday } 
+                                    onChangeText={ ( text, rawText ) => {
+                                       const { masked, unmasked } = formatWithMask( {
+                                          text: text, mask: Masks.DATE_DDMMYYYY,
+                                       } );
+                                       setPayday( masked );
+                                       console.log( "masked: ", masked );
+                                       console.log( "text: ", text );
+                                       console.log( "rawText: ", rawText );
+                                    } }
+                                    style={ s.input }
                                     placeholderTextColor={ "#777" }
-                                    // ref={ id_Payday }
+                                    placeholder={ `${ 
+                                       new Date().getDate() }/${ 
+                                          new Date().getMonth() + 1
+                                       }/${ new Date().getFullYear() 
+                                    }` }
+                                    keyboardType="numeric"
                                  />
                               </Section>
                            }
@@ -492,11 +468,25 @@ export default function ReceiptsView( { ...props } ) {
                            
                            
                            <Text style={ s.label }>Vencimento</Text>
-                           <TextInput style={ s.input }
+                           <MaskInput
                               value={ DueDate }
-                              onChangeText={ setDueDate }
-                              keyboardType="number-pad"
+                              onChangeText={ ( text, rawText ) => {
+                                 const { masked, unmasked } = formatWithMask( {
+                                    text: text, mask: Masks.DATE_DDMMYYYY,
+                                 } );
+                                 setDueDate( masked );
+                                 console.log( "masked: ", masked );
+                                 console.log( "text: ", text );
+                                 console.log( "rawText: ", rawText );
+                              } }
+                              style={ s.input }
                               placeholderTextColor={ "#777" }
+                              placeholder={ `${ 
+                                 new Date().getDate() }/${ 
+                                    new Date().getMonth() + 2 > 12 ? new Date().getMonth() + 2 - 12 : new Date().getMonth() + 2
+                                 }/${ new Date().getMonth() + 2 > 12 ? new Date().getFullYear() + 1 : new Date().getFullYear() 
+                              }` }
+                              keyboardType="numeric"
                            />
                            
                            <View style={ s.duoBox }>
@@ -536,7 +526,6 @@ export default function ReceiptsView( { ...props } ) {
                               } }
                               value={ Discount }
                               onChangeText={ ( text, rawText ) => {
-
                                  let 
                                     services = []
                                     ,
@@ -551,21 +540,11 @@ export default function ReceiptsView( { ...props } ) {
                                     total = total + item.total
                                  } );
 
-                                 // setTempTotal( ( total ).toString() );
-      
-                                       
-
                                  const 
-                                    n = (
-                                       total
-                                       -
-                                       Brl2Float( text )
-                                    ).toString()
+                                    n = ( total - Brl2Float( text ) ).toString()
                                  ;
 
                                  setDiscount( rawText );
-                                 // here
-                                 // setTempTotal( n.toString() );
                                  setReceiptValue( n.toString() );
                                  console.log(
                                     "Subtotal onChangeText: ",
@@ -577,37 +556,30 @@ export default function ReceiptsView( { ...props } ) {
                                     "total: ", total,
                                     "n: ", n
                                  );
-
-
                               } }
                               style={ s.input }
                               keyboardType="numeric"
                            />
                            
                            <Text style={ s.label }>Garantia</Text>
-                           {/* <TextInput style={ s.input }
-                              keyboardType="number-pad"
-                              value={ Warranty }
-                              onChangeText={ setWarranty }
-                              placeholderTextColor={ "#777" }
-                           /> */}
-                           <MaskedTextInput
-                              type="date"
-                              options={ {
-                                 dateFormat: "DD/MM/YYYY",
-                              } }
+                           <MaskInput
                               value={ Warranty }
                               onChangeText={ ( text, rawText ) => {
-                                 const t = text.toString();
-                                 setWarranty( t );
-                                 console.log( text );
-                                 console.log( rawText );
-                              } }
-                              onBlur={ () => {
-                                 setWarranty( Warranty.split( "" ). );
+                                 const { masked, unmasked } = formatWithMask( {
+                                    text: text, mask: Masks.DATE_DDMMYYYY,
+                                 } );
+                                 setWarranty( masked );
+                                 console.log( "masked: ", masked );
+                                 console.log( "text: ", text );
+                                 console.log( "rawText: ", rawText );
                               } }
                               style={ s.input }
                               placeholderTextColor={ "#777" }
+                              placeholder={ `${ 
+                                 new Date().getDate() }/${ 
+                                    new Date().getMonth() + 7 > 12 ? new Date().getMonth() + 7 - 12 : new Date().getMonth() + 7
+                                 }/${ new Date().getMonth() + 7 > 12 ? new Date().getFullYear() + 1 : new Date().getFullYear() 
+                              }` }
                               keyboardType="numeric"
                            />
                               
@@ -932,17 +904,43 @@ export default function ReceiptsView( { ...props } ) {
                               try {
                                  const 
                                     bkp = { ...Service }
+                                    ,
+                                    d = Discount.toString().split( "" )
+                                    ,
+                                    nt = d.pop()
+                                    ,
+                                    ou = d.pop()
                                  ;
+
+                                 let discount = "";
                                  
+                                 d.push( "." );
+                                 d.push( ou );
+                                 d.push( nt );
+                                 discount = d.join( "" );
+
                                  bkp.services = [ ...TempList ];
                                  bkp.notes = Notes;
                                  bkp.total = TempTotal;
-                                 
-                                 console.log( Service.total );
+
+                                 console.log( 
+                                    "TempTotal: ", TempTotal,
+                                    "\n100.50: ", Str2Brl( "100.50" ),
+                                    "\nDiscount: ", Discount,
+                                    "\nDiscounte: ", discount
+                                 );
+                                 console.log( "Service.total: ", Service.total );
                                  setService( bkp );
+
+                                 return {
+                                    discount
+                                 }
                               } catch( err: any ) { console.error( err ) }
 
-                           } SaveData().then( () => {
+                           } SaveData().then( returned => {
+                              setReceiptValue( (
+                                 parseFloat( TempTotal ) - parseFloat( returned?.discount )
+                              ).toString() );
                               setServicesDescription( "" );
                               setQuantity( 1 ),
                               setValue( "" );
