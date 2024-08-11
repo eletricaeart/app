@@ -144,19 +144,19 @@ import { MaskedText } from "react-native-mask-text";
 import { MaskedTextInput } from "react-native-mask-text";
 
 <MaskedTextInput
-  type="currency"
-  options={{
-    prefix: '$',
-    decimalSeparator: '.',
-    groupSeparator: ',',
-    precision: 2
-  }}
-  onChangeText={(text, rawText) => {
-    console.log(text);
-    console.log(rawText);
-  }}
-  style={styles.input}
-  keyboardType="numeric"
+   type="currency"
+   options={ {
+      prefix: "R$ ",
+      decimalSeparator: ".",
+      groupSeparator: ",",
+      precision: 2
+   } }
+   onChangeText={ ( text, rawText ) => {
+      console.log( text );
+      console.log( rawText );
+   } }
+   style={ s.input }
+   keyboardType="numeric"
 />
 
 # Currency Mask text

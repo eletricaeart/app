@@ -36,7 +36,7 @@ import * as Form from "@/src/widgets/clb-form";
 import * as CStore from "@/src/widgets/clb-dbs";
 import { Icon } from "@/src/widgets/clb-icons";
 import { _ } from "@/src/widgets/clb";
-import { Str2Brl, } from "@/src/utils";
+import { Brl2Float, Str2Brl } from "@/src/utils";
 
 import { LinearGradient } from "expo-linear-gradient";
 
@@ -154,7 +154,8 @@ export default function ReceiptsView( { ...props } ) {
          customer: Customer,
       } )
       ,
-      [ Discount, setDiscount ] = useState( Str2Brl( "0" ) )
+      // [ Discount, setDiscount ] = useState( Str2Brl( "0" ) )
+      [ Discount, setDiscount ] = useState( 0 )
       ,
       [ Warranty, setWarranty ] = useState( () => {
          // pintura: 2 e 5 anos 
@@ -175,7 +176,7 @@ export default function ReceiptsView( { ...props } ) {
       [ Attachment, setAttachment ] = useState( "" )
 
       ,
-      [ ReceiptValue, setReceiptValue ] = useState( Str2Brl( "0" ) )
+      [ ReceiptValue, setReceiptValue ] = useState( "0" )
    ;
 
    const 
@@ -188,13 +189,11 @@ export default function ReceiptsView( { ...props } ) {
       [ ModalCustomer, setModalCustomer ] = useState( false )
    ;
 
-   useEffect( () => {
-      setSubtotal( 
-         Str2Brl(
-            parseFloat( ReceiptValue ) - parseFloat( Discount ) 
-         )
-      )
-   }, [ ReceiptValue ] );
+   // useEffect( () => {
+   //    setSubtotal( 
+         
+   //    )
+   // }, [ ReceiptValue ] );
    
    function ToggleSwitch_Paid() {
       setSwitchPaid_Enabled( !SwitchPaid_Enabled );
@@ -210,7 +209,7 @@ export default function ReceiptsView( { ...props } ) {
       setPayday( currentDate );
    }
 
-   const PaydayShowMode = (currentMode) => {
+   const PaydayShowMode = currentMode => {
       DateTimePickerAndroid.open({
         value: Payday,
         OnChangePayday,
@@ -257,15 +256,18 @@ export default function ReceiptsView( { ...props } ) {
       ,
       [ TempList, setTempList ] = useState( [] )
       ,
-      [ TempTotal, setTempTotal ] = useState( 0 )
+      [ TempTotal, setTempTotal ] = useState( "0" )
    ;
    
 
 
-   useEffect( () => {
-      const n = Str2Brl( ( TempTotal - Discount ).toString() );
-      setSubtotal( n );
-   }, [ TempTotal ] );
+   // useEffect( () => {
+   // }, [ TempTotal ] );
+
+   // useEffect( () => {
+   //    const n = Str2Brl( TempTotal - Discount );
+   //    setSubtotal( n );
+   // }, [ Discount ] );
 
    
 
@@ -403,7 +405,7 @@ export default function ReceiptsView( { ...props } ) {
                         <Content style={{ flexDirection: "row", justifyContent: "space-between", gap: 18, height: 110, }}>
                            <Section style={{ justifyContent: "space-between" }}>
                               <H3 style={{ color: "#fff", }}>Valor do recibo</H3>
-                              <H1 style={{ color: "#fff", }}>R$ { ReceiptValue }</H1>
+                              <H1 style={{ color: "#fff", }}>{ Str2Brl( ReceiptValue ) }</H1>
                            </Section>
                            <Section>
                               <P style={{ color: "#fff", }}>{ Ref }</P>
@@ -448,8 +450,6 @@ export default function ReceiptsView( { ...props } ) {
                                     placeholderTextColor={ "#777" }
                                     // ref={ id_Payday }
                                  />
-                                 {/* <Button onPress={showDatepicker} title="Show date picker!" />
-                                 <Text>selected: {Payday.toLocaleString()}</Text> */}
                               </Section>
                            }
                         </Section>
@@ -474,14 +474,17 @@ export default function ReceiptsView( { ...props } ) {
                               
                               <View style={ s.duoBox }>
                                  <Text style={ s.label }>Subtotal</Text>
-                                 <TextInput style={ s.input }
+                                 <TextInput
+                                    type="currency"
                                     value={ Subtotal }
-                                    // onChangeText={ () => {
-                                    //    setSubtotal( ReceiptValue - Discount )
-                                    // } }
                                     editable={ false }
-                                    keyboardType="number-pad"
                                     placeholderTextColor={ "#777" }
+                                    onChangeText={ ( text, rawText ) => {
+                                       console.log( "Subtotal text: ", text );
+                                       console.log( "Subtotal rawText: ", rawText );
+                                    } }
+                                    style={ s.input }
+                                    keyboardType="numeric"
                                  />
                               </View>
                            </View>
@@ -523,29 +526,60 @@ export default function ReceiptsView( { ...props } ) {
                            </View>
                            
                            <Text style={ s.label }>Desconto</Text>
-                           { /* <TextInput style={ s.input }
-                              inputMode="decimal"
-                              value={ Discount }
-                              onChangeText={ text => {
-                                 const 
-                                    t = text.toString()
-                                 ;   
-                                 setDiscount( parseFloat( text ) );
-                              } }
-                              placeholderTextColor={ "#777" }
-                           /> */ }
                            <MaskedTextInput
                               type="currency" 
-                              options={{
-                                 prefix: 'R$ ',
-                                 decimalSeparator: '.',
-                                 groupSeparator: ',',
+                              options={ {
+                                 prefix: "R$ ",
+                                 decimalSeparator: ",",
+                                 groupSeparator: ".",
                                  precision: 2
-                              }}
-                              onChangeText={(text, rawText) => {
-                                 console.log(text);
-                                 console.log(rawText);
-                              }}
+                              } }
+                              value={ Discount }
+                              onChangeText={ ( text, rawText ) => {
+
+                                 let 
+                                    services = []
+                                    ,
+                                    total = 0
+                                 ;
+
+                                 if( TempList.length > 0 ) {
+                                    services = [ ...TempList ]
+                                 }
+
+                                 services.forEach( item => {
+                                    total = total + item.total
+                                 } );
+
+                                 // setTempTotal( ( total ).toString() );
+      
+                                       
+
+                                 const 
+                                    n = (
+                                       total
+                                       -
+                                       Brl2Float( text )
+                                    ).toString()
+                                 ;
+
+                                 setDiscount( rawText );
+                                 // here
+                                 // setTempTotal( n.toString() );
+                                 setReceiptValue( n.toString() );
+                                 console.log(
+                                    "Subtotal onChangeText: ",
+                                    typeof text,
+                                    "TempTotal: ", TempTotal, 
+                                    "Discount: ", Discount,
+                                    "text: ", text,
+                                    "rawText: ", rawText,
+                                    "total: ", total,
+                                    "n: ", n
+                                 );
+
+
+                              } }
                               style={ s.input }
                               keyboardType="numeric"
                            />
@@ -784,7 +818,9 @@ export default function ReceiptsView( { ...props } ) {
                         <Label style={{
                            flex: 1,
                         }}>
-                           <LabelText style={{ color: "#daa520",fontSize: 16, fontWeight: 700, }}>Valor</LabelText>
+                           <LabelText style={{ color: "#daa520",fontSize: 16, fontWeight: 700, }}>
+                              Valor
+                           </LabelText>
                            <TextInput style={[ s.input, { backgroundColor: "#1b1d22", color: "#fff", } ]}
                            inputMode="decimal"
                            placeholder="0.00"
@@ -824,7 +860,9 @@ export default function ReceiptsView( { ...props } ) {
 
                                  setTempList( services );
 
-                                 setTempTotal( total );
+                                 setTempTotal( ( total ).toString() );
+                                 setSubtotal( Str2Brl( ( total ).toString() ) );
+                                 setReceiptValue( total.toString() );
 
                                  return services;
                                  
