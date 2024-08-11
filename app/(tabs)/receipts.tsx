@@ -36,7 +36,7 @@ import * as Form from "@/src/widgets/clb-form";
 import * as CStore from "@/src/widgets/clb-dbs";
 import { Icon } from "@/src/widgets/clb-icons";
 import { _ } from "@/src/widgets/clb";
-import { Brl2Float, Str2Brl } from "@/src/utils";
+import { Brl2Float, FixBrl, Str2Brl } from "@/src/utils";
 
 import { LinearGradient } from "expo-linear-gradient";
 
@@ -691,7 +691,9 @@ export default function ReceiptsView( { ...props } ) {
                         <Section style={{  }}>
                            <Header>
                               <TextInput 
-                              placeholder="Novo serviço"
+                              placeholder={
+                                 `Serviço ${ new Date().getDate() }-${ new Date().getMonth() + 1 }-${ new Date().getFullYear() }`
+                              }
                               value={ ServiceDescription } 
                               onChangeText={ setServiceDescription }
                               onBlur={ () => {
@@ -767,7 +769,9 @@ export default function ReceiptsView( { ...props } ) {
                      <Label>
                         <LabelText style={{ color: "#daa520", fontSize: 16, fontWeight: 700, }}>Descrição</LabelText>
                         <TextInput style={[ s.input, { backgroundColor: "#1b1d22", color: "#eee", } ]}
-                        placeholder="Nome do serviço"
+                        placeholder={ 
+                           `Serviço ${ new Date().getDate() }-${ new Date().getMonth() + 1 }-${ new Date().getFullYear() }` 
+                        }
                         placeholderTextColor={ "#777" }
                         value={ ServicesDescription }
                         onChangeText={ text => {
@@ -812,12 +816,19 @@ export default function ReceiptsView( { ...props } ) {
                            <LabelText style={{ color: "#daa520",fontSize: 16, fontWeight: 700, }}>
                               Valor
                            </LabelText>
-                           <TextInput style={[ s.input, { backgroundColor: "#1b1d22", color: "#fff", } ]}
-                           inputMode="decimal"
-                           placeholder="0.00"
-                           placeholderTextColor={ "#777" }
-                           value={ Value }
-                           onChangeText={ text => setValue( text ) }
+                           <MaskInput
+                              inputMode="numeric"
+                              style={[ s.input, { backgroundColor: "#1b1d22", color: "#fff", } ]}
+                              placeholder="0.00"
+                              placeholderTextColor={ "#777" }
+                              value={ Value }
+                              mask={ Masks.BRL_CURRENCY }
+                              onChangeText={ ( masked, unmasked ) => {
+                              setValue( unmasked ); // you can use the masked value as well
+
+                              console.log( masked ); // "R$ 1.234,56"
+                              console.log( unmasked ); // "123456"
+                              } }
                            />
                         </Label>
                      </Duo>
@@ -830,14 +841,24 @@ export default function ReceiptsView( { ...props } ) {
                                  let 
                                     data = {
                                        description: ServicesDescription,
-                                       value: Value,
+                                       value: FixBrl( Value ),
                                        quantity: Quantity,
-                                       total: parseFloat( Value ) * parseFloat( Quantity ),
+                                       // total: parseFloat( Value ) * parseFloat( Quantity ),
+                                       // total: FixBrl( Value ) * parseInt( Quantity ),
+                                       total: parseInt( Quantity ) * FixBrl( Value ),
                                     },
                                     services = []
                                     ,
                                     total = 0
                                  ;
+
+                                 console.log(
+                                    "parseInt( Quantity ): ", parseInt( Quantity ),
+                                    "\nValue: ", Value,
+                                    "\nFixBrl( Value ): ", FixBrl( Value ),
+                                    "\nparseInt( Quantity ) * FixBrl( Value ): ",
+                                    parseInt( Quantity ) * FixBrl( Value )
+                                 );
 
                                  if( TempList.length > 0 ) {
                                     services = [ ...TempList ]
@@ -922,6 +943,9 @@ export default function ReceiptsView( { ...props } ) {
                                  bkp.services = [ ...TempList ];
                                  bkp.notes = Notes;
                                  bkp.total = TempTotal;
+                                 if( bkp.description == "" ) {
+                                    bkp.description = `Serviço ${ new Date().getDate() }-${ new Date().getMonth() + 1 }-${ new Date().getFullYear() }`;
+                                 }
 
                                  console.log( 
                                     "TempTotal: ", TempTotal,

@@ -200,6 +200,9 @@ const code = unMask("ABC-1234") // return ABC1234
 
 
 -------------------------------
+https://www.npmjs.com/package/react-native-mask-input
+
+best for
 yarn add react-native-mask-input
 
 import MaskInput from 'react-native-mask-input';

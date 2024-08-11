@@ -22,3 +22,22 @@ export function Brl2Float( v: string ) {
    );
    return float;
 }
+
+export function FixBrl( n ) {
+   // fix number from <MaskInput
+   const 
+      comple = n.toString().split( "" )
+      ,
+      o = comple.pop()
+      ,
+      t = comple.pop()
+   ;
+   let completo = "";
+   
+   comple.push( "." );
+   comple.push( t );
+   comple.push( o );
+   completo = comple.join( "" );
+
+   return completo;
+}
