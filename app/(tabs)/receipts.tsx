@@ -449,6 +449,50 @@ export default function ReceiptsView( { ...props } ) {
                               </View>
                               
                               <View style={ s.duoBox }>
+                                 <Text style={ s.label }>Vencimento</Text>
+                                 <MaskInput
+                                    value={ DueDate }
+                                    onChangeText={ ( text, rawText ) => {
+                                       const { masked, unmasked } = formatWithMask( {
+                                          text: text, mask: Masks.DATE_DDMMYYYY,
+                                       } );
+                                       setDueDate( masked );
+                                       console.log( "masked: ", masked );
+                                       console.log( "text: ", text );
+                                       console.log( "rawText: ", rawText );
+                                    } }
+                                    style={ s.input }
+                                    placeholderTextColor={ "#777" }
+                                    placeholder={ `${ 
+                                       new Date().getDate() }/${ 
+                                          new Date().getMonth() + 2 > 12 ? new Date().getMonth() + 2 - 12 : new Date().getMonth() + 2
+                                       }/${ new Date().getMonth() + 2 > 12 ? new Date().getFullYear() + 1 : new Date().getFullYear() 
+                                    }` }
+                                    keyboardType="numeric"
+                                 />
+                              </View>
+                           </View>
+                                                   
+                           <Text style={ s.label }>Cliente</Text>
+                           <Text style={ [ s.input, { paddingTop: 18,  } ] }
+                           onPress={ () => {
+                              setModalCustomerVisibility( !ModalCustomerVisibility );
+                           } }>
+                              { Customer }
+                           </Text>
+                           
+                           <View style={ s.duo }>
+                              <View style={ s.duoBox }>
+                                 <Text style={ s.label }>Serviços</Text>
+                                 <Text style={ [ s.input, { paddingTop: 18,  } ] }
+                                 onPress={ () => {
+                                    setModalServicesVisibility( !ModalServicesVisibility );
+                                 } }>
+                                    { TempTotal && Str2Brl( TempTotal ) }
+                                 </Text>
+                              </View>
+
+                              <View style={ s.duoBox }>
                                  <Text style={ s.label }>Subtotal</Text>
                                  <TextInput
                                     type="currency"
@@ -463,50 +507,6 @@ export default function ReceiptsView( { ...props } ) {
                                     keyboardType="numeric"
                                  />
                               </View>
-                           </View>
-                           
-                           
-                           
-                           <Text style={ s.label }>Vencimento</Text>
-                           <MaskInput
-                              value={ DueDate }
-                              onChangeText={ ( text, rawText ) => {
-                                 const { masked, unmasked } = formatWithMask( {
-                                    text: text, mask: Masks.DATE_DDMMYYYY,
-                                 } );
-                                 setDueDate( masked );
-                                 console.log( "masked: ", masked );
-                                 console.log( "text: ", text );
-                                 console.log( "rawText: ", rawText );
-                              } }
-                              style={ s.input }
-                              placeholderTextColor={ "#777" }
-                              placeholder={ `${ 
-                                 new Date().getDate() }/${ 
-                                    new Date().getMonth() + 2 > 12 ? new Date().getMonth() + 2 - 12 : new Date().getMonth() + 2
-                                 }/${ new Date().getMonth() + 2 > 12 ? new Date().getFullYear() + 1 : new Date().getFullYear() 
-                              }` }
-                              keyboardType="numeric"
-                           />
-                           
-                           <View style={ s.duoBox }>
-                              <Text style={ s.label }>Cliente</Text>
-                              <Text style={ [ s.input, { paddingTop: 18,  } ] }
-                              onPress={ () => {
-                                 setModalCustomerVisibility( !ModalCustomerVisibility );
-                              } }>
-                                 { Customer }
-                              </Text>
-                           </View>
-                           
-                           <View style={ s.duoBox }>
-                              <Text style={ s.label }>Serviços</Text>
-                              <Text style={ [ s.input, { paddingTop: 18,  } ] }
-                              onPress={ () => {
-                                 setModalServicesVisibility( !ModalServicesVisibility );
-                              } }>
-                                 { TempTotal && Str2Brl( TempTotal ) }
-                              </Text>
                            </View>
                         </Section>
 
@@ -606,7 +606,7 @@ export default function ReceiptsView( { ...props } ) {
                               <Text style={ s.dividerText }>Informaçoes adicionais</Text>
                            </View>
                            <Text style={ s.label }>Anotações</Text>
-                           <TextInput multiline={ true } style={{ backgroundColor: "#fff", borderRadius: 16, borderColor: "#7773", borderWidth: 1, height: 136, padding: 16, }}
+                           <TextInput multiline={ true } style={{ backgroundColor: "#f5f5f5", borderRadius: 16, borderColor: "#7773", borderWidth: 1, height: 136, padding: 16, }}
                            value={ Notes } onChangeText={ text => {
                               setNotes( text );
                            } }
