@@ -585,11 +585,26 @@ export default function ReceiptsView( { ...props } ) {
                            />
                            
                            <Text style={ s.label }>Garantia</Text>
-                           <TextInput style={ s.input }
+                           {/* <TextInput style={ s.input }
                               keyboardType="number-pad"
                               value={ Warranty }
                               onChangeText={ setWarranty }
                               placeholderTextColor={ "#777" }
+                           /> */}
+                           <MaskedTextInput
+                              type="date"
+                              options={ {
+                                 dateFormat: "DD/MM/YYYY",
+                              } }
+                              value={ Warranty }
+                              onChangeText={ ( text, rawText ) => {
+                                 setWarranty( text );
+                                 console.log( text );
+                                 console.log( rawText );
+                              } }
+                              style={ s.input }
+                              placeholderTextColor={ "#777" }
+                              keyboardType="numeric"
                            />
                               
                            <Text style={ s.label }>Forma de pagamento</Text>
