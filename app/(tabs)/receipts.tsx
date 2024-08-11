@@ -488,7 +488,8 @@ export default function ReceiptsView( { ...props } ) {
                                  onPress={ () => {
                                     setModalServicesVisibility( !ModalServicesVisibility );
                                  } }>
-                                    { TempTotal && Str2Brl( TempTotal ) }
+                                    {/* { TempTotal && Str2Brl( TempTotal ) } */}
+                                    { TempTotal && Service.description } 
                                  </Text>
                               </View>
 
@@ -989,7 +990,7 @@ export default function ReceiptsView( { ...props } ) {
 
          { ModalCustomerVisibility && 
             <ModalFullPage>
-               <Header style={{ backgroundColor: "#f5f5f5", elevation: 10, }}>
+               <Header style={{ backgroundColor: "#e5e5e5", }}>
                   <Content>
                      <Duo style={{ flexDirection: "row", justifyContent: "space-between", 
                         alignItems: "center",
@@ -1004,12 +1005,37 @@ export default function ReceiptsView( { ...props } ) {
                         <H4 style={{ flex: 1, textAlign: "center", }}>Catálogo de clientes</H4>
                      </Duo>
                   </Content>
-               </Header>
+               </Header> 
                <Section style={{
                   flex: 1, height: "100%",
-                  padding: 16,
+                  backgroundColor: "#e5e5e5",
                }}>
-                  <Text>Customer Modal</Text>
+                  
+                  <Section style={{ flex: 1, borderRadius: 24, overflow: "hidden", elevation: 3, }}>
+                     <ScrollView style={{ padding: 16, backgroundColor: "#f5f5f5", }}>
+                        <Section style={{  }}>
+                           <Header>
+                              <TextInput 
+                              placeholder={
+                                 `Customers`
+                              }
+                              value={ ServiceDescription } 
+                              onChangeText={ setServiceDescription }
+                              onBlur={ () => {
+                                 const bkp = { ...Service };
+                                 bkp.description = ServiceDescription;
+                                 setService( bkp );
+                              } }
+                              style={{ fontSize: 24, fontWeight: "bold", color: "#00559c", paddingLeft: 8, }}/>
+                           </Header>
+                           <Section style={{
+                              paddingTop: 24, paddingBottom: "100%",
+                           }}>
+                              {/* body */}
+                           </Section>
+                        </Section>
+                     </ScrollView>
+                  </Section>
                </Section>
             </ModalFullPage> 
          }
