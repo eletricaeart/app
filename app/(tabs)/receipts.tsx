@@ -598,9 +598,13 @@ export default function ReceiptsView( { ...props } ) {
                               } }
                               value={ Warranty }
                               onChangeText={ ( text, rawText ) => {
-                                 setWarranty( text );
+                                 const t = text.toString();
+                                 setWarranty( t );
                                  console.log( text );
                                  console.log( rawText );
+                              } }
+                              onBlur={ () => {
+                                 setWarranty( Warranty.split( "" ). );
                               } }
                               style={ s.input }
                               placeholderTextColor={ "#777" }
