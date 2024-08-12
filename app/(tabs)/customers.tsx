@@ -86,28 +86,28 @@ export function Fabb() {
            visible
            icon={open ? 'calendar-today' : 'plus'}
            actions={[
-             { icon: 'plus', onPress: () => console.log('Pressed add') },
+             { icon: 'plus', onPress: () => console.log( 'Pressed add' ) },
              {
                icon: 'star',
                label: 'Star',
-               onPress: () => console.log('Pressed star'),
+               onPress: () => console.log( 'Pressed star' ),
              },
              {
                icon: 'email',
                label: 'Email',
-               onPress: () => console.log('Pressed email'),
+               onPress: () => console.log( 'Pressed email' ),
              },
              {
                icon: 'bell',
                label: 'Remind',
-               onPress: () => console.log('Pressed notifications'),
+               onPress: () => console.log( 'Pressed notifications' ),
              },
            ]}
-           onStateChange={onStateChange}
+           onStateChange={ onStateChange }
            onPress={() => {
-             if (open) {
-               // do something if the speed dial is open
-             }
+               if( open ) {
+                  // do something if the speed dial is open
+               }
            }}
          />
        </Portal>
