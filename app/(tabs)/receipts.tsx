@@ -1015,18 +1015,9 @@ export default function ReceiptsView( { ...props } ) {
                      <ScrollView style={{ padding: 16, backgroundColor: "#f5f5f5", }}>
                         <Section style={{  }}>
                            <Header>
-                              <TextInput 
-                              placeholder={
-                                 `Customers`
-                              }
-                              value={ ServiceDescription } 
-                              onChangeText={ setServiceDescription }
-                              onBlur={ () => {
-                                 const bkp = { ...Service };
-                                 bkp.description = ServiceDescription;
-                                 setService( bkp );
-                              } }
-                              style={{ fontSize: 24, fontWeight: "bold", color: "#00559c", paddingLeft: 8, }}/>
+                              <H2 style={{ fontSize: 24, fontWeight: "bold", color: "#00559c", alignSelf: "center", }}>
+                                 Clientes
+                              </H2>
                            </Header>
                            <Section style={{
                               paddingTop: 24, paddingBottom: "100%",
