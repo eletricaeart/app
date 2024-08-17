@@ -192,8 +192,10 @@ export function UsersCard( { ...props } ) {
          padding: 16,
          borderColor: "#fc0",
          borderWidth: 0,
-         // elevation: .2,
+         elevation: 15,
+         width: "95%",
          height: 93,
+         margin: "auto",
       },
       picture: {
          aspectRatio: 1, 

@@ -40,6 +40,7 @@ import uuid from "react-native-uuid";
 import { ref, get, child, getDatabase } from "firebase/database";
 
 import useCustomersFB from "@/src/hooks/useCustomersFB";
+import { Header, T1, VSplit, } from "@/src/widgets/ui";
 
 
 
@@ -390,19 +391,18 @@ export default function CustomersView( { ...props } ) {
 
    return( <>
       <PaperProvider>
-         <LinearGradient colors={[ "#f5f5f5", "#e5e5e5", ]} style={[ { flex: 1, } ]} >
+         {/* <LinearGradient colors={[ "#f5f5f5", "#e5e5e5", ]} style={[ { flex: 1, } ]} > */}
+         <LinearGradient colors={[ "#fafafa", "#faf", ]} style={[ { flex: 1, } ]} >
             
             { Customers != null ? 
                <ScrollView style={{ flex: 1,  }}>
                   <HomePage style={{  }}>
                      <Header>
-                        <Content>
-                           <H2>Clientes</H2>
-                        </Content>
+                        <T1 style={{ color: "#daa520", }}>Clientes</T1>
                      </Header>
    
                      <Section bg="#e2f4fe00" style={{ flex: 1, paddingBottom: 75, }}>
-                        <Content style={{ gap: 16 }}>
+                        <Section style={{ gap: 16, padding: 0, }}>
    
                            { 
                               // Customers.map( customer => {
@@ -425,10 +425,12 @@ export default function CustomersView( { ...props } ) {
                                  ItemSeparatorComponent={ 
                                     () => <View style={{ height: 16, }}/>
                                  }
+                                 style={{ width: "100%",  }} 
+                                 contentContainerStyle={{ padding: 16, paddingBottom: 38, }}
                               />
                            }
                            
-                        </Content>
+                        </Section>
                      </Section>
                   </HomePage> 
                </ScrollView>
@@ -846,9 +848,6 @@ const
       width: 100%;
    `
    ,
-   Header = styled.View`
-
-   `,
    Section = styled.View``,
    Content = styled.View`
       padding: 16px;
