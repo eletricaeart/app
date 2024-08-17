@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from "react";
 
 import {
-   Header,
    PageFooter,
    BottomNavigationBar,
    Sheet,
@@ -15,6 +14,7 @@ import {
    View,
    Text,
    Image,
+   ImageBackground,
 } from "react-native";
 
 import { Appbar, } from "react-native-paper";
@@ -24,7 +24,7 @@ import {
 } from "@/src/widgets/clb-icons";
 
 import * as c from "@/src/widgets/clb-html";
-import { Tiles, Tile } from "@/src/widgets/ui";
+import { Tiles, Tile, Header, T1, VSplit, HeaderBanner, T2, T, } from "@/src/widgets/ui";
 
 const 
    items = [
@@ -41,14 +41,26 @@ export default function Home( { ...props } ) {
    const 
       [ Subtitle, setSubtitle ] = useState( "" )
    ;
- 
 
    return( <>
       <Sheet 
          style={{ backgroundColor: "#fafafa", 
             // alignItems: "center", justifyContent: "center",
-         }}>
-         <Text>Home (tabs)</Text>
+         }}
+      >
+         <HeaderBanner >
+            <Image source={ require( "@/src/images/EA/HeaderBannerBP.png" ) } resizeMode="contain" 
+               style={{ width: "100%", height: "100%", }}
+            />
+            <Header style={{ position: "absolute", }}>
+               <T1 style={{ color: "#eee", }}>Olá Rafael</T1>
+               <T style={{ color: "#ddd", }}>Tudo bem!?</T>
+            </Header>
+         </HeaderBanner>
+         <Header>
+            <T1 style={{ color: "#daa520", }}>Home (tabs)</T1>
+         </Header>
+         <VSplit />
          <Tiles>
             {
                items.map( item => {

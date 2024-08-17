@@ -156,17 +156,12 @@ export default function Index() {
       { !User ? 
       (
          <View style={ s.root } >
-            {/* <ImageBackground source={ require( "@/src/images/bgs/1wNXXu1b.jpeg" ) } resizeMode="cover" style={ s.bgImage }> */}
-            {/* <ImageBackground source={ require( "@/src/images/bgs/Dark Phone Wallpapers.jpeg" ) } resizeMode="cover" style={ s.bgImage }> */}
-            {/* <ImageBackground source={ require( "@/src/images/bgs/F8Sesbci.jpeg" ) } resizeMode="cover" style={ s.bgImage }> */}
-            {/* <ImageBackground source={ require( "@/src/images/bgs/tAeAw3a7.jpeg" ) } resizeMode="cover" style={ s.bgImage }> */}
-            {/* <ImageBackground source={ require( "@/src/images/bgs/1wNXXu1b.jpeg" ) } resizeMode="cover" style={ s.bgImage }> */}
-            <ImageBackground source={ require( "@/src/images/bgs/1wNXXu1sdv.png" ) } resizeMode="cover" style={ s.bgImage }>
+            <ImageBackground source={ require( "@/src/images/bgs/splash-login-720x1600.png" ) } resizeMode="cover" style={ s.bgImage }>
                <KeyboardAvoidingView behavior="padding" style={ [ s.root, { width: "100%", backgroundColor: "#fc0fc000", alignItems: "center", justifyContent: "flex-start", } ]}>
 
-                  <View  style={{ backgroundColor: "#fc00", width: "100%", height: "25%", alignItems: "center", justifyContent: "center", marginTop: 56, marginBottom: 56, }}>
-                     {/* <Image source={ require( "@/src/images/EA/EA-login-logo.png" ) } style={ { width: "40%", resizeMode: "contain", } }/> */}
-                     {/* <Image source={ require( "@/src/images/EA/EA logo 123.png" ) } style={ { width: "90%", resizeMode: "contain", } }/> */}
+                  <View style={{ backgroundColor: "#27f7", width: "100%", height: "25%", alignItems: "center", justifyContent: "center", marginTop: 56, marginBottom: 56,
+                     padding: 0,borderRadius: 1000, aspectRatio: 1, elevation: 15,
+                   }}>
                      <Image source={ require( "@/src/images/EA/globo-de-plasma-700.png" ) } style={ { height: "100%", resizeMode: "contain", } }/>
                   </View>
                

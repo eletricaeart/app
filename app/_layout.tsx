@@ -61,7 +61,6 @@ export default function RootLayout() {
       <Stack screenOptions={ { ...stack_screenOptions } } >
          <Stack.Screen name="(auth)" options={ { ...screen_auth_options } } />
          <Stack.Screen name="(tabs)" options={ { ...screen_tabs_options } } />
-         <Stack.Screen name="home" options={ { ...screen_tabs_options } } />
          <Stack.Screen name="index" options={ { ...screen_00_options } } />
          <Stack.Screen name="+not-found" />
       </Stack>
@@ -93,7 +92,7 @@ const
    screen_00_options = {
       // headerTitle: "Eletrica & Art",
       headerShown: false,
-      // statusBarColor: "#1b1d22",
+      statusBarColor: "#1b1d22",
    },
    screen_auth_options = {
       statusBarColor: "#16181c",
