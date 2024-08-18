@@ -64,7 +64,13 @@ export default function Home( { ...props } ) {
          <Tiles>
             {
                items.map( item => {
-                  return( <Tile key={ item.id }>
+                  return( <Tile key={ item.id } style={{ 
+                     // shadowOffset: { width: 2, height: 5 }, 
+                     // shadowOpacity: .5, 
+                     // shadowRadius: 15, 
+                     // shadowColor: "#0009",
+                     // elevation: 15, 
+                     }}>
                      <Text style={{ fontSize: 22, color: "#333", fontWeight: 800, }}>{ item.name }</Text>
                      <Text style={{ fontSize: 18, color: "#fc0fc0", }}>{ item.id }</Text>
                      <Text style={{ fontSize: 14, color: "#777", }}>{ item.src }</Text>

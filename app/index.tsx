@@ -28,7 +28,7 @@ import { colors } from "@/src/widgets/clb-colors";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { FirebaseApp, FirebaseAuth,  } from "@/FirebaseConfig";
+import { FirebaseApp, FirebaseAuth, SaveDataOnFbRDB,  } from "@/FirebaseConfig";
 import { 
    signInWithEmailAndPassword, 
    createUserWithEmailAndPassword,
@@ -49,6 +49,8 @@ export default function Index() {
       // bgImage = require( "@/src/images/bgs/bg_09.jpeg" )
       // ,
       [ User, setUser ] = useState<User | null>( null )
+      ,
+      [ Name, setName ] = useState( "" )
       ,
       [ Email, setEmail ] = useState( "" )
       ,
@@ -93,22 +95,70 @@ export default function Index() {
          }
       }
       ,
+      // SignUp = async () => {
+      //    setLoading( true );
+      //    try {
+      //       const 
+      //          response = await createUserWithEmailAndPassword( auth, Email, Password )
+      //          ,
+      //          userUid = await response.user.uid
+      //       ;
+
+      //       console.log( "SigUp() response: \n\n\n", response );
+      //       alert( userUid );
+      //    }
+      //    catch( err: any ) {
+      //       console.log( "SignUp() err: \n\n\n", err );
+      //       alert( `Deu ruim no cadastro!\n\ncódigo do erro: ${ err.code }\n${ err.message }` );
+      //    }
+      //    finally {
+      //       setLoading( false );
+      //    }
+      // }
       SignUp = async () => {
          setLoading( true );
-         try {
-            const 
-               response = await createUserWithEmailAndPassword( auth, Email, Password )
-            ;
+         async function Handle() {
+            try {
+               const 
+                  response = await createUserWithEmailAndPassword( auth, Email, Password )
+                  ,
+                  userUid = response.user.uid
+               ;
 
-            console.log( "SigUp() response: \n\n\n", response );
+               console.log( "SigUp() response: \n\n\n", response );
+               
+               return response;
+            }
+            catch( err: any ) {
+               console.log( "SignUp() err: \n\n\n", err );
+               alert( `Deu ruim no cadastro!\n\ncódigo do erro: ${ err.code }\n${ err.message }` );
+            }
+            finally {
+               setLoading( false );
+            }
          }
-         catch( err: any ) {
-            console.log( "SignUp() err: \n\n\n", err );
-            alert( `Deu ruim no cadastro!\n\ncódigo do erro: ${ err.code }\n${ err.message }` );
-         }
-         finally {
-            setLoading( false );
-         }
+         Handle().then( value => {
+            async function CreateUserSpace() {
+               const 
+                  userData = {
+                     name: Name,
+                     uid: value?.user.uid,
+                  }
+                  ,
+                  userReady = JSON.stringify( userData )
+               ;
+               SaveDataOnFbRDB( {
+                  ref: `users/${ value.user.uid }/name`,
+                  data: Name,
+               } );
+               SaveDataOnFbRDB( {
+                  ref: `users/${ value.user.uid }/uid`,
+                  data: value?.user.uid,
+               } );
+               await CStore.StoreData( userReady, "user" );
+            }
+            CreateUserSpace();
+         } );
       }
       ,
       SaveUser2DBs = async () => {
@@ -157,21 +207,31 @@ export default function Index() {
       (
          <View style={ s.root } >
             <ImageBackground source={ require( "@/src/images/bgs/splash-login-720x1600.png" ) } resizeMode="cover" style={ s.bgImage }>
-               <KeyboardAvoidingView behavior="padding" style={ [ s.root, { width: "100%", backgroundColor: "#fc0fc000", alignItems: "center", justifyContent: "flex-start", } ]}>
-
+               <View behavior="padding" style={ [ s.root, { width: "100%", backgroundColor: "#fc0fc000", alignItems: "center", justifyContent: "flex-start", } ]}>
                   <View style={{ backgroundColor: "#27f7", width: "100%", height: "25%", alignItems: "center", justifyContent: "center", marginTop: 56, marginBottom: 56,
                      padding: 0,borderRadius: 1000, aspectRatio: 1, elevation: 15,
                    }}>
                      <Image source={ require( "@/src/images/EA/globo-de-plasma-700.png" ) } style={ { height: "100%", resizeMode: "contain", } }/>
                   </View>
+
                
                   {/* <Text style={ s.tt }>
                      { IsLogin ? "Entre" : "Cadastre-se" }
                   </Text> */}
 
                {/* <BlurView intensity={ 30 } style={ s.formBlur }> */}
-                  <View style={[ s.form, { backgroundColor: "#fff5", borderColor: "#fff", borderWidth: 2, } ]}>
+                  <KeyboardAvoidingView behavior="position" style={[ s.form, { backgroundColor: "#fff5", borderColor: "#fff", borderWidth: 2, } ]}>
 
+                     <View style={ s.Label }>
+                        <Text style={ s.label }>Nome</Text>
+                        <TextInput 
+                        style={ s.input }
+                        placeholder="Nome"
+                        value={ Name }
+                        onChangeText={ ( text ) => setName( text ) }
+                        keyboardType="default"
+                        />
+                     </View>
                      <View style={ s.Label }>
                         <Text style={ s.label }>Email</Text>
                         <TextInput 
@@ -194,7 +254,7 @@ export default function Index() {
 
                         />
                      </View>
-                  </View> 
+                  </KeyboardAvoidingView> 
 
                {/* </BlurView> */}
                   <View style={ s.footer }>
@@ -225,7 +285,7 @@ export default function Index() {
                            </> )
                      }
                   </View>
-               </KeyboardAvoidingView>
+               </View>
             </ImageBackground>
          </View>
       )

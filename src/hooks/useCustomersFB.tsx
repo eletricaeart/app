@@ -3,6 +3,8 @@
 import { useState, useEffect, SetStateAction, } from "react";
 import { get, child, ref,getDatabase, } from "firebase/database";
 
+import * as CStore from "@/src/widgets/clb-dbs";
+
 
 export default function useCustomersFB( { ...props } ) {
    const 
@@ -18,7 +20,10 @@ export default function useCustomersFB( { ...props } ) {
    useEffect( () => {
       async function FetchData() {
          try {
-            await get( child( ref( getDatabase() ), props.path || "customers" ) )
+            const 
+               userInfo = await CStore.GetObjData( "user" )
+            ;
+            await get( child( ref( getDatabase() ), props.path || `users/${ userInfo.uid }/customers` ) )
             .then(
                dataList => { 
                   const 

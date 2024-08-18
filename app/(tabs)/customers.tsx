@@ -40,7 +40,14 @@ import uuid from "react-native-uuid";
 import { ref, get, child, getDatabase } from "firebase/database";
 
 import useCustomersFB from "@/src/hooks/useCustomersFB";
-import { Header, T1, VSplit, } from "@/src/widgets/ui";
+import { 
+   Header, VSplit, 
+   Section, Content,
+   Center, Centered, 
+   Card, BackSheet, 
+   Duo, H1, H2, H3, H4, H5, H6,
+   TT, T, T1, T2, Homepage, P, PP, 
+} from "@/src/widgets/ui";
 
 
 
@@ -121,6 +128,8 @@ export function Fabb() {
 == == == == == == == == == */
 export default function CustomersView( { ...props } ) {
    const 
+      user = CStore.GetObjData( "user" )
+      ,
       { CustomersFB, Loading } = useCustomersFB({})
       ,
       [ Customers, setCustomers ] = useState( [] )
@@ -158,7 +167,7 @@ export default function CustomersView( { ...props } ) {
 
    async function UpdateCustomersBase() {
       try {
-         let 
+         let // here
             tempCustomersFB = CustomersFB
             ,
             tempCustomersFBJson = JSON.stringify( CustomersFB )
@@ -194,6 +203,9 @@ export default function CustomersView( { ...props } ) {
    
    
    async function RegisterCustomerOnBase( props ) {
+      const 
+         userInfo = await CStore.GetObjData( "user" )
+      ;
       id_form.current.focus() && 
       Keyboard.dismiss();
       if( Name != "" ) {
@@ -211,8 +223,8 @@ export default function CustomersView( { ...props } ) {
             SetCustomers();
          } );
 
-         SaveDataOnFbRDB( {
-            ref: `customers/${ props.object.id }`,
+         SaveDataOnFbRDB( { 
+            ref: `users/${ userInfo.uid }/customers/${ props.object.id }`,
             data: props.object,
             okMsg: "Enviado pra nuvem!",
             errMsg: "Deu ruim no envio mano!"
@@ -396,7 +408,7 @@ export default function CustomersView( { ...props } ) {
             
             { Customers != null ? 
                <ScrollView style={{ flex: 1,  }}>
-                  <HomePage style={{  }}>
+                  <Homepage style={{  }}>
                      <Header>
                         <T1 style={{ color: "#daa520", }}>Clientes</T1>
                      </Header>
@@ -432,7 +444,7 @@ export default function CustomersView( { ...props } ) {
                            
                         </Section>
                      </Section>
-                  </HomePage> 
+                  </Homepage> 
                </ScrollView>
                : 
                <View style={{ flex: 1, }}>
@@ -842,122 +854,3 @@ const s = StyleSheet.create( {
 } );
 
 
-const 
-   HomePage = styled.View`
-      flex: 1;
-      width: 100%;
-   `
-   ,
-   Section = styled.View``,
-   Content = styled.View`
-      padding: 16px;
-   `,
-   Center = styled.View`
-      align-items: center;
-      justify-content: center;
-   `,
-   Centered = styled.View`
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-   `,
-   Duo = styled.View`
-      flex-direction: "row";
-      gap: 8;
-   `
-   ,
-   BackSheet = styled.View`
-      background-color: #959595;
-      border-top-right-radius: 24;
-      border-top-left-radius: 24;
-      width: 90%;
-      height: 15;
-      margin-top: 10;
-      align-self: center;
-   `
-   ,
-
-   /** == == == [ text ] 
-    * 
-    * == == == == == == == == == */
-   TT = styled.Text`
-      margin: 0;
-      padding: 0;
-      font-size: 32;
-      font-weight: bold;
-      color: #333;
-   `,
-   H1 = styled.Text`
-      margin: 0;
-      padding: 0;
-      font-size: 32;
-      font-weight: bold;
-      color: #333;
-   `,
-   H2 = styled.Text`
-      margin: 0;
-      padding: 0;
-      font-size: 24;
-      font-weight: bold;
-      color: #333;
-   `,
-   H3 = styled.Text`
-      margin: 0;
-      padding: 0;
-      font-size: 20px;
-      font-weight: bold;
-      color: #333;
-   `,
-   H4 = styled.Text`
-      margin: 0;
-      padding: 0;
-      font-size: 18;
-      font-weight: bold;
-      color: #333;
-   `,
-   H5 = styled.Text`
-      margin: 0;
-      padding: 0;
-      font-size: 14;
-      font-weight: bold;
-      color: #333;
-   `,
-   H6 = styled.Text`
-      margin: 0;
-      padding: 0;
-      font-size: 12;
-      font-weight: bold;
-      color: #333;
-   `,
-
-   T = styled.Text`
-      margin: 0;
-      padding: 0;
-      font-size: 16;
-      font-weight: bold;
-      color: #333;
-   `,
-   P = styled.Text`
-      margin: 0;
-      padding: 0;
-      font-size: 16;
-      font-weight: bold;
-      color: #333;
-   `,
-   PP = styled.Text`
-      margin: 0;
-      padding: 0;
-      font-size: 12;
-      font-weight: bold;
-      color: #333;
-   `,
-
-
-   /** == [ card ] 
-    * 
-    * == == == == == == == == == */
-   Card = styled.View`
-      border-radius: 24px;
-      overflow: hidden;
-   `
-;
