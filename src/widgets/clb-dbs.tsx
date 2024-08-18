@@ -91,3 +91,14 @@ export async function GetObjData( dbs_name: string ) {
 };
 
 
+ /* Delete value
+  */
+export async function DeleteData( dbs_name: string ) {
+   try {
+      AsyncStorage.removeItem( dbs_name );
+   } catch( err ) {
+   // error reading value
+   }
+};
+
+

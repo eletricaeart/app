@@ -15,6 +15,7 @@ import {
    Text,
    Image,
    ImageBackground,
+   ActivityIndicator,
 } from "react-native";
 
 import { Appbar, } from "react-native-paper";
@@ -26,6 +27,7 @@ import {
 import * as c from "@/src/widgets/clb-html";
 import { Tiles, Tile, Header, T1, VSplit, HeaderBanner, T2, T, } from "@/src/widgets/ui";
 import { GetObjData, } from "@/src/widgets/clb-dbs";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 const 
@@ -43,19 +45,42 @@ export default function Home( { ...props } ) {
    const 
       [ Subtitle, setSubtitle ] = useState( "" )
       ,
-      [ User, setUser ] = useState( {} )
+      [ User, setUser ] = useState( GetObjData( "user" ) )
+      ,
+      [ Loading, setLoading ] = useState( false )
    ;
 
+   async function FetchLocalUser() {
+      try {
+         const 
+            data = await AsyncStorage.getItem( "user" )
+            ,
+            jsonData = await JSON.parse( data )
+         ;
+         return jsonData;
+      } catch( err: any ) {
+         console.error( "FetchLocalUser() err: \n\n\n", err );
+      }
+   }
+
+   async function SetUser() {
+      try {
+         await FetchLocalUser().then(
+            returned => setUser( returned )
+         );
+      } catch( err: any ) {
+         console.error( "SetUser() err: \n\n\n", err );
+      }
+   }
+
+
    useEffect( () => {
-      GetObjData( "user" ).then( user => {
-         setUser( user );
-      } ); 
+      SetUser();
    }, [] );
 
    return( <>
       <Sheet 
          style={{ backgroundColor: "#fafafa", 
-            // alignItems: "center", justifyContent: "center",
          }}
       >
          <HeaderBanner >
@@ -63,7 +88,9 @@ export default function Home( { ...props } ) {
                style={{ width: "100%", height: "100%", }}
             />
             <Header style={{ position: "absolute", }}>
-               <T1 style={{ color: "#eee", }}>Olá { User && User.name }</T1>
+               <T1 style={{ color: "#eee", }}>
+                  Olá { User && User.name }
+               </T1>
                <T style={{ color: "#ddd", }}>Tudo bem!?</T>
             </Header>
          </HeaderBanner>
@@ -74,13 +101,7 @@ export default function Home( { ...props } ) {
          <Tiles>
             {
                items.map( item => {
-                  return( <Tile key={ item.id } style={{ 
-                     // shadowOffset: { width: 2, height: 5 }, 
-                     // shadowOpacity: .5, 
-                     // shadowRadius: 15, 
-                     // shadowColor: "#0009",
-                     // elevation: 15, 
-                     }}>
+                  return( <Tile key={ item.id }>
                      <Text style={{ fontSize: 22, color: "#333", fontWeight: 800, }}>{ item.name }</Text>
                      <Text style={{ fontSize: 18, color: "#fc0fc0", }}>{ item.id }</Text>
                      <Text style={{ fontSize: 14, color: "#777", }}>{ item.src }</Text>

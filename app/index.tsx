@@ -76,6 +76,8 @@ export default function Index() {
          let userCredential = {};
          const userInfo = {};
 
+         await CStore.DeleteData( "user" );
+
          setLoading( true );
          async function Handle() {
             try {
