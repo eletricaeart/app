@@ -30,17 +30,6 @@ import { GetObjData, } from "@/src/widgets/clb-dbs";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
-const 
-   items = [
-      { id: 1, name: "Google", src: "https://google.com" }
-      ,
-      { id: 2, name: "Facebook", src: "https://facebook.com" }
-      ,
-      { id: 3, name: "YouTube", src: "https://youtube.com" }
-   ]
-;
-
-
 export default function Home( { ...props } ) {
    const 
       [ Subtitle, setSubtitle ] = useState( "" )
@@ -92,20 +81,9 @@ export default function Home( { ...props } ) {
             </Header>
          </HeaderBanner>
          <Header>
-            <T1 style={{ color: "#daa520", }}>Home (tabs)</T1>
+            <T1 style={{ color: "#daa520", }}>Cliente</T1>
          </Header>
          <VSplit />
-         <Tiles>
-            {
-               items.map( item => {
-                  return( <Tile key={ item.id }>
-                     <Text style={{ fontSize: 22, color: "#333", fontWeight: 800, }}>{ item.name }</Text>
-                     <Text style={{ fontSize: 18, color: "#fc0fc0", }}>{ item.id }</Text>
-                     <Text style={{ fontSize: 14, color: "#777", }}>{ item.src }</Text>
-                  </Tile> );
-               } )
-            }
-         </Tiles>
       </Sheet>
    </> );
 }

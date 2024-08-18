@@ -162,7 +162,7 @@ export const
       background: #FFF;
       border-radius: 22px;
       box-shadow: #7777 2px 5px 15px;
-      padding: 8px;
+      padding: 16px;
       flex: 0 0 47.5%;
       aspect-ratio: 1 / .8 !important;
       elevation: 15;

@@ -239,11 +239,6 @@ export default function CustomersView( { ...props } ) {
 
    useEffect( () => {
       SetCustomers();
-
-      // GetFBData( { 
-      //    ref: "customers/c:32-904/name",
-      //    putValueOn: setClientes
-      // } );
    }, [] ); 
    
 

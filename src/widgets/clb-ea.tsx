@@ -10,6 +10,7 @@ import {
    Image,
    Button,
    Dimensions,
+   Pressable,
 } from "react-native";
 
 import {
@@ -20,6 +21,7 @@ import * as c from "./clb-html";
 import * as Colores from "@/src/widgets/clb-colors";
 
 import { Icon } from "./clb-icons";
+import { Link } from "@react-navigation/native";
 
 
 
@@ -230,18 +232,33 @@ export function UsersCard( { ...props } ) {
       <View style={[ s.card, props.style ]}>
 
          <View style={[ s.picture ]}>
-            <Image source={ profile } style={[ s.img ]} resizeMode="contain"/>
+            <Pressable style={[ s.picture ]} onPress={ () => {
+               alert( "foto" );
+            } }>
+               <Image source={ profile } style={[ s.img ]} resizeMode="contain"/>
+            </Pressable>
          </View>
 
          <View style={ s.customerInfo }>
-            {/* <c.H4>Anselmo Sammarco Nunes</c.H4> */}
-            <c.H4 color="#242526">{ name }</c.H4>
-            {/* <c.T>(13) 99148-6078</c.T> */}
-            <c.T color="#777">{ tel }</c.T>
+            <Pressable onPress={ () => {
+               const data = {
+
+               };
+               <Link href={ "/customer" }/>
+            } }>
+               {/* <c.H4>Anselmo Sammarco Nunes</c.H4> */}
+               <c.H4 color="#242526">{ name }</c.H4>
+               {/* <c.T>(13) 99148-6078</c.T> */}
+               <c.T color="#777">{ tel }</c.T>
+            </Pressable>   
          </View>
 
          <View style={ s.sideBtn }>
-            <Icon i="mc" name="dots-vertical" color="#777"/>
+            <Pressable onPress={ () => {
+               alert( props.name || "menu" );
+            } }>
+               <Icon i="mc" name="dots-vertical" color="#777"/>
+            </Pressable>
          </View>
 
       </View>

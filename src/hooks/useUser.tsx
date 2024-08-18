@@ -1,7 +1,36 @@
 
 
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useState, useEffect } from "react";
-import { fetchUser } from "../lib/api";
+// import { fetchUser } from "../lib/api";
+
+
+async function FetchUser( userId: string ) {
+
+}
+
+async function FetchLocalUser() {
+   try {
+      const 
+         data = await AsyncStorage.getItem( "user" )
+         ,
+         jsonData = await JSON.parse( data )
+      ;
+      return jsonData;
+   } catch( err: any ) {
+      console.error( "FetchLocalUser() err: \n\n\n", err );
+   }
+}
+
+async function SetUser() {
+   try {
+      await FetchLocalUser().then(
+         returned => setUser( returned )
+      );
+   } catch( err: any ) {
+      console.error( "SetUser() err: \n\n\n", err );
+   }
+}
 
 export function useUser( userId: string ) {
    const 
@@ -11,10 +40,9 @@ export function useUser( userId: string ) {
   ;
 
    useEffect( () => {
-      fetchUser( userId )
-      .then( userData => {
+      FetchUser( userId ).then( userData => {
          setUser( userData );
-         setLoading( false);
+         setLoading( false );
    } );
    }, [ userId ] );
 
