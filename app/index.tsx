@@ -14,6 +14,15 @@ import {
    Image,
 } from "react-native";
 
+import {
+   Btn,
+   Content,
+   Input,
+   Label, LabelText,
+   Section,
+   T2,
+} from "@/src/widgets/ui";
+
 import { BlurView } from 'expo-blur';
 
 
@@ -42,6 +51,7 @@ import { firebase } from "@react-native-firebase/database";
 import {
    BtnSquare01,
 } from "@/src/widgets/clb-svg";
+import { get, child, ref, getDatabase } from "firebase/database";
 
 
 export default function Index() {
@@ -64,57 +74,58 @@ export default function Index() {
       ,
       SignIn = async () => {
          let userCredential = {};
+         const userInfo = {};
 
          setLoading( true );
-         try {
-            const 
-               response = await signInWithEmailAndPassword( auth, Email, Password )
-            ;
+         async function Handle() {
+            try {
+               const 
+                  response = await signInWithEmailAndPassword( auth, Email, Password )
+                  ,
+                  userUid = response.user.uid
+               ;
 
-            console.log( "SigIn() response: \n\n\n", response );
-            userCredential = { ...response };
-         }
-         catch( err: any ) {
-            console.log( "SignIn() catch err: \n\n\n", err );
-            alert(
-               `Não consegui fazer seu login!\naconteceu esse erro aqui: \n${ err.message }`
-            );
-         }
-         finally {
-            console.log( `finally UserCredential: \n\n\n`, userCredential );
+               console.log( "SigIn() response: \n\n\n", response );
+               userCredential = { ...response };
 
-            if( User ) {
-               const json = JSON.stringify( User );
-               await AsyncStorage.setItem( "User", json );   
-               
-            } else {
-               console.log( "{ empty }" );
+               return response;
             }
+            catch( err: any ) {
+               console.log( "SignIn() catch err: \n\n\n", err );
+               alert(
+                  `Não consegui fazer seu login!\naconteceu esse erro aqui: \n${ err.message }`
+               );
+            }
+            finally {
+               console.log( `finally UserCredential: \n\n\n`, userCredential );
 
-            setLoading( false );
+               if( User ) {
+                  const json = JSON.stringify( User );
+                  await AsyncStorage.setItem( "User", json );   
+                  
+               } else {
+                  console.log( "{ empty }" );
+               }
+
+               setLoading( false );
+            }
          }
+         Handle().then( value => {
+            async function CreateUserSpace() {
+               const 
+                  userData = {
+                     name: await get( child( ref( getDatabase() ), `users/${ value?.user.uid }/name` ) ),
+                     uid: value?.user.uid,
+                  }
+                  ,
+                  userReady = JSON.stringify( userData )
+               ;
+               await CStore.StoreData( userReady, "user" );
+            }
+            CreateUserSpace();
+         } );
       }
       ,
-      // SignUp = async () => {
-      //    setLoading( true );
-      //    try {
-      //       const 
-      //          response = await createUserWithEmailAndPassword( auth, Email, Password )
-      //          ,
-      //          userUid = await response.user.uid
-      //       ;
-
-      //       console.log( "SigUp() response: \n\n\n", response );
-      //       alert( userUid );
-      //    }
-      //    catch( err: any ) {
-      //       console.log( "SignUp() err: \n\n\n", err );
-      //       alert( `Deu ruim no cadastro!\n\ncódigo do erro: ${ err.code }\n${ err.message }` );
-      //    }
-      //    finally {
-      //       setLoading( false );
-      //    }
-      // }
       SignUp = async () => {
          setLoading( true );
          async function Handle() {
@@ -181,6 +192,27 @@ export default function Index() {
 
 
 
+   async function FetchData( userUid: string ) {
+      try {
+         const 
+            userInfo = {}
+         ;
+         await get( child( ref( getDatabase() ), `users/${ userUid }/name` ) )
+         .then(
+            name => { 
+               // userInfo.name = name
+               // setCustomersFB( list );
+               // setLoading( false );
+               return name;
+            }
+         );
+      } catch( err: any ) {
+         alert( `Deu ruim no FetchData() err: \ncode: ${err.code} \nmsg: ${err.message}` );
+      }
+   }
+
+
+
 
    useEffect( () => {
       onAuthStateChanged( FirebaseAuth, User => {
@@ -220,40 +252,45 @@ export default function Index() {
                   </Text> */}
 
                {/* <BlurView intensity={ 30 } style={ s.formBlur }> */}
-                  <KeyboardAvoidingView behavior="position" style={[ s.form, { backgroundColor: "#fff5", borderColor: "#fff", borderWidth: 2, } ]}>
+                  <KeyboardAvoidingView behavior="position" 
+                  style={[ 
+                     // s.form, 
+                     { width: "80%",
+                        // backgroundColor: "#fff5", borderColor: "#fff", borderWidth: 2, 
+                     } 
+                  ]}>
 
-                     <View style={ s.Label }>
-                        <Text style={ s.label }>Nome</Text>
-                        <TextInput 
-                        style={ s.input }
+                     <Label>
+                        <LabelText>Nome</LabelText>
+                        <Input 
                         placeholder="Nome"
                         value={ Name }
                         onChangeText={ ( text ) => setName( text ) }
                         keyboardType="default"
+                        cursorColor={ "#00559C" }
                         />
-                     </View>
-                     <View style={ s.Label }>
-                        <Text style={ s.label }>Email</Text>
-                        <TextInput 
-                        style={ s.input }
+                     </Label>
+                     <Label>
+                        <LabelText>Email</LabelText>
+                        <Input 
                         placeholder="Email"
                         value={ Email }
                         onChangeText={ ( text ) => setEmail( text ) }
                         keyboardType="email-address"
+                        cursorColor={ "#00559C" }
                         />
-                     </View>
-                     <View style={ s.Label }>
-                        <Text style={ s.label }>Password</Text>
-                        <TextInput 
-                        style={ s.input }
+                     </Label>
+                     <Label>
+                        <LabelText>Password</LabelText>
+                        <Input 
                         placeholder="Password"
                         secureTextEntry={ true }
                         value={ Password }
                         onChangeText={ ( text ) => setPassword( text ) }
                         keyboardType="default"
-
+                        cursorColor={ "#00559C" }
                         />
-                     </View>
+                     </Label>
                   </KeyboardAvoidingView> 
 
                {/* </BlurView> */}
@@ -264,25 +301,25 @@ export default function Index() {
                            size="large" color="#00559c"
                            /> )
                            : 
-                           ( <>
+                           ( <Section style={{ gap: 16, width: "80%", }}>
                            
                               <Pressable style={{ elevation: 10, width: "100%", }} onPress={ SignIn }>
-                                 <BtnSquare01 fill="#00559c" bg="#fff0">
-                                    <Text style={{ fontSize: 18, fontWeight: "bold", color: "#fff", }}>
+                                 <Btn style={{ backgroundColor: "#00559c", }}>
+                                    <T2 style={{ color: "#eee", }}>
                                        Acessar sua conta
-                                    </Text>
-                                 </BtnSquare01> 
+                                    </T2>
+                                 </Btn> 
                               </Pressable>
 
                               <Pressable style={{ elevation: 10, width: "100%", }} onPress={ SignUp }>
-                                 <BtnSquare01 fill={ colors.blue2 } bg="#fff0">
-                                    <Text style={{ fontSize: 18, fontWeight: "bold", color: "#fff",  }}>
+                                 <Btn>
+                                    <T2 style={{ color: "#00559C", }}>
                                        Criar uma conta
-                                    </Text>
-                                 </BtnSquare01> 
+                                    </T2>
+                                 </Btn> 
                               </Pressable>
 
-                           </> )
+                           </Section> )
                      }
                   </View>
                </View>
@@ -338,7 +375,8 @@ const
          // color: "#160767",
          color: "#fff",
          fontWeight: "bold",
-         paddingLeft: 14,
+         // paddingLeft: 14,
+         paddingLeft: 6,
       },
       input: {
          borderRadius: 13,

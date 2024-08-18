@@ -116,6 +116,7 @@ export const
    Section = styled.View``
    ,
    Content = styled.View`
+      width: 100%;
       padding: 16px;
    `
    ,
@@ -196,4 +197,42 @@ export const
       padding: .5px;
       width: 90%;
    `
+   ,
+
+
+   // Form == == == 
+   Label = styled.View`
+      padding: 8px 16px 8px 16px;
+      gap: 6px;
+   `
+   ,
+   LabelText = styled.Text`
+      font-size: 16px;
+      color: #212329;
+      font-weight: bold;
+      padding-left: 6px;
+   `
+   ,
+   Input = styled.TextInput`
+      border-radius: 13px;
+      background: #f5f5f5;
+      border-color: #7777;
+      border-width: 1px;
+      padding: 8px 14px;
+      color: #000;
+   `
+   ,
+   Btn = styled.View`
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      border-radius: 13px;
+      background: #009ee6;
+      border-color: #7777;
+      border-width: 1px;
+      padding: 8px 14px;
+      color: #00559C;
+      elevation: 3;
+   `
+   
 ;

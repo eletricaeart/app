@@ -25,6 +25,8 @@ import {
 
 import * as c from "@/src/widgets/clb-html";
 import { Tiles, Tile, Header, T1, VSplit, HeaderBanner, T2, T, } from "@/src/widgets/ui";
+import { GetObjData, } from "@/src/widgets/clb-dbs";
+
 
 const 
    items = [
@@ -40,7 +42,15 @@ const
 export default function Home( { ...props } ) {
    const 
       [ Subtitle, setSubtitle ] = useState( "" )
+      ,
+      [ User, setUser ] = useState( {} )
    ;
+
+   useEffect( () => {
+      GetObjData( "user" ).then( user => {
+         setUser( user );
+      } ); 
+   }, [] );
 
    return( <>
       <Sheet 
@@ -53,7 +63,7 @@ export default function Home( { ...props } ) {
                style={{ width: "100%", height: "100%", }}
             />
             <Header style={{ position: "absolute", }}>
-               <T1 style={{ color: "#eee", }}>Olá Rafael</T1>
+               <T1 style={{ color: "#eee", }}>Olá { User && User.name }</T1>
                <T style={{ color: "#ddd", }}>Tudo bem!?</T>
             </Header>
          </HeaderBanner>
