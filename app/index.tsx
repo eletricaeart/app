@@ -242,8 +242,8 @@ export default function Index() {
          <View style={ s.root } >
             <ImageBackground source={ require( "@/src/images/bgs/splash-login-720x1600.png" ) } resizeMode="cover" style={ s.bgImage }>
                <View behavior="padding" style={ [ s.root, { width: "100%", backgroundColor: "#fc0fc000", alignItems: "center", justifyContent: "flex-start", } ]}>
-                  <View style={{ backgroundColor: "#27f7", width: "100%", height: "25%", alignItems: "center", justifyContent: "center", marginTop: 56, marginBottom: 56,
-                     padding: 0,borderRadius: 1000, aspectRatio: 1, elevation: 15,
+                  <View style={{ backgroundColor: "#27f7", height: "25%", aspectRatio: 1, alignItems: "center", justifyContent: "center", marginTop: 56, marginBottom: 56,
+                     padding: 0,borderRadius: 1000, elevation: 15,
                    }}>
                      <Image source={ require( "@/src/images/EA/globo-de-plasma-700.png" ) } style={ { height: "100%", resizeMode: "contain", } }/>
                   </View>
