@@ -575,7 +575,6 @@ export default function CustomersView( { ...props } ) {
                                     </View>
                                  </View>
                               </c.Section>
-
                               <c.Section endereço section>
                                  <View style={ s.divider }>
                                     <Text style={ s.dividerText }>ENDEREÇO</Text>
@@ -641,7 +640,6 @@ export default function CustomersView( { ...props } ) {
                                     onChangeText={ setCity }
                                  />
                               </c.Section>
-
                               <c.Section observações section>
                                  <View style={ s.divider }>
                                     <Text style={ s.dividerText }>OBSERVAÇÕES</Text>
@@ -657,7 +655,6 @@ export default function CustomersView( { ...props } ) {
                                  marginTop: 24,
                                  marginBottom: 66,
                               } }>
-
                                  <Touch 
                                     txt="apagar tudo"
                                     onPressIn={ () => { Keyboard.dismiss() } }
@@ -686,7 +683,6 @@ export default function CustomersView( { ...props } ) {
                                     txt="cadastrar"
                                     onPress={ () => { RegisterCustomerOnBase( { dbs_name: "customers", object: customersList } ) } }
                                  />
-
                               </c.Section>
                               
                            </View>
@@ -715,7 +711,6 @@ export default function CustomersView( { ...props } ) {
            open={open}
            visible
            backdropColor="#fffb"
-
            fabStyle={{ backgroundColor: "#00559c", }}
            icon={open ? 'atom' : 'plus'}
            actions={[
