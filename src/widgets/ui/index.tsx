@@ -226,7 +226,9 @@ export const
       align-items: center;
       justify-content: center;
       text-align: center;
-      border-radius: 13px;
+      /* border-radius: 13px; */
+      /* border-radius: 9px; */
+      border-radius: 20px;
       background: #009ee6;
       border-color: #7777;
       border-width: 1px;

@@ -263,7 +263,7 @@ export default function Index() {
                   ]}>
 
                      <Label>
-                        <LabelText>Nome</LabelText>
+                        <LabelText style={{ color: "#fff", textShadowColor: "#daa520", textShadowRadius: 5  }}>Nome</LabelText>
                         <Input 
                         placeholder="Nome"
                         value={ Name }
@@ -273,7 +273,7 @@ export default function Index() {
                         />
                      </Label>
                      <Label>
-                        <LabelText>Email</LabelText>
+                        <LabelText style={{ color: "#fff", textShadowColor: "#daa520", textShadowRadius: 5  }}>Email</LabelText>
                         <Input 
                         placeholder="Email"
                         value={ Email }
@@ -283,7 +283,7 @@ export default function Index() {
                         />
                      </Label>
                      <Label>
-                        <LabelText>Password</LabelText>
+                        <LabelText style={{ color: "#fff", textShadowColor: "#daa520", textShadowRadius: 5  }}>Password</LabelText>
                         <Input 
                         placeholder="Password"
                         secureTextEntry={ true }

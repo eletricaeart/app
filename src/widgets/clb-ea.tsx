@@ -21,7 +21,8 @@ import * as c from "./clb-html";
 import * as Colores from "@/src/widgets/clb-colors";
 
 import { Icon } from "./clb-icons";
-import { Link } from "@react-navigation/native";
+import { Link, } from "expo-router";
+// import { Link, useLinkProps, } from "@react-navigation/native";
 
 
 
@@ -240,17 +241,13 @@ export function UsersCard( { ...props } ) {
          </View>
 
          <View style={ s.customerInfo }>
-            <Pressable onPress={ () => {
-               const data = {
-
-               };
-               <Link href={ "/customer" }/>
-            } }>
+            {/* <Link to={{ screen: "customer", params: { id: 'jane' } }}> */}
+            <Link href="https://github.com">
                {/* <c.H4>Anselmo Sammarco Nunes</c.H4> */}
                <c.H4 color="#242526">{ name }</c.H4>
                {/* <c.T>(13) 99148-6078</c.T> */}
                <c.T color="#777">{ tel }</c.T>
-            </Pressable>   
+            </Link>   
          </View>
 
          <View style={ s.sideBtn }>
