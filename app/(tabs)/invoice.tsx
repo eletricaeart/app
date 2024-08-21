@@ -118,46 +118,77 @@ export default function InvoiceView() {
                   <H5 >Tot</H5>
                </PpView4>
             </View>
-            {  budgets &&
-               budgets.map( ( item, position ) => {
-                  if( position % 2 == 0 ) {
-                     return(
-                        <View style={[ s.rowInput ]}>
-                           <PpView>
-                              <Pp >{ item.qtd }</Pp>
-                           </PpView>
-                           <PpView2>
-                              <Pp >{ item.desc }</Pp>
-                           </PpView2>
-                           <PpView3>
-                              <Ppr >{ CutRS( Str2Brl( item.unit.toString() ) ) }</Ppr>
-                           </PpView3>
-                           <PpView4>
-                              <Ppr >{ CutRS( Str2Brl( item.tot.toString() ) ) }</Ppr>
-                           </PpView4>
-                        </View>
-                     );
-                  } else {
-                     return(
-                        <View style={[ s.rowInput, { backgroundColor: "#e5e5e5bf" } ]}>
-                           <PpView>
-                              <Pp >{ item.qtd }</Pp>
-                           </PpView>
-                           <PpView2>
-                              <Pp >{ item.desc }</Pp>
-                           </PpView2>
-                           <PpView3>
-                              <Ppr >{ CutRS( Str2Brl( item.unit.toString() ) ) }</Ppr>
-                           </PpView3>
-                           <PpView4>
-                              <Ppr >{ CutRS( Str2Brl( item.tot.toString() ) ) }</Ppr>
-                           </PpView4>
-                        </View>
-                     );
-                  }
-               } )
-            }
+            <View>
+               {  budgets &&
+                  budgets.map( ( item, position ) => {
+                     if( position % 2 == 0 ) {
+                        return(
+                           <View style={[ s.rowInput ]}>
+                              <PpView>
+                                 <Pp >{ item.qtd }</Pp>
+                              </PpView>
+                              <PpView2>
+                                 <Pp >{ item.desc }</Pp>
+                              </PpView2>
+                              <PpView3>
+                                 <Ppr >{ CutRS( Str2Brl( item.unit.toString() ) ) }</Ppr>
+                              </PpView3>
+                              <PpView4>
+                                 <Ppr >{ CutRS( Str2Brl( item.tot.toString() ) ) }</Ppr>
+                              </PpView4>
+                           </View>
+                        );
+                     } else {
+                        return(
+                           <View style={[ s.rowInput, { backgroundColor: "#e5e5e5bf" } ]}>
+                              <PpView>
+                                 <Pp >{ item.qtd }</Pp>
+                              </PpView>
+                              <PpView2>
+                                 <Pp >{ item.desc }</Pp>
+                              </PpView2>
+                              <PpView3>
+                                 <Ppr >{ CutRS( Str2Brl( item.unit.toString() ) ) }</Ppr>
+                              </PpView3>
+                              <PpView4>
+                                 <Ppr >{ CutRS( Str2Brl( item.tot.toString() ) ) }</Ppr>
+                              </PpView4>
+                           </View>
+                        );
+                     }
+                  } )
+               }
+            </View>
+            <View>
+               <View style={[ s.bRow, { backgroundColor: "#f5f5f5" } ]}>
+                  <View style={[ s.bRow, {  } ]}>
+                     <H5 style={[ s.TTbRow ]}>Subtotal</H5>
+                     <Pp style={[ s.TT, { color: "#333" } ]}>Subtotal</Pp>
+                  </View>
+                  <View style={[ s.bRow, {  } ]}>
+                     <H5 style={[ s.TTbRow ]}>Desconto</H5>
+                     <Pp style={[ s.TT, { color: "#333" } ]}>Desconto</Pp>
+                  </View>
+                  <View style={[ s.bRow, {  } ]}>
+                     <H5 style={[ s.TTbRow ]}>Valor Total</H5>
+                     <Pp style={[ s.TT, { color: "#333" } ]}>Valor Total</Pp>
+                  </View>
+               </View>
+            </View>
          </View>
+            <View style={[ s.topFlag, { backgroundColor: "#fff" } ]}>
+               <H4 style={[ s.topFlagTT, { color: "#00559C" } ]}>Observações</H4>
+            </View>
+         <BottomView>
+            <Center>
+               <OBS>
+                  <Text>oi</Text>
+               </OBS>
+            </Center>
+            <Signatures>
+
+            </Signatures>
+         </BottomView>
       </ScrollView>
    </View> );
 };
@@ -184,6 +215,15 @@ const
          padding: 4,
       }
       ,
+      bRow: {
+         backgroundColor: "#0000",
+         flexDirection: "row",
+         alignItems: "center",
+         justifyContent: "space-around",
+         padding: 4,
+         borderColor: "#e5e5e5", borderTopWidth: .5,
+      }
+      ,
       rowInput: {
          backgroundColor: "#f5f5f5",
          flexDirection: "row",
@@ -193,6 +233,12 @@ const
       ,
       TT: {
          color: "#19497b"
+      }
+      ,
+      TTbRow: {
+         color: "#333",
+         paddingLeft: 8,
+         paddingRight: 8,
       }
       ,
       tt: {
@@ -257,5 +303,28 @@ const
    Ppr = styled.Text`
       font-size: 12px;
       border-right: #fc0 1px dashed;
+   `,
+   OBS = styled.View`
+      background: #e5e5e5;
+      border-radius: 13px;
+      width: 90%;
+      height: 10ch;
+      padding: 16px;
+      border: #7775 2px solid;
+   `,
+   Center = styled.View`
+      align-items: center;
+      justify-content: center;
+      padding: 0px 0px 24px 0;
+      border-bottom-left-radius: 24px;
+      border-bottom-right-radius: 24px;
+      background: #fff;
+   `,
+   BottomView = styled.View`
+      background: #e5e5e5;
+      flex: 1;
+   `,
+   Signatures = styled.View`
+      
    `
 ;
