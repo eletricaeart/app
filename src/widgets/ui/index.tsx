@@ -228,7 +228,7 @@ export const
       text-align: center;
       /* border-radius: 13px; */
       /* border-radius: 9px; */
-      border-radius: 20px;
+      border-radius: 13px;
       background: #009ee6;
       border-color: #7777;
       border-width: 1px;

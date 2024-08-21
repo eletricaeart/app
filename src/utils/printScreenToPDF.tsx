@@ -6,7 +6,7 @@
 */
 import React, { useRef } from "react";
 import { View, Button, Text } from "react-native";
-/* yarn add react-native-view-shot react-native-pdf */
+/* npx expo install react-native-view-shot expo-media-library react-native-pdf */
 import ViewShot from "react-native-view-shot";
 import PDF from "react-native-pdf";
 

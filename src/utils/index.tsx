@@ -41,3 +41,8 @@ export function FixBrl( n ) {
 
    return completo;
 }
+
+export function CutRS( s ) {
+   const data = s.split( "R$" ).join( "" );
+   return data;
+}

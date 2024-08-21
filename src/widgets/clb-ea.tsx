@@ -93,7 +93,9 @@ export function EACard() {
       ,
       s = StyleSheet.create( {
          card: {
-            backgroundColor: Colores.colors.blue0, width: "100%", flexDirection: "row",
+            // backgroundColor: Colores.colors.blue0, 
+            backgroundColor: "#19497b", 
+            width: "100%", flexDirection: "row",
             padding: 16,
             aspectRatio: "16 / 6.5",
             alignItems: "center", justifyContent: "space-between",
