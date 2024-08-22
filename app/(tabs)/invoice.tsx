@@ -139,44 +139,82 @@ export default function InvoiceView() {
                </PpView4>
             </View>
             <View>
-               {  budgets &&
-                  budgets.map( ( item, position ) => {
-                     if( position % 2 == 0 ) {
-                        return(
-                           <View style={[ s.rowInput ]}>
-                              <PpView>
-                                 <Pp >{ item.qtd }</Pp>
-                              </PpView>
-                              <PpView2>
-                                 <Pp >{ item.desc }</Pp>
-                              </PpView2>
-                              <PpView3>
-                                 <Ppr >{ CutRS( Str2Brl( item.unit.toString() ) ) }</Ppr>
-                              </PpView3>
-                              <PpView4>
-                                 <Ppr >{ CutRS( Str2Brl( item.tot.toString() ) ) }</Ppr>
-                              </PpView4>
-                           </View>
-                        );
-                     } else {
-                        return(
-                           <View style={[ s.rowInput, { backgroundColor: "#e5e5e5bf" } ]}>
-                              <PpView>
-                                 <Pp >{ item.qtd }</Pp>
-                              </PpView>
-                              <PpView2>
-                                 <Pp >{ item.desc }</Pp>
-                              </PpView2>
-                              <PpView3>
-                                 <Ppr >{ CutRS( Str2Brl( item.unit.toString() ) ) }</Ppr>
-                              </PpView3>
-                              <PpView4>
-                                 <Ppr >{ CutRS( Str2Brl( item.tot.toString() ) ) }</Ppr>
-                              </PpView4>
-                           </View>
-                        );
-                     }
-                  } )
+               {  !budgets ?                  
+                     budgets.map( ( item, position ) => {
+                        if( position % 2 == 0 ) {
+                           return(
+                              <View style={[ s.rowInput ]}>
+                                 <PpView>
+                                    <Pp >{ item.qtd }</Pp>
+                                 </PpView>
+                                 <PpView2>
+                                    <Pp >{ item.desc }</Pp>
+                                 </PpView2>
+                                 <PpView3>
+                                    <Ppr >{ CutRS( Str2Brl( item.unit.toString() ) ) }</Ppr>
+                                 </PpView3>
+                                 <PpView4>
+                                    <Ppr >{ CutRS( Str2Brl( item.tot.toString() ) ) }</Ppr>
+                                 </PpView4>
+                              </View>
+                           );
+                        } else {
+                           return(
+                              <View style={[ s.rowInput, { backgroundColor: "#e5e5e5bf" } ]}>
+                                 <PpView>
+                                    <Pp >{ item.qtd }</Pp>
+                                 </PpView>
+                                 <PpView2>
+                                    <Pp >{ item.desc }</Pp>
+                                 </PpView2>
+                                 <PpView3>
+                                    <Ppr >{ CutRS( Str2Brl( item.unit.toString() ) ) }</Ppr>
+                                 </PpView3>
+                                 <PpView4>
+                                    <Ppr >{ CutRS( Str2Brl( item.tot.toString() ) ) }</Ppr>
+                                 </PpView4>
+                              </View>
+                           );
+                        }
+                     } )
+                     :
+                     [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,].map( ( item, position ) => {
+                        if( position % 2 == 0 ) {
+                           return(
+                              <View style={[ s.rowInput ]}>
+                                 <PpView style={{ paddingTop: 11, paddingBottom: 11, }}>
+                                    <Pp></Pp>
+                                 </PpView>
+                                 <PpView2>
+                                    <Pp></Pp>
+                                 </PpView2>
+                                 <PpView3>
+                                    <Ppr></Ppr>
+                                 </PpView3>
+                                 <PpView4>
+                                    <Ppr></Ppr>
+                                 </PpView4>
+                              </View>
+                           );
+                        } else {
+                           return(
+                              <View style={[ s.rowInput, { backgroundColor: "#e5e5e5bf" } ]}>
+                                 <PpView style={{ paddingTop: 11, paddingBottom: 11, }}>
+                                    <Pp></Pp>
+                                 </PpView>
+                                 <PpView2>
+                                    <Pp></Pp>
+                                 </PpView2>
+                                 <PpView3>
+                                    <Ppr></Ppr>
+                                 </PpView3>
+                                 <PpView4>
+                                    <Ppr></Ppr>
+                                 </PpView4>
+                              </View>
+                           );
+                        }
+                     } )
                }
             </View>
             <View>
@@ -372,7 +410,7 @@ const
       flex-direction: row;
       align-items: center;
       justify-content: space-evenly;
-      padding: 36px 0 16px 0;
+      padding: 36px 0 48px 0;
    `,
    Signature = styled.View`
       border-top-color: #000;
