@@ -303,7 +303,7 @@ const
    `,
    PpView = styled.View`
       border-right-color: #ebee;
-      border-right-width: 1px;
+      border-right-width: .5px;
       border-right-style: dashed;
       /* background: #27f; */
       flex: 0 1 20%;
