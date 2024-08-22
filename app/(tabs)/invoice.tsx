@@ -182,7 +182,7 @@ export default function InvoiceView() {
                         if( position % 2 == 0 ) {
                            return(
                               <View style={[ s.rowInput ]}>
-                                 <PpView style={{ paddingTop: 11, paddingBottom: 11, }}>
+                                 <PpView style={{ paddingTop: 16, }}>
                                     <Pp></Pp>
                                  </PpView>
                                  <PpView2>
@@ -199,7 +199,7 @@ export default function InvoiceView() {
                         } else {
                            return(
                               <View style={[ s.rowInput, { backgroundColor: "#e5e5e5bf" } ]}>
-                                 <PpView style={{ paddingTop: 11, paddingBottom: 11, }}>
+                                 <PpView style={{ paddingTop: 16, }}>
                                     <Pp></Pp>
                                  </PpView>
                                  <PpView2>
