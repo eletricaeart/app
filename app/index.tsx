@@ -16,6 +16,7 @@ import {
 
 import {
    Btn,
+   BtnTxt,
    Content,
    Input,
    Label, LabelText,
@@ -306,18 +307,19 @@ export default function Index() {
                            ( <Section style={{ gap: 16, width: "80%", }}>
                            
                               <Pressable style={{ elevation: 10, width: "100%", }} onPress={ SignIn }>
-                                 <Btn style={{ backgroundColor: "#00559c", }}>
-                                    <T2 style={{ color: "#eee", }}>
+                                 {/* <Btn style={{ backgroundColor: "#00559C", }}> */}
+                                 <Btn style={{ backgroundColor: "#212329", }}>
+                                    <BtnTxt style={{ color: "#eee", }}>
                                        Acessar sua conta
-                                    </T2>
+                                    </BtnTxt>
                                  </Btn> 
                               </Pressable>
 
                               <Pressable style={{ elevation: 10, width: "100%", }} onPress={ SignUp }>
                                  <Btn>
-                                    <T2 style={{ color: "#00559C", }}>
+                                    <BtnTxt>
                                        Criar uma conta
-                                    </T2>
+                                    </BtnTxt>
                                  </Btn> 
                               </Pressable>
 

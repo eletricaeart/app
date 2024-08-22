@@ -229,12 +229,21 @@ export const
       /* border-radius: 13px; */
       /* border-radius: 9px; */
       border-radius: 13px;
-      background: #009ee6;
+      background: #becfea;
       border-color: #7777;
       border-width: 1px;
-      padding: 8px 14px;
-      color: #00559C;
+      /* padding: 8px 14px; */
+      padding: 14px;
+      color: #0075BD;
       elevation: 3;
+   `
+   ,
+   BtnTxt = styled.Text`
+      /* font-size: 20px; */
+      font-size: 16px;
+      font-weight: bold;
+      text-transform: uppercase;
+      color: #0075BD;
    `
    
 ;

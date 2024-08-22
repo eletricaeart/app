@@ -1,7 +1,7 @@
 
 
 import { EACard } from "@/src/widgets/clb-ea";
-import { H1, H3, H4, H5, P } from "@/src/widgets/ui";
+import { H1, H3, H4, H5, H6, P } from "@/src/widgets/ui";
 import React, { useRef, useState } from "react";
 import { ScrollView, View, Button, Text, StyleSheet } from "react-native";
 import styled from "styled-components/native";
@@ -57,7 +57,7 @@ export default function InvoiceView() {
                <H5 style={[ s.TT ]}>Emissão</H5>
                <H5 style={[ s.TT ]}>Validade</H5>
             </View>
-            <View style={[ s.row, { backgroundColor: "#f5f5f5" } ]}>
+            <View style={[ s.row, { backgroundColor: "#f5f5f5", padding: 0 } ]}>
                <P style={[ s.tt ]}>Orçamento</P>
                <P style={[ s.tt ]}>Emissão</P>
                <P style={[ s.tt ]}>Validade</P>
@@ -67,38 +67,58 @@ export default function InvoiceView() {
                <H4 style={[ s.topFlagTT ]}>Cliente</H4>
             </View>
          <View>
-            <View style={[ s.customerInput ]}>
-               <H5 style={[ s.customerInputTT, { flex: 1 } ]}>Nome</H5>
-               <P style={[ s.customerOutput, { flex: 5.3 } ]}>Nome</P>
-            </View>
-            <View style={[ s.customerInput, { backgroundColor: "#e5e5e5bf" } ]}>
-               <H5 style={[ s.customerInputTT, { flex: 2 } ]}>Telefone</H5>
-               <P style={[ s.customerOutput, { flex: 2 } ]}>Telefone</P>
-               <H5 style={[ s.customerInputTT ]}>Email</H5>
-               <P style={[ s.customerOutput, { flex: 2 } ]}>Email</P>
-            </View>
-            <View style={[ s.customerInput ]}>
-               <H5 style={[ s.customerInputTT ]}>CPF/CNPF</H5>
-               <P style={[ s.customerOutput ]}>CPF</P>
-               <H5 style={[ s.customerInputTT ]}>RG/IE</H5>
-               <P style={[ s.customerOutput ]}>RG</P>
-            </View>
-            <View style={[ s.customerInput, { backgroundColor: "#e5e5e5bf" } ]}>
-               <H5 style={[ s.customerInputTT ]}>Endereço</H5>
-               <P style={[ s.customerOutput ]}>Endereço</P>
-               <H5 style={[ s.customerInputTT ]}>N°</H5>
-               <P style={[ s.customerOutput ]}>N</P>
-            </View>
-            <View style={[ s.customerInput ]}>
-               <H5 style={[ s.customerInputTT ]}>Cidade</H5>
-               <P style={[ s.customerOutput ]}>Cidade</P>
-               <H5 style={[ s.customerInputTT ]}>Bairro</H5>
-               <P style={[ s.customerOutput ]}>Bairro</P>
-               <H5 style={[ s.customerInputTT ]}>UF</H5>
-               <P style={[ s.customerOutput ]}>UF</P>
-               <H5 style={[ s.customerInputTT ]}>CEP</H5>
-               <P style={[ s.customerOutput ]}>CEP</P>
-            </View>
+            <TrCustomer>
+               <TTitle style={{  }}>Nome</TTitle>
+               <TText style={{ flex: 1, paddingLeft: 8, }}>Nome</TText>
+            </TrCustomer>
+            <TrCustomer style={[ { backgroundColor: "#e5e5e5bf" } ]}>
+               <TTitle style={[  ]}>Telefone</TTitle>
+               <View style={{ flex: 2, paddingLeft: 8, }}>
+                  <TText>Telefone</TText>
+               </View>
+               <TTitle style={[  ]}>Email</TTitle>
+               <View style={{ flex: 2, paddingLeft: 8, }}>
+                  <TText style={[  { flex: 2 } ]}>Email</TText>
+               </View>
+            </TrCustomer>
+            <TrCustomer>
+               <TTitle style={[  ]}>CPF/CNPF</TTitle>
+               <View style={{ flex: 2, paddingLeft: 8, }}>
+                  <TText style={[  ]}>CPF</TText>
+               </View>
+               <TTitle style={[  ]}>RG/IE</TTitle>
+               <View style={{ flex: 2, paddingLeft: 8, }}>
+                  <TText style={[  ]}>RG</TText>
+               </View>
+            </TrCustomer>
+            <TrCustomer style={[ { backgroundColor: "#e5e5e5bf" } ]}>
+               <TTitle style={[  ]}>Endereço</TTitle>
+               <View style={{ flex: 2, paddingLeft: 8, }}>
+                  <TText style={[  ]}>Endereço</TText>
+               </View>
+               <TTitle style={{  }}>N°</TTitle>
+               <View style={{ flex: .5, paddingLeft: 8, }}>
+                  <TText style={{ paddingLeft: 2, }}>N</TText>
+               </View>
+               <TTitle style={{ paddingLeft: 8 }}>Cidade</TTitle>
+               <View style={{ flex: 2, paddingLeft: 8, }}>
+                  <TText style={[  ]}>Cidade</TText>
+               </View>
+            </TrCustomer>
+            <TrCustomer>
+               <TTitle style={[  ]}>Bairro</TTitle>
+               <View style={{ flex: 2, paddingLeft: 8, }}>
+                  <TText style={[  ]}>Bairro</TText>
+               </View>
+               <TTitle style={[  ]}>UF</TTitle>
+               <View style={{ flex: .5, paddingLeft: 8, }}>
+                  <TText style={[  ]}>UF</TText>
+               </View>
+               <TTitle style={[  ]}>CEP</TTitle>
+               <View style={{ flex: 2, paddingLeft: 8, }}>
+                  <TText style={[  ]}>CEP</TText>
+               </View>
+            </TrCustomer>
          </View>
             <View style={[ s.topFlag ]}>
                <H4 style={[ s.topFlagTT ]}>Orçamento</H4>
@@ -106,16 +126,16 @@ export default function InvoiceView() {
          <View>
             <View style={[ s.rowInput, { backgroundColor: "#19497b77" } ]}>
                <PpView>
-                  <H5 >QT</H5>
+                  <H6>Qtd.</H6>
                </PpView>
                <PpView2>
-                  <H5 >Descrição</H5>
+                  <H6>Descrição</H6>
                </PpView2>
                <PpView3>
-                  <H5 >Uni</H5>
+                  <H6>Unidade</H6>
                </PpView3>
                <PpView4>
-                  <H5 >Tot</H5>
+                  <H6>Total</H6>
                </PpView4>
             </View>
             <View>
@@ -186,7 +206,16 @@ export default function InvoiceView() {
                </OBS>
             </Center>
             <Signatures>
-
+               <Signature>
+                  <Sig>
+                     Rafael - Elétrica & ART
+                  </Sig>
+               </Signature>
+               <Signature>
+                  <Sig>
+                     Cliente
+                  </Sig>
+               </Signature>
             </Signatures>
          </BottomView>
       </ScrollView>
@@ -242,8 +271,8 @@ const
       }
       ,
       tt: {
-         color: "#19497b",
-         fontSize: 14
+         color: "#333",
+         fontSize: 11
       },
       customerInput: {
          flexDirection: "row",
@@ -259,6 +288,19 @@ const
 ;
 
 const 
+   TrCustomer = styled.View`
+      flex-direction: row;
+      padding: 4px;
+   `,
+   TTitle = styled.Text`
+      font-size: 12px;
+      text-transform: uppercase;
+      font-weight: bold;
+      color: #333;
+   `,
+   TText = styled.Text`
+      font-size: 11px;
+   `,
    PpView = styled.View`
       border-right-color: #ebee;
       border-right-width: 1px;
@@ -297,12 +339,12 @@ const
       justify-content: center;
    `,
    Pp = styled.Text`
-      font-size: 14px;
-      border-right: #fc0 1px dashed;
+      font-size: 12px;
+      color: #555;
    `,
    Ppr = styled.Text`
       font-size: 12px;
-      border-right: #fc0 1px dashed;
+      color: #555;
    `,
    OBS = styled.View`
       background: #e5e5e5;
@@ -323,8 +365,22 @@ const
    BottomView = styled.View`
       background: #e5e5e5;
       flex: 1;
+      width: 100%;
+      height: 100%;
    `,
    Signatures = styled.View`
-      
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-evenly;
+      padding: 36px 0 16px 0;
+   `,
+   Signature = styled.View`
+      border-top-color: #000;
+      border-top-width: 1px;
+      border-top-style: solid;
+      width: 40%;
+   `,
+   Sig = styled.Text`
+      text-align: center;
    `
 ;
