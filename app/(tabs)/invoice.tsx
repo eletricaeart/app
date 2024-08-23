@@ -82,13 +82,13 @@ export default function InvoiceView() {
                </View>
             </TrCustomer>
             <TrCustomer>
-               <TTitle style={[  ]}>CPF/CNPF</TTitle>
-               <View style={{ flex: 2, paddingLeft: 8, }}>
-                  <TText style={[  ]}>CPF</TText>
-               </View>
                <TTitle style={[  ]}>RG/IE</TTitle>
                <View style={{ flex: 2, paddingLeft: 8, }}>
                   <TText style={[  ]}>RG</TText>
+               </View>
+               <TTitle style={[  ]}>CPF/CNPF</TTitle>
+               <View style={{ flex: 2, paddingLeft: 8, }}>
+                  <TText style={[  ]}>CPF</TText>
                </View>
             </TrCustomer>
             <TrCustomer style={[ { backgroundColor: "#e5e5e5bf" } ]}>
@@ -97,18 +97,17 @@ export default function InvoiceView() {
                   <TText style={[  ]}>Endereço</TText>
                </View>
                <TTitle style={{  }}>N°</TTitle>
-               <View style={{ flex: .5, paddingLeft: 8, }}>
-                  <TText style={{ paddingLeft: 2, }}>N</TText>
-               </View>
-               <TTitle style={{ paddingLeft: 8 }}>Cidade</TTitle>
+               <TText style={{ flex: .5, paddingLeft: 8, }}>N</TText>
+               
+               <TTitle style={{ paddingLeft: 8 }}>Bairro</TTitle>
                <View style={{ flex: 2, paddingLeft: 8, }}>
-                  <TText style={[  ]}>Cidade</TText>
+                  <TText style={[  ]}>Bairro</TText>
                </View>
             </TrCustomer>
             <TrCustomer>
-               <TTitle style={[  ]}>Bairro</TTitle>
+               <TTitle style={[  ]}>Cidade</TTitle>
                <View style={{ flex: 2, paddingLeft: 8, }}>
-                  <TText style={[  ]}>Bairro</TText>
+                  <TText style={[  ]}>Cidade</TText>
                </View>
                <TTitle style={[  ]}>UF</TTitle>
                <View style={{ flex: .5, paddingLeft: 8, }}>
@@ -132,10 +131,10 @@ export default function InvoiceView() {
                   <H6>Descrição</H6>
                </PpView2>
                <PpView3>
-                  <H6>Unidade</H6>
+                  <H6>R$ Unit.</H6>
                </PpView3>
                <PpView4>
-                  <H6>Total</H6>
+                  <H6>R$ Tot.</H6>
                </PpView4>
             </View>
             <View>
@@ -182,24 +181,24 @@ export default function InvoiceView() {
                         if( position % 2 == 0 ) {
                            return(
                               <View style={[ s.rowInput ]}>
-                                 <PpView style={{ paddingTop: 16, }}>
-                                    <Pp></Pp>
+                                 <PpView style={{ paddingTop: 4, }}>
+                                    <Pp>{" "}</Pp>
                                  </PpView>
                                  <PpView2>
-                                    <Pp></Pp>
+                                    <Pp>{" "}</Pp>
                                  </PpView2>
                                  <PpView3>
-                                    <Ppr></Ppr>
+                                    <Ppr>{" "}</Ppr>
                                  </PpView3>
                                  <PpView4>
-                                    <Ppr></Ppr>
+                                    <Ppr>{" "}</Ppr>
                                  </PpView4>
                               </View>
                            );
                         } else {
                            return(
                               <View style={[ s.rowInput, { backgroundColor: "#e5e5e5bf" } ]}>
-                                 <PpView style={{ paddingTop: 16, }}>
+                                 <PpView style={{ paddingTop: 4, }}>
                                     <Pp></Pp>
                                  </PpView>
                                  <PpView2>
@@ -331,13 +330,14 @@ const
       padding: 4px;
    `,
    TTitle = styled.Text`
-      font-size: 12px;
+      font-size: 11px;
       text-transform: uppercase;
       font-weight: bold;
       color: #333;
-   `,
+      `,
    TText = styled.Text`
       font-size: 11px;
+      color: #555;
    `,
    PpView = styled.View`
       border-right-color: #ebee;
@@ -351,7 +351,7 @@ const
    `,
    PpView2 = styled.View`
       border-right-color: #ebee;
-      border-right-width: 1px;
+      border-right-width: .5px;
       border-right-style: dashed;
       /* background: #27f; */
       flex: 0 1 100%;
@@ -361,7 +361,7 @@ const
    `,
    PpView3 = styled.View`
       border-right-color: #ebee;
-      border-right-width: 1px;
+      border-right-width: .5px;
       border-right-style: dashed;
       /* background: #27f; */
       flex: 0 1 20%;
