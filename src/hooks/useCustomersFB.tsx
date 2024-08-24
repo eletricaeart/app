@@ -23,11 +23,15 @@ export default function useCustomersFB( { ...props } ) {
             const 
                userInfo = await CStore.GetObjData( "user" )
             ;
+            console.log( "user: ", await CStore.GetObjData( "user" ) );
             await get( child( ref( getDatabase() ), props.path || `users/${ userInfo.uid }/customers` ) )
             .then(
                dataList => { 
                   const 
-                     list: ((prevState: never[]) => never[]) | { key: any; id: any; name: any; email: any; }[] = []
+                     list: (
+                        ( prevState: never[] ) => never[] ) 
+                        | 
+                        { key: any; id: any; name: any; email: any; }[] = []
                      // list: SetStateAction<{ id: string; name: string; email: string; }> | { id: any; name: any; email: any; }[] = []
                   ;
                   
@@ -53,7 +57,7 @@ export default function useCustomersFB( { ...props } ) {
          }
       }
       FetchData();
-   }, [  ] );
+   }, [] );
 
    return { CustomersFB, Loading };
 }

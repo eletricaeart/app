@@ -73,13 +73,64 @@ export default function Index() {
       ,
       auth = FirebaseAuth
       ,
+      // SignIn = async () => {
+      //    let userCredential = {};
+      //    let userInfo = {};
+
+      //    await CStore.DeleteData( "user" );
+
+      //    setLoading( true );
+      //    async function Handle() {
+      //       try {
+      //          const 
+      //             response = await signInWithEmailAndPassword( auth, Email, Password )
+      //             ,
+      //             userUid = response.user.uid
+      //          ;
+
+      //          console.log( "SigIn() response: \n\n\n", response );
+      //          userCredential = { ...response };
+
+      //          return response;
+      //       }
+      //       catch( err: any ) {
+      //          console.log( "SignIn() catch err: \n\n\n", err );
+      //          alert(
+      //             `Não consegui fazer seu login!\naconteceu esse erro aqui: \n${ err.message }`
+      //          );
+      //       }
+      //    }
+      //    Handle().then( value => {
+      //       async function CreateUserSpace() {
+      //          const 
+      //             userData = {
+      //                name: await get( child( ref( getDatabase() ), `users/${ value?.user.uid }/name` ) ),
+      //                uid: value?.user.uid,
+      //             }
+      //             ,
+      //             userReady = JSON.stringify( userData )
+      //          ;
+      //          CStore.StoreData( userReady, "user" );
+
+      //          console.log( `finally UserCredential: \n\n\n`, userCredential );
+   
+      //          if( User ) {
+      //             const json = JSON.stringify( User );
+      //             await AsyncStorage.setItem( "User", json );   
+                  
+      //          } else {
+      //             console.log( "{ empty }" );
+      //          }
+      //       }
+      //       CreateUserSpace();
+
+      //       setLoading( false );
+      //    } );
+      // }
+      // ,
       SignIn = async () => {
-         let userCredential = {};
-         const userInfo = {};
-
-         await CStore.DeleteData( "user" );
-
          setLoading( true );
+         await CStore.DeleteData( "user" );
          async function Handle() {
             try {
                const 
@@ -89,27 +140,15 @@ export default function Index() {
                ;
 
                console.log( "SigIn() response: \n\n\n", response );
-               userCredential = { ...response };
-
+               
+               // return response;
                return response;
             }
             catch( err: any ) {
-               console.log( "SignIn() catch err: \n\n\n", err );
-               alert(
-                  `Não consegui fazer seu login!\naconteceu esse erro aqui: \n${ err.message }`
-               );
+               console.log( "SignIn() err: \n\n\n", err );
+               alert( `Não consegui fazer seu login!\naconteceu esse erro aqui: ${ err.code }\n${ err.message }` );
             }
             finally {
-               console.log( `finally UserCredential: \n\n\n`, userCredential );
-
-               if( User ) {
-                  const json = JSON.stringify( User );
-                  await AsyncStorage.setItem( "User", json );   
-                  
-               } else {
-                  console.log( "{ empty }" );
-               }
-
                setLoading( false );
             }
          }
@@ -117,7 +156,7 @@ export default function Index() {
             async function CreateUserSpace() {
                const 
                   userData = {
-                     name: await get( child( ref( getDatabase() ), `users/${ value?.user.uid }/name` ) ),
+                     name: "fbdata",
                      uid: value?.user.uid,
                   }
                   ,
@@ -125,7 +164,21 @@ export default function Index() {
                ;
                await CStore.StoreData( userReady, "user" );
             }
-            CreateUserSpace();
+            CreateUserSpace().then( () => {
+               async function S() {
+                  let
+                     user = await AsyncStorage.getItem( "user" )
+                     ,
+                     userParsed = await JSON.parse( user ) 
+                     ,
+                     userUid = await userParsed.uid 
+
+                  ;
+                  // here
+                  // console.log( "oi: ", await get( child( ref( getDatabase() ), `users/${ await userUid }/name` ) ) );
+               }
+               S();
+            } );
          } );
       }
       ,
@@ -152,22 +205,22 @@ export default function Index() {
             }
          }
          Handle().then( value => {
+            const 
+               userData = {
+                  name: Name,
+                  uid: value?.user.uid,
+               }
+               ,
+               userReady = JSON.stringify( userData )
+            ;
             async function CreateUserSpace() {
-               const 
-                  userData = {
-                     name: Name,
-                     uid: value?.user.uid,
-                  }
-                  ,
-                  userReady = JSON.stringify( userData )
-               ;
                SaveDataOnFbRDB( {
-                  ref: `users/${ value.user.uid }/name`,
+                  ref: `users/${ userData.uid }/name`,
                   data: Name,
                } );
                SaveDataOnFbRDB( {
-                  ref: `users/${ value.user.uid }/uid`,
-                  data: value?.user.uid,
+                  ref: `users/${ userData.uid }/uid`,
+                  data: userData.uid,
                } );
                await CStore.StoreData( userReady, "user" );
             }
@@ -197,16 +250,17 @@ export default function Index() {
 
    async function FetchData( userUid: string ) {
       try {
-         const 
+         let 
             userInfo = {}
          ;
          await get( child( ref( getDatabase() ), `users/${ userUid }/name` ) )
          .then(
             name => { 
-               // userInfo.name = name
+               userInfo.name = name;
                // setCustomersFB( list );
                // setLoading( false );
-               return name;
+               console.log( "name: ", name );
+               return userInfo;
             }
          );
       } catch( err: any ) {

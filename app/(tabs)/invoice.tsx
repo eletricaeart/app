@@ -68,55 +68,83 @@ export default function InvoiceView() {
             </View>
          <View>
             <TrCustomer>
-               <TTitle style={{  }}>Nome</TTitle>
-               <TText style={{ flex: 1, paddingLeft: 8, }}>Nome</TText>
+               <Th>
+                  <TTitle>Nome</TTitle>
+               </Th>
+               <Td style={{ flex: 1, }}>
+                  <TText>Nome</TText>
+               </Td>
             </TrCustomer>
             <TrCustomer style={[ { backgroundColor: "#e5e5e5bf" } ]}>
-               <TTitle style={[  ]}>Telefone</TTitle>
-               <View style={{ flex: 2, paddingLeft: 8, }}>
+               <Th>
+                  <TTitle>Telefone</TTitle>
+               </Th>
+               <Td style={{ flex: 2, }}>
                   <TText>Telefone</TText>
-               </View>
-               <TTitle style={[  ]}>Email</TTitle>
-               <View style={{ flex: 2, paddingLeft: 8, }}>
+               </Td>
+               <Th>
+                  <TTitle>Email</TTitle>
+               </Th>
+               <Td style={{ flex: 2, }}>
                   <TText style={[  { flex: 2 } ]}>Email</TText>
-               </View>
+               </Td>
             </TrCustomer>
             <TrCustomer>
-               <TTitle style={[  ]}>RG/IE</TTitle>
-               <View style={{ flex: 2, paddingLeft: 8, }}>
-                  <TText style={[  ]}>RG</TText>
-               </View>
-               <TTitle style={[  ]}>CPF/CNPF</TTitle>
-               <View style={{ flex: 2, paddingLeft: 8, }}>
-                  <TText style={[  ]}>CPF</TText>
-               </View>
+               <Th>
+                  <TTitle>RG/IE</TTitle>
+               </Th>
+               <Td style={{ flex: 2, }}>
+                  <TText>RG</TText>
+               </Td>
+               <Th>
+                  <TTitle>CPF/CNPF</TTitle>
+               </Th>
+               <Td style={{ flex: 2, }}>
+                  <TText>CPF</TText>
+               </Td>
             </TrCustomer>
             <TrCustomer style={[ { backgroundColor: "#e5e5e5bf" } ]}>
-               <TTitle style={[  ]}>Endereço</TTitle>
-               <View style={{ flex: 2, paddingLeft: 8, }}>
-                  <TText style={[  ]}>Endereço</TText>
-               </View>
-               <TTitle style={{  }}>N°</TTitle>
-               <TText style={{ flex: .5, paddingLeft: 8, }}>N</TText>
+               <Th>
+                  <TTitle>Endereço</TTitle>
+               </Th>
+               <Td style={{ flex: 2, }}>
+                  <TText>Endereço</TText>
+               </Td>
+
+               <Th>
+                  <TTitle style={{  }}>N°</TTitle>
+               </Th>
+               <Td style={{ flex: .5 }}>
+                  <TText>N</TText>
+               </Td>
                
-               <TTitle style={{ paddingLeft: 8 }}>Bairro</TTitle>
-               <View style={{ flex: 2, paddingLeft: 8, }}>
-                  <TText style={[  ]}>Bairro</TText>
-               </View>
+               <Th>
+                  <TTitle style={{  }}>Bairro</TTitle>
+               </Th>
+               <Td style={{ flex: 2, }}>
+                  <TText>Bairro</TText>
+               </Td>
             </TrCustomer>
             <TrCustomer>
-               <TTitle style={[  ]}>Cidade</TTitle>
-               <View style={{ flex: 2, paddingLeft: 8, }}>
-                  <TText style={[  ]}>Cidade</TText>
-               </View>
-               <TTitle style={[  ]}>UF</TTitle>
-               <View style={{ flex: .5, paddingLeft: 8, }}>
-                  <TText style={[  ]}>UF</TText>
-               </View>
-               <TTitle style={[  ]}>CEP</TTitle>
-               <View style={{ flex: 2, paddingLeft: 8, }}>
-                  <TText style={[  ]}>CEP</TText>
-               </View>
+               <Th>
+                  <TTitle>Cidade</TTitle>
+               </Th>
+               <Td style={{ flex: 2, }}>
+                  <TText>Cidade</TText>
+               </Td>
+               <Th>
+                  <TTitle>UF</TTitle>
+               </Th>
+               <Td style={{ flex: .5, }}>
+                  <TText>UF</TText>
+               </Td>
+
+               <Th>
+                  <TTitle>CEP</TTitle>
+               </Th>
+               <Td style={{ flex: 2, }}>
+                  <TText>CEP</TText>
+               </Td>
             </TrCustomer>
          </View>
             <View style={[ s.topFlag ]}>
@@ -327,7 +355,13 @@ const
 const 
    TrCustomer = styled.View`
       flex-direction: row;
+   `,
+   Th = styled.View`
       padding: 4px;
+      background: #0001;
+   `,
+   Td = styled.View`
+      padding: 4px 0 4px 4px;
    `,
    TTitle = styled.Text`
       font-size: 11px;
