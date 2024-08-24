@@ -22,7 +22,7 @@ import {
    AppBar,
    AppBarLeft,
    AppBarRight,
-   BottomNavigationBar,
+   // BottomNavigationBar,
    PageFooter,
 } from "@/src/widgets/clb-widgets";
 
@@ -59,9 +59,9 @@ export default function RootLayout() {
 
    return( <>
       <Stack screenOptions={ { ...stack_screenOptions } } >
-         <Stack.Screen name="(auth)" options={ { ...screen_auth_options } } />
+         {/* <Stack.Screen name="(auth)" options={ { ...screen_auth_options } } /> */}
          <Stack.Screen name="(tabs)" options={ { ...screen_tabs_options } } />
-         <Stack.Screen name="index" options={ { ...screen_00_options } } />
+         {/* <Stack.Screen name="index" options={ { ...screen_00_options } } /> */}
          <Stack.Screen name="+not-found" />
       </Stack>
    </> );
@@ -79,10 +79,6 @@ const
          fontWeight: "bold",
          color: "#fff",
       }
-      // ,
-      // headerStyle: {
-      //    backgroundColor: "#00559C",
-      // }
       ,
       statusBarColor: "#00559c",
       headerBlurEffect: "regular",
