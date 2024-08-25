@@ -58,12 +58,21 @@ export default function RootLayout() {
 
 
    return( <>
-      <Stack screenOptions={ { ...stack_screenOptions } } >
-         {/* <Stack.Screen name="(auth)" options={ { ...screen_auth_options } } /> */}
-         <Stack.Screen name="(tabs)" options={ { ...screen_tabs_options } } />
-         {/* <Stack.Screen name="index" options={ { ...screen_00_options } } /> */}
-         <Stack.Screen name="+not-found" />
-      </Stack>
+      {
+         User ? (
+            <Stack screenOptions={ { ...stack_screenOptions } }>
+               <Stack.Screen name="(tabs)" options={ { ...screen_tabs_options } } />
+               <Stack.Screen name="index" options={ { ...screen_00_options } } />
+               <Stack.Screen name="+not-found" />
+            </Stack>
+         ) : (
+            <Stack screenOptions={ { ...auth_screenOptions } } >
+               <Stack.Screen name="(auth)" options={ { ...screen_auth_options } } />
+               {/* <Stack.Screen name="index" options={ { ...screen_00_options } } /> */}
+               <Stack.Screen name="+not-found" />
+            </Stack>
+         )
+      }
    </> );
 }
 
@@ -81,6 +90,23 @@ const
       }
       ,
       statusBarColor: "#00559c",
+      headerBlurEffect: "regular",
+      headerTransparent: true,
+   }
+   ,
+   auth_screenOptions = {
+      headerShown: false,
+      headerTitleAlign: "center"
+      ,
+      headerTintColor: "#e5e5e5"
+      ,
+      headerTitleStyle: {
+         // fontFamily: "GodOfThunder",
+         fontWeight: "bold",
+         color: "#fff",
+      }
+      ,
+      statusBarColor: "#16181c",
       headerBlurEffect: "regular",
       headerTransparent: true,
    }
