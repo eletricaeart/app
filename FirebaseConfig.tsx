@@ -3,8 +3,12 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 // import { getAnalytics } from "firebase/analytics";
-import { getAuth, initializeAuth, getReactNativePersistence, } from "firebase/auth";
-// import { initializeAuth, getReactNativePersistence } from "@firebase/auth";
+// import { getAuth, initializeAuth, getReactNativePersistence, } from "firebase/auth";
+
+// Have to do ts-ignore as getReactNativePersistence is not detected by ts compiler with firebase 10.3.0
+// @ts-ignore 
+import { initializeAuth, getReactNativePersistence, getAuth } from "@firebase/auth";
+
 // import AsyncStorage from "@react-native-async-storage/async-storage";
 import ReactNativeAsyncStorage from "@react-native-async-storage/async-storage";
 import { getFirestore } from "firebase/firestore";
@@ -29,9 +33,13 @@ const firebaseConfig = {
 // Initialize Firebase
 export const FirebaseApp = initializeApp(firebaseConfig);
 export const FirebaseAuth = getAuth( FirebaseApp );
+
+// Have to do ts-ignore as getReactNativePersistence is not detected by ts compiler with firebase 10.3.0
+// @ts-ignore 
 // export const FirebaseAuth = initializeAuth( FirebaseApp, {
 //    persistence: getReactNativePersistence( ReactNativeAsyncStorage )
 // } );
+
 export const FirebaseDB = getDatabase( FirebaseApp );
 export const FirestoreDB = getFirestore( FirebaseApp );
 // const analytics = getAnalytics(app);

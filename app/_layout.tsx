@@ -14,6 +14,7 @@ import {
 
 import { FirebaseAuth } from "@/FirebaseConfig";
 import {
+   getAuth,
    onAuthStateChanged,
    User,
 } from "firebase/auth";
@@ -29,6 +30,17 @@ import {
 import { Icon } from "@/src/widgets/clb-icons";
 
 
+
+export {
+   // Catch any errors thrown by the Layout component.
+   ErrorBoundary,
+} from "expo-router";
+
+export const unstable_settings = {
+   // Ensure that reloading on `/modal` keeps a back button present.
+   initialRouteName: "(tabs)",
+};
+
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
@@ -40,6 +52,10 @@ export default function RootLayout() {
         GodOfThunder: require('@/src/fonts/GodOfThunder.ttf'),
       } )   
    ;
+   // Expo Router uses Error Boundaries to catch errors in the navigation tree.
+   // useEffect( () => {
+   //    if( error ) throw error;
+   // }, [error] );
 
    useEffect( () => {
      if( loaded ) {
@@ -48,6 +64,7 @@ export default function RootLayout() {
    }, [loaded] );
 
    useEffect( () => {
+      // onAuthStateChanged( FirebaseAuth, user => {
       onAuthStateChanged( FirebaseAuth, user => {
          console.log( { user } );
          setUser( user ); 
@@ -58,7 +75,7 @@ export default function RootLayout() {
 
 
    return( <>
-      {
+      {/* {
          User ? (
             <Stack screenOptions={ { ...stack_screenOptions } }>
                <Stack.Screen name="(tabs)" options={ { ...screen_tabs_options } } />
@@ -68,11 +85,17 @@ export default function RootLayout() {
          ) : (
             <Stack screenOptions={ { ...auth_screenOptions } } >
                <Stack.Screen name="(auth)" options={ { ...screen_auth_options } } />
-               {/* <Stack.Screen name="index" options={ { ...screen_00_options } } /> */}
                <Stack.Screen name="+not-found" />
             </Stack>
          )
-      }
+      } */}
+      <Stack>
+         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+         {/* <Stack.Screen name="modal" options={{ presentation: "modal" }} /> */}
+         <Stack.Screen name="landing" options={{ headerShown: false }} />
+         <Stack.Screen name="sign-in" options={{ presentation: "modal" }} />
+         <Stack.Screen name="sign-up" options={{ presentation: "modal" }} />
+      </Stack>
    </> );
 }
 
