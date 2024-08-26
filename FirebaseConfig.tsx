@@ -3,8 +3,8 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 // import { getAnalytics } from "firebase/analytics";
-// import { getAuth, initializeAuth, getReactNativePersistence, } from "firebase/auth";
-import { initializeAuth, getReactNativePersistence } from "@firebase/auth";
+import { getAuth, initializeAuth, getReactNativePersistence, } from "firebase/auth";
+// import { initializeAuth, getReactNativePersistence } from "@firebase/auth";
 // import AsyncStorage from "@react-native-async-storage/async-storage";
 import ReactNativeAsyncStorage from "@react-native-async-storage/async-storage";
 import { getFirestore } from "firebase/firestore";
@@ -28,10 +28,10 @@ const firebaseConfig = {
 
 // Initialize Firebase
 export const FirebaseApp = initializeApp(firebaseConfig);
-// export const FirebaseAuth = getAuth( FirebaseApp );
-export const FirebaseAuth = initializeAuth( FirebaseApp, {
-   persistence: getReactNativePersistence( ReactNativeAsyncStorage )
-} );
+export const FirebaseAuth = getAuth( FirebaseApp );
+// export const FirebaseAuth = initializeAuth( FirebaseApp, {
+//    persistence: getReactNativePersistence( ReactNativeAsyncStorage )
+// } );
 export const FirebaseDB = getDatabase( FirebaseApp );
 export const FirestoreDB = getFirestore( FirebaseApp );
 // const analytics = getAnalytics(app);
@@ -105,12 +105,3 @@ async function RemoveDataOnFbRDB( { ...props } ) {
       alert( props.errMsg || "deu ruim pra deletar da nuvem" );
    } );
 }
-
-
-/* 
-https://www.youtube.com/watch?v=65xV2wnG1gk
-https://www.youtube.com/watch?v=BsOik6ycGqk
-https://www.youtube.com/watch?v=cMi6Vwo6C2M
-https://www.youtube.com/watch?v=UP8wNrFLgtU
-https://www.youtube.com/watch?v=zh6Sc1flK2g
-https://www.youtube.com/results?search_query=expo+router+authentication */

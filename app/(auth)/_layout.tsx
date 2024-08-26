@@ -5,6 +5,8 @@ import React, { useEffect, useState } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { Icon } from "@/src/widgets/clb-icons";
+import AuthRoutes from "@/app/(auth)/routes";
+import Routes from "../routes";
 import { SplashScreen, Stack, Tabs, } from "expo-router";
 import { useFonts } from "expo-font";
 

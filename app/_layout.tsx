@@ -27,7 +27,6 @@ import {
 } from "@/src/widgets/clb-widgets";
 
 import { Icon } from "@/src/widgets/clb-icons";
-import { background } from "native-base/lib/typescript/theme/styled-system";
 
 
 SplashScreen.preventAutoHideAsync();
@@ -59,88 +58,63 @@ export default function RootLayout() {
 
 
    return( <>
-      {/* {
-         !User ? (
+      {
+         User ? (
             <Stack screenOptions={ { ...stack_screenOptions } }>
                <Stack.Screen name="(tabs)" options={ { ...screen_tabs_options } } />
                <Stack.Screen name="index" options={ { ...screen_00_options } } />
+               <Stack.Screen name="+not-found" />
             </Stack>
          ) : (
             <Stack screenOptions={ { ...auth_screenOptions } } >
                <Stack.Screen name="(auth)" options={ { ...screen_auth_options } } />
-               <Stack.Screen name="index" />
-               <Stack.Screen name="modal/test" 
-                  options={{
-                     headerShown: false,
-                     presentation: "modal",
-                  }}
-               />
+               {/* <Stack.Screen name="index" options={ { ...screen_00_options } } /> */}
                <Stack.Screen name="+not-found" />
             </Stack>
          )
-      } */}
-      <Stack>
-         <Stack.Screen 
-            name="index"
-            options={ screen_modal_options }
-         />
-         <Stack.Screen 
-            name="modal/test"
-            // name="modal"
-            options={{
-               // headerShown: false,
-               // presentation: "transparentModal",
-               presentation: "modal",
-               statusBarColor: "#1b1d22",
-            }}
-         />
-         <Stack.Screen
-            name="home"
-         />
-      </Stack>
+      }
    </> );
 }
 
 const 
    stack_screenOptions = {
       headerShown: false,
-      headerTitleAlign: "center",
-      headerTintColor: "#e5e5e5",
+      headerTitleAlign: "center"
+      ,
+      headerTintColor: "#e5e5e5"
+      ,
       headerTitleStyle: {
          // fontFamily: "GodOfThunder",
          fontWeight: "bold",
          color: "#fff",
-      },
+      }
+      ,
       statusBarColor: "#00559c",
       headerBlurEffect: "regular",
-      headerTransparent: true
-   },
+      headerTransparent: true,
+   }
+   ,
    auth_screenOptions = {
       headerShown: false,
-      headerTitleAlign: "center",
-      headerTintColor: "#e5e5e5",
+      headerTitleAlign: "center"
+      ,
+      headerTintColor: "#e5e5e5"
+      ,
       headerTitleStyle: {
          // fontFamily: "GodOfThunder",
          fontWeight: "bold",
          color: "#fff",
-      },
+      }
+      ,
       statusBarColor: "#16181c",
       headerBlurEffect: "regular",
       headerTransparent: true,
-   },
+   }
+   ,
    screen_00_options = {
       // headerTitle: "Eletrica & Art",
       headerShown: false,
       statusBarColor: "#1b1d22",
-   },
-   screen_modal_options = {
-      statusBarColor: "#1b1d22",
-      headerTitle: "Céo",
-      headerTitleAlign: "center",
-      headerShown: true,
-      headerStyle: {
-         backgroundColor: "#1b1d22",
-      }
    },
    screen_auth_options = {
       statusBarColor: "#16181c",
