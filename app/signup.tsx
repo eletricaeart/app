@@ -83,6 +83,7 @@ export default function SignUpView( { ...props } ) {
             userData = {
                name: Name,
                uid: value?.user.uid,
+               email: Email,
             }
             ,
             userReady = JSON.stringify( userData )
@@ -95,6 +96,10 @@ export default function SignUpView( { ...props } ) {
             SaveDataOnFbRDB( {
                ref: `users/${ userData.uid }/uid`,
                data: userData.uid,
+            } );
+            SaveDataOnFbRDB( {
+               ref: `users/${ userData.uid }/email`,
+               data: Email,
             } );
             await CStore.StoreData( userReady, "user" );
          }

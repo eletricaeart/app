@@ -13,7 +13,9 @@ import {
 
 import styled from "styled-components/native";
 import {
-   PageFooter, BottomNavigationBar, Fab, Press,
+   PageFooter, 
+   // BottomNavigationBar, 
+   Fab, Press,
    Touch, 
 } from "@/src/widgets/clb-widgets";
 
