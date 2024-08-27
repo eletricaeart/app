@@ -2,8 +2,11 @@
 
 /** == [ @imports ] 
  * == == == == == == == == == */
-import { Btn, BtnTxt, Input, Label, LabelText, PP, Section } from "@/src/widgets/ui";
 import React, { useState, useEffect } from "react";
+import { BackBtn, BackBtnTxt, Btn, BtnTxt, Input, Label, LabelText, PP, Section } from "@/src/widgets/ui";
+import { Link } from "@react-navigation/native";
+import { router } from "expo-router";
+import * as CStore from "@/src/widgets/clb-dbs";
 import { 
    StyleSheet,
    View,
@@ -14,9 +17,17 @@ import {
    Pressable, 
 } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
-import {
-   Link,
-} from "@react-navigation/native";
+
+import { FirebaseApp, FirebaseAuth, SaveDataOnFbRDB,  } from "@/FirebaseConfig";
+import { 
+   signInWithEmailAndPassword, 
+   createUserWithEmailAndPassword,
+   onAuthStateChanged,
+   User,
+   getAuth, 
+   signOut,
+} from "firebase/auth";
+import { get, child, ref, getDatabase } from "firebase/database";
 
 
 /** == [ properties ]
@@ -25,8 +36,9 @@ import {
 
 /** == [ exports ]
  * == == == == == == == == == */
-export default function SignInView( { ...props } ) {
+export default function SignUpView( { ...props } ) {
    const 
+      [ User, setUser ] = useState<User | null>( null ),
       [ Name, setName ] = useState( "" )
       ,
       [ Email, setEmail ] = useState( "" )
@@ -37,8 +49,65 @@ export default function SignInView( { ...props } ) {
 
    ;
 
+   async function HandleSignUp() {
+      /* then( user => {
+         if( user ) {
+            router.replace( "/home/(tabs)" );
+            // alert( "oi user" );
+         }
+      } ) */
+      setLoading( true );
+      
+      async function Handle() {
+         try {
+            const 
+               response = await createUserWithEmailAndPassword( FirebaseAuth, Email, Password )
+               ,
+               userUid = response.user.uid
+            ;
+
+            console.log( "SigUp() response: \n\n\n", response );
+            
+            return response;
+         }
+         catch( err: any ) {
+            console.log( "SignUp() err: \n\n\n", err );
+            alert( `Deu ruim no cadastro!\n\ncódigo do erro: ${ err.code }\n${ err.message }` );
+         }
+         finally {
+            setLoading( false );
+         }
+      }
+      Handle().then( value => {
+         const 
+            userData = {
+               name: Name,
+               uid: value?.user.uid,
+            }
+            ,
+            userReady = JSON.stringify( userData )
+         ;
+         async function CreateUserSpace() {
+            SaveDataOnFbRDB( {
+               ref: `users/${ userData.uid }/name`,
+               data: Name,
+            } );
+            SaveDataOnFbRDB( {
+               ref: `users/${ userData.uid }/uid`,
+               data: userData.uid,
+            } );
+            await CStore.StoreData( userReady, "user" );
+         }
+         CreateUserSpace().then( router.replace( "/home/(tabs)" ) );
+      } );
+      
+   }
+
 
    return( <>
+      <BackBtn onPress={ () => { router.back(); } }>
+         <BackBtnTxt>&lt;</BackBtnTxt>
+      </BackBtn>
       <View style={ s.root }>
          <ImageBackground source={ require( "@/src/images/bgs/splash-login-720x1600.png" ) } resizeMode="cover" style={ s.bgImage }>
             <View behavior="padding" style={ [ s.rootB ]}>
@@ -49,6 +118,16 @@ export default function SignInView( { ...props } ) {
             
                <KeyboardAvoidingView behavior="position" style={[ { width: "80%", } ]}>
 
+                  <Label>
+                     <LabelText style={{ color: "#fff", textShadowColor: "#daa520", textShadowRadius: 5  }}>Nome</LabelText>
+                     <Input 
+                        placeholder="Nome"
+                        value={ Name }
+                        onChangeText={ ( text ) => setName( text ) }
+                        inputMode="text"
+                        cursorColor={ "#00559C" }
+                     />
+                  </Label>
                   <Label>
                      <LabelText style={{ color: "#fff", textShadowColor: "#daa520", textShadowRadius: 5  }}>Email</LabelText>
                      <Input 
@@ -79,25 +158,13 @@ export default function SignInView( { ...props } ) {
                      ) : ( 
                         <Section style={{ gap: 16, width: "80%", }}>
                         
-                           <Pressable style={{ elevation: 10, width: "100%", }} onPress={ () => {} }>
+                           <Pressable style={{ elevation: 10, width: "100%", }} onPress={ HandleSignUp }>
                               <Btn style={{ backgroundColor: "#212329", }}>
                                  <BtnTxt style={{ color: "#eee", }}>
-                                    Acessar sua conta
+                                    Cadastrar sua conta
                                  </BtnTxt>
                               </Btn> 
                            </Pressable>
-
-                           <Pressable style={{ elevation: 10, width: "100%", }} onPress={ () => {} }>
-                              <Btn>
-                                 <BtnTxt>
-                                    Criar uma conta
-                                 </BtnTxt>
-                              </Btn> 
-                           </Pressable>
-
-                           <Link to="/">
-                              <PP>Voltar</PP>
-                           </Link>
 
                         </Section> 
                      )

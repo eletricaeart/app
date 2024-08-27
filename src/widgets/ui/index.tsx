@@ -244,6 +244,26 @@ export const
       font-weight: bold;
       text-transform: uppercase;
       color: #0075BD;
+   `,
+
+
+   // Buttons
+   BackBtn = styled.Pressable`
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: #fff0;
+      height: 46px;
+      width: 46px;
+      align-items: center;
+      justify-content: center;
+      z-index: 3;
+   `,
+   BackBtnTxt = styled.Text`
+      text-transform: uppercase;
+      font-weight: bold;
+      font-size: 28px;
+      color: #fff;
    `
    
 ;

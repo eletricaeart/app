@@ -13,10 +13,21 @@ import {
    KeyboardAvoidingView,
    Pressable, 
 } from "react-native";
-import { Link, } from "expo-router";
 import { ActivityIndicator } from "react-native-paper";
-// import { Link, } from "@react-navigation/native";
+import { Link, router, } from "expo-router";
 
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+import { FirebaseApp, FirebaseAuth, SaveDataOnFbRDB,  } from "@/FirebaseConfig";
+import { 
+   signInWithEmailAndPassword, 
+   createUserWithEmailAndPassword,
+   onAuthStateChanged,
+   User,
+   getAuth, 
+   signOut,
+} from "firebase/auth";
+import { get, child, ref, getDatabase } from "firebase/database";
 
 /** == [ properties ]
  * == == == == == == == == == */
@@ -26,18 +37,30 @@ import { ActivityIndicator } from "react-native-paper";
  * == == == == == == == == == */
 export default function index( { ...props } ) {
    const 
-      [ Name, setName ] = useState( "" )
-      ,
-      [ Email, setEmail ] = useState( "" )
-      ,
-      [ Password, setPassword ] = useState( "" )
-      ,
+      [ User, setUser ] = useState<User | null>( null ),
       [ Loading, setLoading ] = useState( false )
 
    ;
 
+   useEffect( () => {
+      onAuthStateChanged( FirebaseAuth, User => {
+         console.log( "onAuthStateChanged: ", User );
+         setUser( User ); 
+      } );
+   }, [] );
 
-   return( <>
+   useEffect( () => {
+      async function load() {
+         if( User ) {
+            const jsn = JSON.stringify( User );
+            await AsyncStorage.setItem( "User", jsn );
+         }
+      }
+      load();
+   }, [ User ] );
+
+   User ? ( router.replace( "/home/(tabs)" ) ) : 
+   ( <>
       <View style={ s.root }>
          <ImageBackground source={ require( "@/src/images/bgs/splash-login-720x1600.png" ) } resizeMode="cover" style={ s.bgImage }>
             <View behavior="padding" style={ [ s.rootB ]}>
@@ -45,11 +68,9 @@ export default function index( { ...props } ) {
                   <Image source={ require( "@/src/images/EA/globo-de-plasma-700.png" ) } style={ { height: "100%", resizeMode: "contain", } }/>
                </View>
 
+               <Text>Welcome landing view</Text>
             
                <KeyboardAvoidingView behavior="position" style={[ { width: "80%", } ]}>
-
-                  
-                  
                </KeyboardAvoidingView> 
 
                <View style={ s.footer }>
@@ -61,7 +82,7 @@ export default function index( { ...props } ) {
                         
                            <Pressable style={{ elevation: 10, width: "100%", }} onPress={ () => {} }>
                               <Btn style={{ backgroundColor: "#212329", }}>
-                                 <Link href="/sign-in">
+                                 <Link href="/signin">
                                     <BtnTxt style={{ color: "#eee", }}>
                                        Acessar sua conta 
                                     </BtnTxt>
@@ -71,7 +92,7 @@ export default function index( { ...props } ) {
 
                            <Pressable style={{ elevation: 10, width: "100%", }} onPress={ () => {} }>
                               <Btn>
-                                 <Link href="/sign-up">
+                                 <Link href="/signup">
                                     <BtnTxt>
                                        Criar uma conta
                                     </BtnTxt>

@@ -6,6 +6,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import 'react-native-reanimated';
 import { useFonts } from 'expo-font';
 import {
+   useColorScheme,
    View,
    Text,
    Image,
@@ -28,7 +29,11 @@ import {
 } from "@/src/widgets/clb-widgets";
 
 import { Icon } from "@/src/widgets/clb-icons";
-
+import {
+   DarkTheme,
+   DefaultTheme,
+   ThemeProvider,
+} from "@react-navigation/native";
 
 
 export {
@@ -38,7 +43,8 @@ export {
 
 export const unstable_settings = {
    // Ensure that reloading on `/modal` keeps a back button present.
-   initialRouteName: "(tabs)",
+   // initialRouteName: "(tabs)",
+   initialRouteName: "/landing",
 };
 
 SplashScreen.preventAutoHideAsync();
@@ -52,6 +58,7 @@ export default function RootLayout() {
         GodOfThunder: require('@/src/fonts/GodOfThunder.ttf'),
       } )   
    ;
+   // const colorScheme = useColorScheme();
    // Expo Router uses Error Boundaries to catch errors in the navigation tree.
    // useEffect( () => {
    //    if( error ) throw error;
@@ -64,7 +71,6 @@ export default function RootLayout() {
    }, [loaded] );
 
    useEffect( () => {
-      // onAuthStateChanged( FirebaseAuth, user => {
       onAuthStateChanged( FirebaseAuth, user => {
          console.log( { user } );
          setUser( user ); 
@@ -74,7 +80,7 @@ export default function RootLayout() {
    if( !loaded ) { return null; }
 
 
-   return( <>
+   return( <> 
       {/* {
          User ? (
             <Stack screenOptions={ { ...stack_screenOptions } }>
@@ -89,13 +95,18 @@ export default function RootLayout() {
             </Stack>
          )
       } */}
-      <Stack>
-         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-         {/* <Stack.Screen name="modal" options={{ presentation: "modal" }} /> */}
-         <Stack.Screen name="landing" options={{ headerShown: false }} />
-         <Stack.Screen name="sign-in" options={{ presentation: "modal" }} />
-         <Stack.Screen name="sign-up" options={{ presentation: "modal" }} />
-      </Stack>
+      {/* <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}> */}
+         <Stack initialRouteName="landing">
+            <Stack.Screen name="landing" options={{ headerShown: false, statusBarColor: "#1b1d22" }} />
+            <Stack.Screen name="index" options={{ headerShown: false }} />
+            {/* <Stack.Screen name="home/(tabs)" options={{ headerShown: false }} /> */}
+            <Stack.Screen name="home" options={{ headerShown: false }} />
+            <Stack.Screen name="auth" options={{ headerShown: false }} />
+            {/* <Stack.Screen name="modal" options={{ presentation: "modal" }} /> */}
+            <Stack.Screen name="signin" options={{ headerShown: false , presentation: "modal", statusBarColor: "#1b1d22" }} />
+            <Stack.Screen name="signup" options={{ headerShown: false , presentation: "modal", statusBarColor: "#1b1d22" }} />
+         </Stack>
+      {/* </ThemeProvider> */}
    </> );
 }
 

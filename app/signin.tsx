@@ -2,7 +2,7 @@
 
 /** == [ @imports ] 
  * == == == == == == == == == */
-import { Btn, BtnTxt, Input, Label, LabelText, PP, Section } from "@/src/widgets/ui";
+import { BackBtn, BackBtnTxt, Btn, BtnTxt, Input, Label, LabelText, PP, Section } from "@/src/widgets/ui";
 import React, { useState, useEffect } from "react";
 import { 
    StyleSheet,
@@ -17,6 +17,19 @@ import { ActivityIndicator } from "react-native-paper";
 import {
    Link,
 } from "@react-navigation/native";
+import { router } from "expo-router";
+
+import * as CStore from "@/src/widgets/clb-dbs";
+import { FirebaseApp, FirebaseAuth, SaveDataOnFbRDB,  } from "@/FirebaseConfig";
+import { 
+   signInWithEmailAndPassword, 
+   createUserWithEmailAndPassword,
+   onAuthStateChanged,
+   User,
+   getAuth, 
+   signOut,
+} from "firebase/auth";
+import { get, child, ref, getDatabase } from "firebase/database";
 
 
 /** == [ properties ]
@@ -27,8 +40,7 @@ import {
  * == == == == == == == == == */
 export default function SignInView( { ...props } ) {
    const 
-      [ Name, setName ] = useState( "" )
-      ,
+      [ User, setUser ] = useState<User | null>( null ),
       [ Email, setEmail ] = useState( "" )
       ,
       [ Password, setPassword ] = useState( "" )
@@ -37,8 +49,59 @@ export default function SignInView( { ...props } ) {
 
    ;
 
+   async function HandleSignIn() {
+      setLoading( true );
+      await CStore.DeleteData( "user" );
+      async function Handle() {
+         try {
+            const 
+               response = await signInWithEmailAndPassword( FirebaseAuth, Email, Password )
+               ,
+               userUid = response.user.uid
+            ;
+
+            console.log( "SigIn() response: \n\n\n", response );
+            
+            // return response;
+            // return userUid;
+            return { response, userUid };
+         }
+         catch( err: any ) {
+            console.log( "SignIn() err: \n\n\n", err );
+            alert( `Não consegui fazer seu login!\naconteceu esse erro aqui: ${ err.code }\n${ err.message }` );
+         }
+         finally {
+            setLoading( false );
+         }
+      }
+      Handle().then( returned => {
+         async function CreateUserSpace() {
+            try {
+               const 
+                  // name = await get( child( ref( getDatabase() ), `users/${ returned?.user.uid }/name` ) )
+                  // ,
+                  userData = {
+                     name: "",
+                     // uid: returned?.user.uid,
+                     uid: returned?.userUid,
+                  }
+                  ,
+                  userReady = JSON.stringify( userData )
+               ;
+               await CStore.StoreData( userReady, "user" );
+               if( returned ) {
+                  router.replace( "/home/(tabs)" );
+               }
+            } catch( err: any ) { console.log( "CreateUserSpace() err: ", err ); }
+         }
+         CreateUserSpace();
+      } );
+   }
 
    return( <>
+      <BackBtn onPress={ () => { router.back() } }>
+         <BackBtnTxt>&lt;</BackBtnTxt>
+      </BackBtn>
       <View style={ s.root }>
          <ImageBackground source={ require( "@/src/images/bgs/splash-login-720x1600.png" ) } resizeMode="cover" style={ s.bgImage }>
             <View behavior="padding" style={ [ s.rootB ]}>
@@ -79,25 +142,13 @@ export default function SignInView( { ...props } ) {
                      ) : ( 
                         <Section style={{ gap: 16, width: "80%", }}>
                         
-                           <Pressable style={{ elevation: 10, width: "100%", }} onPress={ () => {} }>
+                           <Pressable style={{ elevation: 10, width: "100%", }} onPress={ () => { HandleSignIn() } }>
                               <Btn style={{ backgroundColor: "#212329", }}>
                                  <BtnTxt style={{ color: "#eee", }}>
-                                    Acessar sua conta
+                                    Login
                                  </BtnTxt>
                               </Btn> 
                            </Pressable>
-
-                           <Pressable style={{ elevation: 10, width: "100%", }} onPress={ () => {} }>
-                              <Btn>
-                                 <BtnTxt>
-                                    Criar uma conta
-                                 </BtnTxt>
-                              </Btn> 
-                           </Pressable>
-
-                           <Link to="/">
-                              <PP>Voltar</PP>
-                           </Link>
 
                         </Section> 
                      )

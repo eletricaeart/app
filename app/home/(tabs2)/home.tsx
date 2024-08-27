@@ -2,6 +2,8 @@
 
 /** == [ @imports ] 
  * == == == == == == == == == */
+import { Homepage, P } from "@/src/widgets/ui";
+import { Link } from "expo-router";
 import React, { useState, useEffect } from "react";
 import { 
    StyleSheet,
@@ -16,23 +18,13 @@ import {
 
 /** == [ exports ]
  * == == == == == == == == == */
-export default function Index( { ...props } ) {
+export default function HomeView( { ...props } ) {
 
 
    return( <>
-      <Text>Home screen</Text>
+      <Homepage>
+         <P>Home page</P>
+         <Link href={"/home/standalone"}>Standalone</Link>
+      </Homepage>
    </> );
 }
-
-
-/** == [ StyleSheet ]
- * == == == == == == == == == */
-const 
-   s = StyleSheet.create( {
-      sheet: {
-         flex: 1,
-         alignItems: "center",
-         justifyContent: "center",
-      },
-   } )
-;

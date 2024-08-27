@@ -5,7 +5,6 @@ import React, { useEffect, useState } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { Icon } from "@/src/widgets/clb-icons";
-import AuthRoutes from "@/app/(auth)/routes";
 import Routes from "../routes";
 import { SplashScreen, Stack, Tabs, } from "expo-router";
 import { useFonts } from "expo-font";
@@ -35,10 +34,9 @@ export default function AuthLayout() {
    if( !loaded ) { return null; }
 
   return(
-      <Stack screenOptions={{ headerShown: false, statusBarColor: "#1b1d22" }} initialRouteName="sign-in">
-         <Stack.Screen name="index" options={{ statusBarColor: "#1b1d22" }}/>
-         <Stack.Screen name="sign-in" options={{  }} />
-         <Stack.Screen name="sign-up" options={{  }}/>
+      <Stack screenOptions={{ headerShown: false, statusBarColor: "#1b1d22" }} initialRouteName="sign-up">
+         <Stack.Screen name="signin" options={{ headerShown: false, presentation: "modal" }}/>
+         <Stack.Screen name="signup" options={{ headerShown: false, }}/>
       </Stack>
   );
 }

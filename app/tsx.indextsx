@@ -47,8 +47,6 @@ import {
    getAuth, 
    signOut,
 } from "firebase/auth";
-import { firebase } from "@react-native-firebase/database";
-
 import { get, child, ref, getDatabase } from "firebase/database";
 
 
