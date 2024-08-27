@@ -20,7 +20,9 @@ import styled from "styled-components/native";
 import { MaskedTextInput, MaskedText, mask, } from "react-native-mask-text";
 
 import {
-   PageFooter, BottomNavigationBar, Fab, Press,
+   PageFooter, 
+   // BottomNavigationBar, 
+   Fab, Press,
    Touch, 
 } from "@/src/widgets/clb-widgets";
 
@@ -94,11 +96,6 @@ export default function ReceiptsView( { ...props } ) {
    ;
 
 
-
-   useEffect( () => {
-   }, [] ); 
-   
-
    /** == [ Fabb properties ] 
     * 
     * == == == == == == == == == */
@@ -129,7 +126,9 @@ export default function ReceiptsView( { ...props } ) {
       ,
       [ DueDate, setDueDate ] = useState( "" )
       ,
-      [ Customer, setCustomer ] = useState( "" )
+      [ Customer, setCustomer ] = useState( {} )
+      ,
+      [ Customers, setCustomers ] = useState( {} )
       ,
       [ Services, setServices ] = useState( [] )
       ,
@@ -182,6 +181,19 @@ export default function ReceiptsView( { ...props } ) {
          
    //    )
    // }, [ ReceiptValue ] );
+
+   useEffect( () => {
+      async function SetCustomers() {
+         try {
+            const 
+               getCustomers = await AsyncStorage.getItem( "customers" ).then( r => JSON.parse( r ) )
+            ;
+            console.log( "SetCustomers() => getCustomers: ", getCustomers );
+            return getCustomers;
+         } catch( err: any ) { console.log( "SetCustomers() err: ", err ); }
+      }
+      setCustomers( SetCustomers() );
+   }, [] ); 
    
    function ToggleSwitch_Paid() {
       setSwitchPaid_Enabled( !SwitchPaid_Enabled );
@@ -195,6 +207,42 @@ export default function ReceiptsView( { ...props } ) {
    function OnChangePayday( selectedDate ) {
       const currentDate = selectedDate;
       setPayday( currentDate );
+   }
+   
+   
+   async function RegisterReceiptsOnBase( props ) {
+      const 
+         receipts = await CStore.GetObjData( "receipts" ),
+         customerID = Customer // here
+      ;
+      // id_form.current.focus() && Keyboard.dismiss();
+
+      if( Name != "" ) {
+
+         // Insert data to AsyncStorage
+         await CStore.Save( 
+            props.dbs_name, props.object 
+         ).then( r => {
+            // reset inputs
+            inputs.forEach( i => i( "" ) );
+            // close modal
+            setModalVisibility( false );
+            // fetch local customers
+            // FetchLocalCustomers();
+            SetCustomers();
+         } );
+
+         SaveDataOnFbRDB( { 
+            ref: `users/${ userInfo.uid }/customers/${ props.object.id }`,
+            data: props.object,
+            okMsg: "Enviado pra nuvem!",
+            errMsg: "Deu ruim no envio mano!"
+         } );
+         
+      } else {
+         alert( "Digite o nome do seu cliente" );
+      }
+      // RegisterCustomerOnBase( { dbs_name: "customers", object: customersList } )
    }
 
 
@@ -473,14 +521,16 @@ export default function ReceiptsView( { ...props } ) {
                               </View>
                            </View>
                                                    
+                           {/* cliente input */}
                            <Text style={ s.label }>Cliente</Text>
                            <Text style={ [ s.input, { paddingTop: 18,  } ] }
                            onPress={ () => {
                               setModalCustomerVisibility( !ModalCustomerVisibility );
                            } }>
-                              { Customer }
+                              { Customer.name }
                            </Text>
                            
+
                            <View style={ s.duo }>
                               <View style={ s.duoBox }>
                                  <Text style={ s.label }>Serviços</Text>
@@ -1022,7 +1072,9 @@ export default function ReceiptsView( { ...props } ) {
                            <Section style={{
                               paddingTop: 24, paddingBottom: "100%",
                            }}>
-                              {/* body */}
+                              {/* cliente modal */
+                                 // body 
+                              }
                            </Section>
                         </Section>
                      </ScrollView>

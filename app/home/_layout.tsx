@@ -12,6 +12,12 @@ export default function Layout() {
                headerShown: false,
             }}
          />
+         <Stack.Screen 
+            name="/home"
+            options={{
+               headerShown: false,
+            }}
+         />
       </Stack>
    </> );
 }
