@@ -50,6 +50,7 @@ import {
 } from "firebase/auth";
 
 import { get, child, ref, getDatabase } from "firebase/database";
+import Landing from "@/app/landing";
 
 
 /** == [ properties ]
@@ -229,37 +230,14 @@ export default function Index() {
    // firebase.database().ref( "users" ).child( value.user.uid ).set( { name: name } );
 
 
+   
    return( <>
-      {/* { User ? 
-         ( <TabLayout /> ) 
+      { User ? 
+         ( router.replace( "/home/(tabs)" ) ) 
          : 
-         ( <AuthLayout /> )
-      } */}
-      <View style={ s.sheet }>
-         <Text>Index /</Text>
-         <View style={{ padding: 8 }}>
-            <Link href="/home/standalone">Open home/standalone</Link>
-         </View>
-         
-         <View style={{ padding: 8 }}>
-            <Link href="/home/(tabs)">Open home/(tabs)</Link>
-         </View>
-         <Pressable onPress={ () => { router.push( "/home/(tabs)" ) } }>
-            <Text>Home(tabs)</Text>
-         </Pressable>
-
-         <View style={{ padding: 8 }}>
-            <Link href="/landing">landing</Link>
-         </View>
-
-         <View style={{ padding: 8 }}>
-            <Link href="/signin">Sign in</Link>
-         </View>
-
-         <View style={{ padding: 8 }}>
-            <Link href="/signup">Sign up</Link>
-         </View>
-      </View>
+         // ( router.replace( "/landing" ) )
+         ( <Landing /> )
+      }
    </> );
 }
 

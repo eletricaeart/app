@@ -32,7 +32,12 @@ import { get, child, ref, getDatabase } from "firebase/database";
 
 /** == [ properties ]
  * == == == == == == == == == */
-
+// const 
+//    politicas = {
+//       privacidade: function() { return <Text>política de privacidade</Text> },
+//       termosDeUso: function() { return <Text >termos de uso</Text> },
+//    }
+// ;
 
 /** == [ exports ]
  * == == == == == == == == == */
@@ -175,6 +180,12 @@ export default function SignUpView( { ...props } ) {
                      )
                   }
                </View>
+               <Text style={{ textAlign: "center", color: "#eee", position: "absolute", bottom: 15 }}>
+                  Ao se registrar, você concorda com a nossa{"\n"}
+                  <Text style={{ textDecorationLine: "underline" }}>política de privacidade</Text> 
+                  e os 
+                  <Text style={{ textDecorationLine: "underline" }}>termos de uso</Text>
+               </Text>
             </View>
          </ImageBackground>
       </View>

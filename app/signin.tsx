@@ -14,10 +14,8 @@ import {
    Pressable, 
 } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
-import {
-   Link,
-} from "@react-navigation/native";
-import { router } from "expo-router";
+
+import { Link, router, } from "expo-router";
 
 import * as CStore from "@/src/widgets/clb-dbs";
 import { FirebaseApp, FirebaseAuth, SaveDataOnFbRDB,  } from "@/FirebaseConfig";
@@ -78,10 +76,10 @@ export default function SignInView( { ...props } ) {
          async function CreateUserSpace() {
             try {
                const 
-                  // name = await get( child( ref( getDatabase() ), `users/${ returned?.user.uid }/name` ) )
-                  // ,
+                  name = await get( child( ref( getDatabase() ), `users/${ returned?.userUid }/name` ) )
+                  ,
                   userData = {
-                     name: "",
+                     name: name,
                      // uid: returned?.user.uid,
                      uid: returned?.userUid,
                   }
@@ -154,6 +152,10 @@ export default function SignInView( { ...props } ) {
                      )
                   }
                </View>
+               <Text style={{ textAlign: "center", color: "#eee", position: "absolute", bottom: 15 }}>
+                  Ainda não tem uma conta? registre-se 
+                  <Link href="/signup" style={{ textDecorationLine: "underline" }}> aqui</Link> 
+               </Text>
             </View>
          </ImageBackground>
       </View>

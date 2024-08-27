@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 
 import {
    PageFooter,
-   BottomNavigationBar,
+   // BottomNavigationBar,
    Sheet,
 } from "@/src/widgets/clb-widgets";
 
@@ -45,7 +45,8 @@ export default function Home( { ...props } ) {
    const 
       [ Subtitle, setSubtitle ] = useState( "" )
       ,
-      [ User, setUser ] = useState( GetObjData( "user" ) )
+      // [ User, setUser ] = useState( GetObjData( "user" ) )
+      [ User, setUser ] = useState( {} )
       ,
       [ Loading, setLoading ] = useState( false )
    ;
@@ -64,19 +65,24 @@ export default function Home( { ...props } ) {
    }
 
    async function SetUser() {
+      setLoading( true );
       try {
          await FetchLocalUser().then(
             returned => setUser( returned )
          );
       } catch( err: any ) {
          console.error( "SetUser() err: \n\n\n", err );
-      }
+      } finally { setLoading( false ); }
    }
 
 
    useEffect( () => {
-      SetUser();
+      SetUser().then( returned => alert( returned ) );
    }, [] );
+
+   useEffect( () => {
+      SetUser();
+   }, [User] );
 
    return( <>
       <Sheet style={{ backgroundColor: "#fafafa", }}>
@@ -87,6 +93,18 @@ export default function Home( { ...props } ) {
             <Header style={{ position: "absolute", }}>
                <T1 style={{ color: "#eee", }}>
                   Olá { User && User.name }
+                  
+                  {/* Olá { 
+                     User ? Loading ? (
+                        <ActivityIndicator
+                        style={{marginTop: 30}}
+                        size="large"
+                        color="#fc0fc0"
+                        />
+                     ) : (
+                        User
+                     )
+                  } */}
                </T1>
                <T style={{ color: "#ddd", }}>Tudo bem!?</T>
             </Header>

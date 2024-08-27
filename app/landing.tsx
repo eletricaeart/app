@@ -35,7 +35,7 @@ import { get, child, ref, getDatabase } from "firebase/database";
 
 /** == [ exports ]
  * == == == == == == == == == */
-export default function index( { ...props } ) {
+export default function Landing( { ...props } ) {
    const 
       [ User, setUser ] = useState<User | null>( null ),
       [ Loading, setLoading ] = useState( false )
@@ -59,55 +59,61 @@ export default function index( { ...props } ) {
       load();
    }, [ User ] );
 
-   User ? ( router.replace( "/home/(tabs)" ) ) : 
-   ( <>
-      <View style={ s.root }>
-         <ImageBackground source={ require( "@/src/images/bgs/splash-login-720x1600.png" ) } resizeMode="cover" style={ s.bgImage }>
-            <View behavior="padding" style={ [ s.rootB ]}>
-               <View style={[ s.vv ]}>
-                  <Image source={ require( "@/src/images/EA/globo-de-plasma-700.png" ) } style={ { height: "100%", resizeMode: "contain", } }/>
-               </View>
-
-               <Text>Welcome landing view</Text>
-            
-               <KeyboardAvoidingView behavior="position" style={[ { width: "80%", } ]}>
-               </KeyboardAvoidingView> 
-
-               <View style={ s.footer }>
-                  {
-                     Loading ? (
-                        <ActivityIndicator size="large" color="#00559c"/> 
-                     ) : ( 
-                        <Section style={{ gap: 16, width: "80%", }}>
-                        
-                           <Pressable style={{ elevation: 10, width: "100%", }} onPress={ () => {} }>
-                              <Btn style={{ backgroundColor: "#212329", }}>
-                                 <Link href="/signin">
-                                    <BtnTxt style={{ color: "#eee", }}>
-                                       Acessar sua conta 
-                                    </BtnTxt>
-                                 </Link>
-                              </Btn> 
-                           </Pressable>
-
-                           <Pressable style={{ elevation: 10, width: "100%", }} onPress={ () => {} }>
-                              <Btn>
-                                 <Link href="/signup">
-                                    <BtnTxt>
-                                       Criar uma conta
-                                    </BtnTxt>
-                                 </Link>
-                              </Btn> 
-                           </Pressable>
-
-                        </Section> 
-                     )
-                  }
-               </View>
+   if( User ) {
+      router.replace( "/home/(tabs)" ); 
+   } 
+      return <Returned/>;
+      
+      function Returned() {
+         return( <>
+            <View style={ s.root }>
+               <ImageBackground source={ require( "@/src/images/bgs/splash-login-720x1600.png" ) } resizeMode="cover" style={ s.bgImage }>
+                  <View behavior="padding" style={ [ s.rootB ]}>
+                     <View style={[ s.vv ]}>
+                        <Image source={ require( "@/src/images/EA/globo-de-plasma-700.png" ) } style={ { height: "100%", resizeMode: "contain", } }/>
+                     </View>
+      
+                     <Text>Welcome landing view</Text>
+                  
+                     <KeyboardAvoidingView behavior="position" style={[ { width: "80%", } ]}>
+                     </KeyboardAvoidingView> 
+      
+                     <View style={ s.footer }>
+                        {
+                           Loading ? (
+                              <ActivityIndicator size="large" color="#00559c"/> 
+                           ) : ( 
+                              <Section style={{ gap: 16, width: "80%", }}>
+                              
+                                 <Pressable style={{ elevation: 10, width: "100%", }} onPress={ () => {} }>
+                                    <Btn style={{ backgroundColor: "#212329", }}>
+                                       <Link href="/signin">
+                                          <BtnTxt style={{ color: "#eee", }}>
+                                             Acessar sua conta 
+                                          </BtnTxt>
+                                       </Link>
+                                    </Btn> 
+                                 </Pressable>
+      
+                                 <Pressable style={{ elevation: 10, width: "100%", }} onPress={ () => {} }>
+                                    <Btn>
+                                       <Link href="/signup">
+                                          <BtnTxt>
+                                             Criar uma conta
+                                          </BtnTxt>
+                                       </Link>
+                                    </Btn> 
+                                 </Pressable>
+      
+                              </Section> 
+                           )
+                        }
+                     </View>
+                  </View>
+               </ImageBackground>
             </View>
-         </ImageBackground>
-      </View>
-   </> );
+         </> );
+      }
 }
 
 
