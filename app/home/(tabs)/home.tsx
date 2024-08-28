@@ -54,30 +54,51 @@ export default function Home( { ...props } ) {
    async function FetchLocalUser() {
       try {
          const 
-            data = await AsyncStorage.getItem( "user" )
-            ,
-            jsonData = await JSON.parse( data )
+            u = await AsyncStorage.getItem( "user" ).then( r => JSON.parse( r ) )
          ;
-         return jsonData;
+         return u;
       } catch( err: any ) {
-         console.error( "FetchLocalUser() err: \n\n\n", err );
+         console.error( "() err: \n\n\n", err );
       }
    }
 
+   // async function SetUser() {
+      // setLoading( true );
+      // try {
+      //    const 
+      //       user = await FetchLocalUser().then(
+      //          returned => setUser( returned )
+      //       )
+      //    ;
+      //    return user;
+      // } catch( err: any ) {
+      //    console.error( "SetUser() err: \n\n\n", err );
+      // } finally { setLoading( false ); }
+      
+   // }
+
    async function SetUser() {
-      setLoading( true );
       try {
-         await FetchLocalUser().then(
-            returned => setUser( returned )
-         );
+         FetchLocalUser().then( r => console.log( "u: ", r ) );
       } catch( err: any ) {
          console.error( "SetUser() err: \n\n\n", err );
-      } finally { setLoading( false ); }
+      }
    }
 
 
    useEffect( () => {
-      SetUser().then( returned => alert( returned ) );
+      // SetUser().then( returned => console.log( "SetUser() => returned: ", returned ) );
+      async function handle() {
+         try {
+            const 
+               u = await AsyncStorage.getItem( "user" ).then( r => JSON.parse( r ) )
+            ;
+            return u;
+         } catch( err: any ) {
+            console.error( "() err: \n\n\n", err );
+         }
+      }
+      handle().then( r => console.log( "u: ", r ) );
    }, [] );
 
    useEffect( () => {
