@@ -90,7 +90,7 @@ export default function ReceiptsView( { ...props } ) {
       ,
       [ ModalCustomerVisibility, setModalCustomerVisibility ] = useState( false )
       ,
-      [ Receipts, setReceipts ] = useState( null )
+      [ Receipts, setReceipts ] = useState( [] )
       ,
       [ InputInterface, setInputInterface ] = useState( true )
    ;
@@ -128,7 +128,7 @@ export default function ReceiptsView( { ...props } ) {
       ,
       [ Customer, setCustomer ] = useState( {} )
       ,
-      [ Customers, setCustomers ] = useState( {} )
+      [ Customers, setCustomers ] = useState( [] )
       ,
       [ Services, setServices ] = useState( [] )
       ,
@@ -182,8 +182,13 @@ export default function ReceiptsView( { ...props } ) {
    //    )
    // }, [ ReceiptValue ] );
 
-   useEffect( () => {
-      async function SetCustomers() {
+   /**
+    * receipts functions
+    * 
+    */
+   async function SetCustomers() {
+      // retrieve customers from storage and set on Customers
+      async function handle() {
          try {
             const 
                getCustomers = await AsyncStorage.getItem( "customers" ).then( r => JSON.parse( r ) )
@@ -192,15 +197,41 @@ export default function ReceiptsView( { ...props } ) {
             return getCustomers;
          } catch( err: any ) { console.log( "SetCustomers() err: ", err ); }
       }
-      setCustomers( SetCustomers() );
+      handle().then( r => setCustomers( r ) )
+   }
+
+   async function SetReceipts() {
+      // retrieve receipts from storage and set on Receipts
+      async function handle() {
+         try {
+            const 
+               getReceipts = await AsyncStorage.getItem( "receipts" ).then( r => JSON.parse( r ) )
+            ;
+            console.log( "SetReceipts() => getReceipts: ", getReceipts );
+            return getReceipts;
+         } catch( err: any ) { console.log( "SetReceipts() err: ", err ); }
+      }
+      handle().then( r => setReceipts( r ) )
+   }
+
+
+   /**
+    * load view
+    * 
+    */
+   useEffect( () => {
+      SetCustomers();
+      // SetReceipts();
    }, [] ); 
    
    function ToggleSwitch_Paid() {
       setSwitchPaid_Enabled( !SwitchPaid_Enabled );
       if( SwitchPaid_Enabled ) {
          setPaid( true );
+         return true;
       } else {
          setPaid( false );
+         return false;
       }
    }
 
@@ -210,39 +241,57 @@ export default function ReceiptsView( { ...props } ) {
    }
    
    
-   async function RegisterReceiptsOnBase( props ) {
-      const 
-         receipts = await CStore.GetObjData( "receipts" ),
-         customerID = Customer // here
+   async function RegisterNewReceipt() {
+      try {
+         const 
+            user = await AsyncStorage.getItem( "user" ).then( r => JSON.parse( r ) )
+         ;
+         let 
+         obj = {
+            id: Ref,
+            owner: Customer.id,
+            name: Service.description,
+            notes: Service.notes,
+            services: [ ...Service.services ],
+            receiptValue: Service.total,
+            subtotal: Subtotal,
+            discount: Discount,
+            warranty: Warranty,
+            formOfPayment: FormOfPayment,
+            isPaid: SwitchPaid_Enabled,
+            payday: Payday,
+            dueDate: DueDate,
+         }
+         ,
+         db = await CStore.GetObjData( "receipts" )
+         , 
+         data = []
       ;
-      // id_form.current.focus() && Keyboard.dismiss();
 
-      if( Name != "" ) {
+      SaveDataOnFbRDB( { 
+         ref: `users/${ user.uid }/receipts/${ obj.id }`,
+         data: obj,
+         okMsg: "Enviado pra nuvem!",
+         errMsg: "Deu ruim no envio mano!"
+      } );
 
-         // Insert data to AsyncStorage
-         await CStore.Save( 
-            props.dbs_name, props.object 
-         ).then( r => {
-            // reset inputs
-            inputs.forEach( i => i( "" ) );
-            // close modal
-            setModalVisibility( false );
-            // fetch local customers
-            // FetchLocalCustomers();
-            SetCustomers();
-         } );
-
-         SaveDataOnFbRDB( { 
-            ref: `users/${ userInfo.uid }/customers/${ props.object.id }`,
-            data: props.object,
-            okMsg: "Enviado pra nuvem!",
-            errMsg: "Deu ruim no envio mano!"
-         } );
-         
-      } else {
-         alert( "Digite o nome do seu cliente" );
+      if( db != null ) {
+         console.log( "null" );
+         data = [ ...db ];
       }
-      // RegisterCustomerOnBase( { dbs_name: "customers", object: customersList } )
+      data.push( obj );
+
+      await AsyncStorage.setItem( 
+         "receipts", JSON.stringify( data ) 
+      ).then( r => {
+         async function handle() {
+            try {
+            } catch( err: any ) {
+               console.log( "dsd: ", err );
+            }
+         }
+      });  
+      } catch( err: any ) { console.log( "RegisterNewReceipt() err: ", err ); }
    }
 
 
@@ -446,8 +495,12 @@ export default function ReceiptsView( { ...props } ) {
                                  trackColor={{ false: "#767577", true: "#00559c77" }}
                                  thumbColor={ SwitchPaid_Enabled ? "#0088ec" : "#f4f3f4" }
                                  ios_backgroundColor="#3e3e3e"
-                                 onValueChange={ ToggleSwitch_Paid }
+                                 onValueChange={ () => {
+                                    ToggleSwitch_Paid();
+                                    setPaid( SwitchPaid_Enabled );
+                                 } }
                                  value={ SwitchPaid_Enabled }
+                                 // value={ Paid }
                               />
                            </Section>
 
@@ -700,7 +753,17 @@ export default function ReceiptsView( { ...props } ) {
                               txtSty={{ color: "#fff", }}
                               txt="cadastrar"
                               onPress={ () => { 
-                                 // RegisterCustomerOnBase( { dbs_name: "customers", object: customersList } ) 
+                                 console.log(
+                                    "Receipt: \n\n\n", 
+                                    "\nService: ", Service,
+                                    "\nCustomer.id: ", Customer.id,
+                                    "\nRef: ", Ref,
+                                 );
+                                 if( Service.services.length > 0 ) {
+                                    RegisterNewReceipt();
+                                 } else {
+                                    console.log( "NewReceipt not saved" );
+                                 }
                               } }
                            />
 
@@ -1074,6 +1137,33 @@ export default function ReceiptsView( { ...props } ) {
                            }}>
                               {/* cliente modal */
                                  // body 
+                                 Customers && 
+                                 <FlatList 
+                                    data={ Customers }
+                                    renderItem={ ({item}) => <>
+                                       <Pressable
+                                          onPress={ () => {
+                                             setCustomer( {
+                                                name: item.name,
+                                                id: item.id,
+                                             } );
+                                             setModalCustomerVisibility( !ModalCustomerVisibility );
+                                          } }
+                                       >
+                                          <ea.CustomersCard
+                                             key={ item.id }
+                                             name={ item.name }
+                                          />
+                                       </Pressable>
+                                    </> }
+                                    
+                                    keyExtractor={ item => item.id } 
+                                    ItemSeparatorComponent={ 
+                                       () => <View style={{ height: 2, }}/>
+                                    }
+                                    style={{ width: "100%", }} 
+                                    contentContainerStyle={{ padding: 16, paddingBottom: 38, paddingLeft: 0, paddingRight: 0, }}
+                                 />
                               }
                            </Section>
                         </Section>

@@ -22,6 +22,7 @@ import * as Colores from "@/src/widgets/clb-colors";
 
 import { Icon } from "./clb-icons";
 import { Link, } from "expo-router";
+import { H4, T } from "./ui";
 // import { Link, useLinkProps, } from "@react-navigation/native";
 
 
@@ -178,7 +179,10 @@ export function EACard() {
 
 
 
-
+/**
+ * usersCard
+ * 
+ */
 export function UsersCard( { ...props } ) {
    const 
       child = props.children 
@@ -259,6 +263,95 @@ export function UsersCard( { ...props } ) {
                <Icon i="mc" name="dots-vertical" color="#777"/>
             </Pressable>
          </View>
+
+      </View>
+   </> );
+}
+
+
+
+/**
+ * CustomersCard
+ * 
+ */
+export function CustomersCard( { ...props } ) {
+   const 
+      child = props.children 
+      ,
+      profile = props.profile || require( "@/src/images/Avatar/default_avatar_masc_ico.webp" )
+      ,
+      name = props.name || "Nome do Cliente"
+      ,
+      tel = props.tel || "(13) 99148-6078"
+   ;
+   const s = StyleSheet.create( {
+      card: {
+         flexDirection: "row",
+         backgroundColor: "#fff",
+         borderRadius: 16,
+         padding: 16,
+         borderColor: "#fc0",
+         borderWidth: 0,
+         elevation: 15,
+         width: "95%",
+         height: 93,
+         margin: "auto",
+      },
+      picture: {
+         aspectRatio: 1, 
+         backgroundColor: "#009ee6",
+         // backgroundColor: "#00559c",
+         borderRadius: 1000,
+         alignItems: "center",
+         justifyContent: "center",
+         height: "100%",
+      },
+      img: {
+         width: "100%", height: "100%",
+         borderRadius: 1000,
+      },
+      customerInfo: {
+         justifyContent: "center",
+         flex: 1,
+         width: 70,
+         paddingLeft: 16,
+         // backgroundColor: "#4565",
+      },
+      sideBtn: {
+         width: "auto",
+         // paddingRight: 8,
+         alignItems: "center",
+         justifyContent: "center",
+         // backgroundColor: "#456",
+      },
+   } )
+
+   return( <>
+      <View style={[ s.card, props.style ]}>
+
+         <View style={[ s.picture ]}>
+            <Pressable style={[ s.picture ]} onPress={ () => {
+               // alert( "foto" );
+            } }>
+               <Image source={ profile } style={[ s.img ]} resizeMode="contain"/>
+            </Pressable>
+         </View>
+
+         <View style={ s.customerInfo }>
+            {/* <Link to={{ screen: "customer", params: { id: 'jane' } }}> */}
+            {/* <Pressable style={{ display: "flex", flexDirection: "column" }}> */}
+               <H4 color="#242526">{ name }</H4>
+               <T color="#777">{ tel }</T>
+            {/* </Pressable>    */}
+         </View>
+
+         {/* <View style={ s.sideBtn }>
+            <Pressable onPress={ () => {
+               alert( props.name || "menu" );
+            } }>
+               <Icon i="mc" name="dots-vertical" color="#777"/>
+            </Pressable>
+         </View> */}
 
       </View>
    </> );
