@@ -52,34 +52,21 @@ export default function Home( { ...props } ) {
    ;
 
    async function FetchLocalUser() {
+      // fetch & return user from localStorage
       try {
          const 
-            u = await AsyncStorage.getItem( "user" ).then( r => JSON.parse( r ) )
+            user = await AsyncStorage.getItem( "user" ).then( r => JSON.parse( r ) )
          ;
-         return u;
+         return user;
       } catch( err: any ) {
          console.error( "() err: \n\n\n", err );
       }
    }
 
-   // async function SetUser() {
-      // setLoading( true );
-      // try {
-      //    const 
-      //       user = await FetchLocalUser().then(
-      //          returned => setUser( returned )
-      //       )
-      //    ;
-      //    return user;
-      // } catch( err: any ) {
-      //    console.error( "SetUser() err: \n\n\n", err );
-      // } finally { setLoading( false ); }
-      
-   // }
-
    async function SetUser() {
+      // get user from localStorage & setUser( user )
       try {
-         FetchLocalUser().then( r => console.log( "u: ", r ) );
+         FetchLocalUser().then( r => setUser( r ) );
       } catch( err: any ) {
          console.error( "SetUser() err: \n\n\n", err );
       }
@@ -87,18 +74,7 @@ export default function Home( { ...props } ) {
 
 
    useEffect( () => {
-      // SetUser().then( returned => console.log( "SetUser() => returned: ", returned ) );
-      async function handle() {
-         try {
-            const 
-               u = await AsyncStorage.getItem( "user" ).then( r => JSON.parse( r ) )
-            ;
-            return u;
-         } catch( err: any ) {
-            console.error( "() err: \n\n\n", err );
-         }
-      }
-      handle().then( r => console.log( "u: ", r ) );
+      SetUser();
    }, [] );
 
    useEffect( () => {

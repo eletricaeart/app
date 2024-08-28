@@ -186,6 +186,17 @@ export default function ReceiptsView( { ...props } ) {
     * receipts functions
     * 
     */
+   async function FetchLocalReceipts() {
+      try {
+         const 
+            receipts = await AsyncStorage.getItem( "receipts" ).then( r => setReceipts( r ) )
+         ;
+         return receipts;
+      } catch( err: any ) {
+         console.error( "FetchLocalReceipts() err: \n\n\n", err );
+      }
+   }
+
    async function SetCustomers() {
       // retrieve customers from storage and set on Customers
       async function handle() {
@@ -334,7 +345,7 @@ export default function ReceiptsView( { ...props } ) {
       <PaperProvider>
          <LinearGradient colors={[ "#f5f5f5", "#e5e5e5", ]} style={[ { flex: 1, } ]} >
             
-            { Receipts != null ? 
+            { Receipts == null ? 
                <ScrollView style={{ flex: 1,  }}>
                   <HomePage style={{  }}>
                      <Header>
@@ -350,10 +361,12 @@ export default function ReceiptsView( { ...props } ) {
                               <FlatList 
                                  data={ Receipts }
                                  renderItem={ ({item}) => <>
-                                    <ea.UsersCard
+                                    <View
                                        key={ item.id }
                                        name={ item.name }
-                                    />
+                                    >
+                                       <Text>{ item.name }</Text>
+                                    </View>
                                  </> }
                                  keyExtractor={ item => item.id } 
                                  ItemSeparatorComponent={ 
@@ -1189,7 +1202,10 @@ export default function ReceiptsView( { ...props } ) {
                   labelTextColor: "#333",
                   labelStyle: { fontWeight: "bold" },
                   onPress: () => {
-                     // UpdateCustomersBase();
+                     // 
+                     FetchLocalReceipts().then( r => setReceipts( r ) );
+                     alert( Receipts );
+                     console.log( Receipts );
                   },
                },
                {
