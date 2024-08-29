@@ -169,7 +169,7 @@ export default function CustomersView( { ...props } ) {
 
    async function UpdateCustomersBase() {
       try {
-         let // here
+         let
             tempCustomersFB = CustomersFB
             ,
             tempCustomersFBJson = JSON.stringify( CustomersFB )

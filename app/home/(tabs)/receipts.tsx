@@ -111,16 +111,30 @@ export default function ReceiptsView( { ...props } ) {
 
    /* == [ Modal's properties ]
    == == == == == == == == == */
+   const defaults = {
+      dueDate: `${ 
+         new Date().getDate() }/${ 
+            new Date().getMonth() + 2 > 12 ? new Date().getMonth() + 2 - 12 : new Date().getMonth() + 2
+         }/${ new Date().getMonth() + 2 > 12 ? new Date().getFullYear() + 1 : new Date().getFullYear() 
+      }`,
+      payday: `${ 
+         new Date().getDate() }/${ 
+            new Date().getMonth() + 1
+         }/${ new Date().getFullYear() 
+      }`,
+      warranty: `${ 
+         new Date().getDate() }/${ 
+            new Date().getMonth() + 7 > 12 ? new Date().getMonth() + 7 - 12 : new Date().getMonth() + 7
+         }/${ new Date().getMonth() + 7 > 12 ? new Date().getFullYear() + 1 : new Date().getFullYear() 
+      }`,
+   };
    const [ customersDB, setcustomersDB ] = useState( [] );
    const 
       [ Paid, setPaid ] = useState( false )
       ,
       [ Payday, setPayday ] = useState( "" )
       ,
-      [ Ref, setRef ] = useState( () => {
-         let tempReceipts = [ 1, 2, 3 ];
-         return `rc-${ new Date().getFullYear() }-00${ new Date().getMonth() + 1 }-${ tempReceipts.length + 1 }`         
-      } )
+      [ Ref, setRef ] = useState( "" )
       ,
       [ Subtotal, setSubtotal ] = useState( Str2Brl( "0" ) )
       ,
@@ -155,7 +169,7 @@ export default function ReceiptsView( { ...props } ) {
          // pintura: 2 e 5 anos 
          // eletrica: 30 dias p/ não duráveis e 90 dias p/ duráveis
          // drywall: 6 meses ?
-         ""
+         return ""
       } )
       ,
       [ FormOfPayment, setFormOfPayment ] = useState( "..." )
@@ -186,43 +200,53 @@ export default function ReceiptsView( { ...props } ) {
     * receipts functions
     * 
     */
+   async function FetchLocalCustomers() {
+      try {
+         const 
+            getCustomers = await AsyncStorage.getItem( "customers" ).then( r => JSON.parse( r ) )
+         ;
+         console.log( "FetchLocalCustomers() => getCustomers: ", getCustomers );
+         return getCustomers;
+      } catch( err: any ) { console.log( "FetchLocalCustomers() err: ", err ); }
+   }
+
    async function FetchLocalReceipts() {
       try {
          const 
-            receipts = await AsyncStorage.getItem( "receipts" ).then( r => setReceipts( r ) )
+            getReceipts = await AsyncStorage.getItem( "receipts" ).then( r => JSON.parse( r ) )
          ;
-         return receipts;
-      } catch( err: any ) {
-         console.error( "FetchLocalReceipts() err: \n\n\n", err );
-      }
+         console.log( "FetchLocalReceipts() => getReceipts: ", getReceipts );
+         return getReceipts;
+      } catch( err: any ) { console.log( "FetchLocalReceipts() err: ", err ); }
    }
 
    async function SetCustomers() {
       // retrieve customers from storage and set on Customers
-      async function handle() {
-         try {
-            const 
-               getCustomers = await AsyncStorage.getItem( "customers" ).then( r => JSON.parse( r ) )
-            ;
-            console.log( "SetCustomers() => getCustomers: ", getCustomers );
-            return getCustomers;
-         } catch( err: any ) { console.log( "SetCustomers() err: ", err ); }
-      }
-      handle().then( r => setCustomers( r ) )
+      FetchLocalCustomers().then( r => setCustomers( r ) )
    }
 
    async function SetReceipts() {
       // retrieve receipts from storage and set on Receipts
-      async function handle() {
+      await FetchLocalReceipts().then( r => setReceipts( r ) )
+   }
+
+   async function SetRef() {
+      async function GetReceipts() {
          try {
             const 
-               getReceipts = await AsyncStorage.getItem( "receipts" ).then( r => JSON.parse( r ) )
+               receipts = await AsyncStorage.getItem( "receipts" ).then( r => JSON.parse( r ) )
             ;
-            console.log( "SetReceipts() => getReceipts: ", getReceipts );
-            return getReceipts;
-         } catch( err: any ) { console.log( "SetReceipts() err: ", err ); }
+            return receipts;
+         } catch( err: any ) {
+            console.error( "GetReceipts() err: \n\n\n", err );
+         }
       }
-      handle().then( r => setReceipts( r ) )
+      GetReceipts().then( r => {
+         if( r == null ) {
+            return `rc-${ new Date().getFullYear() }-00${ new Date().getMonth() + 1 }-${ 1 }`         
+         }
+         return `rc-${ new Date().getFullYear() }-00${ new Date().getMonth() + 1 }-${ r.length + 1 }`         
+      } ).then( r => setRef( r ) );
    }
 
 
@@ -232,8 +256,13 @@ export default function ReceiptsView( { ...props } ) {
     */
    useEffect( () => {
       SetCustomers();
-      // SetReceipts();
+      SetReceipts();
+      SetRef();
    }, [] ); 
+
+   useEffect( () => {
+      SetRef();
+   }, [ Receipts ] ); 
    
    function ToggleSwitch_Paid() {
       setSwitchPaid_Enabled( !SwitchPaid_Enabled );
@@ -253,56 +282,88 @@ export default function ReceiptsView( { ...props } ) {
    
    
    async function RegisterNewReceipt() {
-      try {
-         const 
-            user = await AsyncStorage.getItem( "user" ).then( r => JSON.parse( r ) )
-         ;
-         let 
-         obj = {
-            id: Ref,
-            owner: Customer.id,
-            name: Service.description,
-            notes: Service.notes,
-            services: [ ...Service.services ],
-            receiptValue: Service.total,
-            subtotal: Subtotal,
-            discount: Discount,
-            warranty: Warranty,
-            formOfPayment: FormOfPayment,
-            isPaid: SwitchPaid_Enabled,
-            payday: Payday,
-            dueDate: DueDate,
-         }
-         ,
-         db = await CStore.GetObjData( "receipts" )
-         , 
-         data = []
-      ;
+      async function handle() {
+         try {
+            const 
+               user = await AsyncStorage.getItem( "user" ).then( r => JSON.parse( r ) )
+            ;
+            const 
+               obj = {
+                  id: Ref,
+                  owner: Customer.id,
+                  name: Service.description,
+                  notes: Service.notes,
+                  services: [ ...Service.services ],
+                  receiptValue: Service.total,
+                  subtotal: Subtotal,
+                  discount: Discount,
+                  warranty: Warranty ? Warranty : defaults.warranty,
+                  formOfPayment: FormOfPayment,
+                  isPaid: SwitchPaid_Enabled,
+                  payday: !SwitchPaid_Enabled ? "" : Payday ? Payday :  defaults.payday,
+                  dueDate: DueDate ? DueDate : defaults.dueDate,
+               }
+            ;
 
-      SaveDataOnFbRDB( { 
-         ref: `users/${ user.uid }/receipts/${ obj.id }`,
-         data: obj,
-         okMsg: "Enviado pra nuvem!",
-         errMsg: "Deu ruim no envio mano!"
-      } );
+            await CStore.SaveAsList( "receipts", obj ).then( r => {
+               SetReceipts();
+            } );
 
-      if( db != null ) {
-         console.log( "null" );
-         data = [ ...db ];
+            SaveDataOnFbRDB( { 
+               ref: `users/${ user.uid }/receipts/${ obj.id }`,
+               data: obj,
+               okMsg: "Enviado pra nuvem!",
+               errMsg: "Deu ruim no envio mano!"
+            } );
+
+            // reset all inputs
+            setSubtotal( Str2Brl( "0" ) );
+            setCustomer( {} );
+            setServices( [] );
+            setService( {
+               description: "",
+               services: [],
+               notes: "",
+               total: "0",
+               customer: "",
+            } );
+            SetRef();
+            setNotes( "" );
+            setDiscount( 0 );
+            setWarranty( defaults.warranty );
+            setFormOfPayment( "..." );
+            setSwitchPaid_Enabled( false );
+            setPayday( defaults.payday );
+            setDueDate( defaults.dueDate );
+            
+         } catch( err: any ) { console.log( "RegisterNewReceipt() err: ", err ); }
       }
-      data.push( obj );
 
-      await AsyncStorage.setItem( 
-         "receipts", JSON.stringify( data ) 
-      ).then( r => {
-         async function handle() {
-            try {
-            } catch( err: any ) {
-               console.log( "dsd: ", err );
-            }
-         }
-      });  
-      } catch( err: any ) { console.log( "RegisterNewReceipt() err: ", err ); }
+      !Customer.id ? (
+         console.log( 
+            "nenhum cliente foi adicionado no recibo!",
+            // "\nWarranty: ", Warranty,
+            // "\nPayday: ", Payday,
+            // "\nDueDate: ", DueDate,
+            // "\nSwitchPaid_Enabled: ", SwitchPaid_Enabled,
+            
+            // "\n\n\nid: ", Ref,
+            // "\nowner: ", Customer.id,
+            // "\nname: ", Service.description,
+            // "\nnotes: ", Service.notes,
+            // "\nservices: ", [ ...Service.services ],
+            // "\nreceiptValue: ", Service.total,
+            // "\nsubtotal: ", Subtotal,
+            // "\ndiscount: ", Discount,
+            // "\nwarranty: ", Warranty ? Warranty : defaults.warranty,
+            // "\nformOfPayment: ", FormOfPayment,
+            // "\nisPaid: ", SwitchPaid_Enabled,
+            // "\npayday: ", !SwitchPaid_Enabled ? "" : Payday ? Payday :  defaults.payday,
+            // "\ndueDate: ", DueDate ? DueDate : defaults.dueDate
+         )
+      ) : Service.services.length == 0 ? (
+         console.log( "nenhum serviço foi adicionado no recibo!" )
+      ) : handle();
    }
 
 
@@ -345,8 +406,8 @@ export default function ReceiptsView( { ...props } ) {
       <PaperProvider>
          <LinearGradient colors={[ "#f5f5f5", "#e5e5e5", ]} style={[ { flex: 1, } ]} >
             
-            { Receipts == null ? 
-               <ScrollView style={{ flex: 1,  }}>
+            { Receipts != null ? 
+               <ScrollView style={{ flex: 1, }}>
                   <HomePage style={{  }}>
                      <Header>
                         <Content>
@@ -355,6 +416,7 @@ export default function ReceiptsView( { ...props } ) {
                      </Header>
    
                      <Section  style={{ flex: 1, paddingBottom: 75, backgroundColor: "#e2f4fe00", }}>
+                           
                         <Content style={{ gap: 16 }}>
    
                            {  
@@ -364,18 +426,115 @@ export default function ReceiptsView( { ...props } ) {
                                     <View
                                        key={ item.id }
                                        name={ item.name }
+                                       style={{
+                                          // backgroundColor: "#afc",
+                                          height: 80,
+                                          flexDirection: "row",
+                                       }}
                                     >
-                                       <Text>{ item.name }</Text>
+                                       <View style={{
+                                             // backgroundColor: "#afb",
+                                             height: "100%",
+                                             flex: .35 - .18,
+                                             paddingTop: 18,
+                                             paddingBottom: 18,
+                                             paddingLeft: 18,
+                                             paddingRight: 9,
+                                             alignItems: "center",
+                                             justifyContent: "center",
+                                          }}
+                                       >
+                                          <View style={{ 
+                                             backgroundColor: "#daa520", 
+                                             alignItems: "center", 
+                                             justifyContent: "center",
+                                             padding: 8,
+                                             borderRadius: 1000, 
+                                          }}
+                                          >
+                                             <Icon i="mc" name="receipt" color="#afb"/>
+                                          </View>
+                                       </View>
+
+                                       <View style={{
+                                             flex: 1,
+                                             paddingTop: 18,
+                                             paddingBottom: 18,
+                                             paddingLeft: 9,
+                                             paddingRight: 9,
+                                          }}
+                                       >
+                                          <H3>{ item.name }</H3>
+                                          <P style={{ color: "#777" }}>{ Str2Brl( item.receiptValue ) }</P>
+                                       </View>
+
+                                       <View style={{
+                                             // backgroundColor: "#afb",
+                                             height: "100%",
+                                             flex: .35 - .18,
+                                             paddingTop: 18,
+                                             paddingBottom: 18,
+                                             paddingLeft: 9,
+                                             paddingRight: 18,
+                                             alignItems: "center",
+                                             justifyContent: "center",
+                                          }}
+                                       >
+                                          { 
+                                             item.isPaid ? ( 
+                                                <View
+                                                   style={{
+                                                      backgroundColor: "#27f3",
+                                                      paddingTop: 2,
+                                                      paddingBottom: 2,
+                                                      paddingLeft: 6,
+                                                      paddingRight: 6,
+                                                      borderRadius: 20,
+                                                      alignItems: "center",
+                                                      justifyContent: "center",
+                                                   }}
+                                                >
+                                                   <PP style={{ color: "#27f", fontWeight: "bold" }}>
+                                                      Pago
+                                                   </PP>
+                                                </View>
+                                             ) : (
+                                                <View
+                                                   style={{
+                                                      backgroundColor: "#f723",
+                                                      paddingTop: 2,
+                                                      paddingBottom: 2,
+                                                      paddingLeft: 6,
+                                                      paddingRight: 6,
+                                                      borderRadius: 20,
+                                                      alignItems: "center",
+                                                      justifyContent: "center",
+                                                   }}
+                                                >
+                                                   <PP style={{ color: "#f72", fontWeight: "bold" }}>
+                                                      Receber
+                                                   </PP>
+                                                </View>
+                                             )
+                                          }
+                                       </View>
+
                                     </View>
                                  </> }
                                  keyExtractor={ item => item.id } 
                                  ItemSeparatorComponent={ 
-                                    () => <View style={{ height: 16, }}/>
+                                    () => <View style={{ 
+                                       height: 1, 
+                                       backgroundColor: "#ccc" ,
+                                       width: "90%",
+                                       margin: "auto",
+                                    }}/>
                                  }
                               />
                            }
                            
                         </Content>
+
                      </Section>
                   </HomePage> 
                </ScrollView>
@@ -533,11 +692,7 @@ export default function ReceiptsView( { ...props } ) {
                                     } }
                                     style={ s.input }
                                     placeholderTextColor={ "#777" }
-                                    placeholder={ `${ 
-                                       new Date().getDate() }/${ 
-                                          new Date().getMonth() + 1
-                                       }/${ new Date().getFullYear() 
-                                    }` }
+                                    placeholder={ defaults.payday }
                                     keyboardType="numeric"
                                  />
                               </Section>
@@ -555,7 +710,7 @@ export default function ReceiptsView( { ...props } ) {
                                  <Text style={ s.label }>Referência</Text>
                                  <TextInput style={ s.input }
                                     value={ Ref }
-                                    onChangeText={ setRef }
+                                    // onChangeText={ setRef }
                                     keyboardType="number-pad"
                                     placeholderTextColor={ "#777" }
                                     editable={ false }
@@ -577,11 +732,7 @@ export default function ReceiptsView( { ...props } ) {
                                     } }
                                     style={ s.input }
                                     placeholderTextColor={ "#777" }
-                                    placeholder={ `${ 
-                                       new Date().getDate() }/${ 
-                                          new Date().getMonth() + 2 > 12 ? new Date().getMonth() + 2 - 12 : new Date().getMonth() + 2
-                                       }/${ new Date().getMonth() + 2 > 12 ? new Date().getFullYear() + 1 : new Date().getFullYear() 
-                                    }` }
+                                    placeholder={ defaults.dueDate }
                                     keyboardType="numeric"
                                  />
                               </View>
@@ -692,11 +843,7 @@ export default function ReceiptsView( { ...props } ) {
                               } }
                               style={ s.input }
                               placeholderTextColor={ "#777" }
-                              placeholder={ `${ 
-                                 new Date().getDate() }/${ 
-                                    new Date().getMonth() + 7 > 12 ? new Date().getMonth() + 7 - 12 : new Date().getMonth() + 7
-                                 }/${ new Date().getMonth() + 7 > 12 ? new Date().getFullYear() + 1 : new Date().getFullYear() 
-                              }` }
+                              placeholder={ defaults.warranty }
                               keyboardType="numeric"
                            />
                               
@@ -772,11 +919,12 @@ export default function ReceiptsView( { ...props } ) {
                                     "\nCustomer.id: ", Customer.id,
                                     "\nRef: ", Ref,
                                  );
-                                 if( Service.services.length > 0 ) {
-                                    RegisterNewReceipt();
-                                 } else {
-                                    console.log( "NewReceipt not saved" );
-                                 }
+                                 RegisterNewReceipt();
+                                 // if( Service.services.length > 0 ) {
+                                 //    RegisterNewReceipt();
+                                 // } else {
+                                 //    console.log( "NewReceipt not saved" );
+                                 // }
                               } }
                            />
 
@@ -1203,7 +1351,92 @@ export default function ReceiptsView( { ...props } ) {
                   labelStyle: { fontWeight: "bold" },
                   onPress: () => {
                      // 
-                     FetchLocalReceipts().then( r => setReceipts( r ) );
+                     async function FetchFB() {
+                        try {
+                           const 
+                              user = await CStore.GetObjData( "user" )
+                           ;
+                           console.log( "user: ", await CStore.GetObjData( "user" ) );
+                           await get( child( ref( getDatabase() ), `users/${ user.uid }/receipts` ) )
+                           .then(
+                              dataList => { 
+                                 const 
+                                    list: (
+                                       ( prevState: never[] ) => never[] ) 
+                                       | 
+                                       { key: any; id: any; name: any; email: any; }[] = []
+                                    // list: SetStateAction<{ id: string; name: string; email: string; }> | { id: any; name: any; email: any; }[] = []
+                                 ;
+                                 
+                                 dataList.forEach( data => {
+                                    const 
+                                       key = data.key
+                                       ,
+                                       value = data.val()
+                                    ;
+                                    list.push( {
+                                       key: key,
+                                       id: value.id,
+                                       name: value.name,
+                                       email: value.email,
+                                    } );
+                                 } );
+                                 // setCustomersFB( list );
+                                 // setLoading( false );
+                              }
+                           );
+                        } catch( err: any ) {
+                           alert( `Deu ruim no FetchData() err: \ncode: ${err.code} \nmsg: ${err.message}` );
+                        }
+                     }
+
+                     async function GetFBReceipts() {
+                        try {
+                           let
+                              tempReceiptsFB = ReceiptsFB
+                              ,
+                              tempReceiptsFBJson = JSON.stringify( ReceiptsFB )
+                              ,
+                              tempLocalReceiptsString = await AsyncStorage.getItem( "receipts" )
+                              ,
+                              tempLocalReceipts = await JSON.parse( tempLocalReceiptsString )
+                           ;
+                  
+                           await AsyncStorage.setItem( "Receipts", tempReceiptsFBJson );
+                           SetReceipts();
+                        } catch( err: any ) {
+                           console.error( "GetFBReceipts() err: \n\n\n", err );
+                        }
+                     }
+
+
+
+                     async function GetReceiptsFromFbRDB() {
+                        try {
+                           // const dbRef = ref( getDatabase() );
+                           let 
+                              dbRef = ref( FirebaseDB ),
+                              data = [],
+                              user = await CStore.GetObjData( "user" )
+                           ;
+
+                           get(
+                              child( dbRef, `users/${ user.uid }/receipts` ).then( snapshot => {
+                                 if( snapshot.exists() ) {
+                                    data = [ ...( snapshot.val().vampire ) ];
+                                    console.log( "\n\n\nGetReceiptsFromFbRDB() snapshot data: ", data );
+                                 } else {
+                                    console.log( "doens't exist" );
+                                 }
+                              } )
+                           );
+
+                           return data;
+                        } catch( err ) {
+                           alert( "Unsuccessful" );
+                        }
+                     }
+                     GetReceiptsFromFbRDB().then( r => console.log( "\n\n\nGetReceiptsFromFbRDB() snapshot r: ", r ) );
                      alert( Receipts );
                      console.log( Receipts );
                   },

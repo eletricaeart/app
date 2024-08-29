@@ -33,6 +33,36 @@ export async function Save( dbs_name, object ) {
    }
 }
 
+/**
+ * Save on localStprage as [ {}, {}, ]
+ */
+export async function SaveAsList( ls_name: string, object ) {
+   let list = [];
+
+   try {
+      if( await AsyncStorage.getItem( ls_name ) ) {
+         const 
+            listDBs = await AsyncStorage.getItem( ls_name )
+            ,
+            parsedList = await JSON.parse( listDBs )
+         ;
+         list = [ ...parsedList ];
+         console.log( "SaveAsList() list: \n\n\n", list );
+      }
+
+      list.push( object );
+
+      const jsonValue = JSON.stringify( list );
+      await AsyncStorage.setItem( ls_name, jsonValue );
+
+      console.log( "SaveAsList() jsonValue: \n\n\n", jsonValue );
+
+      return( jsonValue );
+   } catch( err ) {
+     console.log( "\n\n== == == == == ==\nSaveAsList() saving error: \n", err );
+   }
+}
+
 
 
 
