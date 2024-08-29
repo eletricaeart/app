@@ -1436,9 +1436,22 @@ export default function ReceiptsView( { ...props } ) {
                            alert( "Unsuccessful" );
                         }
                      }
-                     GetReceiptsFromFbRDB().then( r => console.log( "\n\n\nGetReceiptsFromFbRDB() snapshot r: ", r ) );
+                     // GetReceiptsFromFbRDB().then( r => console.log( "\n\n\nGetReceiptsFromFbRDB() snapshot r: ", r ) );
                      alert( Receipts );
-                     console.log( Receipts );
+                     console.log( "Buscar() Receipts: ", Receipts );
+                     async function handle() {
+                        try {
+                           const 
+                              user = await CStore.GetObjData( "user" ),
+                              data = await get( child( ref( getDatabase() ), `users/${ user.uid }/receipts` ) )
+                           ;
+                           return { user, data };
+                        } catch( err: any ) {
+                           console.error( "handle() err: \n\n\n", err );
+                        }
+                     }
+                     console.log( "Buscar() Receipts: ", Receipts );
+                     handle().then( r => console.log( "Buscar() handle() r: ", r ) );
                   },
                },
                {
@@ -1450,11 +1463,11 @@ export default function ReceiptsView( { ...props } ) {
                },
             ]}
             onStateChange={onStateChange}
-            onPress={() => {
-               if (open) {
+            onPress={ () => {
+               if( open ) {
                   // do something if the speed dial is open
                }
-            }}
+            } }
             />
          </Portal>
      </PaperProvider>
