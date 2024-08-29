@@ -54,6 +54,7 @@ import { ref, get, child, getDatabase, set } from "firebase/database";
 import useCustomersFB from "@/src/hooks/useCustomersFB";
 import { GetTotal } from "@/src/scripts/receipts";
 import MaskInput, { formatWithMask, Masks } from "react-native-mask-input";
+import useReceiptsFB from "@/src/hooks/useReceiptsFB";
 
 
 
@@ -91,6 +92,8 @@ export default function ReceiptsView( { ...props } ) {
       [ ModalCustomerVisibility, setModalCustomerVisibility ] = useState( false )
       ,
       [ Receipts, setReceipts ] = useState( [] )
+      ,
+      { ReceiptsFB, Loading } = useReceiptsFB({})
       ,
       [ InputInterface, setInputInterface ] = useState( true )
    ;
@@ -1439,19 +1442,28 @@ export default function ReceiptsView( { ...props } ) {
                      // GetReceiptsFromFbRDB().then( r => console.log( "\n\n\nGetReceiptsFromFbRDB() snapshot r: ", r ) );
                      alert( Receipts );
                      console.log( "Buscar() Receipts: ", Receipts );
-                     async function handle() {
+                     async function Buscar() {
                         try {
                            const 
                               user = await CStore.GetObjData( "user" ),
                               data = await get( child( ref( getDatabase() ), `users/${ user.uid }/receipts` ) )
+                              ,
+            tempCustomersFB = CustomersFB
+            ,
+            tempCustomersFBJson = JSON.stringify( CustomersFB )
+            ,
+            tempLocalCustomersString = await AsyncStorage.getItem( "customers" )
+            ,
+            tempLocalCustomers = await JSON.parse( tempLocalCustomersString )
                            ;
                            return { user, data };
                         } catch( err: any ) {
-                           console.error( "handle() err: \n\n\n", err );
+                           console.error( "Buscar() err: \n\n\n", err );
                         }
                      }
                      console.log( "Buscar() Receipts: ", Receipts );
-                     handle().then( r => console.log( "Buscar() handle() r: ", r ) );
+                     Buscar().then( r => console.log( "Buscar() r: ", r ) );
+                     
                   },
                },
                {
