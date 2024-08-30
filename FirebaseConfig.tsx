@@ -94,6 +94,115 @@ export async function GetDataFromFbRDB( { ...props } ) {
    }
 }
 
+/**
+ * 
+ * read data from rtdb
+ * 
+ */
+export async function FetchRtdbData( { ...props } ) {
+   async function handle() {
+      try {
+         // const dbRef = ref( getDatabase() );
+         // let 
+         //    data ;
+         //    await get(
+         //       child( ref( FirebaseDB ), props.ref )
+         //    ).then( snapshot => {
+         //       if( snapshot.exists() ) {
+         //          console.log( "snapshot.val(): ", snapshot.val() );
+         //          data = snapshot.val();
+         //       } else {
+         //          console.log( "No data available" );
+         //       }
+         //    } ).catch( err => {
+         //       console.error( err );
+         //    } )
+         // ;
+   
+         // return data;
+
+         return await get( child( ref( FirebaseDB ), props.ref ) );
+      } catch( err: any ) {
+         console.log( "Unsuccessful: ", err );
+      }
+   }
+   handle().then( fb => {
+      console.log( "fb?.val(): ", fb?.val() );
+      return fb?.val();
+   } );
+}
+
+/**
+ * read [ {}, {} ] data from rtdb
+ * 
+ */
+/* async function FetchData() {
+   try {
+      const 
+         user = await CStore.GetObjData( "user" )
+      ;
+      console.log( "receipts: ", await CStore.GetObjData( "receipts" ) );
+      // await get( child( ref( getDatabase() ), `users/${ user.uid }/receipts` ) )
+      await get( child( 
+         ref( FirebaseDB ), `users/${ user.uid }/receipts` 
+      ) ).then(
+         dataList => { 
+            const 
+               list: ( 
+                  ( prevState: never[] ) => never[] 
+               ) | { 
+                  key: any;
+                  id: any;
+                  formOfPayment: any;
+                  isPaid: any;
+                  name: any;
+                  notes: any;
+                  owner: any;
+                  payday: any;
+                  receiptValue: any;
+                  services: any[];
+                  subtotal: any;
+                  warranty: any;
+               }[] = []
+               // list: SetStateAction<{ id: string; name: string; email: string; }> | { id: any; name: any; email: any; }[] = []
+            ;
+            
+            dataList.forEach( data => {
+               const 
+                  key = data.key,
+                  value = data.val(),
+                  services: any[] = []
+               ;
+
+               value.services.forEach( service => {
+                  services.push( Object.values( service ) );
+               } );
+
+               list.push( { 
+                  // ...value 
+                  key: key,
+                  id: value.id,
+                  formOfPayment: value.formOfPayment,
+                  isPaid: value.isPaid,
+                  name: value.name,
+                  notes: value.notes,
+                  owner: value.owner,
+                  payday: value.payday,
+                  receiptValue: value.receiptValue,
+                  services: services,
+                  subtotal: value.subtotal,
+                  warranty: value.warranty,
+               } );
+            } );
+            setReceiptsFB( list );
+            setLoading( false );
+         }
+      );
+   } catch( err: any ) {
+      alert( `Deu ruim no FetchData() err: \ncode: ${err.code} \nmsg: ${err.message}` );
+   }
+} */
+
 export async function UpdateDataOnFbRDB( { ...props } ) {
    await update( 
       ref( FirebaseDB, props.ref ),  

@@ -45,7 +45,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { api_GetCEP } from "@/src/services/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { FirebaseDB, SaveDataOnFbRDB, GetDataFromFbRDB } from "@/FirebaseConfig";
+import { FirebaseDB, SaveDataOnFbRDB, GetDataFromFbRDB, GetFbRDBData, FetchRtdbData } from "@/FirebaseConfig";
 import { GetFBData, DeleteFBData, } from "@/src/widgets/clb-fb";
 
 import uuid from "react-native-uuid";
@@ -55,6 +55,7 @@ import useCustomersFB from "@/src/hooks/useCustomersFB";
 import { GetTotal } from "@/src/scripts/receipts";
 import MaskInput, { formatWithMask, Masks } from "react-native-mask-input";
 import useReceiptsFB from "@/src/hooks/useReceiptsFB";
+import { css } from "styled-components";
 
 
 
@@ -223,6 +224,50 @@ export default function ReceiptsView( { ...props } ) {
       } catch( err: any ) { console.log( "FetchLocalReceipts() err: ", err ); }
    }
 
+   async function FetchFbReceipts() {
+      // async function handle() {
+      //    try {
+      //       const 
+      //          user = await CStore.GetObjData( "user" ),
+      //          data = await get( child( 
+      //             ref( FirebaseDB ), `users/${ user.uid }/receipts` 
+      //          ) ).then( snapshot => snapshot?.val() );
+      //       ;
+      //       return await data;
+      //    } catch( err: any ) {
+      //       console.error( "FetchFbReceipts() err: \n\n\n", err );
+      //    }
+      // }
+      // handle().then( r => {
+      //    setReceipts( r );
+      //    console.log("r: ", r );
+
+      //    async function SaveLocal() {
+      //       const json = JSON.stringify( r );
+      //       await AsyncStorage.setItem( "receipts", json );
+      //    }
+      //    SaveLocal();
+      // } );
+      
+      try {
+         let
+            receipts = ReceiptsFB
+            ,
+            json = JSON.stringify( ReceiptsFB )
+            // ,
+            // localReceipts = await AsyncStorage.getItem( "receipts" )
+            // ,
+            // localJson = await JSON.parse( localReceipts )
+         ;
+
+         await AsyncStorage.setItem( "receipts", json );
+         SetReceipts();
+
+      } catch( err: any ) {
+         console.error( "FetchFbReceipts() err: \n\n\n", err );
+      }
+   }
+
    async function SetCustomers() {
       // retrieve customers from storage and set on Customers
       FetchLocalCustomers().then( r => setCustomers( r ) )
@@ -245,10 +290,11 @@ export default function ReceiptsView( { ...props } ) {
          }
       }
       GetReceipts().then( r => {
-         if( r == null ) {
-            return `rc-${ new Date().getFullYear() }-00${ new Date().getMonth() + 1 }-${ 1 }`         
-         }
-         return `rc-${ new Date().getFullYear() }-00${ new Date().getMonth() + 1 }-${ r.length + 1 }`         
+         return `rc-${ new Date().getFullYear() }-00${ new Date().getMonth() + 1 }-${ Math.round( Math.random() * 999 ) }-${ Math.round( Math.random() * 999 ) }`;       
+         // if( r == null ) {
+         //    return `rc-${ new Date().getFullYear() }-00${ new Date().getMonth() + 1 }-${ 1 }`         
+         // }
+         // return `rc-${ new Date().getFullYear() }-00${ new Date().getMonth() + 1 }-${ r.length + 1 }`         
       } ).then( r => setRef( r ) );
    }
 
@@ -438,7 +484,7 @@ export default function ReceiptsView( { ...props } ) {
                                        <View style={{
                                              // backgroundColor: "#afb",
                                              height: "100%",
-                                             flex: .35 - .18,
+                                             flex: .45 - .18,
                                              paddingTop: 18,
                                              paddingBottom: 18,
                                              paddingLeft: 18,
@@ -474,7 +520,7 @@ export default function ReceiptsView( { ...props } ) {
                                        <View style={{
                                              // backgroundColor: "#afb",
                                              height: "100%",
-                                             flex: .35 - .18,
+                                             flex: .45 - .18,
                                              paddingTop: 18,
                                              paddingBottom: 18,
                                              paddingLeft: 9,
@@ -488,6 +534,7 @@ export default function ReceiptsView( { ...props } ) {
                                                 <View
                                                    style={{
                                                       backgroundColor: "#27f3",
+                                                      width: "100%",
                                                       paddingTop: 2,
                                                       paddingBottom: 2,
                                                       paddingLeft: 6,
@@ -1344,7 +1391,7 @@ export default function ReceiptsView( { ...props } ) {
             backdropColor="#fffb"
 
             fabStyle={{ backgroundColor: "#00559c", }}
-            icon={open ? 'atom' : 'plus'}
+            icon={ open ? 'atom' : 'plus' }
             actions={[
                //  { icon: 'plus', onPress: () => console.log('Pressed add') },
                {
@@ -1352,118 +1399,11 @@ export default function ReceiptsView( { ...props } ) {
                   label: 'Buscar recibos da nuvem',
                   labelTextColor: "#333",
                   labelStyle: { fontWeight: "bold" },
-                  onPress: () => {
-                     // 
-                     async function FetchFB() {
-                        try {
-                           const 
-                              user = await CStore.GetObjData( "user" )
-                           ;
-                           console.log( "user: ", await CStore.GetObjData( "user" ) );
-                           await get( child( ref( getDatabase() ), `users/${ user.uid }/receipts` ) )
-                           .then(
-                              dataList => { 
-                                 const 
-                                    list: (
-                                       ( prevState: never[] ) => never[] ) 
-                                       | 
-                                       { key: any; id: any; name: any; email: any; }[] = []
-                                    // list: SetStateAction<{ id: string; name: string; email: string; }> | { id: any; name: any; email: any; }[] = []
-                                 ;
-                                 
-                                 dataList.forEach( data => {
-                                    const 
-                                       key = data.key
-                                       ,
-                                       value = data.val()
-                                    ;
-                                    list.push( {
-                                       key: key,
-                                       id: value.id,
-                                       name: value.name,
-                                       email: value.email,
-                                    } );
-                                 } );
-                                 // setCustomersFB( list );
-                                 // setLoading( false );
-                              }
-                           );
-                        } catch( err: any ) {
-                           alert( `Deu ruim no FetchData() err: \ncode: ${err.code} \nmsg: ${err.message}` );
-                        }
-                     }
-
-                     async function GetFBReceipts() {
-                        try {
-                           let
-                              tempReceiptsFB = ReceiptsFB
-                              ,
-                              tempReceiptsFBJson = JSON.stringify( ReceiptsFB )
-                              ,
-                              tempLocalReceiptsString = await AsyncStorage.getItem( "receipts" )
-                              ,
-                              tempLocalReceipts = await JSON.parse( tempLocalReceiptsString )
-                           ;
-                  
-                           await AsyncStorage.setItem( "Receipts", tempReceiptsFBJson );
-                           SetReceipts();
-                        } catch( err: any ) {
-                           console.error( "GetFBReceipts() err: \n\n\n", err );
-                        }
-                     }
-
-
-
-                     async function GetReceiptsFromFbRDB() {
-                        try {
-                           // const dbRef = ref( getDatabase() );
-                           let 
-                              dbRef = ref( FirebaseDB ),
-                              data = [],
-                              user = await CStore.GetObjData( "user" )
-                           ;
-
-                           get(
-                              child( dbRef, `users/${ user.uid }/receipts` ).then( snapshot => {
-                                 if( snapshot.exists() ) {
-                                    data = [ ...( snapshot.val().vampire ) ];
-                                    console.log( "\n\n\nGetReceiptsFromFbRDB() snapshot data: ", data );
-                                 } else {
-                                    console.log( "doens't exist" );
-                                 }
-                              } )
-                           );
-
-                           return data;
-                        } catch( err ) {
-                           alert( "Unsuccessful" );
-                        }
-                     }
-                     // GetReceiptsFromFbRDB().then( r => console.log( "\n\n\nGetReceiptsFromFbRDB() snapshot r: ", r ) );
-                     alert( Receipts );
-                     console.log( "Buscar() Receipts: ", Receipts );
-                     async function Buscar() {
-                        try {
-                           const 
-                              user = await CStore.GetObjData( "user" ),
-                              data = await get( child( ref( getDatabase() ), `users/${ user.uid }/receipts` ) )
-                              ,
-            tempCustomersFB = CustomersFB
-            ,
-            tempCustomersFBJson = JSON.stringify( CustomersFB )
-            ,
-            tempLocalCustomersString = await AsyncStorage.getItem( "customers" )
-            ,
-            tempLocalCustomers = await JSON.parse( tempLocalCustomersString )
-                           ;
-                           return { user, data };
-                        } catch( err: any ) {
-                           console.error( "Buscar() err: \n\n\n", err );
-                        }
-                     }
-                     console.log( "Buscar() Receipts: ", Receipts );
-                     Buscar().then( r => console.log( "Buscar() r: ", r ) );
-                     
+                  onPress: () => { 
+                     FetchFbReceipts().then( r => {
+                        setReceipts( r );
+                        console.log( "FetchFbReceipts() => r: ", r );
+                     } ); 
                   },
                },
                {
