@@ -7,6 +7,7 @@ import {
    Text, Image, Pressable, TextInput, Keyboard,
    Button,
    KeyboardAvoidingView,
+   ActivityIndicator,
 } from "react-native";
 
 import {
@@ -455,7 +456,7 @@ export default function ReceiptsView( { ...props } ) {
       <PaperProvider>
          <LinearGradient colors={[ "#f5f5f5", "#e5e5e5", ]} style={[ { flex: 1, } ]} >
             
-            { Receipts != null ? 
+            { Loading ? <ActivityIndicator color="#daa520"/> : Receipts != null ? 
                <ScrollView style={{ flex: 1, }}>
                   <HomePage style={{  }}>
                      <Header>
