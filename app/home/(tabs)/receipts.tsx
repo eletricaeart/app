@@ -57,6 +57,7 @@ import { GetTotal } from "@/src/scripts/receipts";
 import MaskInput, { formatWithMask, Masks } from "react-native-mask-input";
 import useReceiptsFB from "@/src/hooks/useReceiptsFB";
 import { css } from "styled-components";
+import { Fmenu } from "@/src/widgets/ui";
 
 
 
@@ -478,8 +479,10 @@ export default function ReceiptsView( { ...props } ) {
                                        name={ item.name }
                                        style={{
                                           // backgroundColor: "#afc",
-                                          height: 80,
+                                          height: 120,
                                           flexDirection: "row",
+                                          marginTop: 4,
+                                          marginBottom: 4,
                                        }}
                                     >
                                        <View style={{
@@ -520,55 +523,73 @@ export default function ReceiptsView( { ...props } ) {
 
                                        <View style={{
                                              // backgroundColor: "#afb",
+                                             width: "100%",
                                              height: "100%",
-                                             flex: .45 - .18,
-                                             paddingTop: 18,
-                                             paddingBottom: 18,
-                                             paddingLeft: 9,
-                                             paddingRight: 18,
+                                             flex: .45,
+                                             padding: 0,
                                              alignItems: "center",
                                              justifyContent: "center",
                                           }}
                                        >
-                                          { 
-                                             item.isPaid ? ( 
-                                                <View
-                                                   style={{
-                                                      backgroundColor: "#27f3",
-                                                      width: "100%",
-                                                      paddingTop: 2,
-                                                      paddingBottom: 2,
-                                                      paddingLeft: 6,
-                                                      paddingRight: 6,
-                                                      borderRadius: 20,
-                                                      alignItems: "center",
-                                                      justifyContent: "center",
-                                                   }}
-                                                >
-                                                   <PP style={{ color: "#27f", fontWeight: "bold" }}>
-                                                      Pago
-                                                   </PP>
-                                                </View>
-                                             ) : (
-                                                <View
-                                                   style={{
-                                                      backgroundColor: "#f723",
-                                                      paddingTop: 2,
-                                                      paddingBottom: 2,
-                                                      paddingLeft: 6,
-                                                      paddingRight: 6,
-                                                      borderRadius: 20,
-                                                      alignItems: "center",
-                                                      justifyContent: "center",
-                                                   }}
-                                                >
-                                                   <PP style={{ color: "#f72", fontWeight: "bold" }}>
-                                                      Receber
-                                                   </PP>
-                                                </View>
-                                             )
-                                          }
+                                          <Pressable
+                                             style={{
+                                                backgroundColor: "#27f5",
+                                                width: "100%",
+                                                height: "100%",
+                                                flex: 1,
+                                                paddingTop: 18,
+                                                paddingBottom: 18,
+                                                paddingLeft: 9,
+                                                paddingRight: 18,
+                                                alignItems: "center",
+                                                justifyContent: "center",
+                                             }}
+                                             onPress={ () => <>
+                                             </> }
+                                          >
+                                             { 
+                                                item.isPaid ? ( 
+                                                   <View
+                                                      style={{
+                                                         backgroundColor: "#27f3",
+                                                         width: "100%",
+                                                         paddingTop: 2,
+                                                         paddingBottom: 2,
+                                                         paddingLeft: 6,
+                                                         paddingRight: 6,
+                                                         borderRadius: 20,
+                                                         alignItems: "center",
+                                                         justifyContent: "center",
+                                                      }}
+                                                   >
+                                                      <PP style={{ color: "#27f", fontWeight: "bold" }}>
+                                                         Pago
+                                                      </PP>
+                                                   </View>
+                                                ) : (
+                                                   <View
+                                                      style={{
+                                                         backgroundColor: "#f723",
+                                                         paddingTop: 2,
+                                                         paddingBottom: 2,
+                                                         paddingLeft: 6,
+                                                         paddingRight: 6,
+                                                         borderRadius: 20,
+                                                         alignItems: "center",
+                                                         justifyContent: "center",
+                                                      }}
+                                                   >
+                                                      <PP style={{ color: "#f72", fontWeight: "bold" }}>
+                                                         Receber
+                                                      </PP>
+                                                   </View>
+                                                )
+                                             }
+                                          </Pressable>
                                        </View>
+                                                <Fmenu style={{ display: "none" }}>
+                                                   <P>Fmenu</P>
+                                                </Fmenu>
 
                                     </View>
                                  </> }

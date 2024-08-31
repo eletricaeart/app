@@ -2,9 +2,10 @@
 
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Pressable, Modal } from 'react-native';
+import { Tabs } from "expo-router";
 
 import { CommonActions } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+// import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Text, BottomNavigation,
    Button, Menu, Divider, PaperProvider,
 } from 'react-native-paper';
@@ -13,7 +14,6 @@ import {
    AppBar,
    AppBarLeft,
    AppBarRight,
-   BottomNavigationBar,
    PageFooter,
 } from "@/src/widgets/clb-widgets";
 
@@ -23,9 +23,8 @@ import {
 
 import { Icon } from "@/src/widgets/clb-icons";
 import Routes from "@/app/routes";
-import Login from "./login";
 
-const Tab = createBottomTabNavigator();
+// const Tab = createBottomTabNavigator();
 
 export default function Layout() {
    const 
@@ -35,11 +34,15 @@ export default function Layout() {
    ;
 
   return (
-    <Tab.Navigator
+    <Tabs
       // initialRouteName="Login" 
       screenOptions={{
          headerShown: true,
-         tabBarStyle: { backgroundColor: "#27f" }, 
+         tabBarStyle: { 
+            backgroundColor: "#16181C",
+            height: 78,
+
+         }, 
          headerShadowVisible: true,
          
          headerBackground: () => ( <>
@@ -71,16 +74,9 @@ export default function Layout() {
          headerStyle: {
             backgroundColor: "#00559C",
          }
-         // ,
-         // title: "Eletrica & Art"
-         // ,
-         // headerBlurEffect: "light"
-         // ,
-         // headerShadowVisible: true
-         // ,
-         // headerShown: true
       }}
-      tabBar={({ navigation, state, descriptors, insets }) => (
+      
+      /* tabBar={({ navigation, state, descriptors, insets }) => (
         <BottomNavigation.Bar
          navigationState={state}
          
@@ -131,18 +127,19 @@ export default function Layout() {
             return label;
           }}
         />
-      )}
+      )} */
     >
-      {/* <Tab.Screen 
+      {/* <Tabs.Screen 
          name="Login"
          component={ Login }
 
       /> */}
-      <Tab.Screen
-        name="Home"
-        component={Routes.Home}
+      <Tabs.Screen
+        name="home"
+      //   component={Routes.Home}
         options={{
-            tabBarLabel: 'Home',
+            // tabBarLabel: 'Home',
+            title: 'Home',
             tabBarIcon: ({ color, size }) => {
                return <Icon i="mi" name="electrical-services" color="#27f"/>;
             },
@@ -150,11 +147,11 @@ export default function Layout() {
             headerTitle: () => <HeaderTitle />, 
         }}
       />
-      <Tab.Screen
-        name="Customers"
-        component={Routes.Customers}
+      <Tabs.Screen
+        name="customers"
+      //   component={Routes.Customers}
         options={{
-          tabBarLabel: 'Clientes',
+          title: 'Clientes',
           tabBarIcon: ({ color, size }) => {
             return <Icon i="f" name="people-group" color="#fff"/>;
           },
@@ -208,58 +205,48 @@ export default function Layout() {
           unmountOnBlur: true,
         }} 
       />
-      <Tab.Screen
-        name="Receipts"
-        component={Routes.ReceiptsView}
+      <Tabs.Screen
+        name="receipts"
+      //   component={Routes.ReceiptsView}
         options={{
-          tabBarLabel: 'Recibos',
+          title: 'Recibos',
           tabBarIcon: ({ color, size }) => {
             return <Icon i="mc" name="receipt" color="#fff"/>;
           },
         }}
       />
-      <Tab.Screen
-        name="Budgets"
-        component={Routes.Budgets}
+      <Tabs.Screen
+        name="budgets"
+      //   component={Routes.Budgets}
         options={{
-          tabBarLabel: 'Orçamentos',
+          title: 'Orçamentos',
           tabBarIcon: ({ color, size }) => {
             return <Icon i="f" name="file-invoice-dollar" color="#fff"/>;
           },
 
         }}
       />
-      <Tab.Screen
-        name="Dev"
-        component={Routes.Dev}
+      <Tabs.Screen
+        name="dev"
+      //   component={Routes.Dev}
         options={{
-          tabBarLabel: 'Dev',
+          title: 'Dev',
           tabBarIcon: ({ color, size }) => {
             return <Icon i="mi" name="devices" color="#ffab00"/>;
           },
         }}
       />
-      <Tab.Screen
+      <Tabs.Screen
         name="invoice"
-        component={Routes.tabs.Invoice}
+      //   component={Routes.tabs.Invoice}
         options={{
-          tabBarLabel: 'Dev',
+          title: 'Dev',
           tabBarIcon: ({ color, size }) => {
             return <Icon i="mi" name="devices" color="#ffab00"/>;
           },
         }}
       />
-      {/* <Tab.Screen
-        name="NewCustomer"
-        component={Routes.NewCustomer}
-        options={{
-          tabBarLabel: 'Cadastrar Cliente',
-          tabBarIcon: ({ color, size }) => {
-            return <Icon i="mi" name="people" color="#ffab00"/>;
-          },
-        }}
-      /> */}
-    </Tab.Navigator>
+    </Tabs>
   );
 }
 

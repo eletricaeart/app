@@ -179,6 +179,14 @@ export const
       overflow: hidden;
    `
    ,
+   Fmenu = styled.View`
+      background: #ffab00;
+      padding: 16px;
+      position: absolute;
+      top: 0;
+      right: 0;
+      z-index: 9;
+   `,
 
 
    // Separator == == == 

@@ -1,7 +1,7 @@
 
 // http://127.0.0.1:8081
 import HomeScreen from "@/app-example/app/(tabs)";
-import React from "react";
+import React, { useState } from "react";
 
 import {
    StyleSheet,
@@ -28,6 +28,9 @@ import { createMaterialBottomTabNavigator } from "react-native-paper/react-navig
 
 import Routes from "@/app/routes";
 import Homepage from "@/app/homepage";
+import { Str2Brl } from "../utils";
+import { H3, P } from "./clb-html";
+import { PP, Fmenu } from "./ui";
 
 /* == [ AppBar ]
 == == == == == == == == == */
@@ -356,6 +359,137 @@ export function Sheet( { ...props } ) {
 
 
 
+/**
+ * receipt cardlist
+ * 
+ */
+export function receiptCardList( { ...props } ) {
+   const 
+      [ FmenuState, setFmenuState ] = useState<boolean>( props.fmenuState || false )
+   ;
+
+   return(
+      <View
+         key={ item.id }
+         name={ item.name }
+         style={{
+            // backgroundColor: "#afc",
+            height: 120,
+            flexDirection: "row",
+            marginTop: 4,
+            marginBottom: 4,
+         }}
+      >
+         <View style={{
+               // backgroundColor: "#afb",
+               height: "100%",
+               flex: .45 - .18,
+               paddingTop: 18,
+               paddingBottom: 18,
+               paddingLeft: 18,
+               paddingRight: 9,
+               alignItems: "center",
+               justifyContent: "center",
+            }}
+         >
+            <View style={{ 
+               backgroundColor: "#daa520", 
+               alignItems: "center", 
+               justifyContent: "center",
+               padding: 8,
+               borderRadius: 1000, 
+            }}
+            >
+               <Icon i="mc" name="receipt" color="#afb"/>
+            </View>
+         </View>
+
+         <View style={{
+               flex: 1,
+               paddingTop: 18,
+               paddingBottom: 18,
+               paddingLeft: 9,
+               paddingRight: 9,
+            }}
+         >
+            <H3>{ item.name }</H3>
+            <P style={{ color: "#777" }}>{ Str2Brl( item.receiptValue ) }</P>
+         </View>
+
+         <View style={{
+               // backgroundColor: "#afb",
+               width: "100%",
+               height: "100%",
+               flex: .45,
+               padding: 0,
+               alignItems: "center",
+               justifyContent: "center",
+            }}
+         >
+            <Pressable
+               style={{
+                  backgroundColor: "#27f5",
+                  width: "100%",
+                  height: "100%",
+                  flex: 1,
+                  paddingTop: 18,
+                  paddingBottom: 18,
+                  paddingLeft: 9,
+                  paddingRight: 18,
+                  alignItems: "center",
+                  justifyContent: "center",
+               }}
+               onPress={ fmenuState = !fmenuState }
+            >
+               { 
+                  item.isPaid ? ( 
+                     <View
+                        style={{
+                           backgroundColor: "#27f3",
+                           width: "100%",
+                           paddingTop: 2,
+                           paddingBottom: 2,
+                           paddingLeft: 6,
+                           paddingRight: 6,
+                           borderRadius: 20,
+                           alignItems: "center",
+                           justifyContent: "center",
+                        }}
+                     >
+                        <PP style={{ color: "#27f", fontWeight: "bold" }}>
+                           Pago
+                        </PP>
+                     </View>
+                  ) : (
+                     <View
+                        style={{
+                           backgroundColor: "#f723",
+                           paddingTop: 2,
+                           paddingBottom: 2,
+                           paddingLeft: 6,
+                           paddingRight: 6,
+                           borderRadius: 20,
+                           alignItems: "center",
+                           justifyContent: "center",
+                        }}
+                     >
+                        <PP style={{ color: "#f72", fontWeight: "bold" }}>
+                           Receber
+                        </PP>
+                     </View>
+                  )
+               }
+            </Pressable>
+         </View>
+               { fmenuState &&
+                  <Fmenu style={{}}>
+                     <P>Fmenu</P>
+                  </Fmenu>
+               }
+
+      </View>
+   );
+}
 
 
 

@@ -1,11 +1,14 @@
 
 
+import React, { useRef, useState } from "react";
+import { printToFileAsync, } from "expo-print";
+import { shareAsync, } from "expo-sharing";
 import { EACard } from "@/src/widgets/clb-ea";
 import { H1, H3, H4, H5, H6, P } from "@/src/widgets/ui";
-import React, { useRef, useState } from "react";
-import { ScrollView, View, Button, Text, StyleSheet } from "react-native";
+import { ScrollView, View, Button, Text, StyleSheet, Pressable } from "react-native";
 import styled from "styled-components/native";
 import Budgets from "./budgets";
+import { invoiceHtml, invoiceFile } from "@/src/services/invoicePDF";
 import { Brl2Float, CutRS, FixBrl, Str2Brl } from "@/src/utils";
 // import ViewShot from "react-native-view-shot";
 // import PDF from "react-native-pdf";
@@ -31,6 +34,33 @@ class BudgetModel {
 
 export default function InvoiceView() {
    const 
+      html = `
+         <html>
+            <t>oi</t>
+         </html>
+      `,
+      GeneratePDF = async () => {
+         const 
+            htmlData = invoiceHtml( { customer: { name: "Anselmo" } } )
+            ,
+            file = await printToFileAsync({
+               // html: html,
+               html: htmlData,
+               base64: false,
+               margins: { 
+                  top: 16,
+                  right: 16,
+                  bottom: 16,
+                  left: 16,
+               }
+            });
+         ;
+         
+         await shareAsync( file.uri );
+      }
+   ;
+
+   const 
       [ Budgets, setBudgets ] = useState( [] )
       ,
       budgets = []
@@ -49,6 +79,35 @@ export default function InvoiceView() {
 
    // setBudgets( budgets );
    return( <View style={[ s.root ]}>
+      <View
+         style={{
+            position: "absolute", bottom: 0, left: 0,
+            width: "100%",
+            backgroundColor: "#e5e5e5", height: 80,
+            alignItems: "center", justifyContent: "center",
+            zIndex: 9,
+         }}
+      >
+         <Pressable
+            onPress={ () => {
+               GeneratePDF();
+            } }
+            style={{
+               backgroundColor: "#1df", 
+               width: "90%", height: 56,
+               padding: 16, borderRadius: 13,
+               alignItems: "center", justifyContent: "center",
+            }}
+         >
+            <Text
+               style={{
+                  fontWeight: "bold",
+                  color: "#00559C",
+                  fontSize: 16,
+               }}
+            >BAIXAR EM PDF</Text>
+         </Pressable>
+      </View>
       <ScrollView>
          <EACard></EACard>
          <View>
