@@ -8,18 +8,21 @@ const
    }
 ;   
 
+interface service_i {
+   quantity: number;
+   description: string;
+   value: string;
+   total: number;
+}
+
 export const invoiceHtml = ( { ...props } ) => {
    const 
-      customer = { ...props.owner }
-      ,
-      budget = { ...props.budget }
-      ,
       services = [ ...props.budget.services ]
    ;
 
    const 
       interfaces = {
-         budgetBodyItem: service => ( `
+         budgetBodyItem: ( service: service_i ) => ( `
             <tr>
                <td>
                   <input id="input_qtd_01" type="text" value="${ service.quantity }"/>
@@ -39,222 +42,7 @@ export const invoiceHtml = ( { ...props } ) => {
    ;
 
    let 
-      
-      budgetBody = `
-      `
-      ,
-      budgetBody_bkp = `
-         <tr>
-            <td>
-               <input id="input_qtd_01" type="number" step="0.01" />
-            </td>
-            <td>
-               <input id="input_description_01" type="text" />
-            </td>
-            <td>
-               <input id="input_unit_01" type="number" step="0.01" />
-            </td>
-            <td>
-               <input id="input_tot_01" type="number" step="0.01" />
-            </td>
-         </tr>
-         <tr>
-            <td>
-               <input id="input_qtd_02" type="number" step="0.01" />
-            </td>
-            <td>
-               <input id="input_description_02" type="text" />
-            </td>
-            <td>
-               <input id="input_unit_02" type="number" step="0.01" />
-            </td>
-            <td>
-               <input id="input_tot_02" type="number" step="0.01" />
-            </td>
-         </tr>
-         <tr>
-            <td>
-               <input id="input_qtd_03" type="number" step="0.01" />
-            </td>
-            <td>
-               <input id="input_description_03" type="text" />
-            </td>
-            <td>
-               <input id="input_unit_03" type="number" step="0.01" />
-            </td>
-            <td>
-               <input id="input_tot_03" type="number" step="0.01" />
-            </td>
-         </tr>
-         <tr>
-            <td>
-               <input id="input_qtd_04" type="number" step="0.01" />
-            </td>
-            <td>
-               <input id="input_description_04" type="text" />
-            </td>
-            <td>
-               <input id="input_unit_04" type="number" step="0.01" />
-            </td>
-            <td>
-               <input id="input_tot_04" type="number" step="0.01" />
-            </td>
-         </tr>
-         <tr>
-            <td>
-               <input id="input_qtd_05" type="number" step="0.01" />
-            </td>
-            <td>
-               <input id="input_description_05" type="text" />
-            </td>
-            <td>
-               <input id="input_unit_05" type="number" step="0.01" />
-            </td>
-            <td>
-               <input id="input_tot_05" type="number" step="0.01" />
-            </td>
-         </tr>
-         <tr>
-            <td>
-               <input id="input_qtd_06" type="number" step="0.01" />
-            </td>
-            <td>
-               <input id="input_description_06" type="text" />
-            </td>
-            <td>
-               <input id="input_unit_06" type="number" step="0.01" />
-            </td>
-            <td>
-               <input id="input_tot_06" type="number" step="0.01" />
-            </td>
-         </tr>
-         <tr>
-            <td>
-               <input id="input_qtd_07" type="number" step="0.01" />
-            </td>
-            <td>
-               <input id="input_description_07" type="text" />
-            </td>
-            <td>
-               <input id="input_unit_07" type="number" step="0.01" />
-            </td>
-            <td>
-               <input id="input_tot_07" type="number" step="0.01" />
-            </td>
-         </tr>
-         <tr>
-            <td>
-               <input id="input_qtd_08" type="number" step="0.01" />
-            </td>
-            <td>
-               <input id="input_description_08" type="text" />
-            </td>
-            <td>
-               <input id="input_unit_08" type="number" step="0.01" />
-            </td>
-            <td>
-               <input id="input_tot_08" type="number" step="0.01" />
-            </td>
-         </tr>
-         <tr>
-            <td>
-               <input id="input_qtd_09" type="number" step="0.01" />
-            </td>
-            <td>
-               <input id="input_description_09" type="text" />
-            </td>
-            <td>
-               <input id="input_unit_09" type="number" step="0.01" />
-            </td>
-            <td>
-               <input id="input_tot_09" type="number" step="0.01" />
-            </td>
-         </tr>
-         <tr>
-            <td>
-               <input id="input_qtd_10" type="number" step="0.01" />
-            </td>
-            <td>
-               <input id="input_description_10" type="text" />
-            </td>
-            <td>
-               <input id="input_unit_10" type="number" step="0.01" />
-            </td>
-            <td>
-               <input id="input_tot_10" type="number" step="0.01" />
-            </td>
-         </tr>
-         <tr>
-            <td>
-               <input id="input_qtd_11" type="number" step="0.01" />
-            </td>
-            <td>
-               <input id="input_description_11" type="text" />
-            </td>
-            <td>
-               <input id="input_unit_11" type="number" step="0.01" />
-            </td>
-            <td>
-               <input id="input_tot_11" type="number" step="0.01" />
-            </td>
-         </tr>
-         <tr>
-            <td>
-               <input id="input_qtd_12" type="number" step="0.01" />
-            </td>
-            <td>
-               <input id="input_description_12" type="text" />
-            </td>
-            <td>
-               <input id="input_unit_12" type="number" step="0.01" />
-            </td>
-            <td>
-               <input id="input_tot_12" type="number" step="0.01" />
-            </td>
-         </tr>
-         <tr>
-            <td>
-               <input id="input_qtd_13" type="number" step="0.01" />
-            </td>
-            <td>
-               <input id="input_description_13" type="text" />
-            </td>
-            <td>
-               <input id="input_unit_13" type="number" step="0.01" />
-            </td>
-            <td>
-               <input id="input_tot_13" type="number" step="0.01" />
-            </td>
-         </tr>
-         <tr>
-            <td>
-               <input id="input_qtd_14" type="number" step="0.01" />
-            </td>
-            <td>
-               <input id="input_description_14" type="text" />
-            </td>
-            <td>
-               <input id="input_unit_14" type="number" step="0.01" />
-            </td>
-            <td>
-               <input id="input_tot_14" type="number" step="0.01" />
-            </td>
-         </tr>
-         <tr>
-            <td>
-               <input id="input_qtd_15" type="number" step="0.01" />
-            </td>
-            <td>
-               <input id="input_description_15" type="text" />
-            </td>
-            <td>
-               <input id="input_unit_15" type="number" step="0.01" />
-            </td>
-            <td>
-               <input id="input_tot_15" type="number" step="0.01" />
-            </td>
-         </tr>
-      `
+      budgetBody = ``
    ;
 
    services.forEach( service => {

@@ -1,4 +1,5 @@
 
+// https://medium.com/@adityasinghrathore360/implementing-firebase-authentication-in-react-native-app-with-expo-a-detailed-explanation-cea4d1113501
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
@@ -14,6 +15,8 @@ import ReactNativeAsyncStorage from "@react-native-async-storage/async-storage";
 import { getFirestore } from "firebase/firestore";
 import { getDatabase, ref, child, get, set, update, remove, } from "firebase/database";
 import { Database } from "firebase/database";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -33,6 +36,10 @@ const firebaseConfig = {
 // Initialize Firebase
 export const FirebaseApp = initializeApp(firebaseConfig);
 export const FirebaseAuth = getAuth( FirebaseApp );
+
+// initializeAuth( FirebaseApp, {
+//    persistence: getReactNativePersistence( AsyncStorage )
+// } );
 
 // Have to do ts-ignore as getReactNativePersistence is not detected by ts compiler with firebase 10.3.0
 // @ts-ignore 
