@@ -146,15 +146,6 @@ export default function Layout() {
         }} 
       />
       <Tabs.Screen
-         name="receipts"
-         options={{
-            title: 'Recibos',
-            tabBarIcon: ({ color, size }) => {
-               return <Icon i="mc" name="receipt" color="#fff"/>;
-            },
-         }}
-      />
-      <Tabs.Screen
          name="budgets"
          options={{
             title: 'Orçamentos',

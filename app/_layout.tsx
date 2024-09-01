@@ -81,30 +81,21 @@ export default function RootLayout() {
 
 
    return( <> 
-      {/* {
-         User ? (
-            <Stack screenOptions={ { ...stack_screenOptions } }>
-               <Stack.Screen name="(tabs)" options={ { ...screen_tabs_options } } />
-               <Stack.Screen name="index" options={ { ...screen_00_options } } />
-               <Stack.Screen name="+not-found" />
-            </Stack>
-         ) : (
-            <Stack screenOptions={ { ...auth_screenOptions } } >
-               <Stack.Screen name="(auth)" options={ { ...screen_auth_options } } />
-               <Stack.Screen name="+not-found" />
-            </Stack>
-         )
-      } */}
       {/* <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}> */}
-         <Stack initialRouteName="landing">
-            <Stack.Screen name="landing" options={{ headerShown: false, statusBarColor: "#1b1d22" }} />
-            <Stack.Screen name="index" options={{ headerShown: false }} />
+         <Stack initialRouteName="landing"
+            screenOptions={{ 
+               // animation: "none" 
+               statusBarColor: "#27f"
+            }}
+         >
+            <Stack.Screen name="landing" options={{ headerShown: false, statusBarColor: "#1b1d22", animation: "fade" }} />
+            <Stack.Screen name="index" options={{ headerShown: false, statusBarColor: "#fc0" }} />
             {/* <Stack.Screen name="home/(tabs)" options={{ headerShown: false }} /> */}
             <Stack.Screen name="home" options={{ headerShown: false, statusBarColor: "#00559c" }} />
             <Stack.Screen name="auth" options={{ headerShown: false }} />
             {/* <Stack.Screen name="modal" options={{ presentation: "modal" }} /> */}
-            <Stack.Screen name="signin" options={{ headerShown: false , presentation: "modal", statusBarColor: "#1b1d22" }} />
-            <Stack.Screen name="signup" options={{ headerShown: false , presentation: "modal", statusBarColor: "#1b1d22" }} />
+            <Stack.Screen name="signin" options={{ headerShown: false , presentation: "fullScreenModal", statusBarColor: "#1b1d22", animation: "none", }} />
+            <Stack.Screen name="signup" options={{ headerShown: false , presentation: "modal", statusBarColor: "#1b1d22", animation: "none", }} />
          </Stack>
       {/* </ThemeProvider> */}
    </> );

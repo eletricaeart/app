@@ -1,7 +1,20 @@
 
 
-export function Str2Brl( v: string ) {
+export function Str2Brl( v: string ): string {
+   // "576.46".toLocaleString( "pt-BR", { style: "currency", currency: "BRL" } );
    return parseFloat( v ).toLocaleString( 
+      "pt-BR", { style: "currency", currency: "BRL" } 
+   );
+   // try {
+
+   // } catch( err: any ) {
+   //    console.log( "Str2Brl() err: ", err );
+   // }
+}
+
+export function Float2Brl( v: number ): string {
+   // 576.46.toLocaleString( "pt-BR", { style: "currency", currency: "BRL" } );
+   return v.toLocaleString( 
       "pt-BR", { style: "currency", currency: "BRL" } 
    );
    // try {

@@ -9,12 +9,10 @@ import { ScrollView, View, Button, Text, StyleSheet, Pressable } from "react-nat
 import styled from "styled-components/native";
 // import Budgets from "./budgets";
 import { invoiceHtml, invoiceFile } from "@/src/services/invoicePDF";
-import { Brl2Float, CutRS, FixBrl, Str2Brl } from "@/src/utils";
+import { Brl2Float, CutRS, FixBrl, Float2Brl, Str2Brl } from "@/src/utils";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import budgets from "./(tabs)/budgets";
 import { router, Stack } from "expo-router";
-// import ViewShot from "react-native-view-shot";
-// import PDF from "react-native-pdf";
 
 
 
@@ -72,9 +70,12 @@ export default function GetBudgetPdfView() {
             <t>oi</t>
          </html>
       `,
-      GeneratePDF = async () => {
+      /* GeneratePDF = async () => {
          const 
-            htmlData = invoiceHtml( { customer: { name: "Anselmo" } } )
+            htmlData = invoiceHtml( { 
+               owner: Owner,
+               budget: Budget,
+            } )
             ,
             file = await printToFileAsync({
                // html: html,
@@ -88,6 +89,49 @@ export default function GetBudgetPdfView() {
                }
             });
          ;
+         
+         await shareAsync( file.uri );
+      } */
+      GeneratePDF = async () => {
+         // let data = { owner: {}, budget: {} };
+         const 
+            htmlData = invoiceHtml( 
+               // { 
+               //    owner: data.owner,
+               //    budget: data.budget,
+               // } 
+               await handle()
+            )
+            ,
+            file = await printToFileAsync({
+               // html: html,
+               html: htmlData,
+               base64: false,
+               margins: { 
+                  top: 16,
+                  right: 16,
+                  bottom: 16,
+                  left: 16,
+               }
+            });
+         ;
+         
+         async function handle() {
+            try {
+               const 
+                  data = await AsyncStorage.getItem( "budgetData" ).then( r => JSON.parse( r ) )
+               ;
+               console.log( "handle budgetData: ", await data );
+               return data;
+            } catch( err: any ) {
+               console.error( "handle() err: \n\n\n", err );
+            }
+         }
+         /* handle().then( r => {
+            data.owner = r.owner;
+            data.budget = r.budget;
+            console.log( "returned data: ", data );
+         } ); */
          
          await shareAsync( file.uri );
       }
@@ -178,6 +222,8 @@ export default function GetBudgetPdfView() {
 
             setBudget( data.budget );
             setOwner( data.owner );
+
+            AsyncStorage.setItem( "budgetData", JSON.stringify( { owner: data.owner, budget: data.budget } ) );
          } );
       }
       LoadBudgetIntoView();
@@ -333,6 +379,11 @@ export default function GetBudgetPdfView() {
                            if( position % 2 == 0 ) {
                               return(
                                  <View style={[ s.rowInput ]}>
+                                    {/* 
+                                       quantity: str
+                                       total: float
+                                       value: str
+                                    */}
                                     <PpView>
                                        <Pp >{ item.quantity }</Pp>
                                     </PpView>
@@ -343,7 +394,7 @@ export default function GetBudgetPdfView() {
                                        <Ppr style={ s.ttt }>{ CutRS( Str2Brl( item.value ) ) }</Ppr>
                                     </PpView3>
                                     <PpView4>
-                                       <Ppr style={ s.ttt }>{ CutRS( Str2Brl( item.total.toString() ) ) }</Ppr>
+                                       <Ppr style={ s.ttt }>{ CutRS( Float2Brl( item.total ) ) }</Ppr>
                                     </PpView4>
                                  </View>
                               );
@@ -360,7 +411,7 @@ export default function GetBudgetPdfView() {
                                        <Ppr style={ s.ttt }>{ CutRS( Str2Brl( item.value ) ) }</Ppr>
                                     </PpView3>
                                     <PpView4>
-                                       <Ppr style={ s.ttt }>{ CutRS( Str2Brl( item.total.toString() ) ) }</Ppr>
+                                       <Ppr style={ s.ttt }>{ CutRS( Float2Brl( item.total ) ) }</Ppr>
                                     </PpView4>
                                  </View>
                               );

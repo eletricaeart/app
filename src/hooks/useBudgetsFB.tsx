@@ -8,6 +8,31 @@ import { FirebaseDB } from "@/FirebaseConfig";
 
 
 export default function useBudgetsFB() {
+   interface serviceItem_i {
+      quantity: string;
+      description: string;
+      value: string;
+      total: number;
+   }
+
+   interface service_i { 
+      key: any;
+      id: any;
+      formOfPayment: any;
+      isPaid: any;
+      name: any;
+      notes: any;
+      owner: any;
+      payday: any;
+      receiptValue: any;
+      services: serviceItem_i[];
+      subtotal: any;
+      warranty: any;
+      dateOfIssue: any;
+      discount: any;
+      dueDate: any;
+   }
+
    const 
       [ BudgetsFB, setBudgetsFB ] = useState( [] )
       ,
@@ -29,35 +54,31 @@ export default function useBudgetsFB() {
                   const 
                      list: ( 
                         ( prevState: never[] ) => never[] 
-                     ) | { 
-                        key: any;
-                        id: any;
-                        formOfPayment: any;
-                        isPaid: any;
-                        name: any;
-                        notes: any;
-                        owner: any;
-                        payday: any;
-                        receiptValue: any;
-                        services: any[];
-                        subtotal: any;
-                        warranty: any;
-                        dateOfIssue: any;
-                        discount: any;
-                        dueDate: any;
-                     }[] = []
+                     ) | service_i[] = []
                      // list: SetStateAction<{ id: string; name: string; email: string; }> | { id: any; name: any; email: any; }[] = []
                   ;
                   
                   dataList.forEach( data => {
                      const 
-                        key = data.key,
-                        value = data.val(),
-                        services: any[] = []
+                        key = data.key
+                        ,
+                        value = data.val()
+                        ,
+                        services: serviceItem_i[] = []
+                        // list: SetStateAction<{ id: string; name: string; email: string; }> | { id: any; name: any; email: any; }[] = []
                      ;
 
                      value.services.forEach( service => {
-                        services.push( Object.values( service ) );
+                        const 
+                           data = {
+                              quantity: service.quantity,
+                              description: service.description,
+                              value: service.value,
+                              total: service.total,
+                           }
+                        ;
+                        // services.push( Object.values( service ) );
+                        services.push( data );
                      } );
 
                      list.push( { 

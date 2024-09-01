@@ -10,10 +10,256 @@ const
 
 export const invoiceHtml = ( { ...props } ) => {
    const 
-      customer = {}
+      customer = { ...props.owner }
       ,
-      receipt = {}
+      budget = { ...props.budget }
+      ,
+      services = [ ...props.budget.services ]
    ;
+
+   const 
+      interfaces = {
+         budgetBodyItem: service => ( `
+            <tr>
+               <td>
+                  <input id="input_qtd_01" type="text" value="${ service.quantity }"/>
+               </td>
+               <td>
+                  <input id="input_description_01" type="text" value="${ service.description }"/>
+               </td>
+               <td>
+                  <input id="input_unit_01" type="text" value="${ service.value }"/>
+               </td>
+               <td>
+                  <input id="input_tot_01" type="text" value="${ service.total }"/>
+               </td>
+            </tr>
+         ` )
+      }
+   ;
+
+   let 
+      
+      budgetBody = `
+      `
+      ,
+      budgetBody_bkp = `
+         <tr>
+            <td>
+               <input id="input_qtd_01" type="number" step="0.01" />
+            </td>
+            <td>
+               <input id="input_description_01" type="text" />
+            </td>
+            <td>
+               <input id="input_unit_01" type="number" step="0.01" />
+            </td>
+            <td>
+               <input id="input_tot_01" type="number" step="0.01" />
+            </td>
+         </tr>
+         <tr>
+            <td>
+               <input id="input_qtd_02" type="number" step="0.01" />
+            </td>
+            <td>
+               <input id="input_description_02" type="text" />
+            </td>
+            <td>
+               <input id="input_unit_02" type="number" step="0.01" />
+            </td>
+            <td>
+               <input id="input_tot_02" type="number" step="0.01" />
+            </td>
+         </tr>
+         <tr>
+            <td>
+               <input id="input_qtd_03" type="number" step="0.01" />
+            </td>
+            <td>
+               <input id="input_description_03" type="text" />
+            </td>
+            <td>
+               <input id="input_unit_03" type="number" step="0.01" />
+            </td>
+            <td>
+               <input id="input_tot_03" type="number" step="0.01" />
+            </td>
+         </tr>
+         <tr>
+            <td>
+               <input id="input_qtd_04" type="number" step="0.01" />
+            </td>
+            <td>
+               <input id="input_description_04" type="text" />
+            </td>
+            <td>
+               <input id="input_unit_04" type="number" step="0.01" />
+            </td>
+            <td>
+               <input id="input_tot_04" type="number" step="0.01" />
+            </td>
+         </tr>
+         <tr>
+            <td>
+               <input id="input_qtd_05" type="number" step="0.01" />
+            </td>
+            <td>
+               <input id="input_description_05" type="text" />
+            </td>
+            <td>
+               <input id="input_unit_05" type="number" step="0.01" />
+            </td>
+            <td>
+               <input id="input_tot_05" type="number" step="0.01" />
+            </td>
+         </tr>
+         <tr>
+            <td>
+               <input id="input_qtd_06" type="number" step="0.01" />
+            </td>
+            <td>
+               <input id="input_description_06" type="text" />
+            </td>
+            <td>
+               <input id="input_unit_06" type="number" step="0.01" />
+            </td>
+            <td>
+               <input id="input_tot_06" type="number" step="0.01" />
+            </td>
+         </tr>
+         <tr>
+            <td>
+               <input id="input_qtd_07" type="number" step="0.01" />
+            </td>
+            <td>
+               <input id="input_description_07" type="text" />
+            </td>
+            <td>
+               <input id="input_unit_07" type="number" step="0.01" />
+            </td>
+            <td>
+               <input id="input_tot_07" type="number" step="0.01" />
+            </td>
+         </tr>
+         <tr>
+            <td>
+               <input id="input_qtd_08" type="number" step="0.01" />
+            </td>
+            <td>
+               <input id="input_description_08" type="text" />
+            </td>
+            <td>
+               <input id="input_unit_08" type="number" step="0.01" />
+            </td>
+            <td>
+               <input id="input_tot_08" type="number" step="0.01" />
+            </td>
+         </tr>
+         <tr>
+            <td>
+               <input id="input_qtd_09" type="number" step="0.01" />
+            </td>
+            <td>
+               <input id="input_description_09" type="text" />
+            </td>
+            <td>
+               <input id="input_unit_09" type="number" step="0.01" />
+            </td>
+            <td>
+               <input id="input_tot_09" type="number" step="0.01" />
+            </td>
+         </tr>
+         <tr>
+            <td>
+               <input id="input_qtd_10" type="number" step="0.01" />
+            </td>
+            <td>
+               <input id="input_description_10" type="text" />
+            </td>
+            <td>
+               <input id="input_unit_10" type="number" step="0.01" />
+            </td>
+            <td>
+               <input id="input_tot_10" type="number" step="0.01" />
+            </td>
+         </tr>
+         <tr>
+            <td>
+               <input id="input_qtd_11" type="number" step="0.01" />
+            </td>
+            <td>
+               <input id="input_description_11" type="text" />
+            </td>
+            <td>
+               <input id="input_unit_11" type="number" step="0.01" />
+            </td>
+            <td>
+               <input id="input_tot_11" type="number" step="0.01" />
+            </td>
+         </tr>
+         <tr>
+            <td>
+               <input id="input_qtd_12" type="number" step="0.01" />
+            </td>
+            <td>
+               <input id="input_description_12" type="text" />
+            </td>
+            <td>
+               <input id="input_unit_12" type="number" step="0.01" />
+            </td>
+            <td>
+               <input id="input_tot_12" type="number" step="0.01" />
+            </td>
+         </tr>
+         <tr>
+            <td>
+               <input id="input_qtd_13" type="number" step="0.01" />
+            </td>
+            <td>
+               <input id="input_description_13" type="text" />
+            </td>
+            <td>
+               <input id="input_unit_13" type="number" step="0.01" />
+            </td>
+            <td>
+               <input id="input_tot_13" type="number" step="0.01" />
+            </td>
+         </tr>
+         <tr>
+            <td>
+               <input id="input_qtd_14" type="number" step="0.01" />
+            </td>
+            <td>
+               <input id="input_description_14" type="text" />
+            </td>
+            <td>
+               <input id="input_unit_14" type="number" step="0.01" />
+            </td>
+            <td>
+               <input id="input_tot_14" type="number" step="0.01" />
+            </td>
+         </tr>
+         <tr>
+            <td>
+               <input id="input_qtd_15" type="number" step="0.01" />
+            </td>
+            <td>
+               <input id="input_description_15" type="text" />
+            </td>
+            <td>
+               <input id="input_unit_15" type="number" step="0.01" />
+            </td>
+            <td>
+               <input id="input_tot_15" type="number" step="0.01" />
+            </td>
+         </tr>
+      `
+   ;
+
+   services.forEach( service => {
+      budgetBody += interfaces.budgetBodyItem( service );
+   } );
    
    return `
       <!DOCTYPE html>
@@ -63,16 +309,6 @@ export const invoiceHtml = ( { ...props } ) => {
             :root {
                font: 1em "inter";
                font-weight: 400;
-               /* color: #bbb; */
-               
-               
-               /* color-scheme: light dark; */
-               /* vite */
-               /* background-color: #242424;  */
-               /* dark reader */
-               /* background: #1e2021;        */
-               /* céo */
-               /* background-color: #212329;   */
             
                --appbar-shadow: rgba( 0 0 0 .25 ) 0 4px 8px;
             
@@ -98,7 +334,6 @@ export const invoiceHtml = ( { ...props } ) => {
             
             html {
                flex-direction: column;
-               /* width: 100vw; */
                min-height: 100vh;
                line-height: 1.15;
                -webkit-text-size-adjust: 100%;
@@ -237,7 +472,6 @@ export const invoiceHtml = ( { ...props } ) => {
             form {
                display: flex;
                flex-direction: column;
-               /* gap: 1.5rem; */
             }
             
             content:has( label ), 
@@ -285,12 +519,6 @@ export const invoiceHtml = ( { ...props } ) => {
             /* input type switch */
             label[switch] {
                cursor: default;
-               /*
-               display: inline-block;
-               position: relative;
-               width: 60px;
-               height: 34px;
-               */
                flex-direction: row;
                align-items: center;
             }
@@ -301,31 +529,16 @@ export const invoiceHtml = ( { ...props } ) => {
             }
             slider {
                cursor: pointer;
-               /*
-               position: absolute;
-               top: 0;
-               top: 1em;
-               left: 0;
-               right: 0;
-               bottom: 0;
-               */
                background-color: var( --input-slider, #ccc );
                border-radius: 34px;
                -webkit-transition: .4s;
                transition: .4s;
             
-               /* display: flex; */
-               /* align-items: center; */
                width: 3.5em;
                padding: 2px;
             }
             slider > ball {
                content: "";
-               /*
-               position: absolute;
-               left: 4px;
-               bottom: 4px;
-               */
                display: block;
                width: 26px;
                height: 26px;
@@ -336,20 +549,6 @@ export const invoiceHtml = ( { ...props } ) => {
             
                top: 1em;
             }
-            /* slider:before {
-               content: "";
-               position: absolute;
-               left: 4px;
-               bottom: 4px;
-               width: 26px;
-               height: 26px;
-               background-color: var( --input-slider-before, white );
-               border-radius: 50%;
-               -webkit-transition: .4s;
-               transition: .4s;
-            
-               top: 1em;
-            } */
             input:checked + slider {
                background-color: var( --input-switch, #2196F3 );
                background-color: var( --input-switch, #fc0 );
@@ -362,16 +561,10 @@ export const invoiceHtml = ( { ...props } ) => {
                -ms-transform: translateX( 26px );
                transform: translateX( 26px) ;
             }
-            /* input:checked + slider:before {
-               -webkit-transform: translateX( 26px );
-               -ms-transform: translateX( 26px );
-               transform: translateX( 26px) ;
-            } */
             
             input[type="submit"],
             input[type="button"],
             btn, button {
-               /* border: var( --card-lv2 ) 2px solid; */
                background-color: var( --btn-simp, #27f3 );
                background-image: linear-gradient( to bottom, #fff #fff );
                text-transform: uppercase;
@@ -458,7 +651,6 @@ export const invoiceHtml = ( { ...props } ) => {
             table[flex] {
                display: flex;
                flex-direction: column;
-               /* max-width: 100dvw; */
             }
             
             table[flex] thead,
@@ -482,45 +674,9 @@ export const invoiceHtml = ( { ...props } ) => {
             
             
             @media ( prefers-color-scheme: light ) {
-               /* :root {
-                  color: #213547;
-                  background-color: #ffffff;
-               } */
-               /* a:hover {
-                  color: #747bff;
-               }
-               button {
-                  background-color: #27f;
-               } button a {
-                  color: #e9e6e3;
-               } */
-            
             }
             
             @media ( prefers-color-scheme: dark ) {
-               /* :root {
-                  color: #bbb;
-                  background-color: #212329;
-                  background-color: #1b1d22;
-               } */
-            
-               /* a:hover {
-                  color: #747bff;
-               }
-               button {
-                  background-color: #fc0;
-               } button a {
-                  color: #16181c;
-               }
-            
-               code {
-                  display: block;
-                  background: #0005;
-                  padding: .5rem;
-                  border-radius: 9px;
-                  white-space: break-spaces;
-                  backdrop-filter: blur( 12px );
-               } */
             }
             
             
@@ -604,18 +760,11 @@ export const invoiceHtml = ( { ...props } ) => {
                display: flex;
             }
             tiles > content {
-               /*
-               flex-direction: row !important;
-               flex-wrap: wrap;
-               justify-content: space-between;
-               */
                display: grid !important;
                grid-template-columns: repeat( 2, 1fr );
                gap: 1em;
             }
             tiles > content > tile {
-               /*
-               */
                flex-shrink: 1;
                flex-grow: 0;
                flex-basis: calc( 50vw - 1.5em );
@@ -705,8 +854,6 @@ export const invoiceHtml = ( { ...props } ) => {
                text-align: center;
             }
             
-            /* [gap] { gap: 2em; } */
-            
             [pd="2em"] { padding: 2em; }
             [np] { padding: 0 !important; }
             
@@ -731,8 +878,6 @@ export const invoiceHtml = ( { ...props } ) => {
                cursor: pointer;
             }
             
-            
-            
             /* == [ mídias ]
             == == == == == == == == == */
             pix {
@@ -755,9 +900,6 @@ export const invoiceHtml = ( { ...props } ) => {
                height: 100%;
                border: transparent;
             }
-            
-            
-            
             
             /* == [ icons ]
             == == == == == == == == == */
@@ -859,14 +1001,7 @@ export const invoiceHtml = ( { ...props } ) => {
       /* == == == == == == == == == */
 
       homepage, home-page {
-      /* backdrop-filter: blur( 13px ); */
       background-color: var( --homepage, #fff9 );
-      /* background-blend-mode: overlay;
-      background-image: radial-gradient(
-      circle at center, 
-      #fff 80%, #27f5 
-      ); */
-      /* background-image: url( ../imgs/bgs/2c79b93ca8dbe8e7c3ec4d7152eb0d31.jpg ); */
       }
 
       content, [content] {
@@ -895,7 +1030,6 @@ export const invoiceHtml = ( { ...props } ) => {
       app-bar,
       appbar {
       background: var( --card-lv1 );
-      /* background-image: url( ../imgs/bgs/8fb2-h.jpeg ); */
       background-blend-mode: overlay;
       box-shadow: var(--appbar-shadow);
       height: 72px;
@@ -919,7 +1053,6 @@ export const invoiceHtml = ( { ...props } ) => {
       padding: 2px;
       width: 100%;
       height: 100%;
-      /* aspect-ratio: 1; */
       }
       trigram {
       display: flex;
@@ -977,7 +1110,6 @@ export const invoiceHtml = ( { ...props } ) => {
       fab {
       display: grid;
       place-items: center;
-      /* justify-content: center; */
       border: transparent;
       border-radius: 100%;
       background: var( --card-lv1 );
@@ -986,7 +1118,6 @@ export const invoiceHtml = ( { ...props } ) => {
       aspect-ratio: 1;
       position: fixed;
       bottom: 24px;
-      /*bottom: 6%;*/
       right: 1em;
       filter: drop-shadow( 2px 4px 6px #0005 );
       cursor: pointer;
@@ -1025,11 +1156,6 @@ export const invoiceHtml = ( { ...props } ) => {
       align-items: center;
       justify-content: center;
       }
-
-      /* img#ea_logoURI {
-      background-image: url( "https://raw.githubusercontent.com/Ceo-js/ea/2e6fdd74866a50968095c8c6942156d1e93e1c34/ea.jpg" );
-      background-size: cover;
-      } */
 
       ea-logo {
       display: flex;
@@ -1146,7 +1272,6 @@ export const invoiceHtml = ( { ...props } ) => {
       width: 100%;
       height: 100dvh;
       position: fixed;
-      /* position: sticky; */
       top: 0;
       left: 0;
       z-index: 9;
@@ -1300,15 +1425,6 @@ export const invoiceHtml = ( { ...props } ) => {
       }
 
 
-
-
-      /* == [ console ]
-      == == == == == == == == == */
-      console {
-      /* background: var( --bg2 ); */
-      }
-
-
       /* == [ customers ]
       == == == == == == == == == */
       customers {
@@ -1319,13 +1435,10 @@ export const invoiceHtml = ( { ...props } ) => {
       justify-content: center;
       background-color: var( --customer, #21232940 );
       background-color: var( --customer, #bdbebf );
-      /* filter: drop-shadow( var( --customer-shadow, #0003 ) 3px 8px 18px ); */
       border: transparent;
       border-radius: 1.25em;
       width: 100%;
       aspect-ratio: 10/2.86; /*452 x 129*/
-      /*backdrop-filter: blur( 5px );*/
-      /* box-shadow: #0005 3px 6px 15px; */
       }
       customer > header {
       display: flex;
@@ -1389,7 +1502,6 @@ export const invoiceHtml = ( { ...props } ) => {
 
       content[name] {
       width: 100%;
-      /* aspect-ratio: 10 / 3; */
       justify-content: center;
       background-image: linear-gradient(
       to bottom,
@@ -1408,7 +1520,6 @@ export const invoiceHtml = ( { ...props } ) => {
       font-size: 1.5em;
       font-weight: bold;
       color: var( --customer-name, #212329 );
-      /* text-shadow: #000 0 0 10px;
       filter: drop-shadow( #000 0 0 10px ); */
       }
 
@@ -1433,17 +1544,10 @@ export const invoiceHtml = ( { ...props } ) => {
       color: var( --card-item-strong, #555 );
       }
       divider {
-      /* background: var(--divider, #ddd); */
       color: #555;
       font-weight: bold;
       text-transform: uppercase;
       }
-
-      list > li {
-      /* padding: 1em 1.5em; */
-      /* border-bottom: #0009 1px solid; */
-      }
-
 
       tile {
       overflow: hidden;
@@ -1475,59 +1579,25 @@ export const invoiceHtml = ( { ...props } ) => {
       /* == [ receipts ]
       == == == == == == == == == */
       home-page:has( recibos ) {
-      /* min-height: calc( 100dvh - 72px ); */
       background: var( --bg3, #fff );
       }
 
       recibos {
-      /* background: var( --bg2 ); */
       min-height: 100vh;
       }
 
       recibos > content {
       display: grid;
-      /* gap: 1em; */
       }
-      /* recibo {
-      clip-path: polygon( 0 0, 100% 0, 100% 97%, 95% 100%, 90% 97%, 85% 100%, 80% 97%, 75% 100%, 70% 97%, 65% 100%, 60% 97%, 55% 100%, 50% 97%, 45% 100%, 40% 97%, 35% 100%, 30% 97%, 25% 100%, 20% 97%, 15% 100%, 10% 97%, 5% 100%, 0 97% );
-      background: #2905 !important;
-      min-height: 90px;
-      aspect-ratio: 1 / 1.5;
-      border-radius: 0 !important;
-      backdrop-filter: drop-shadow( #0005 2px 2px 2px );
-      } */
       recibo {
       display: grid !important;
       font-size: clamp( 5px, 3vw, 50px );
       aspect-ratio: 16 / 4;
       background: transparent !important;
       }
-      /* recibo > contents {
-      filter: drop-shadow( #0000 2px 2px 10px );
-      clip-path: polygon(
-      0 .8em, .8em 0, 67% 0, 69.3% .6em, 71.3% 0, 100% 0, 100% 100%,
-      71.3% 100%, 69.3% calc( 100% - .6em ), 67% 100%, 0 100% 
-      );
-      display: grid !important;
-      grid-template-columns: 2fr 5fr 3fr;
-      aspect-ratio: 16 / 4;
-      background: var( --receipt, #515359 ) !important;
-      background: var( --receipt, #e5e5e5 ) !important;
-      background: var( --receipt, white ) !important;
-      border-radius: 0 !important;
-      border-top: #e5e5e5 .125em dashed;
-      border-bottom: #e5e5e5 .125em dashed;
-      border-left: #e5e5e5 .125em dashed;
-      position: relative;
-      overflow: hidden;
-      text-wrap: nowrap;
-      }  */
+      
       recibo > contents {
       filter: drop-shadow( #0000 2px 2px 10px );
-      /* clip-path: polygon(
-      0 .8em, .8em 0, 67% 0, 69.3% .6em, 71.3% 0, 100% 0, 100% 100%,
-      71.3% 100%, 69.3% calc( 100% - .6em ), 67% 100%, 0 100% 
-      ); */
       display: grid !important;
       grid-template-columns: 2fr 5fr 3fr;
       aspect-ratio: 16 / 4;
@@ -1535,7 +1605,6 @@ export const invoiceHtml = ( { ...props } ) => {
       border-radius: 0 !important;
       border-bottom: #e5e5e5 .2em dashed;
       position: relative;
-      /* overflow: hidden; */
       text-wrap: nowrap;
       } 
 
@@ -1547,8 +1616,6 @@ export const invoiceHtml = ( { ...props } ) => {
       background: transparent;
       width: 32.01%;
       height: 100%;
-      /* border-left: var( --bg54, #e5e5e599 ) .25em dotted;
-      border-right: #e5e5e5 .7em dotted; */
       }
 
       date, main-info, total-price {
@@ -1653,7 +1720,6 @@ export const invoiceHtml = ( { ...props } ) => {
       justify-content: flex-end;
       align-self: flex-end;
       border-radius: 5em;
-      /* background: #27f5; */
       padding: .5em;
       color: #27f;
       }
@@ -1672,7 +1738,6 @@ export const invoiceHtml = ( { ...props } ) => {
       background-image: url( "../imgs/plasma/w1.jpeg" );
       background-image: url( "../imgs/plasma/eletromagnetico.jpg" );
       background-blend-mode: overlay;
-      /* min-height: 150px; */
       font-family: "poppins" !important;
       }
 
@@ -1850,12 +1915,10 @@ export const invoiceHtml = ( { ...props } ) => {
       text-transform: uppercase;
       font-weight: bolder;
       color: var( --table-customer-th-color, #212329 );
-      /* background: var( --receipt-pdf-th, #b5dfef ); */
       }
 
       #form_receipt_pdf td {
       flex: 2;
-      /* background: var( --receipt-pdf-td, #deeff7 ); */
       }
 
       table#customer th[nome] {
@@ -1878,7 +1941,6 @@ export const invoiceHtml = ( { ...props } ) => {
       max-width: 6ch;
       }
 
-      /* table#customer :where( th, td ) { */
       #form_receipt_pdf :where( th, td ) {
       padding: .4em;
       font-size: .8em;
@@ -1990,19 +2052,7 @@ export const invoiceHtml = ( { ...props } ) => {
       font-weight: bold;
       }
 
-      #btn_createPDF {
-      /*
-      clip-path: circle();
-      width: 45px;
-      aspect-ratio: 1;
-      position: fixed;
-      bottom: 12%;
-      right: 12%;
-      box-shadow: #0005 3px 2px 5px;
-      */
-      }
             </style>
-            <!-- <link rel="stylesheet" href="../src/styles/includes/theme.css"> -->
             <link rel="stylesheet" href="../src/fonts/fonts.css">
             <!-- == [ Scripts ] 
             == == == == == == == == == -->
@@ -2014,7 +2064,6 @@ export const invoiceHtml = ( { ...props } ) => {
             <script src="../src/scripts/widgets/AppBar.js" defer></script>
             <script src="../src/scripts/widgets/Drawer.js" defer></script>
             <script src="../src/scripts/widgets/NavBar.js" defer></script>
-            <!--script src="../src/scripts/widgets/AppFooter.js" defer></script-->
             <script src="../src/scripts/widgets/EA-Card.js" defer></script>
             <script src="../src/scripts/Widgets/NavLink.js" defer></script>
             <script src="../src/scripts/Widgets/Button.js" defer></script>
@@ -2071,7 +2120,7 @@ export const invoiceHtml = ( { ...props } ) => {
             width: 100%;
             aspect-ratio: 1;
             border-radius: 100vw;
-            border: var( --card-lv3 ) solid .48em;
+            border: var( --card-lv3 ) solid .24em;
          }
 
          ea-card > description {
@@ -2115,15 +2164,15 @@ export const invoiceHtml = ( { ...props } ) => {
                      <top-flag row>
                         <label id="label_">
                            <t>Orçamento</t>
-                           <input type="number" name="" id="orcamento-number" value="" />
+                           <input type="text" name="" id="orcamento-number" value="${ props.budget.id }" />
                         </label>
                         <label id="label_">
                            <t>Emissão</t>
-                           <input type="number" name="" id="emissao" value="" />
+                           <input type="text" name="" id="emissao" value="${ props.budget.dateOfIssue }" />
                         </label>
                         <label id="label_">
                            <t>Validade</t>
-                           <input type="number" name="" id="validade" value="" />
+                           <input type="text" name="" id="validade" value="${ props.budget.warranty }" />
                         </label>
                      </top-flag>
                      <customer-info section>
@@ -2131,41 +2180,41 @@ export const invoiceHtml = ( { ...props } ) => {
                            <tt>Cliente</tt>
                         </badge>
 
-                        <table id="customer">
+                        <table id="customer"> <!-- cliente body -->
                            <tbody>
                               <tr>
                                  <th nome>nome</th>
                                  <td nome>
-                                    <input id="input_nome" type="text" value="${ props.customer.name }" />
+                                    <input id="input_nome" type="text" value="${ props.owner.name }" />
                                  </td>
                               </tr>
                               <tr>
                                  <th >telefone </th>
-                                 <td ><input id="input_telefone" type="tel" /></td>
+                                 <td ><input id="input_telefone" type="text" value="${ props.owner.whatsapp || props.owner.cellphone || props.owner.phone }"/></td>
                                  <th >email </th>
-                                 <td ><input id="input_email" type="email" /></td>
+                                 <td ><input id="input_email" type="text" value="${ props.owner.email }"/></td>
                               </tr>
                               <tr>
                                  <th >cpf/cnpj </th>
-                                 <td><input id="input_cpf" type="text" /></td>
+                                 <td><input id="input_cpf" type="text" value="${ props.owner.cpf }"/></td>
                                  <th >rg/ie </th>
-                                 <td><input id="input_rg" type="text" /></td>
+                                 <td><input id="input_rg" type="text" value="${ props.owner.rg }"/></td>
                               </tr>
                               <tr>
                                  <th >endereço </th>
-                                 <td><input id="input_endereço" type="text" /></td>
+                                 <td><input id="input_endereço" type="text" value="${ props.owner.logradouro }"/></td>
                                  <th >n° </th>
-                                 <td><input id="input_n" type="number" step="1" /></td>
+                                 <td><input id="input_n" type="text" value="${ props.owner.number }"/></td>
                               </tr>
                               <tr>
                                  <th >bairro </th>
-                                 <td><input id="input_bairro" type="text" /></td>
+                                 <td><input id="input_bairro" type="text" value="${ props.owner.district }"/></td>
                                  <th >cidade </th>
-                                 <td><input id="input_cidade" type="text" /></td>
+                                 <td><input id="input_cidade" type="text" value="${ props.owner.city }"/></td>
                                  <th id="th_uf">uf </th>
-                                 <td ><input id="input_uf" type="text" /></td>
+                                 <td ><input id="input_uf" type="text" value="${ props.owner.uf }"/></td>
                                  <th >cep </th>
-                                 <td ><input id="input_cep" type="text" /></td>
+                                 <td ><input id="input_cep" type="text" value="${ props.owner.cep }"/></td>
                               </tr>
                            </tbody>
                         </table>
@@ -2176,240 +2225,31 @@ export const invoiceHtml = ( { ...props } ) => {
                         <table id="table-budget">
                            <thead>
                               <tr>
-                                 <th id="qt">QT </th>
-                                 <th id="description">DESCRIÇÃO </th>
-                                 <th id="unit">UNIT</th>
-                                 <th id="tot">TOT</th>
+                                 <th id="qt">Qtd. </th>
+                                 <th id="description">Descrição </th>
+                                 <th id="unit">R$ Unit.</th>
+                                 <th id="tot">R$ Tot.</th>
                               </tr>
                            </thead>
-                           <tbody id="tbody_budget">
-                              <tr>
-                                 <td>
-                                    <input id="input_qtd_01" type="number" step="0.01" />
-                                 </td>
-                                 <td>
-                                    <input id="input_description_01" type="text" />
-                                 </td>
-                                 <td>
-                                    <input id="input_unit_01" type="number" step="0.01" />
-                                 </td>
-                                 <td>
-                                    <input id="input_tot_01" type="number" step="0.01" />
-                                 </td>
-                              </tr>
-                              <tr>
-                                 <td>
-                                    <input id="input_qtd_02" type="number" step="0.01" />
-                                 </td>
-                                 <td>
-                                    <input id="input_description_02" type="text" />
-                                 </td>
-                                 <td>
-                                    <input id="input_unit_02" type="number" step="0.01" />
-                                 </td>
-                                 <td>
-                                    <input id="input_tot_02" type="number" step="0.01" />
-                                 </td>
-                              </tr>
-                              <tr>
-                                 <td>
-                                    <input id="input_qtd_03" type="number" step="0.01" />
-                                 </td>
-                                 <td>
-                                    <input id="input_description_03" type="text" />
-                                 </td>
-                                 <td>
-                                    <input id="input_unit_03" type="number" step="0.01" />
-                                 </td>
-                                 <td>
-                                    <input id="input_tot_03" type="number" step="0.01" />
-                                 </td>
-                              </tr>
-                              <tr>
-                                 <td>
-                                    <input id="input_qtd_04" type="number" step="0.01" />
-                                 </td>
-                                 <td>
-                                    <input id="input_description_04" type="text" />
-                                 </td>
-                                 <td>
-                                    <input id="input_unit_04" type="number" step="0.01" />
-                                 </td>
-                                 <td>
-                                    <input id="input_tot_04" type="number" step="0.01" />
-                                 </td>
-                              </tr>
-                              <tr>
-                                 <td>
-                                    <input id="input_qtd_05" type="number" step="0.01" />
-                                 </td>
-                                 <td>
-                                    <input id="input_description_05" type="text" />
-                                 </td>
-                                 <td>
-                                    <input id="input_unit_05" type="number" step="0.01" />
-                                 </td>
-                                 <td>
-                                    <input id="input_tot_05" type="number" step="0.01" />
-                                 </td>
-                              </tr>
-                              <tr>
-                                 <td>
-                                    <input id="input_qtd_06" type="number" step="0.01" />
-                                 </td>
-                                 <td>
-                                    <input id="input_description_06" type="text" />
-                                 </td>
-                                 <td>
-                                    <input id="input_unit_06" type="number" step="0.01" />
-                                 </td>
-                                 <td>
-                                    <input id="input_tot_06" type="number" step="0.01" />
-                                 </td>
-                              </tr>
-                              <tr>
-                                 <td>
-                                    <input id="input_qtd_07" type="number" step="0.01" />
-                                 </td>
-                                 <td>
-                                    <input id="input_description_07" type="text" />
-                                 </td>
-                                 <td>
-                                    <input id="input_unit_07" type="number" step="0.01" />
-                                 </td>
-                                 <td>
-                                    <input id="input_tot_07" type="number" step="0.01" />
-                                 </td>
-                              </tr>
-                              <tr>
-                                 <td>
-                                    <input id="input_qtd_08" type="number" step="0.01" />
-                                 </td>
-                                 <td>
-                                    <input id="input_description_08" type="text" />
-                                 </td>
-                                 <td>
-                                    <input id="input_unit_08" type="number" step="0.01" />
-                                 </td>
-                                 <td>
-                                    <input id="input_tot_08" type="number" step="0.01" />
-                                 </td>
-                              </tr>
-                              <tr>
-                                 <td>
-                                    <input id="input_qtd_09" type="number" step="0.01" />
-                                 </td>
-                                 <td>
-                                    <input id="input_description_09" type="text" />
-                                 </td>
-                                 <td>
-                                    <input id="input_unit_09" type="number" step="0.01" />
-                                 </td>
-                                 <td>
-                                    <input id="input_tot_09" type="number" step="0.01" />
-                                 </td>
-                              </tr>
-                              <tr>
-                                 <td>
-                                    <input id="input_qtd_10" type="number" step="0.01" />
-                                 </td>
-                                 <td>
-                                    <input id="input_description_10" type="text" />
-                                 </td>
-                                 <td>
-                                    <input id="input_unit_10" type="number" step="0.01" />
-                                 </td>
-                                 <td>
-                                    <input id="input_tot_10" type="number" step="0.01" />
-                                 </td>
-                              </tr>
-                              <tr>
-                                 <td>
-                                    <input id="input_qtd_11" type="number" step="0.01" />
-                                 </td>
-                                 <td>
-                                    <input id="input_description_11" type="text" />
-                                 </td>
-                                 <td>
-                                    <input id="input_unit_11" type="number" step="0.01" />
-                                 </td>
-                                 <td>
-                                    <input id="input_tot_11" type="number" step="0.01" />
-                                 </td>
-                              </tr>
-                              <tr>
-                                 <td>
-                                    <input id="input_qtd_12" type="number" step="0.01" />
-                                 </td>
-                                 <td>
-                                    <input id="input_description_12" type="text" />
-                                 </td>
-                                 <td>
-                                    <input id="input_unit_12" type="number" step="0.01" />
-                                 </td>
-                                 <td>
-                                    <input id="input_tot_12" type="number" step="0.01" />
-                                 </td>
-                              </tr>
-                              <tr>
-                                 <td>
-                                    <input id="input_qtd_13" type="number" step="0.01" />
-                                 </td>
-                                 <td>
-                                    <input id="input_description_13" type="text" />
-                                 </td>
-                                 <td>
-                                    <input id="input_unit_13" type="number" step="0.01" />
-                                 </td>
-                                 <td>
-                                    <input id="input_tot_13" type="number" step="0.01" />
-                                 </td>
-                              </tr>
-                              <tr>
-                                 <td>
-                                    <input id="input_qtd_14" type="number" step="0.01" />
-                                 </td>
-                                 <td>
-                                    <input id="input_description_14" type="text" />
-                                 </td>
-                                 <td>
-                                    <input id="input_unit_14" type="number" step="0.01" />
-                                 </td>
-                                 <td>
-                                    <input id="input_tot_14" type="number" step="0.01" />
-                                 </td>
-                              </tr>
-                              <tr>
-                                 <td>
-                                    <input id="input_qtd_15" type="number" step="0.01" />
-                                 </td>
-                                 <td>
-                                    <input id="input_description_15" type="text" />
-                                 </td>
-                                 <td>
-                                    <input id="input_unit_15" type="number" step="0.01" />
-                                 </td>
-                                 <td>
-                                    <input id="input_tot_15" type="number" step="0.01" />
-                                 </td>
-                              </tr>
+                           <tbody id="tbody_budget"> <!-- orçamento body -->
+                              ${ budgetBody }
                            </tbody>
                         </table>
                         <budget-end id="budget_end" row>
                            <table>
-                              <tbody>
+                              <tbody> <!-- footer body -->
                                  <tr>
                                     <th id="th_subtotal">Subtotal</th>
                                     <td id="td_subtotal">
-                                       <input id="input_subtotal" type="number" step="0.01" />
+                                       <input id="input_subtotal" type="text" value="${ props.budget.subtotal }"/>
                                     </td>
                                     <th id="th_desconto">Desconto</th>
                                     <td id="td_desconto">
-                                       <input id="input_desconto" type="number" step="0.01" />
+                                       <input id="input_desconto" type="text" value="${ props.budget.discount }"/>
                                     </td>
-                                    <th id="th_total">TOTAL</th>
+                                    <th id="th_total">Valor Total</th>
                                     <td id="td_total">
-                                       <input id="input_total" type="number" step="0.01" />
+                                       <input id="input_total" type="text" value="${ props.budget.receiptValue }"/>
                                     </td>
                                  </tr>
                               </tbody>
@@ -2421,7 +2261,7 @@ export const invoiceHtml = ( { ...props } ) => {
                         <badge section>
                            <tt>Observações</tt>
                         </badge>
-                        <textarea id="input_notes" name="" rows="8"></textarea>
+                        <textarea id="input_notes" name="" rows="8">${ props.budget.notes }</textarea>
                      </notes>
                   </form>
                   <signatures section>
