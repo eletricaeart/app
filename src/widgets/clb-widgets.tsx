@@ -1,7 +1,7 @@
 
 // http://127.0.0.1:8081
 import HomeScreen from "@/app-example/app/(tabs)";
-import React, { useState } from "react";
+import React, { Children, useEffect, useState } from "react";
 
 import {
    StyleSheet,
@@ -31,6 +31,8 @@ import Homepage from "@/app/homepage";
 import { Str2Brl } from "../utils";
 import { H3, P } from "./clb-html";
 import { PP, Fmenu } from "./ui";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { router } from "expo-router";
 
 /* == [ AppBar ]
 == == == == == == == == == */
@@ -360,18 +362,22 @@ export function Sheet( { ...props } ) {
 
 
 /**
- * receipt cardlist
+ * budget cardlist
  * 
  */
-export function receiptCardList( { ...props } ) {
+export function BudgetCardList( { ...props } ) {
    const 
-      [ FmenuState, setFmenuState ] = useState<boolean>( props.fmenuState || false )
+      [ FmenuState, setFmenuState ] = useState<boolean>( false )
    ;
 
+   useEffect( () => {
+      setFmenuState( false );
+   }, [] );
    return(
       <View
-         key={ item.id }
-         name={ item.name }
+         budget={ props }
+         // key={ props.id }
+         name={ props.name }
          style={{
             // backgroundColor: "#afc",
             height: 120,
@@ -412,8 +418,8 @@ export function receiptCardList( { ...props } ) {
                paddingRight: 9,
             }}
          >
-            <H3>{ item.name }</H3>
-            <P style={{ color: "#777" }}>{ Str2Brl( item.receiptValue ) }</P>
+            <H3>{ props.budget.name }</H3>
+            <P style={{ color: "#777" }}>{ Str2Brl( props.budget.receiptValue ) }</P>
          </View>
 
          <View style={{
@@ -428,7 +434,7 @@ export function receiptCardList( { ...props } ) {
          >
             <Pressable
                style={{
-                  backgroundColor: "#27f5",
+                  // backgroundColor: "#27f5",
                   width: "100%",
                   height: "100%",
                   flex: 1,
@@ -439,10 +445,10 @@ export function receiptCardList( { ...props } ) {
                   alignItems: "center",
                   justifyContent: "center",
                }}
-               onPress={ fmenuState = !fmenuState }
+               onPress={ () => setFmenuState( !FmenuState ) }
             >
                { 
-                  item.isPaid ? ( 
+                  props.budget.isPaid ? ( 
                      <View
                         style={{
                            backgroundColor: "#27f3",
@@ -481,9 +487,40 @@ export function receiptCardList( { ...props } ) {
                }
             </Pressable>
          </View>
-               { fmenuState &&
+               { FmenuState &&
                   <Fmenu style={{}}>
-                     <P>Fmenu</P>
+                     <Pressable onPress={ () => {
+                        const 
+                           budgetHook = {
+                              budgetId: props.budget.id,
+                              ownerId: props.budget.owner,
+                           }
+                        ;
+                        async function LoadBudget() {
+                           async function handle() {
+                              try {
+                                 const 
+                                    json = JSON.stringify( budgetHook )
+                                 ;
+
+                                 await AsyncStorage.setItem( "budgetHook", json );
+                              } catch( err: any ) {
+                                 console.error( "LoadBudget() err: \n\n\n", err );
+                              }
+                           }
+                           handle().then( () => router.push( "../getBudgetPdf" ) );
+                        }
+                        LoadBudget();
+                        setFmenuState( !FmenuState );
+                     } }>
+                        <P style={{  }}>get pdf</P>
+                     </Pressable>
+                     <Pressable onPress={ () => alert( "oi" ) }>
+                        <P style={{  }}>editar</P>
+                     </Pressable>
+                     <Pressable onPress={ () => alert( "oi" ) }>
+                        <P style={{  }}>deletar</P>
+                     </Pressable>
                   </Fmenu>
                }
 

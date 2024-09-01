@@ -12,10 +12,17 @@ export default function Layout() {
                headerShown: false,
             }}
          />
-         <Stack.Screen 
+         {/* <Stack.Screen 
             name="/home"
             options={{
                headerShown: false,
+            }}
+         /> */}
+         <Stack.Screen 
+            name="getBudgetPdf"
+            options={{
+               headerShown: false,
+               statusBarColor: "#19497b"
             }}
          />
       </Stack>

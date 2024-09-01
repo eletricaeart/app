@@ -87,7 +87,8 @@ export function EACard() {
    const { width } = Dimensions.get( "window" ); // andy: 411.42857142857144 H1-fsz: //0.053472222,
    const 
       logo = {
-         raw: "https://raw.githubusercontent.com/Ceo-js/ea/2e6fdd74866a50968095c8c6942156d1e93e1c34/ea.jpg"
+         // raw: "https://raw.githubusercontent.com/Ceo-js/ea/2e6fdd74866a50968095c8c6942156d1e93e1c34/ea.jpg"
+         raw: "https://rawcdn.githack.com/eletricaeart/app/6e75f2fa11d56872a7e284e03c20bd865925ff2c/src/images/EA/globo-de-plasma-300.png?raw=true"
          ,
          local: "@/src/images/EA/globo-de-plasma-700.png"
       }
@@ -97,9 +98,11 @@ export function EACard() {
             // backgroundColor: Colores.colors.blue0, 
             backgroundColor: "#19497b", 
             width: "100%", flexDirection: "row",
-            padding: 16,
-            aspectRatio: "16 / 6.5",
-            alignItems: "center", justifyContent: "space-between",
+            padding: 8,
+            // aspectRatio: "16 / 6.5",
+            aspectRatio: "16 / 5.8",
+            // alignItems: "center", justifyContent: "space-between",
+            alignItems: "center", justifyContent: "space-around",
          },
 
          picture: {
@@ -110,13 +113,16 @@ export function EACard() {
             justifyContent: "center",
          },
          img: {
-            width: "90%", height: "90%",
+            width: "97%", height: "97%",
             borderRadius: 1000,
          },
 
          description: {
-            flex: 1 / 1.1,
+            flexBasis: 200,
+            aspectRatio: 1 / .6,
             alignItems: "center",
+            justifyContent: "center",
+            // backgroundColor: "#fff3",
          },
          tt: {
             color: "#fff",

@@ -180,12 +180,19 @@ export const
    `
    ,
    Fmenu = styled.View`
-      background: #ffab00;
-      padding: 16px;
+      /* background: #fff; */
+      background: #e5e5e5;
       position: absolute;
       top: 0;
-      right: 0;
+      right: 5px;
       z-index: 9;
+      min-width: 100px;
+      padding: 16px;
+      gap: 13px;
+      border-radius: 9px;
+      align-items: center;
+      elevation: 5;
+      box-shadow: #000 2px 1px 5px;
    `,
 
 

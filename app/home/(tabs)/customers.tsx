@@ -66,7 +66,7 @@ interface customer {
    rg?: string;
    cpf?: string;
    cep?: string;
-   estate?: string;
+   uf?: string;
    logradouro?: string;
    number?: string;
    complemento?: string;
@@ -279,7 +279,7 @@ export default function CustomersView( { ...props } ) {
       ,
       [ Cep, setCep ] = useState( "" )
       ,
-      [ Estate, setEstate ] = useState( "" )
+      [ UF, setUF ] = useState( "" )
       ,
       [ Logradouro, setLogradouro ] = useState( "" )
       ,
@@ -309,7 +309,7 @@ export default function CustomersView( { ...props } ) {
          setRg,
          setCpf,
          setCep,
-         setEstate,
+         setUF,
          setLogradouro,
          setNumber,
          setComplemento,
@@ -330,7 +330,7 @@ export default function CustomersView( { ...props } ) {
          rg: Rg,
          cpf: Cpf,
          cep: Cep,
-         estate: Estate,
+         uf: UF,
          logradouro: Logradouro,
          number: Number,
          complemento: Complemento,
@@ -361,7 +361,7 @@ export default function CustomersView( { ...props } ) {
          _( response.data );
    
          setCep( response.data.cep );
-         setEstate( response.data.uf );
+         setUF( response.data.uf );
          setLogradouro( response.data.logradouro );
          setDistrict( response.data.bairro );
          setCity( response.data.localidade );
@@ -599,8 +599,8 @@ export default function CustomersView( { ...props } ) {
                                     <View style={ s.duoBox }>
                                        <Text style={ s.label }>UF</Text>
                                        <TextInput style={ s.input }
-                                    value={ Estate }
-                                    onChangeText={ setEstate }
+                                    value={ UF }
+                                    onChangeText={ setUF }
                                  />
                                     </View>
                                  </View>

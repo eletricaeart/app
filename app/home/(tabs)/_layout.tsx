@@ -43,6 +43,7 @@ export default function Layout() {
             height: 78,
 
          }, 
+         // tabBarButton: ,
          headerShadowVisible: true,
          
          headerBackground: () => ( <>
@@ -75,87 +76,26 @@ export default function Layout() {
             backgroundColor: "#00559C",
          }
       }}
-      
-      /* tabBar={({ navigation, state, descriptors, insets }) => (
-        <BottomNavigation.Bar
-         navigationState={state}
-         
-         sceneAnimationType={ "opacity" }
-         shifting={ true }
-         labeled={ true }
-         compact={ true }
-         activeColor={ "#00559C" }
-         inactiveColor={ "#fff" }
-         keyboardHidesNavigationBar={ true }
-         barStyle={ { backgroundColor: "#16181C", } }
-         theme={{colors: {secondaryContainer: "#212329"}}}
-         safeAreaInsets={insets}
-         style={ { backgroundColor: "#16181c" } }
-          onTabPress={({ route, preventDefault }) => {
-            const event = navigation.emit({
-              type: 'tabPress',
-              target: route.key,
-              canPreventDefault: true,
-            });
-
-            if (event.defaultPrevented) {
-              preventDefault();
-            } else {
-             navigation.dispatch({
-                ...CommonActions.navigate(route.name, route.params),
-                target: state.key,
-              });
-            }
-          }}
-          renderIcon={({ route, focused, color }) => {
-            const { options } = descriptors[route.key];
-            if (options.tabBarIcon) {
-              return options.tabBarIcon({ focused, color, size: 24 });
-            }
-
-            return null;
-          }}
-          getLabelText={({ route }) => {
-            const { options } = descriptors[route.key];
-            const label =
-              options.tabBarLabel !== undefined
-                ? options.tabBarLabel
-                : options.title !== undefined
-                ? options.title
-                : route.title;
-
-            return label;
-          }}
-        />
-      )} */
     >
-      {/* <Tabs.Screen 
-         name="Login"
-         component={ Login }
-
-      /> */}
       <Tabs.Screen
-        name="home"
-      //   component={Routes.Home}
-        options={{
-            // tabBarLabel: 'Home',
-            title: 'Home',
-            tabBarIcon: ({ color, size }) => {
-               return <Icon i="mi" name="electrical-services" color="#27f"/>;
-            },
-            unmountOnBlur: true,
-            headerTitle: () => <HeaderTitle />, 
-        }}
+         name="home"
+         options={{
+               title: 'Home',
+               tabBarIcon: ({ color, size }) => {
+                  return <Icon i="mi" name="electrical-services" color="#27f"/>;
+               },
+               unmountOnBlur: true,
+               headerTitle: () => <HeaderTitle />, 
+         }}
       />
       <Tabs.Screen
-        name="customers"
-      //   component={Routes.Customers}
-        options={{
-          title: 'Clientes',
-          tabBarIcon: ({ color, size }) => {
-            return <Icon i="f" name="people-group" color="#fff"/>;
-          },
-          headerRight: ({}) => {
+         name="customers"
+         options={{
+            title: 'Clientes',
+            tabBarIcon: ({ color, size }) => {
+               return <Icon i="f" name="people-group" color="#fff"/>;
+            },
+         headerRight: ({}) => {
             return( <>
                <Pressable 
                style={{ 
@@ -206,54 +146,50 @@ export default function Layout() {
         }} 
       />
       <Tabs.Screen
-        name="receipts"
-      //   component={Routes.ReceiptsView}
-        options={{
-          title: 'Recibos',
-          tabBarIcon: ({ color, size }) => {
-            return <Icon i="mc" name="receipt" color="#fff"/>;
-          },
-        }}
+         name="receipts"
+         options={{
+            title: 'Recibos',
+            tabBarIcon: ({ color, size }) => {
+               return <Icon i="mc" name="receipt" color="#fff"/>;
+            },
+         }}
       />
       <Tabs.Screen
-        name="budgets"
-      //   component={Routes.Budgets}
-        options={{
-          title: 'Orçamentos',
-          tabBarIcon: ({ color, size }) => {
-            return <Icon i="f" name="file-invoice-dollar" color="#fff"/>;
-          },
+         name="budgets"
+         options={{
+            title: 'Orçamentos',
+            tabBarIcon: ({ color, size }) => {
+               return <Icon i="f" name="file-invoice-dollar" color="#fff"/>;
+            },
 
-        }}
+         }}
       />
       <Tabs.Screen
-        name="dev"
-      //   component={Routes.Dev}
-        options={{
-          title: 'Dev',
-          tabBarIcon: ({ color, size }) => {
-            return <Icon i="mi" name="devices" color="#ffab00"/>;
-          },
-        }}
+         name="dev"
+         options={{
+            title: 'Dev',
+            tabBarIcon: ({ color, size }) => {
+               return <Icon i="mi" name="devices" color="#ffab00"/>;
+            },
+         }}
       />
       <Tabs.Screen
-        name="invoice"
-      //   component={Routes.tabs.Invoice}
-        options={{
-          title: 'Dev',
-          tabBarIcon: ({ color, size }) => {
-            return <Icon i="mi" name="devices" color="#ffab00"/>;
-          },
-        }}
+         name="invoice"
+         options={{
+            title: 'Invoice',
+            tabBarIcon: ({ color, size }) => {
+               return <Icon i="mi" name="devices" color="#ffab00"/>;
+            },
+         }}
       />
     </Tabs>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+   container: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+   },
 });
