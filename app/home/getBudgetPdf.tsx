@@ -334,16 +334,16 @@ export default function GetBudgetPdfView() {
                               return(
                                  <View style={[ s.rowInput ]}>
                                     <PpView>
-                                       <Pp >{ item[1] }</Pp>
+                                       <Pp >{ item.quantity }</Pp>
                                     </PpView>
                                     <PpView2>
-                                       <Pp >{ item[0] }</Pp>
+                                       <Pp >{ item.description }</Pp>
                                     </PpView2>
                                     <PpView3>
-                                       <Ppr style={ s.ttt }>{ CutRS( Str2Brl( item[2].toString() ) ) }</Ppr>
+                                       <Ppr style={ s.ttt }>{ CutRS( Str2Brl( item.value ) ) }</Ppr>
                                     </PpView3>
                                     <PpView4>
-                                       <Ppr style={ s.ttt }>{ CutRS( Str2Brl( item[3].toString() ) ) }</Ppr>
+                                       <Ppr style={ s.ttt }>{ CutRS( Str2Brl( item.total.toString() ) ) }</Ppr>
                                     </PpView4>
                                  </View>
                               );
@@ -351,16 +351,16 @@ export default function GetBudgetPdfView() {
                               return(
                                  <View style={[ s.rowInput, { backgroundColor: "#e5e5e5bf" } ]}>
                                     <PpView>
-                                       <Pp >{ item[1] }</Pp>
+                                       <Pp >{ item.quantity }</Pp>
                                     </PpView>
                                     <PpView2>
-                                       <Pp >{ item[0] }</Pp>
+                                       <Pp >{ item.description }</Pp>
                                     </PpView2>
                                     <PpView3>
-                                       <Ppr style={ s.ttt }>{ CutRS( Str2Brl( item[2].toString() ) ) }</Ppr>
+                                       <Ppr style={ s.ttt }>{ CutRS( Str2Brl( item.value ) ) }</Ppr>
                                     </PpView3>
                                     <PpView4>
-                                       <Ppr style={ s.ttt }>{ CutRS( Str2Brl( item[3].toString() ) ) }</Ppr>
+                                       <Ppr style={ s.ttt }>{ CutRS( Str2Brl( item.total.toString() ) ) }</Ppr>
                                     </PpView4>
                                  </View>
                               );

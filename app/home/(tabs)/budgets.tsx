@@ -40,7 +40,7 @@ import * as Form from "@/src/widgets/clb-form";
 import * as CStore from "@/src/widgets/clb-dbs";
 import { Icon } from "@/src/widgets/clb-icons";
 import { _ } from "@/src/widgets/clb";
-import { Brl2Float, FixBrl, Str2Brl } from "@/src/utils";
+import { Brl2Float, Brl2Str, FixBrl, Str2Brl } from "@/src/utils";
 
 import { LinearGradient } from "expo-linear-gradient";
 
@@ -169,8 +169,9 @@ export default function BudgetsView( { ...props } ) {
          customer: Customer,
       } )
       ,
-      // [ Discount, setDiscount ] = useState( Str2Brl( "0" ) )
       [ Discount, setDiscount ] = useState( 0 )
+      ,
+      [ DiscountValue, setDiscountValue ] = useState( 0 )
       ,
       [ Warranty, setWarranty ] = useState( () => {
          // pintura: 2 e 5 anos 
@@ -338,9 +339,9 @@ export default function BudgetsView( { ...props } ) {
                   name: Service.description,
                   notes: Service.notes,
                   services: [ ...Service.services ],
-                  receiptValue: Service.total,
                   subtotal: Subtotal,
-                  discount: Discount,
+                  discount: DiscountValue,
+                  receiptValue: Brl2Float( Subtotal ) - DiscountValue,
                   warranty: Warranty ? Warranty : defaults.warranty,
                   formOfPayment: FormOfPayment,
                   isPaid: SwitchPaid_Enabled,
@@ -764,6 +765,7 @@ export default function BudgetsView( { ...props } ) {
                                  ;
 
                                  setDiscount( rawText );
+                                 setDiscountValue( Brl2Float( text ) );
                                  setReceiptValue( n.toString() );
                                  console.log(
                                     "Subtotal onChangeText: ",
@@ -773,7 +775,9 @@ export default function BudgetsView( { ...props } ) {
                                     "text: ", text,
                                     "rawText: ", rawText,
                                     "total: ", total,
-                                    "n: ", n
+                                    "n: ", n,
+                                    "text Brl2Str: ", Brl2Str( text ),
+                                    "text Brl2Float: ", Brl2Float( text ),
                                  );
                               } }
                               style={ s.input }
