@@ -42,6 +42,9 @@ export default function useBudgetsFB() {
                         services: any[];
                         subtotal: any;
                         warranty: any;
+                        dateOfIssue: any;
+                        discount: any;
+                        dueDate: any;
                      }[] = []
                      // list: SetStateAction<{ id: string; name: string; email: string; }> | { id: any; name: any; email: any; }[] = []
                   ;
@@ -71,6 +74,9 @@ export default function useBudgetsFB() {
                         services: services,
                         subtotal: value.subtotal,
                         warranty: value.warranty,
+                        dateOfIssue: value.dateOfIssue,
+                        discount: value.discount,
+                        dueDate: value.dueDate,
                      } );
                   } );
                   setBudgetsFB( list );

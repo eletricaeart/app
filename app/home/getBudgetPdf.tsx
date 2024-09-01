@@ -20,6 +20,7 @@ import { router, Stack } from "expo-router";
 
 interface owner {
    id: string;
+   name: string;
    phone: string;
    email: string;
    rg: string;
@@ -29,10 +30,11 @@ interface owner {
    number: string;
    district: string;
    city: string;
-   state: string;
+   uf: string;
 };
 
 interface budget {
+   key: string;
    id: string;
    formOfPayment: string;
    isPaid: boolean;
@@ -44,6 +46,9 @@ interface budget {
    subtotal: string;
    warranty: string;
    services: any[];
+   dateOfIssue: string;
+   discount: string;
+   dueDate: string;
 };
 
 // class BudgetModel {
@@ -90,6 +95,7 @@ export default function GetBudgetPdfView() {
 
    const 
       [ Budget, setBudget ] = useState<budget>( {
+         key: "",
          id: "",
          formOfPayment: "",
          isPaid: false,
@@ -101,10 +107,14 @@ export default function GetBudgetPdfView() {
          subtotal: "",
          warranty: "",
          services: [],
+         dateOfIssue: "",
+         discount: "",
+         dueDate: "",
       } )
       ,
       [ Owner, setOwner ] = useState<owner>( {
          id: "",
+         name: "",
          phone: "",
          email: "",
          rg: "",
@@ -114,7 +124,7 @@ export default function GetBudgetPdfView() {
          number: "",
          district: "",
          city: "",
-         state: "",
+         uf: "",
       } )
    ;
 
@@ -175,7 +185,7 @@ export default function GetBudgetPdfView() {
    }, [] );
 
    return( <>
-      <Stack.Screen options={{ headerShown: true, title: "Recibo",
+      <Stack.Screen options={{ headerShown: true, title: "Orçamento",
          header: ({}) => ( <>
             <View
                style={{
@@ -205,14 +215,14 @@ export default function GetBudgetPdfView() {
             <EACard></EACard>
             <View>
                <View style={[ s.row ]}>
-                  <H5 style={[ s.TT ]}>Orçamento</H5>
-                  <H5 style={[ s.TT ]}>Emissão</H5>
-                  <H5 style={[ s.TT ]}>Validade</H5>
+                  <H5 style={[ s.rowTitle ]}>Orçamento</H5>
+                  <H5 style={[ s.rowTitle ]}>Emissão</H5>
+                  <H5 style={[ s.rowTitle ]}>Validade</H5>
                </View>
-               <View style={[ s.row, { backgroundColor: "#f5f5f5", padding: 0 } ]}>
-                  <P style={[ s.tt ]}>{ Budget.id }</P>
-                  <P style={[ s.tt ]}>{ /* Budget.bornDate? */ }</P>
-                  <P style={[ s.tt ]}>{ Budget.warranty }</P>
+               <View style={[ s.row, { backgroundColor: "#f5f5f5", } ]}>
+                  <P style={[ s.rowText ]}>{ Budget.id }</P>
+                  <P style={[ s.rowText ]}>{ Budget.dateOfIssue }</P>
+                  <P style={[ s.rowText ]}>{ Budget.warranty }</P>
                </View>
             </View>
                <View style={[ s.topFlag ]}>
@@ -318,22 +328,22 @@ export default function GetBudgetPdfView() {
                   </PpView4>
                </View>
                <View>
-                  {  !budgets ?                  
-                        budgets.map( ( item, position ) => {
+                  {  Budget ?                  
+                        Budget.services.map( ( item, position ) => {
                            if( position % 2 == 0 ) {
                               return(
                                  <View style={[ s.rowInput ]}>
                                     <PpView>
-                                       <Pp >{ item.qtd }</Pp>
+                                       <Pp >{ item[1] }</Pp>
                                     </PpView>
                                     <PpView2>
-                                       <Pp >{ item.desc }</Pp>
+                                       <Pp >{ item[0] }</Pp>
                                     </PpView2>
                                     <PpView3>
-                                       <Ppr >{ CutRS( Str2Brl( item.unit.toString() ) ) }</Ppr>
+                                       <Ppr style={ s.ttt }>{ CutRS( Str2Brl( item[2].toString() ) ) }</Ppr>
                                     </PpView3>
                                     <PpView4>
-                                       <Ppr >{ CutRS( Str2Brl( item.tot.toString() ) ) }</Ppr>
+                                       <Ppr style={ s.ttt }>{ CutRS( Str2Brl( item[3].toString() ) ) }</Ppr>
                                     </PpView4>
                                  </View>
                               );
@@ -341,16 +351,16 @@ export default function GetBudgetPdfView() {
                               return(
                                  <View style={[ s.rowInput, { backgroundColor: "#e5e5e5bf" } ]}>
                                     <PpView>
-                                       <Pp >{ item.qtd }</Pp>
+                                       <Pp >{ item[1] }</Pp>
                                     </PpView>
                                     <PpView2>
-                                       <Pp >{ item.desc }</Pp>
+                                       <Pp >{ item[0] }</Pp>
                                     </PpView2>
                                     <PpView3>
-                                       <Ppr >{ CutRS( Str2Brl( item.unit.toString() ) ) }</Ppr>
+                                       <Ppr style={ s.ttt }>{ CutRS( Str2Brl( item[2].toString() ) ) }</Ppr>
                                     </PpView3>
                                     <PpView4>
-                                       <Ppr >{ CutRS( Str2Brl( item.tot.toString() ) ) }</Ppr>
+                                       <Ppr style={ s.ttt }>{ CutRS( Str2Brl( item[3].toString() ) ) }</Ppr>
                                     </PpView4>
                                  </View>
                               );
@@ -397,19 +407,17 @@ export default function GetBudgetPdfView() {
                   }
                </View>
                <View>
-                  <View style={[ s.bRow, { backgroundColor: "#f5f5f5" } ]}>
-                     <View style={[ s.bRow, {  } ]}>
-                        <H5 style={[ s.TTbRow ]}>Subtotal</H5>
-                        <Pp style={[ s.TT, { color: "#333" } ]}>Subtotal</Pp>
-                     </View>
-                     <View style={[ s.bRow, {  } ]}>
-                        <H5 style={[ s.TTbRow ]}>Desconto</H5>
-                        <Pp style={[ s.TT, { color: "#333" } ]}>Desconto</Pp>
-                     </View>
-                     <View style={[ s.bRow, {  } ]}>
-                        <H5 style={[ s.TTbRow ]}>Valor Total</H5>
-                        <Pp style={[ s.TT, { color: "#333" } ]}>Valor Total</Pp>
-                     </View>
+                  <View style={[ { backgroundColor: "#f5f5f5" } ]}>
+               <View style={[ s.row ]}>
+                  <H5 style={[ s.rowTitle ]}>Subtotal</H5>
+                  <H5 style={[ s.rowTitle ]}>Desconto</H5>
+                  <H5 style={[ s.rowTitle ]}>Valor Total</H5>
+               </View>
+               <View style={[ s.row, { backgroundColor: "#f5f5f5", } ]}>
+                  <P style={[ s.rowText ]}>{ Budget.subtotal }</P>
+                  <P style={[ s.rowText ]}>{ Str2Brl( Budget.discount ) }</P>
+                  <P style={[ s.rowText ]}>{ Str2Brl( Budget.receiptValue ) }</P>
+               </View>
                   </View>
                </View>
             </View>
@@ -419,7 +427,7 @@ export default function GetBudgetPdfView() {
             <BottomView>
                <Center>
                   <OBS>
-                     <Text>oi</Text>
+                     <Text>{ Budget.notes }</Text>
                   </OBS>
                </Center>
                <Signatures>
@@ -490,8 +498,21 @@ const
          backgroundColor: "#19497b77",
          flexDirection: "row",
          alignItems: "center",
-         justifyContent: "space-around",
-         padding: 4,
+         paddingTop: 4,
+         paddingBottom: 4,
+      }
+      ,
+      rowTitle: {
+         color: "#19497b",
+         textAlign: "center",
+         flexBasis: "33%",
+      }
+      ,
+      rowText: {
+         color: "#333",
+         fontSize: 10,
+         textAlign: "center",
+         flexBasis: "33%",
       }
       ,
       bRow: {
@@ -523,6 +544,9 @@ const
       tt: {
          color: "#333",
          fontSize: 11
+      },
+      ttt: { 
+         textAlign: "left" 
       },
       customerInput: {
          flexDirection: "row",

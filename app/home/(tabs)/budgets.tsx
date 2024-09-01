@@ -346,6 +346,7 @@ export default function BudgetsView( { ...props } ) {
                   isPaid: SwitchPaid_Enabled,
                   payday: !SwitchPaid_Enabled ? "" : Payday ? Payday :  defaults.payday,
                   dueDate: DueDate ? DueDate : defaults.dueDate,
+                  dateOfIssue: `${ new Date().getDate() }/${ new Date().getMonth() + 1 }/${ new Date().getFullYear() }`,
                }
             ;
 
@@ -385,7 +386,7 @@ export default function BudgetsView( { ...props } ) {
 
       !Customer.id ? (
          console.log( 
-            "nenhum cliente foi adicionado no recibo!",
+            "nenhum cliente foi adicionado no orçamento!",
             // "\nWarranty: ", Warranty,
             // "\nPayday: ", Payday,
             // "\nDueDate: ", DueDate,
@@ -406,7 +407,7 @@ export default function BudgetsView( { ...props } ) {
             // "\ndueDate: ", DueDate ? DueDate : defaults.dueDate
          )
       ) : Service.services.length == 0 ? (
-         console.log( "nenhum serviço foi adicionado no recibo!" )
+         console.log( "nenhum serviço foi adicionado no orçamento!" )
       ) : handle();
    }
 
@@ -455,7 +456,7 @@ export default function BudgetsView( { ...props } ) {
                   <HomePage style={{  }}>
                      <Header>
                         <Content>
-                           <H2>Recibos</H2>
+                           <H2>Orçamentos</H2>
                         </Content>
                      </Header>
    
@@ -492,7 +493,7 @@ export default function BudgetsView( { ...props } ) {
                <View style={{ flex: 1, }}>
                   <Header>
                      <Content>
-                        <H2>Recibos</H2>
+                        <H2>Orçamentos</H2>
                      </Content>
                   </Header>
                   <View style={{ width: "100%", aspectRatio: "12 / 9", marginTop: 16, }}>
@@ -500,7 +501,7 @@ export default function BudgetsView( { ...props } ) {
                      style={{ width: "100%", height: "100%", }} resizeMode="contain"/>
                   </View>
                   <Center style={{ paddingTop: 16, }}>
-                     <H3 style={{ color: "#777", }}>Nenhum recibo ainda</H3>
+                     <H3 style={{ color: "#777", }}>Nenhum orçamento ainda</H3>
                   </Center>
                </View>
             }
@@ -573,7 +574,7 @@ export default function BudgetsView( { ...props } ) {
             <Section style={{ zIndex: 1, }}>
                <Header>
                   <View style={{ height: 80, flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingLeft: 16, paddingRight: 16, }}>
-                     <H3 style={{ color: "#00559c99" }}>Novo recibo</H3>
+                     <H3 style={{ color: "#00559c99" }}>Novo orçamento</H3>
                      <Pressable onPress={ () => { setModalVisibility( !ModalVisibility ) } }>
                         <View style={[ s.btnOverlay,  ]}>
                            <Icon i="f0" name="close" color={ colors.error } />
@@ -585,7 +586,7 @@ export default function BudgetsView( { ...props } ) {
                      <Card style={{ backgroundColor: "#00559c", }}>
                         <Content style={{ flexDirection: "row", justifyContent: "space-between", gap: 18, height: 110, }}>
                            <Section style={{ justifyContent: "space-between" }}>
-                              <H3 style={{ color: "#fff", }}>Valor do recibo</H3>
+                              <H3 style={{ color: "#fff", }}>Valor do orçamento</H3>
                               <H1 style={{ color: "#fff", }}>{ Str2Brl( ReceiptValue ) }</H1>
                            </Section>
                            <Section>
@@ -607,7 +608,7 @@ export default function BudgetsView( { ...props } ) {
                         <Section >
 
                            <View style={ s.divider }>
-                              <Text style={ s.dividerText }>Status do recibo</Text>
+                              <Text style={ s.dividerText }>Status do orçamento</Text>
                            </View>
 
                            <Section style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
@@ -837,27 +838,7 @@ export default function BudgetsView( { ...props } ) {
                            marginTop: 24,
                            marginBottom: 66,
                         } }>
-
-                           <Touch 
-                              txt="apagar tudo"
-                              onPressIn={ () => { Keyboard.dismiss() } }
-                              onPressOut={ () => { 
-                                 Form.ClearInputs( inputs ); 
-                                 // id_Name.current.focus(); 
-                              } }
-                           />
-                           <Touch 
-                              touchSty={{ backgroundColor: "#9c5500", }}
-                              txtSty={{ color: "#fff", }}
-                              txt="erase DBs"
-                              onPress={ async () => { await AsyncStorage.removeItem( "customers" ) } }
-                           />
-                           <Touch 
-                              touchSty={{ backgroundColor: "#9c5500", }}
-                              txtSty={{ color: "#fff", }}
-                              txt="show Service"
-                              onPress={ () => { console.log( "Service: ", Service ) } }
-                           />
+                           
                            <Touch 
                               touchSty={{ backgroundColor: "#00559C", }}
                               txtSty={{ color: "#fff", }}
@@ -1296,7 +1277,7 @@ export default function BudgetsView( { ...props } ) {
                //  { icon: 'plus', onPress: () => console.log('Pressed add') },
                {
                   icon: "apple-icloud", /* 'account-reactivate', */
-                  label: 'Buscar recibos da nuvem',
+                  label: 'Buscar orçamentos da nuvem',
                   labelTextColor: "#333",
                   labelStyle: { fontWeight: "bold" },
                   onPress: () => { 
@@ -1308,7 +1289,7 @@ export default function BudgetsView( { ...props } ) {
                },
                {
                   icon: 'receipt',
-                  label: 'Criar novo recibo',
+                  label: 'Criar novo orçamento',
                   labelTextColor: "#333",
                   labelStyle: { fontWeight: "bold", },
                   onPress: () => setModalVisibility( true ),
