@@ -1,3 +1,5 @@
+
+
 import { CutRS, Float2Brl, Str2Brl } from "../utils";
 
 
@@ -49,6 +51,32 @@ export const invoiceHtml = ( { ...props } ) => {
    services.forEach( service => {
       budgetBody += interfaces.budgetBodyItem( service );
    } );
+
+   if( services.length <= 15 ) {
+      // console.log( "length: ", 15 - services.length );
+      let list = [ ...Array(
+         15 - services.length
+      ) ].fill( `
+         <tr>
+            <td>
+               <input id="input_qtd_01" type="text" value=""/>
+            </td>
+            <td>
+               <input id="input_description_01" type="text" value=""/>
+            </td>
+            <td>
+               <input id="input_unit_01" type="text" value=""/>
+            </td>
+            <td>
+               <input id="input_tot_01" type="text" value=""/>
+            </td>
+         </tr>
+      ` );
+      // setBgList( [ ...list ] );
+      list.forEach( service => {
+         budgetBody += service;
+      } );
+   }
    
    return `
       <!DOCTYPE html>

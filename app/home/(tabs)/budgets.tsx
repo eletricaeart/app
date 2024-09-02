@@ -136,6 +136,8 @@ export default function BudgetsView( { ...props } ) {
    };
    const [ customersDB, setcustomersDB ] = useState( [] );
    const 
+      [ BudgetName, setBudgetName ] = useState( "" )
+      ,
       [ Paid, setPaid ] = useState( false )
       ,
       [ Payday, setPayday ] = useState( "" )
@@ -335,7 +337,8 @@ export default function BudgetsView( { ...props } ) {
                obj = {
                   id: Ref,
                   owner: Customer.id,
-                  name: Service.description,
+                  // name: Service.description,
+                  name: BudgetName || `Serviço ${ new Date().getDate() }-${ new Date().getMonth() + 1 }-${ new Date().getFullYear() }`,
                   // notes: Service.notes,
                   notes: Notes,
                   services: [ ...Service.services ],
@@ -575,7 +578,17 @@ export default function BudgetsView( { ...props } ) {
             <Section style={{ zIndex: 1, }}>
                <Header>
                   <View style={{ height: 80, flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingLeft: 16, paddingRight: 16, }}>
-                     <H3 style={{ color: "#00559c99" }}>Novo orçamento</H3>
+                     {/* <H3 style={{ color: "#00559c99" }}>Novo orçamento</H3> */}
+                     
+                     <TextInput style={{ fontSize: 20, fontWeight: "bold", color: "#00559c99" }}
+                        value={ BudgetName } 
+                        onChangeText={ text => {
+                           setBudgetName( text );
+                        } }
+                        placeholder="Novo orçamento"
+                        placeholderTextColor="#00559c99"
+                     />
+
                      <Pressable onPress={ () => { setModalVisibility( !ModalVisibility ) } }>
                         <View style={[ s.btnOverlay,  ]}>
                            <Icon i="f0" name="close" color={ colors.error } />

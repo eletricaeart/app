@@ -401,7 +401,7 @@ export default function CustomersView( { ...props } ) {
    return( <>
       <PaperProvider>
          {/* <LinearGradient colors={[ "#f5f5f5", "#e5e5e5", ]} style={[ { flex: 1, } ]} > */}
-         <LinearGradient colors={[ "#fafafa", "#faf", ]} style={[ { flex: 1, } ]} >
+         <LinearGradient colors={[ "#fafafa", "#e5e5e5", ]} style={[ { flex: 1, } ]} >
             
             { Customers != null ? 
                <ScrollView style={{ flex: 1,  }}>

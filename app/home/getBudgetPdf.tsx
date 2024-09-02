@@ -229,9 +229,9 @@ export default function GetBudgetPdfView() {
 
             if( data.budget.services.length <= 15 ) {
                // console.log( "length: ", 15 - data.budget.services.length );
-               let list = [...Array(
+               let list = [ ...Array(
                   15 - data.budget.services.length
-               )].fill(0);
+               ) ].fill(0);
                setBgList( [ ...list ] );
             }
 
@@ -451,44 +451,85 @@ export default function GetBudgetPdfView() {
                         } )
                   }
                   {
-                     Budget.services.length <= 15 && 
-                     BgList.map( ( item, position ) => {
-                        if( position % 2 == 0 ) {
-                           return(
-                              <View style={[ s.rowInput ]}>
-                                 <PpView style={{ paddingTop: 4, }}>
-                                    <Pp>{" "}</Pp>
-                                 </PpView>
-                                 <PpView2>
-                                    <Pp>{" "}</Pp>
-                                 </PpView2>
-                                 <PpView3>
-                                    <Ppr>{" "}</Ppr>
-                                 </PpView3>
-                                 <PpView4>
-                                    <Ppr>{" "}</Ppr>
-                                 </PpView4>
-                              </View>
-                           );
-                        } else {
-                           return(
-                              <View style={[ s.rowInput, { backgroundColor: "#e5e5e5bf" } ]}>
-                                 <PpView style={{ paddingTop: 4, }}>
-                                    <Pp></Pp>
-                                 </PpView>
-                                 <PpView2>
-                                    <Pp></Pp>
-                                 </PpView2>
-                                 <PpView3>
-                                    <Ppr></Ppr>
-                                 </PpView3>
-                                 <PpView4>
-                                    <Ppr></Ppr>
-                                 </PpView4>
-                              </View>
-                           );
-                        }
-                     } )
+                     Budget.services.length <= 15 &&
+                     Budget.services.length % 2 == 0 ? (
+                        BgList.map( ( item, position ) => {
+                           if( position % 2 == 0 ) {
+                              return(
+                                 <View style={[ s.rowInput ]}>
+                                    <PpView style={{ paddingTop: 4, }}>
+                                       <Pp>{" "}</Pp>
+                                    </PpView>
+                                    <PpView2>
+                                       <Pp>{" "}</Pp>
+                                    </PpView2>
+                                    <PpView3>
+                                       <Ppr>{" "}</Ppr>
+                                    </PpView3>
+                                    <PpView4>
+                                       <Ppr>{" "}</Ppr>
+                                    </PpView4>
+                                 </View>
+                              );
+                           } else {
+                              return(
+                                 <View style={[ s.rowInput, { backgroundColor: "#e5e5e5bf" } ]}>
+                                    <PpView style={{ paddingTop: 4, }}>
+                                       <Pp></Pp>
+                                    </PpView>
+                                    <PpView2>
+                                       <Pp></Pp>
+                                    </PpView2>
+                                    <PpView3>
+                                       <Ppr></Ppr>
+                                    </PpView3>
+                                    <PpView4>
+                                       <Ppr></Ppr>
+                                    </PpView4>
+                                 </View>
+                              );
+                           }
+                        } )
+                     ) : (
+                        BgList.map( ( item, position ) => {
+                           if( position % 2 == 0 ) {
+                              return(
+                                 <View style={[ s.rowInput, { backgroundColor: "#e5e5e5bf" } ]}>
+                                    <PpView style={{ paddingTop: 4, }}>
+                                       <Pp></Pp>
+                                    </PpView>
+                                    <PpView2>
+                                       <Pp></Pp>
+                                    </PpView2>
+                                    <PpView3>
+                                       <Ppr></Ppr>
+                                    </PpView3>
+                                    <PpView4>
+                                       <Ppr></Ppr>
+                                    </PpView4>
+                                 </View>
+                              );
+                           } else {
+                              return(
+                                 <View style={[ s.rowInput ]}>
+                                    <PpView style={{ paddingTop: 4, }}>
+                                       <Pp>{" "}</Pp>
+                                    </PpView>
+                                    <PpView2>
+                                       <Pp>{" "}</Pp>
+                                    </PpView2>
+                                    <PpView3>
+                                       <Ppr>{" "}</Ppr>
+                                    </PpView3>
+                                    <PpView4>
+                                       <Ppr>{" "}</Ppr>
+                                    </PpView4>
+                                 </View>
+                              );
+                           }
+                        } )
+                     )
+                        
                   }
                </View>
                <View>
