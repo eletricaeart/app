@@ -1562,8 +1562,9 @@ export const invoiceHtml = ( { ...props } ) => {
       align-items: center;
       justify-content: center;
       width: 100%;
-      height: 66px;
-      min-height: 66px;
+      /* // here */
+      height: 0px !important;
+      min-height: 0px !important;
 
       bottom: 0;
       left: 0;
