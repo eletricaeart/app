@@ -150,6 +150,7 @@ export const invoiceHtml = ( { ...props } ) => {
                flex-direction: column;
                justify-content: space-between;
                flex: 1;
+               background-color: #29f !important;
             }
             
             /* == [ defaults ] 
@@ -774,13 +775,13 @@ export const invoiceHtml = ( { ...props } ) => {
       /* == [ app-fix ]
       == == == == == == == == == */
       body {
-      min-height: 100dvh !important;
-      max-height: 100dvh !important;
+      min-height: 100vh !important;
+      max-height: 100vh !important;
       }
 
       homepage, home-page {
       overflow: scroll !important;
-      height: calc( 100dvh - 66px ) !important;
+      height: 100vh !important;
       }
       homepage::-webkit-scrollbar,
       home-page::-webkit-scrollbar {
@@ -1567,6 +1568,7 @@ export const invoiceHtml = ( { ...props } ) => {
       bottom: 0;
       left: 0;
       background: #1b1d22;
+      background: #16181c;
       color: #fff;
       }
       navbar > nav-item {
@@ -2985,13 +2987,13 @@ export const invoiceFile = `
    /* == [ app-fix ]
    == == == == == == == == == */
    body {
-   min-height: 100dvh !important;
-   max-height: 100dvh !important;
+   min-height: 100vh !important;
+   max-height: 100vh !important;
    }
 
    homepage, home-page {
    overflow: scroll !important;
-   height: calc( 100dvh - 66px ) !important;
+   height: 100vh !important;
    }
    homepage::-webkit-scrollbar,
    home-page::-webkit-scrollbar {

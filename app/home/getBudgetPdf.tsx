@@ -112,7 +112,8 @@ export default function GetBudgetPdfView() {
                   right: 16,
                   bottom: 16,
                   left: 16,
-               }
+               },
+               
             });
          ;
          
