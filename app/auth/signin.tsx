@@ -76,10 +76,12 @@ export default function SignInView( { ...props } ) {
          async function CreateUserSpace() {
             try {
                const 
-                  name = await get( child( ref( getDatabase() ), `users/${ returned?.userUid }/name` ) )
+                  // name = await get( child( ref( getDatabase() ), `users/${ returned?.userUid }/name` ) )
+                  name = getAuth().currentUser?.displayName
                   ,
                   userData = {
                      name: name,
+                     displayName: name,
                      // uid: returned?.user.uid,
                      uid: returned?.userUid,
                   }

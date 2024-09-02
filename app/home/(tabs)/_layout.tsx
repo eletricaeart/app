@@ -41,8 +41,30 @@ export default function Layout() {
          tabBarStyle: { 
             backgroundColor: "#16181C",
             height: 78,
+            padding: 6,
+            alignItems: "center",
 
          }, 
+         tabBarItemStyle: {
+            gap: 6,
+            paddingTop: 8,
+            paddingBottom: 8,
+            paddingLeft: 16,
+            paddingRight: 16,
+            // backgroundColor: "#fc0",
+            marginLeft: 16,
+            marginRight: 16,
+         },
+         tabBarLabelStyle: {
+            // backgroundColor: "#27f",
+            fontSize: 13,
+         },
+         tabBarIconStyle: {
+            backgroundColor: "#212329",
+            width: 56,
+            borderRadius: 100,
+            // padding: 4,
+         },
          // tabBarButton: ,
          headerShadowVisible: true,
          

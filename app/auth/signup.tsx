@@ -26,6 +26,7 @@ import {
    User,
    getAuth, 
    signOut,
+   updateProfile,
 } from "firebase/auth";
 import { get, child, ref, getDatabase } from "firebase/database";
 
@@ -92,7 +93,12 @@ export default function SignUpView( { ...props } ) {
             }
             ,
             userReady = JSON.stringify( userData )
+            ,
+            auth = getAuth()
          ;
+         updateProfile( auth.currentUser, {
+            displayName: Name,
+         } );
          async function CreateUserSpace() {
             SaveDataOnFbRDB( {
                ref: `users/${ userData.uid }/name`,
@@ -170,7 +176,10 @@ export default function SignUpView( { ...props } ) {
                      ) : ( 
                         <Section style={{ gap: 16, width: "80%", }}>
                         
-                           <Pressable style={{ elevation: 10, width: "100%", }} onPress={ HandleSignUp }>
+                           <Pressable 
+                              style={{ elevation: 10, width: "100%", }} 
+                              onPress={ HandleSignUp }
+                           >
                               <Btn style={{ backgroundColor: "#212329", }}>
                                  <BtnTxt style={{ color: "#eee", }}>
                                     Cadastrar sua conta

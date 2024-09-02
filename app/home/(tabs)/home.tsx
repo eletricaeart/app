@@ -28,6 +28,7 @@ import * as c from "@/src/widgets/clb-html";
 import { Tiles, Tile, Header, T1, VSplit, HeaderBanner, T2, T, } from "@/src/widgets/ui";
 import { GetObjData, } from "@/src/widgets/clb-dbs";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getAuth } from "firebase/auth";
 
 
 const 
@@ -89,7 +90,8 @@ export default function Home( { ...props } ) {
             />
             <Header style={{ position: "absolute", }}>
                <T1 style={{ color: "#eee", }}>
-                  Olá { User && User.name }
+                  {/* Olá { User && User.name } */}
+                  Olá  Maluco loko
                   
                   {/* Olá { 
                      User ? Loading ? (
