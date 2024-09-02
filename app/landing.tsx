@@ -75,8 +75,8 @@ export default function Landing( { ...props } ) {
       
                      <Text>Welcome landing view</Text>
                   
-                     <KeyboardAvoidingView behavior="position" style={[ { width: "80%", } ]}>
-                     </KeyboardAvoidingView> 
+                     {/* <KeyboardAvoidingView behavior="position" style={[ { width: "80%", } ]}>
+                     </KeyboardAvoidingView>  */}
       
                      <View style={ s.footer }>
                         {
@@ -87,7 +87,7 @@ export default function Landing( { ...props } ) {
                               
                                  <Pressable style={{ elevation: 10, width: "100%", }} onPress={ () => {} }>
                                     <Btn style={{ backgroundColor: "#212329", }}>
-                                       <Link href="/signin">
+                                       <Link href="/auth/signin">
                                           <BtnTxt style={{ color: "#eee", }}>
                                              Acessar sua conta 
                                           </BtnTxt>
@@ -97,7 +97,7 @@ export default function Landing( { ...props } ) {
       
                                  <Pressable style={{ elevation: 10, width: "100%", }} onPress={ () => {} }>
                                     <Btn>
-                                       <Link href="/signup">
+                                       <Link href="/auth/signup">
                                           <BtnTxt>
                                              Criar uma conta
                                           </BtnTxt>

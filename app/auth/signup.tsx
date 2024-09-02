@@ -118,15 +118,16 @@ export default function SignUpView( { ...props } ) {
       <BackBtn onPress={ () => { router.back(); } }>
          <BackBtnTxt>&lt;</BackBtnTxt>
       </BackBtn>
-      <View style={ s.root }>
-         <ImageBackground source={ require( "@/src/images/bgs/splash-login-720x1600.png" ) } resizeMode="cover" style={ s.bgImage }>
-            <View behavior="padding" style={ [ s.rootB ]}>
+      <KeyboardAvoidingView behavior="height" style={ s.root }>
+         <ImageBackground source={ require( "@/src/images/bgs/splash-login-720x1600.png" ) } resizeMode="stretch" style={ s.bgImage }>
+            <View style={ [ s.rootB ]}>
                <View style={[ s.vv ]}>
-                  <Image source={ require( "@/src/images/EA/globo-de-plasma-700.png" ) } style={ { height: "100%", resizeMode: "contain", } }/>
+                  <Image source={ require( "@/src/images/EA/globo-de-plasma-700.png" ) } style={ s.vvImage }/>
                </View>
 
             
-               <KeyboardAvoidingView behavior="position" style={[ { width: "80%", } ]}>
+               {/* <KeyboardAvoidingView behavior="padding" style={[ { width: "80%", } ]}> */}
+               <View behavior="position" style={[ { width: "80%", } ]}>
 
                   <Label>
                      <LabelText style={{ color: "#fff", textShadowColor: "#daa520", textShadowRadius: 5  }}>Nome</LabelText>
@@ -159,7 +160,8 @@ export default function SignUpView( { ...props } ) {
                         cursorColor={ "#00559C" }
                      />
                   </Label>
-               </KeyboardAvoidingView> 
+               {/* </KeyboardAvoidingView>  */}
+               </View> 
 
                <View style={ s.footer }>
                   {
@@ -180,15 +182,15 @@ export default function SignUpView( { ...props } ) {
                      )
                   }
                </View>
-               <Text style={{ textAlign: "center", color: "#eee", position: "absolute", bottom: 15 }}>
+               <Text style={{ textAlign: "center", color: "#eee", }}>
                   Ao se registrar, você concorda com a nossa{"\n"}
-                  <Text style={{ textDecorationLine: "underline" }}>política de privacidade</Text> 
+                  <Text style={{ textDecorationLine: "underline" }}>política de privacidade </Text> 
                   e os 
-                  <Text style={{ textDecorationLine: "underline" }}>termos de uso</Text>
+                  <Text style={{ textDecorationLine: "underline" }}> termos de uso</Text>
                </Text>
             </View>
          </ImageBackground>
-      </View>
+      </KeyboardAvoidingView>
    </> );
 }
 
@@ -218,12 +220,30 @@ s = StyleSheet.create( {
       flex: 1,
       alignItems: "center",
       justifyContent: "center",
-      // backgroundColor: "#270"
       width: "100%",
    },
    vv: { 
-      backgroundColor: "#27f7", height: "25%", aspectRatio: 1, alignItems: "center", justifyContent: "center", marginTop: 56, marginBottom: 56,
-      padding: 0,borderRadius: 1000, elevation: 15,
+      backgroundColor: "#21232955", 
+      // height: 180, 
+      height: "25%", 
+      aspectRatio: 1, 
+      alignItems: "center", 
+      justifyContent: "center", 
+      marginTop: 56, 
+      marginBottom: 56,
+      padding: 0,
+      borderRadius: 1000, 
+      elevation: 15,
+      shadowColor: "#000",
+      shadowOffset: {
+         width: 0,
+         height: 0
+      }
+   },
+   vvImage: { 
+      height: "100%", 
+      // resizeMode: "contain",
+      resizeMode: "center",
    },
    tt: {
       fontSize: 24,

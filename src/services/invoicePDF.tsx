@@ -1,3 +1,4 @@
+import { CutRS, Float2Brl, Str2Brl } from "../utils";
 
 
 const 
@@ -31,10 +32,10 @@ export const invoiceHtml = ( { ...props } ) => {
                   <input id="input_description_01" type="text" value="${ service.description }"/>
                </td>
                <td>
-                  <input id="input_unit_01" type="text" value="${ service.value }"/>
+                  <input id="input_unit_01" type="text" value="${ CutRS( Str2Brl( service.value ) ) }"/>
                </td>
                <td>
-                  <input id="input_tot_01" type="text" value="${ service.total }"/>
+                  <input id="input_tot_01" type="text" value="${ CutRS( Float2Brl( service.total ) ) }"/>
                </td>
             </tr>
          ` )
@@ -1787,15 +1788,18 @@ export const invoiceHtml = ( { ...props } ) => {
       flex: 0 1 100%;
       text-align: center;
       }
-      #tbody_budget > tr :nth-child( 3 ) {
-      background: transparent;
-      flex: 0 1 20%;
-      text-align: center;
-      }
+      #tbody_budget > tr :nth-child( 3 ), 
       #tbody_budget > tr :nth-child( 4 ) {
       background: transparent;
       flex: 0 1 20%;
-      text-align: center;
+      text-align: right;
+      padding-right: 16px;
+      }
+      #tbody_budget > tr :nth-child( 3 ) > *,
+      #tbody_budget > tr :nth-child( 4 ) > * {
+         text-align: right;
+         margin: auto;
+         width: 90%;
       }
 
       #tbody_budget :where( td ) {
@@ -2033,11 +2037,11 @@ export const invoiceHtml = ( { ...props } ) => {
                                     </td>
                                     <th id="th_desconto">Desconto</th>
                                     <td id="td_desconto">
-                                       <input id="input_desconto" type="text" value="${ props.budget.discount }"/>
+                                       <input id="input_desconto" type="text" value="${ Float2Brl( props.budget.discount ) }"/>
                                     </td>
                                     <th id="th_total">Valor Total</th>
                                     <td id="td_total">
-                                       <input id="input_total" type="text" value="${ props.budget.receiptValue }"/>
+                                       <input id="input_total" type="text" value="${ Float2Brl( props.budget.receiptValue ) }"/>
                                     </td>
                                  </tr>
                               </tbody>

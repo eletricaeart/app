@@ -101,14 +101,15 @@ export default function SignInView( { ...props } ) {
          <BackBtnTxt>&lt;</BackBtnTxt>
       </BackBtn>
       <View style={ s.root }>
-         <ImageBackground source={ require( "@/src/images/bgs/splash-login-720x1600.png" ) } resizeMode="cover" style={ s.bgImage }>
+         <ImageBackground source={ require( "@/src/images/bgs/splash-login-720x1600.png" ) } resizeMode="stretch" style={ s.bgImage }>
             <View behavior="padding" style={ [ s.rootB ]}>
                <View style={[ s.vv ]}>
-                  <Image source={ require( "@/src/images/EA/globo-de-plasma-700.png" ) } style={ { height: "100%", resizeMode: "contain", } }/>
+                  <Image source={ require( "@/src/images/EA/globo-de-plasma-700.png" ) } style={ s.vvImage }/>
                </View>
 
             
-               <KeyboardAvoidingView behavior="position" style={[ { width: "80%", } ]}>
+               {/* <KeyboardAvoidingView behavior="position" style={[ { width: "80%", } ]}> */}
+               <View behavior="position" style={[ { width: "80%", } ]}>
 
                   <Label>
                      <LabelText style={{ color: "#fff", textShadowColor: "#daa520", textShadowRadius: 5  }}>Email</LabelText>
@@ -131,7 +132,8 @@ export default function SignInView( { ...props } ) {
                         cursorColor={ "#00559C" }
                      />
                   </Label>
-               </KeyboardAvoidingView> 
+               {/* </KeyboardAvoidingView>  */}
+               </View> 
 
                <View style={ s.footer }>
                   {
@@ -152,9 +154,9 @@ export default function SignInView( { ...props } ) {
                      )
                   }
                </View>
-               <Text style={{ textAlign: "center", color: "#eee", position: "absolute", bottom: 15 }}>
+               <Text style={{ textAlign: "center", color: "#eee",  }}>
                   Ainda não tem uma conta? registre-se 
-                  <Link href="/signup" style={{ textDecorationLine: "underline" }}> aqui</Link> 
+                  <Link href="/auth/signup" style={{ textDecorationLine: "underline" }}> aqui</Link> 
                </Text>
             </View>
          </ImageBackground>
@@ -192,8 +194,25 @@ s = StyleSheet.create( {
       width: "100%",
    },
    vv: { 
-      backgroundColor: "#27f7", height: "25%", aspectRatio: 1, alignItems: "center", justifyContent: "center", marginTop: 56, marginBottom: 56,
-      padding: 0,borderRadius: 1000, elevation: 15,
+      backgroundColor: "#21232955", 
+      height: 180, 
+      aspectRatio: 1, 
+      alignItems: "center", 
+      justifyContent: "center", 
+      marginTop: 56, 
+      marginBottom: 56,
+      padding: 0,
+      borderRadius: 1000, 
+      elevation: 15,
+      shadowColor: "#000",
+      shadowOffset: {
+         width: 0,
+         height: 0
+      }
+   },
+   vvImage: { 
+      height: "100%", 
+      resizeMode: "contain",
    },
    tt: {
       fontSize: 24,
