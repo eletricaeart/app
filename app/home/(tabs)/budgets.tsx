@@ -369,6 +369,11 @@ export default function BudgetsView( { ...props } ) {
             setSubtotal( Str2Brl( "0" ) );
             setCustomer( {} );
             setServices( [] );
+            setTempList( [] );
+            setTempTotal( "0" );
+            setBudgetName( "" );
+            setReceiptValue( ( 0 ).toString() );
+            // here 1
             setService( {
                description: "",
                services: [],
@@ -867,7 +872,9 @@ export default function BudgetsView( { ...props } ) {
                                     "\nCustomer.id: ", Customer.id,
                                     "\nRef: ", Ref,
                                  );
-                                 RegisterNewBudget();
+                                 RegisterNewBudget().then( () => {
+                                    setModalVisibility( !ModalVisibility );
+                                 } );
                                  // if( Service.services.length > 0 ) {
                                  //    RegisterNewBudget();
                                  // } else {
