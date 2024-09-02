@@ -171,7 +171,10 @@ export default function GetBudgetPdfView() {
          city: "",
          uf: "",
       } )
+      ,
+      [ BgList, setBgList ] = useState( [] )
    ;
+
 
    useEffect( () => {
       async function LoadBudgetIntoView() {
@@ -223,6 +226,14 @@ export default function GetBudgetPdfView() {
 
             setBudget( data.budget );
             setOwner( data.owner );
+
+            if( data.budget.services.length <= 15 ) {
+               // console.log( "length: ", 15 - data.budget.services.length );
+               let list = [...Array(
+                  15 - data.budget.services.length
+               )].fill(0);
+               setBgList( [ ...list ] );
+            }
 
             AsyncStorage.setItem( "budgetData", JSON.stringify( { owner: data.owner, budget: data.budget } ) );
          } );
@@ -438,6 +449,46 @@ export default function GetBudgetPdfView() {
                               );
                            }
                         } )
+                  }
+                  {
+                     Budget.services.length <= 15 && 
+                     BgList.map( ( item, position ) => {
+                        if( position % 2 == 0 ) {
+                           return(
+                              <View style={[ s.rowInput ]}>
+                                 <PpView style={{ paddingTop: 4, }}>
+                                    <Pp>{" "}</Pp>
+                                 </PpView>
+                                 <PpView2>
+                                    <Pp>{" "}</Pp>
+                                 </PpView2>
+                                 <PpView3>
+                                    <Ppr>{" "}</Ppr>
+                                 </PpView3>
+                                 <PpView4>
+                                    <Ppr>{" "}</Ppr>
+                                 </PpView4>
+                              </View>
+                           );
+                        } else {
+                           return(
+                              <View style={[ s.rowInput, { backgroundColor: "#e5e5e5bf" } ]}>
+                                 <PpView style={{ paddingTop: 4, }}>
+                                    <Pp></Pp>
+                                 </PpView>
+                                 <PpView2>
+                                    <Pp></Pp>
+                                 </PpView2>
+                                 <PpView3>
+                                    <Ppr></Ppr>
+                                 </PpView3>
+                                 <PpView4>
+                                    <Ppr></Ppr>
+                                 </PpView4>
+                              </View>
+                           );
+                        }
+                     } )
                   }
                </View>
                <View>
