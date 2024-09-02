@@ -1967,7 +1967,7 @@ export const invoiceHtml = ( { ...props } ) => {
                         </label>
                         <label id="label_">
                            <t>Validade</t>
-                           <input type="text" name="" id="validade" value="${ props.budget.warranty }" />
+                           <input type="text" name="" id="validade" value="${ props.budget.dueDate }" />
                         </label>
                      </top-flag>
                      <customer-info section>

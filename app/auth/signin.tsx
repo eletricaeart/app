@@ -195,7 +195,8 @@ s = StyleSheet.create( {
    },
    vv: { 
       backgroundColor: "#21232955", 
-      height: 180, 
+      // height: 180, 
+      height: "25%", 
       aspectRatio: 1, 
       alignItems: "center", 
       justifyContent: "center", 
@@ -212,7 +213,8 @@ s = StyleSheet.create( {
    },
    vvImage: { 
       height: "100%", 
-      resizeMode: "contain",
+      // resizeMode: "contain",
+      resizeMode: "center",
    },
    tt: {
       fontSize: 24,

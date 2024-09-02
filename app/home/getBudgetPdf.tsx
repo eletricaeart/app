@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { printToFileAsync, } from "expo-print";
 import { shareAsync, } from "expo-sharing";
 import { EACard } from "@/src/widgets/clb-ea";
-import { H1, H3, H4, H5, H6, P } from "@/src/widgets/ui";
+import { AppbarStick, BackButton, H1, H3, H4, H5, H6, P } from "@/src/widgets/ui";
 import { ScrollView, View, Button, Text, StyleSheet, Pressable } from "react-native";
 import styled from "styled-components/native";
 // import Budgets from "./budgets";
@@ -234,27 +234,9 @@ export default function GetBudgetPdfView() {
    return( <>
       <Stack.Screen options={{ headerShown: true, title: "Orçamento",
          header: ({}) => ( <>
-            <View
-               style={{
-                  backgroundColor: "#21232900",
-                  width: "100%", height: 60,
-                  position: "absolute", top: 0, left: 0,
-                  zIndex: 999,
-               }} 
-            >
-               <Pressable 
-                  style={{
-                     backgroundColor: "#fff1",
-                     width: 50, height: 50,
-                     borderRadius: 16,
-                     // position: "absolute", zIndex: 6,
-                     alignItems: "center", justifyContent: "center",
-                  }}
-                  onPress={ () => router.back() }
-               >
-                  <Text style={{ fontWeight: "bold", color: "#fff9", fontSize: 28, }}>&lt;</Text>
-               </Pressable>
-            </View>
+            <AppbarStick>
+               <BackButton />
+            </AppbarStick>
          </> )
       }} />
       <View style={[ s.root ]}>
@@ -269,7 +251,7 @@ export default function GetBudgetPdfView() {
                <View style={[ s.row, { backgroundColor: "#f5f5f5", } ]}>
                   <P style={[ s.rowText ]}>{ Budget.id }</P>
                   <P style={[ s.rowText ]}>{ Budget.dateOfIssue }</P>
-                  <P style={[ s.rowText ]}>{ Budget.warranty }</P>
+                  <P style={[ s.rowText ]}>{ Budget.dueDate }</P>
                </View>
             </View>
                <View style={[ s.topFlag ]}>

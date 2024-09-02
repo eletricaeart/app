@@ -14,6 +14,10 @@ import {
    Pressable, 
 } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
+import { 
+   Text as Txt,
+   View as ViewA,
+} from "react-native-animatable";
 import { Link, router, } from "expo-router";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -67,13 +71,13 @@ export default function Landing( { ...props } ) {
       function Returned() {
          return( <>
             <View style={ s.root }>
-               <ImageBackground source={ require( "@/src/images/bgs/splash-login-720x1600.png" ) } resizeMode="cover" style={ s.bgImage }>
+               <ImageBackground source={ require( "@/src/images/bgs/splash-login-720x1600.png" ) } resizeMode="stretch" style={ s.bgImage }>
                   <View behavior="padding" style={ [ s.rootB ]}>
-                     <View style={[ s.vv ]}>
+                     <ViewA animation="bounceIn" style={[ s.vv ]}>
                         <Image source={ require( "@/src/images/EA/globo-de-plasma-700.png" ) } style={ { height: "100%", resizeMode: "contain", } }/>
-                     </View>
+                     </ViewA>
       
-                     <Text>Welcome landing view</Text>
+                     <Txt animation="zoomInUp">Welcome landing view</Txt>
                   
                      {/* <KeyboardAvoidingView behavior="position" style={[ { width: "80%", } ]}>
                      </KeyboardAvoidingView>  */}
@@ -109,6 +113,12 @@ export default function Landing( { ...props } ) {
                            )
                         }
                      </View>
+                     <Text style={{ textAlign: "center", color: "#eee", }}>
+                        Ao se registrar, você concorda com a nossa{"\n"}
+                        <Text style={{ textDecorationLine: "underline" }}>política de privacidade </Text> 
+                        e os 
+                        <Text style={{ textDecorationLine: "underline" }}> termos de uso</Text>
+                     </Text>
                   </View>
                </ImageBackground>
             </View>
@@ -142,12 +152,30 @@ s = StyleSheet.create( {
       flex: 1,
       alignItems: "center",
       justifyContent: "center",
-      // backgroundColor: "#270"
       width: "100%",
    },
    vv: { 
-      backgroundColor: "#27f7", height: "25%", aspectRatio: 1, alignItems: "center", justifyContent: "center", marginTop: 56, marginBottom: 56,
-      padding: 0,borderRadius: 1000, elevation: 15,
+      backgroundColor: "#21232955", 
+      // height: 180, 
+      height: "25%", 
+      aspectRatio: 1, 
+      alignItems: "center", 
+      justifyContent: "center", 
+      marginTop: 56, 
+      marginBottom: 56,
+      padding: 0,
+      borderRadius: 1000, 
+      elevation: 15,
+      shadowColor: "#000",
+      shadowOffset: {
+         width: 0,
+         height: 0
+      }
+   },
+   vvImage: { 
+      height: "100%", 
+      // resizeMode: "contain",
+      resizeMode: "center",
    },
    tt: {
       fontSize: 24,

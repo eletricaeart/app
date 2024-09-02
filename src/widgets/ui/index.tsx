@@ -1,5 +1,8 @@
 
 
+import { router } from "expo-router";
+import { View, Pressable } from "react-native";
+import { Text, } from "react-native-animatable";
 import styled from "styled-components/native";
 
 
@@ -283,3 +286,37 @@ export const
    `
    
 ;
+
+
+
+export function AppbarStick( { ...props } ) {
+   return(
+      <View
+         style={{
+            backgroundColor: "#21232900",
+            width: "100%", height: 60,
+            position: "absolute", top: 0, left: 0,
+            zIndex: 999,
+         }} 
+      >
+         { props.children }
+      </View>
+   );
+}
+
+export function BackButton() {
+   return(
+      <Pressable 
+         style={{
+            backgroundColor: "#fff1",
+            width: 50, height: 50,
+            borderRadius: 16,
+            // position: "absolute", zIndex: 6,
+            alignItems: "center", justifyContent: "center",
+         }}
+         onPress={ () => router.back() }
+      >
+         <Text animation="bounceInLeft" style={{ fontWeight: "bold", color: "#fff9", fontSize: 28, }}>&lt;</Text>
+      </Pressable>
+   );
+}
