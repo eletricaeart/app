@@ -32,7 +32,7 @@ import { BlurView } from 'expo-blur';
 import { ActivityIndicator, Button } from "react-native-paper";
 
 // import AuthLayout from "@/app/(auth)/_layout";
-import AuthLayout from "@/app/auth/_layout";
+import AuthLayout from "@/app/(auth)/_layout";
 
 import * as CStore from "@/src/widgets/clb-dbs";
 import { colors } from "@/src/widgets/clb-colors";
@@ -125,7 +125,7 @@ export default function Index() {
                   userUid = response.user.uid
                ;
 
-               console.log( "SigUp() response: \n\n\n", response );
+               console.log( "SignUp() response: \n\n\n", response );
                
                return response;
             }
@@ -233,7 +233,8 @@ export default function Index() {
    
    return( <>
       { User ? 
-         ( router.replace( "/home/(tabs)" ) ) 
+         // ( router.replace( "/home/(tabs)" ) ) 
+         ( router.replace( "/home" ) ) 
          : 
          // ( router.replace( "/landing" ) )
          ( <Landing /> )

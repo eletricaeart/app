@@ -51,7 +51,7 @@ export default function Landing( { ...props } ) {
          console.log( "onAuthStateChanged: ", User );
          setUser( User ); 
       } );
-   }, [] );
+   }, [] ); 
 
    useEffect( () => {
       async function load() {
@@ -64,7 +64,9 @@ export default function Landing( { ...props } ) {
    }, [ User ] );
 
    if( User ) {
-      router.replace( "/home/(tabs)" ); 
+      // router.replace( "/home/(tabs)" ); 
+      // router.replace( "/(tabs)" ); 
+      router.replace( "/home" ); 
    } 
       return <Returned/>;
       
@@ -91,7 +93,8 @@ export default function Landing( { ...props } ) {
                               
                                  <Pressable style={{ elevation: 10, width: "100%", }} onPress={ () => {} }>
                                     <Btn style={{ backgroundColor: "#212329", }}>
-                                       <Link href="/auth/signin">
+                                       {/* <Link href="/auth/signin"> */}
+                                       <Link href="/signin">
                                           <BtnTxt style={{ color: "#eee", }}>
                                              Acessar sua conta 
                                           </BtnTxt>
@@ -101,7 +104,7 @@ export default function Landing( { ...props } ) {
       
                                  <Pressable style={{ elevation: 10, width: "100%", }} onPress={ () => {} }>
                                     <Btn>
-                                       <Link href="/auth/signup">
+                                       <Link href="/home">
                                           <BtnTxt>
                                              Criar uma conta
                                           </BtnTxt>

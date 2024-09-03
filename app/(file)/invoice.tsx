@@ -7,7 +7,7 @@ import { EACard } from "@/src/widgets/clb-ea";
 import { H1, H3, H4, H5, H6, P } from "@/src/widgets/ui";
 import { ScrollView, View, Button, Text, StyleSheet, Pressable } from "react-native";
 import styled from "styled-components/native";
-import Budgets from "./(tabs)/budgets";
+import Budgets from "../(tabs)/budgets";
 import { invoiceHtml, invoiceFile } from "@/src/services/invoicePDF";
 import { Brl2Float, CutRS, FixBrl, Str2Brl } from "@/src/utils";
 // import ViewShot from "react-native-view-shot";

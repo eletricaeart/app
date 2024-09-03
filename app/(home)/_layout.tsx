@@ -7,7 +7,7 @@ export default function Layout() {
    return( <>
       <Stack screenOptions={{ headerShown: false, }}>
          <Stack.Screen
-            name="(tabs)"
+            name="(tabs)" 
             options={{
                headerShown: false,
             }}
@@ -16,7 +16,7 @@ export default function Layout() {
             name="/home"
             options={{
                headerShown: false,
-            }}
+            }} 
          /> */}
          <Stack.Screen 
             name="getBudgetPdf"

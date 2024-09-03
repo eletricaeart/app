@@ -455,7 +455,7 @@ export default function CustomersView( { ...props } ) {
                      style={{ width: "100%", height: "100%", }} resizeMode="contain"/>
                   </View>
                   <Center style={{ paddingTop: 16, }}>
-                     <H3 style={{ color: "#777", }}>Nenhum cliente aqui</H3>
+                     <H3 style={{ color: "#777", textAlign: "center", }}>Você ainda não tem nenhum cliente cadastrado</H3>
                   </Center>
                </View>
             }
@@ -719,8 +719,8 @@ export default function CustomersView( { ...props } ) {
             //  { icon: 'plus', onPress: () => console.log('Pressed add') },
              {
                icon: "apple-icloud", /* 'account-reactivate', */
-               label: 'Atualizar os dados nuvem',
-               labelTextColor: "#333",
+               label: 'Baixar os contatos da base',
+               labelTextColor: "#00559C",
                labelStyle: { fontWeight: "bold" },
                onPress: () => {
                   UpdateCustomersBase();
@@ -728,8 +728,8 @@ export default function CustomersView( { ...props } ) {
             },
             {
                icon: 'account-plus',
-               label: 'Cadastrar novo cliente',
-               labelTextColor: "#333",
+               label: 'Cadastrar um cliente novo',
+               labelTextColor: "#00559C",
                labelStyle: { fontWeight: "bold", },
                onPress: () => setModalVisibility( true ),
              },

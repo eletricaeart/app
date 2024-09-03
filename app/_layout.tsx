@@ -81,7 +81,7 @@ export default function RootLayout() {
 
    return( <> 
       {/* <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}> */}
-         <Stack initialRouteName="landing"
+         <Stack initialRouteName="landing" 
             screenOptions={{ 
                // animation: "none" 
                statusBarColor: "#27f"
@@ -89,9 +89,9 @@ export default function RootLayout() {
          >
             <Stack.Screen name="landing" options={{ headerShown: false, statusBarColor: "#1b1d22", animation: "fade" }} />
             <Stack.Screen name="index" options={{ headerShown: false, statusBarColor: "#1b1d22" }} />
-            {/* <Stack.Screen name="home/(tabs)" options={{ headerShown: false }} /> */}
-            <Stack.Screen name="home" options={{ headerShown: false, statusBarColor: "#00559c" }} />
-            <Stack.Screen name="auth" options={{ headerShown: false, animation: "none"  }} />
+            <Stack.Screen name="(tabs)" options={{ headerShown: false, statusBarColor: "#00559c" }} />
+            <Stack.Screen name="(home)" options={{ headerShown: false, statusBarColor: "#00559c" }} />
+            <Stack.Screen name="(auth)" options={{ headerShown: false, animation: "none"  }} />
             {/* <Stack.Screen name="modal" options={{ presentation: "modal" }} /> */}
             {/* <Stack.Screen name="signin" options={{ headerShown: false , presentation: "fullScreenModal", statusBarColor: "#1b1d22", animation: "none", }} />
             <Stack.Screen name="signup" options={{ headerShown: false , presentation: "modal", statusBarColor: "#1b1d22", animation: "none", }} /> */}

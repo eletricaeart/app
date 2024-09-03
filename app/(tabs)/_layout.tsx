@@ -22,7 +22,6 @@ import {
 } from "@/src/widgets/clb-ea";
 
 import { Icon } from "@/src/widgets/clb-icons";
-import Routes from "@/app/routes";
 
 // const Tab = createBottomTabNavigator();
 
@@ -35,7 +34,7 @@ export default function Layout() {
 
   return (
     <Tabs
-      // initialRouteName="Login" 
+      initialRouteName="home"  
       screenOptions={{
          headerShown: true,
          tabBarStyle: { 

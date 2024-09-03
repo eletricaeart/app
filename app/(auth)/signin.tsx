@@ -90,7 +90,7 @@ export default function SignInView( { ...props } ) {
                ;
                await CStore.StoreData( userReady, "user" );
                if( returned ) {
-                  router.replace( "/home/(tabs)" );
+                  router.replace( "/home" );
                }
             } catch( err: any ) { console.log( "CreateUserSpace() err: ", err ); }
          }
