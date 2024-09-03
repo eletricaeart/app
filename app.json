@@ -7,19 +7,19 @@
     "orientation": "portrait",
     "scheme": "ceo",
     "userInterfaceStyle": "automatic",
-    "icon": "./src/images/EA/ic_launcher.png",
+    "icon": "./src/images/EA/EA-app_icon.png",
     "splash": {
       "image": "./src/images/EA/EA-splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#044a84"
+      "backgroundColor": "#1b1d22"
     },
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./src/images/EA/ic_launcher.png",
-        "backgroundColor": "#044a84"
+        "foregroundImage": "./src/images/EA/EA-app_icon.png",
+        "backgroundColor": "#1b1d22"
       },
       "package": "com.devfellon.eletricaeart"
     },
