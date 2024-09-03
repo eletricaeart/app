@@ -1253,33 +1253,36 @@ export default function BudgetsView( { ...props } ) {
                            }}>
                               {/* cliente modal */
                                  // body 
-                                 Customers && 
-                                 <FlatList 
-                                    data={ Customers }
-                                    renderItem={ ({item}) => <>
-                                       <Pressable
-                                          onPress={ () => {
-                                             setCustomer( {
-                                                name: item.name,
-                                                id: item.id,
-                                             } );
-                                             setModalCustomerVisibility( !ModalCustomerVisibility );
-                                          } }
-                                       >
-                                          <ea.CustomersCard
-                                             key={ item.id }
-                                             name={ item.name }
-                                          />
-                                       </Pressable>
-                                    </> }
-                                    
-                                    keyExtractor={ item => item.id } 
-                                    ItemSeparatorComponent={ 
-                                       () => <View style={{ height: 2, }}/>
-                                    }
-                                    style={{ width: "100%", }} 
-                                    contentContainerStyle={{ padding: 16, paddingBottom: 38, paddingLeft: 0, paddingRight: 0, }}
-                                 />
+                                 Customers ? (
+                                    <FlatList 
+                                       data={ Customers }
+                                       renderItem={ ({item}) => <>
+                                          <Pressable
+                                             onPress={ () => {
+                                                setCustomer( {
+                                                   name: item.name,
+                                                   id: item.id,
+                                                } );
+                                                setModalCustomerVisibility( !ModalCustomerVisibility );
+                                             } }
+                                          >
+                                             <ea.CustomersCard
+                                                key={ item.id }
+                                                name={ item.name }
+                                             />
+                                          </Pressable>
+                                       </> }
+                                       
+                                       keyExtractor={ item => item.id } 
+                                       ItemSeparatorComponent={ 
+                                          () => <View style={{ height: 2, }}/>
+                                       }
+                                       style={{ width: "100%", }} 
+                                       contentContainerStyle={{ padding: 16, paddingBottom: 38, paddingLeft: 0, paddingRight: 0, }}
+                                    />
+                                 ) : (
+                                    <View></View>
+                                 )
                               }
                            </Section>
                         </Section>
