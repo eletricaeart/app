@@ -114,7 +114,7 @@ export default function SignUpView( { ...props } ) {
             } );
             await CStore.StoreData( userReady, "user" );
          }
-         CreateUserSpace().then( router.replace( "/home/(tabs)" ) );
+         CreateUserSpace().then( router.replace( "/home" ) );
       } );
       
    }
