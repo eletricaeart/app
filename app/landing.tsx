@@ -104,7 +104,7 @@ export default function Landing( { ...props } ) {
       
                                  <Pressable style={{ elevation: 10, width: "100%", }} onPress={ () => {} }>
                                     <Btn>
-                                       <Link href="/home">
+                                       <Link href="/signup">
                                           <BtnTxt>
                                              Criar uma conta
                                           </BtnTxt>
