@@ -24,6 +24,8 @@ import { Icon } from "./clb-icons";
 import { Link, router, } from "expo-router";
 import { H4, T } from "./ui";
 import { color } from "native-base/lib/typescript/theme/styled-system";
+import CustomerView from "@/app/(file)/customer";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 // import { Link, useLinkProps, } from "@react-navigation/native";
 
 
@@ -254,8 +256,21 @@ export function UsersCard( { ...props } ) {
          </View>
 
          <Pressable style={ s.customerInfo } onPress={ () => {
-            router.push( "/customer" );
-            // router.push( "/customer" );
+            async function LoadCustomerView() {
+               async function handle() {
+                  try {
+                     const json = JSON.stringify( props.data );
+                     await AsyncStorage.setItem( "customer", json );
+                  } catch( err: any ) {
+                     console.error( "LoadCustomerView() err: \n\n\n", err );
+                  }
+               }
+               handle().then( () => {
+                  router.push( "/customer" );
+               } );
+            }
+            LoadCustomerView();
+            // router.push( { pathname: "/customer", params: { ...props.data } } );
          } }>
             {/* <Link to={{ screen: "customer", params: { id: 'jane' } }}> */}
             {/* <c.H4>Anselmo Sammarco Nunes</c.H4> */}
