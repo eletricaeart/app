@@ -253,7 +253,8 @@ export const
       /* padding: 8px 14px; */
       padding: 14px;
       color: #0075BD;
-      elevation: 3;
+      box-shadow: #000 0 0 0;
+      elevation: 5;
    `
    ,
    BtnTxt = styled.Text`

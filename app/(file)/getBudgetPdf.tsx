@@ -243,7 +243,7 @@ export default function GetBudgetPdfView() {
    }, [] );
 
    return( <>
-      <Stack.Screen options={{ headerShown: true, title: "Orçamento",
+      <Stack.Screen options={{ headerShown: true, title: "Orçamento", statusBarColor: "#19497b",
          header: ({}) => ( <>
             <AppbarStick>
                <BackButton />
@@ -252,7 +252,7 @@ export default function GetBudgetPdfView() {
       }} />
       <View style={[ s.root ]}>
          <ScrollView>
-            <EACard></EACard>
+            <EACard />
             <View>
                <View style={[ s.row ]}>
                   <H5 style={[ s.rowTitle ]}>Orçamento</H5>

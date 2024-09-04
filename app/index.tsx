@@ -182,29 +182,44 @@ export default function Index() {
 
 
    async function FetchData() {
-      try {
-         const 
-            localUser: string | null = await AsyncStorage.getItem( "user" )
-            ,
-            // parsedUser: string = JSON.parse( localUser! )
-            parsedUser = localUser ? JSON.parse( localUser ) : null
-            ,
-            userData = { ...parsedUser }
-         ;
-         await get( child( ref( getDatabase() ), `users/${ userData.uid }/name` ) )
-         .then(
-            name => { 
-               userData.name = name;
-               // setCustomersFB( list );
-               // setLoading( false );
-               // console.log( "name: ", name );
-               console.log( "userData: ", userData );
-               return userData;
-            }
-         );
-      } catch( err: any ) {
-         alert( `Deu ruim no FetchData() err: \ncode: ${err.code} \nmsg: ${err.message}` );
+      async function handle() {
+         // try {
+         //    const 
+         //       localUser: string | null = await AsyncStorage.getItem( "user" )
+         //       ,
+         //       parsedUser = localUser ? JSON.parse( localUser ) : null
+         //       ,
+         //       userData = { ...parsedUser }
+         //    ;
+         //    await get( child( ref( getDatabase() ), `users/${ userData.uid }/name` ) )
+         //    .then(
+         //       name => { 
+         //          userData.name = name;
+         //          console.log( "userData: ", userData );
+         //          return userData;
+         //       }
+         //    );
+         // } catch( err: any ) {
+         //    alert( `Deu ruim no FetchData() err: \ncode: ${err.code} \nmsg: ${err.message}` );
+         // }
+         try {
+            const 
+               localUser = await AsyncStorage.getItem( "user" ).then( r => JSON.parse( r ) )
+            ;
+
+            await get( child( ref( getDatabase() ), `users/${ localUser.uid }/name` ) )
+            .then( name => { 
+               localUser.name = name;
+               console.log( "FetchData() localUser: ", localUser );
+               return localUser;
+            } );
+         } catch( err: any ) {
+            alert( `Deu ruim no FetchData() err: \ncode: ${err.code} \nmsg: ${err.message}` );
+         }
       }
+
+      await AsyncStorage.getItem( "user" ) ? 
+         handle() : console.log( "FetchData() no user on localStorage" );
    }
 
 
@@ -212,20 +227,20 @@ export default function Index() {
 
    useEffect( () => {
       onAuthStateChanged( FirebaseAuth, User => {
-         console.log( "aqui[]: ", User );
+         console.log( "onAuthStateChanged() User: ", User );
          setUser( User ); 
       } );
    }, [] );
 
-   useEffect( () => {
-      async function load() {
-         if( User ) {
-            const jsn = JSON.stringify( User );
-            await AsyncStorage.setItem( "User", jsn );
-         }
-      }
-      load();
-   }, [ User ] );
+   // useEffect( () => {
+   //    async function load() {
+   //       if( User ) {
+   //          const jsn = JSON.stringify( User );
+   //          await AsyncStorage.setItem( "User", jsn );
+   //       }
+   //    }
+   //    load();
+   // }, [ User ] );
 
    // firebase.database().ref( "users" ).child( value.user.uid ).set( { name: name } );
 
@@ -233,10 +248,8 @@ export default function Index() {
    
    return( <>
       { User ? 
-         // ( router.replace( "/home/(tabs)" ) ) 
          ( router.replace( "/home" ) ) 
          : 
-         // ( router.replace( "/landing" ) )
          ( <Landing /> )
       }
    </> );

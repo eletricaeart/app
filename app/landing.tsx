@@ -48,7 +48,7 @@ export default function Landing( { ...props } ) {
 
    useEffect( () => {
       onAuthStateChanged( FirebaseAuth, User => {
-         console.log( "onAuthStateChanged: ", User );
+         console.log( "onAuthStateChanged() landing: ", User );
          setUser( User ); 
       } );
    }, [] ); 
@@ -64,8 +64,6 @@ export default function Landing( { ...props } ) {
    }, [ User ] );
 
    if( User ) {
-      // router.replace( "/home/(tabs)" ); 
-      // router.replace( "/(tabs)" ); 
       router.replace( "/home" ); 
    } 
       return <Returned/>;
@@ -74,7 +72,7 @@ export default function Landing( { ...props } ) {
          return( <>
             <View style={ s.root }>
                <ImageBackground source={ require( "@/src/images/bgs/splash-login-720x1600.png" ) } resizeMode="stretch" style={ s.bgImage }>
-                  <View behavior="padding" style={ [ s.rootB ]}>
+                  <View style={ [ s.rootB ]}>
                      <ViewA animation="bounceIn" style={[ s.vv ]}>
                         <Image source={ require( "@/src/images/EA/globo-de-plasma-700.png" ) } style={ { height: "100%", resizeMode: "contain", } }/>
                      </ViewA>
@@ -91,26 +89,30 @@ export default function Landing( { ...props } ) {
                            ) : ( 
                               <Section style={{ gap: 16, width: "80%", }}>
                               
-                                 <Pressable style={{ elevation: 10, width: "100%", }} onPress={ () => {} }>
-                                    <Btn style={{ backgroundColor: "#212329", }}>
-                                       {/* <Link href="/auth/signin"> */}
-                                       <Link href="/signin">
-                                          <BtnTxt style={{ color: "#eee", }}>
-                                             Acessar sua conta 
-                                          </BtnTxt>
-                                       </Link>
-                                    </Btn> 
-                                 </Pressable>
+                                 <ViewA animation="bounceInDown" style={{ width: "100%", }}>
+                                    <Pressable style={{ elevation: 10, width: "100%", }} onPress={ () => {} }>
+                                       <Btn style={{ backgroundColor: "#212329", }}>
+                                          {/* <Link href="/auth/signin"> */}
+                                          <Link href="/signin">
+                                             <BtnTxt style={{ color: "#eee", }}>
+                                                Acessar sua conta 
+                                             </BtnTxt>
+                                          </Link>
+                                       </Btn> 
+                                    </Pressable>
+                                 </ViewA>
       
-                                 <Pressable style={{ elevation: 10, width: "100%", }} onPress={ () => {} }>
-                                    <Btn>
-                                       <Link href="/signup">
-                                          <BtnTxt>
-                                             Criar uma conta
-                                          </BtnTxt>
-                                       </Link>
-                                    </Btn> 
-                                 </Pressable>
+                                 <ViewA animation="bounceIn" style={{ width: "100%", }}>
+                                    <Pressable style={{ elevation: 15, width: "100%", shadowColor: "#27f", }} onPress={ () => {} }>
+                                       <Btn >
+                                          <Link href="/signup">
+                                             <BtnTxt>
+                                                Criar uma conta
+                                             </BtnTxt>
+                                          </Link>
+                                       </Btn> 
+                                    </Pressable>
+                                 </ViewA>
       
                               </Section> 
                            )

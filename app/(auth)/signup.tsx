@@ -3,7 +3,7 @@
 /** == [ @imports ] 
  * == == == == == == == == == */
 import React, { useState, useEffect } from "react";
-import { BackBtn, BackBtnTxt, Btn, BtnTxt, Input, Label, LabelText, PP, Section } from "@/src/widgets/ui";
+import { AppbarStick, BackBtn, BackBtnTxt, BackButton, Btn, BtnTxt, Input, Label, LabelText, PP, Section } from "@/src/widgets/ui";
 import { Link } from "@react-navigation/native";
 import { router } from "expo-router";
 import * as CStore from "@/src/widgets/clb-dbs";
@@ -29,6 +29,8 @@ import {
    updateProfile,
 } from "firebase/auth";
 import { get, child, ref, getDatabase } from "firebase/database";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import ResetStorage from "@/src/services/resetStorage";
 
 
 /** == [ properties ]
@@ -96,8 +98,9 @@ export default function SignUpView( { ...props } ) {
             ,
             auth = getAuth()
          ;
-         updateProfile( auth.currentUser, {
+         updateProfile( auth.currentUser!, {
             displayName: Name,
+            photoURL: ""
          } );
          async function CreateUserSpace() {
             SaveDataOnFbRDB( {
@@ -114,16 +117,26 @@ export default function SignUpView( { ...props } ) {
             } );
             await CStore.StoreData( userReady, "user" );
          }
-         CreateUserSpace().then( router.replace( "/home" ) );
+         CreateUserSpace().then( () => {
+            // router.replace( "/home" );
+            setUser( value );
+         } );
       } );
       
    }
 
+   useEffect( () => {
+      if( User ) {
+         router.replace( "/home" );
+      }
+      console.log( "User exist, so chancging to /home" );
+   }, [User] );
+
 
    return( <>
-      <BackBtn onPress={ () => { router.back(); } }>
-         <BackBtnTxt>&lt;</BackBtnTxt>
-      </BackBtn>
+      <AppbarStick>
+         <BackButton />
+      </AppbarStick>
       <KeyboardAvoidingView behavior="height" style={ s.root }>
          <ImageBackground source={ require( "@/src/images/bgs/splash-login-720x1600.png" ) } resizeMode="stretch" style={ s.bgImage }>
             <View style={ [ s.rootB ]}>

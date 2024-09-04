@@ -18,6 +18,7 @@ import { ActivityIndicator } from "react-native-paper";
 import { Link, router, } from "expo-router";
 
 import * as CStore from "@/src/widgets/clb-dbs";
+import { AppbarStick, BackButton, } from "@/src/widgets/ui";
 import { FirebaseApp, FirebaseAuth, SaveDataOnFbRDB,  } from "@/FirebaseConfig";
 import { 
    signInWithEmailAndPassword, 
@@ -28,6 +29,8 @@ import {
    signOut,
 } from "firebase/auth";
 import { get, child, ref, getDatabase } from "firebase/database";
+import ResetStorage from "@/src/services/resetStorage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 /** == [ properties ]
@@ -38,7 +41,8 @@ import { get, child, ref, getDatabase } from "firebase/database";
  * == == == == == == == == == */
 export default function SignInView( { ...props } ) {
    const 
-      [ User, setUser ] = useState<User | null>( null ),
+      [ User, setUser ] = useState<User | null>( null )
+      ,
       [ Email, setEmail ] = useState( "" )
       ,
       [ Password, setPassword ] = useState( "" )
@@ -49,20 +53,49 @@ export default function SignInView( { ...props } ) {
 
    async function HandleSignIn() {
       setLoading( true );
-      await CStore.DeleteData( "user" );
+
+      async function handleOldStoredData() {
+         // if user exist on localStorage
+         // check user.email and email input
+         // if doesn't match: old localStorage data is reseted 
+         async function handle() {
+            try {
+               const 
+                  userJson = await AsyncStorage.getItem( "user" )
+                  ,   
+                  oldUser = JSON.parse( userJson )
+               ;
+               
+               console.log( "here oldUser: ", oldUser );
+               return oldUser;
+            } catch( err: any ) {
+               console.error( "handleOldStoredData() err: \n\n\n", err );
+            }
+         }
+
+         if( await AsyncStorage.getItem( "user" ) ) {
+            handle().then( r => {
+               if( r.email != Email ) {
+                  ResetStorage();
+               } 
+            } )
+         }
+      }
+      
       async function Handle() {
+         // signIn user and return { userData and userUid }
          try {
             const 
                response = await signInWithEmailAndPassword( FirebaseAuth, Email, Password )
                ,
                userUid = response.user.uid
+               ,
+               userEmail = response.user.email
             ;
 
             console.log( "SigIn() response: \n\n\n", response );
             
-            // return response;
-            // return userUid;
-            return { response, userUid };
+            return { response, userUid, userEmail };
          }
          catch( err: any ) {
             console.log( "SignIn() err: \n\n\n", err );
@@ -72,46 +105,54 @@ export default function SignInView( { ...props } ) {
             setLoading( false );
          }
       }
-      Handle().then( returned => {
+
+      await handleOldStoredData();
+
+      await Handle().then( returned => {
          async function CreateUserSpace() {
             try {
                const 
-                  // name = await get( child( ref( getDatabase() ), `users/${ returned?.userUid }/name` ) )
-                  name = getAuth().currentUser?.displayName
-                  ,
                   userData = {
-                     name: name,
-                     displayName: name,
+                     name: getAuth().currentUser.displayName,
+                     displayName: getAuth().currentUser.displayName,
                      // uid: returned?.user.uid,
                      uid: returned?.userUid,
+                     email: returned?.response.user.email,
                   }
                   ,
-                  userReady = JSON.stringify( userData )
+                  userJson = JSON.stringify( userData )
                ;
-               await CStore.StoreData( userReady, "user" );
-               if( returned ) {
-                  router.replace( "/home" );
-               }
+               await CStore.StoreData( userJson, "user" );
+
+               console.log( "HandleSignIn() CreateUserSpace(): userData", userData );
+               
+               return returned.response;
             } catch( err: any ) { console.log( "CreateUserSpace() err: ", err ); }
          }
-         CreateUserSpace();
+         CreateUserSpace().then( r => setUser( r ) );
       } );
    }
 
+   useEffect( () => {
+      if( User ) {
+         router.replace( "/home" );
+      }
+   }, [User] );
+
    return( <>
-      <BackBtn onPress={ () => { router.back() } }>
-         <BackBtnTxt>&lt;</BackBtnTxt>
-      </BackBtn>
+      <AppbarStick>
+         <BackButton />
+      </AppbarStick>
       <View style={ s.root }>
          <ImageBackground source={ require( "@/src/images/bgs/splash-login-720x1600.png" ) } resizeMode="stretch" style={ s.bgImage }>
-            <View behavior="padding" style={ [ s.rootB ]}>
+            <View style={ [ s.rootB ]}>
                <View style={[ s.vv ]}>
                   <Image source={ require( "@/src/images/EA/globo-de-plasma-700.png" ) } style={ s.vvImage }/>
                </View>
 
             
                {/* <KeyboardAvoidingView behavior="position" style={[ { width: "80%", } ]}> */}
-               <View behavior="position" style={[ { width: "80%", } ]}>
+               <View style={[ { width: "80%", } ]}>
 
                   <Label>
                      <LabelText style={{ color: "#fff", textShadowColor: "#daa520", textShadowRadius: 5  }}>Email</LabelText>
@@ -119,7 +160,7 @@ export default function SignInView( { ...props } ) {
                         placeholder="Email"
                         value={ Email }
                         onChangeText={ ( text ) => setEmail( text ) }
-                        keyboardType="email-address"
+                        inputMode="email"
                         cursorColor={ "#00559C" }
                      />
                   </Label>
@@ -130,7 +171,7 @@ export default function SignInView( { ...props } ) {
                         secureTextEntry={ true }
                         value={ Password }
                         onChangeText={ ( text ) => setPassword( text ) }
-                        keyboardType="default"
+                        inputMode="text"
                         cursorColor={ "#00559C" }
                      />
                   </Label>
@@ -158,7 +199,7 @@ export default function SignInView( { ...props } ) {
                </View>
                <Text style={{ textAlign: "center", color: "#eee",  }}>
                   Ainda não tem uma conta? registre-se 
-                  <Link href="/auth/signup" style={{ textDecorationLine: "underline" }}> aqui</Link> 
+                  <Link href="/signup" style={{ textDecorationLine: "underline" }}> aqui</Link> 
                </Text>
             </View>
          </ImageBackground>

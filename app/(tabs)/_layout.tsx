@@ -176,24 +176,6 @@ export default function Layout() {
 
          }}
       />
-      <Tabs.Screen
-         name="dev"
-         options={{
-            title: 'Dev',
-            tabBarIcon: ({ color, size }) => {
-               return <Icon i="mi" name="devices" color="#ffab00"/>;
-            },
-         }}
-      />
-      <Tabs.Screen
-         name="invoice"
-         options={{
-            title: 'Invoice',
-            tabBarIcon: ({ color, size }) => {
-               return <Icon i="mi" name="devices" color="#ffab00"/>;
-            },
-         }}
-      />
     </Tabs>
   );
 }
