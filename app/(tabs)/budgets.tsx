@@ -307,6 +307,10 @@ export default function BudgetsView( { ...props } ) {
    }, [] ); 
 
    useEffect( () => {
+      SetCustomers();
+   }, [Customers] ); 
+
+   useEffect( () => {
       SetRef();
    }, [ Budgets ] ); 
    
