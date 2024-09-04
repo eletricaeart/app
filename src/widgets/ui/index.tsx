@@ -305,11 +305,11 @@ export function AppbarStick( { ...props } ) {
    );
 }
 
-export function BackButton() {
+export function BackButton( { ...props } ) {
    return(
       <Pressable 
          style={{
-            backgroundColor: "#fff1",
+            backgroundColor: props.bg || "#fff1",
             width: 50, height: 50,
             borderRadius: 16,
             // position: "absolute", zIndex: 6,
@@ -317,7 +317,7 @@ export function BackButton() {
          }}
          onPress={ () => router.back() }
       >
-         <Text animation="bounceInLeft" style={{ fontWeight: "bold", color: "#fff9", fontSize: 28, }}>&lt;</Text>
+         <Text animation="bounceInLeft" style={{ fontWeight: "bold", color: props.color || "#fff9", fontSize: 28, }}>&lt;</Text>
       </Pressable>
    );
 }

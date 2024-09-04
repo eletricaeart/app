@@ -426,6 +426,7 @@ export default function CustomersView( { ...props } ) {
                            <ea.UsersCard
                               key={ item.id }
                               name={ item.name }
+                              data={ item }
                            />
                         </> }
                         keyExtractor={ item => item.id } 
@@ -708,6 +709,7 @@ export default function CustomersView( { ...props } ) {
       >
          <Text>Modal Menu</Text>
       </Modal>
+      
 
       <Portal>
          <FAB.Group

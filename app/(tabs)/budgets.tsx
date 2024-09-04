@@ -212,10 +212,12 @@ export default function BudgetsView( { ...props } ) {
    async function FetchLocalCustomers() {
       try {
          const 
-            getCustomers = await AsyncStorage.getItem( "customers" ).then( r => JSON.parse( r ) )
+            customersJson = await AsyncStorage.getItem( "customers" )
+            ,
+            customers = await JSON.parse( customersJson )
          ;
-         console.log( "FetchLocalCustomers() => getCustomers: ", getCustomers );
-         return getCustomers;
+         console.log( "FetchLocalCustomers() => getCustomers: ", customers );
+         return customers;
       } catch( err: any ) { console.log( "FetchLocalCustomers() err: ", err ); }
    }
 
@@ -306,9 +308,9 @@ export default function BudgetsView( { ...props } ) {
       SetRef();
    }, [] ); 
 
-   useEffect( () => {
-      SetCustomers();
-   }, [Customers] ); 
+   // useEffect( () => {
+   //    SetCustomers();
+   // }, [Customers] ); 
 
    useEffect( () => {
       SetRef();

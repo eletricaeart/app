@@ -21,7 +21,7 @@ import * as c from "./clb-html";
 import * as Colores from "@/src/widgets/clb-colors";
 
 import { Icon } from "./clb-icons";
-import { Link, } from "expo-router";
+import { Link, router, } from "expo-router";
 import { H4, T } from "./ui";
 import { color } from "native-base/lib/typescript/theme/styled-system";
 // import { Link, useLinkProps, } from "@react-navigation/native";
@@ -253,13 +253,16 @@ export function UsersCard( { ...props } ) {
             </Pressable>
          </View>
 
-         <View style={ s.customerInfo }>
+         <Pressable style={ s.customerInfo } onPress={ () => {
+            router.push( "/customer" );
+            // router.push( "/customer" );
+         } }>
             {/* <Link to={{ screen: "customer", params: { id: 'jane' } }}> */}
             {/* <c.H4>Anselmo Sammarco Nunes</c.H4> */}
             <H4 style={{ color:"#242526" }}>{ name }</H4>
             {/* <c.T>(13) 99148-6078</c.T> */}
             <T style={{ color:"#777" }}>{ tel }</T>
-         </View>
+         </Pressable>
 
          <View style={ s.sideBtn }>
             <Pressable onPress={ () => {
