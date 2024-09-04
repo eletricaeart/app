@@ -90,8 +90,7 @@ export default function Home( { ...props } ) {
             />
             <Header style={{ position: "absolute", }}>
                <T1 style={{ color: "#eee", }}>
-                  {/* Olá { User && User.name } */}
-                  Olá  Maluco loko
+                  Olá { User && User.displayName }
                   
                   {/* Olá { 
                      User ? Loading ? (

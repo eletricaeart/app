@@ -461,43 +461,37 @@ export default function BudgetsView( { ...props } ) {
          <LinearGradient colors={[ "#f5f5f5", "#e5e5e5", ]} style={[ { flex: 1, } ]} >
             
             { Loading ? <ActivityIndicator color="#daa520"/> : Budgets != null ? 
-               <ScrollView style={{ flex: 1, }}>
-                  <HomePage style={{  }}>
-                     <Header>
-                        <Content>
-                           <H2>Orçamentos</H2>
-                        </Content>
-                     </Header>
-   
-                     <Section  style={{ flex: 1, paddingBottom: 75, backgroundColor: "#e2f4fe00", }}>
-                           
-                        <Content style={{ gap: 16 }}>
-   
-                           {  
-                              <FlatList 
-                                 data={ Budgets }
-                                 renderItem={ ( {item} ) => <>
-                                    <BudgetCardList 
-                                       budget={ item }
-                                    />
-                                 </> }
-                                 keyExtractor={ item => item.id } 
-                                 ItemSeparatorComponent={ 
-                                    () => <View style={{ 
-                                       height: 1, 
-                                       backgroundColor: "#ccc" ,
-                                       width: "90%",
-                                       margin: "auto",
-                                    }}/>
-                                 }
-                              />
-                           }
-                           
-                        </Content>
-
-                     </Section>
-                  </HomePage> 
-               </ScrollView>
+               <View style={{ flex: 1, gap: 16 }}>
+                  {  
+                     <FlatList 
+                        ListHeaderComponent={ <>
+                           <Header>
+                              <Content>
+                                 <H2>Orçamentos</H2>
+                              </Content>
+                           </Header>
+                        </> }
+                        data={ Budgets }
+                        renderItem={ ( {item} ) => <>
+                           <BudgetCardList 
+                              budget={ item }
+                           />
+                        </> }
+                        keyExtractor={ item => item.id } 
+                        ItemSeparatorComponent={ 
+                           () => <View style={{ 
+                              height: 1, 
+                              backgroundColor: "#ccc" ,
+                              width: "90%",
+                              margin: "auto",
+                           }}/>
+                        }
+                        style={{
+                           flex: 1,
+                        }}
+                     />
+                  }
+               </View>
                : 
                <View style={{ flex: 1, }}>
                   <Header>
@@ -519,9 +513,9 @@ export default function BudgetsView( { ...props } ) {
 
 
    
-         {/*  == [ Modal ]
+         {/*  == [ Modal - forma de pagamento ]
          == == == == == == == == ==  */}
-         <ModalFullPage ModalVisibility={ ModalVisibility }
+         <ModalFullPage ModalVisibility={ ModalVisibility } onRequestClose={ () => setModalFormOfPayment( false ) }
          overlay={
             <ModalCardCenter 
             setState={ setModalFormOfPayment } 
@@ -891,8 +885,10 @@ export default function BudgetsView( { ...props } ) {
             </ScrollView>
          </ModalFullPage>
 
+
+         {/* modal - serviços */}
          { ModalServicesVisibility && 
-            <ModalFullPage>
+            <ModalFullPage onRequestClose={ () => setModalServicesVisibility( false ) }>
                <Header style={{ backgroundColor: "#e5e5e5", }}>
                   <Content>
                      <Duo style={{ flexDirection: "row", justifyContent: "space-between", 
@@ -1217,8 +1213,10 @@ export default function BudgetsView( { ...props } ) {
             </ModalFullPage> 
          }
 
+
+         {/* modal clientes */}
          { ModalCustomerVisibility && 
-            <ModalFullPage>
+            <ModalFullPage onRequestClose={ () => setModalCustomerVisibility( false ) }>
                <Header style={{ backgroundColor: "#e5e5e5", }}>
                   <Content>
                      <Duo style={{ flexDirection: "row", justifyContent: "space-between", 
@@ -1241,16 +1239,13 @@ export default function BudgetsView( { ...props } ) {
                }}>
                   
                   <Section style={{ flex: 1, borderRadius: 24, overflow: "hidden", elevation: 3, }}>
-                     <ScrollView style={{ padding: 16, backgroundColor: "#f5f5f5", }}>
-                        <Section style={{  }}>
-                           <Header>
+                     <View style={{ flex: 1, backgroundColor: "#f5f5f5", }}>
+                        <Section style={{ flex: 1, }}>
+                           <Header style={{  padding: 18, }}>
                               <H2 style={{ fontSize: 24, fontWeight: "bold", color: "#00559c", alignSelf: "center", }}>
                                  Clientes
                               </H2>
                            </Header>
-                           <Section style={{
-                              paddingTop: 24, paddingBottom: "100%",
-                           }}>
                               {/* cliente modal */
                                  // body 
                                  Customers ? (
@@ -1275,18 +1270,22 @@ export default function BudgetsView( { ...props } ) {
                                        
                                        keyExtractor={ item => item.id } 
                                        ItemSeparatorComponent={ 
-                                          () => <View style={{ height: 2, }}/>
+                                          () => <View style={{ height: 16, }}/>
                                        }
-                                       style={{ width: "100%", }} 
+                                       style={{ 
+                                          width: "100%", 
+                                          // backgroundColor: "#27f",
+                                          paddingLeft: 8,
+                                          paddingRight: 8,
+                                       }} 
                                        contentContainerStyle={{ padding: 16, paddingBottom: 38, paddingLeft: 0, paddingRight: 0, }}
                                     />
                                  ) : (
                                     <View></View>
                                  )
                               }
-                           </Section>
                         </Section>
-                     </ScrollView>
+                     </View>
                   </Section>
                </Section>
             </ModalFullPage> 

@@ -404,45 +404,43 @@ export default function CustomersView( { ...props } ) {
          <LinearGradient colors={[ "#fafafa", "#e5e5e5", ]} style={[ { flex: 1, } ]} >
             
             { Customers != null ? 
-               <ScrollView style={{ flex: 1,  }}>
-                  <Homepage style={{  }}>
-                     <Header>
-                        <T1 style={{ color: "#daa520", }}>Clientes</T1>
-                     </Header>
-   
-                     <Section bg="#e2f4fe00" style={{ flex: 1, paddingBottom: 75, }}>
-                        <Section style={{ gap: 16, padding: 0, }}>
-   
-                           { 
-                              // Customers.map( customer => {
-                              //    return( 
-                              //       <ea.UsersCard 
-                              //          key={ customer.id }
-                              //          name={ customer.name }
-                              //       />
-                              //    );
-                              // } ) 
-                              <FlatList 
-                                 data={ Customers }
-                                 renderItem={ ({item}) => <>
-                                    <ea.UsersCard
-                                       key={ item.id }
-                                       name={ item.name }
-                                    />
-                                 </> }
-                                 keyExtractor={ item => item.id } 
-                                 ItemSeparatorComponent={ 
-                                    () => <View style={{ height: 16, }}/>
-                                 }
-                                 style={{ width: "100%",  }} 
-                                 contentContainerStyle={{ padding: 16, paddingBottom: 38, }}
-                              />
-                           }
-                           
-                        </Section>
-                     </Section>
-                  </Homepage> 
-               </ScrollView>
+               // <ScrollView style={{ flex: 1,  }}>
+               <View style={{ flex: 1, backgroundColor: "#e2f4fe00", gap: 16, }}>
+                  { 
+                     // Customers.map( customer => {
+                     //    return( 
+                     //       <ea.UsersCard 
+                     //          key={ customer.id }
+                     //          name={ customer.name }
+                     //       />
+                     //    );
+                     // } ) 
+                     <FlatList 
+                        ListHeaderComponent={ <>
+                           <Header>
+                              <T1 style={{ color: "#daa520", }}>Clientes</T1>
+                           </Header>
+                        </> }
+                        data={ Customers }
+                        renderItem={ ({item}) => <>
+                           <ea.UsersCard
+                              key={ item.id }
+                              name={ item.name }
+                           />
+                        </> }
+                        keyExtractor={ item => item.id } 
+                        ItemSeparatorComponent={ 
+                           () => <View style={{ height: 16, }}/>
+                        }
+                        style={{ 
+                           width: "100%", 
+                           // backgroundColor: "#27f",
+                           paddingBottom: 0,
+                        }} 
+                        contentContainerStyle={{ padding: 16, paddingBottom: 38, }}
+                     />
+                  }
+               </View>
                : 
                <View style={{ flex: 1, }}>
                   <Header>
@@ -652,12 +650,15 @@ export default function CustomersView( { ...props } ) {
                                     onChangeText={ setNote }
                                  />
                               </c.Section>
+
+
                               <c.Section style={ {
                                  gap: 16,
                                  marginTop: 24,
                                  marginBottom: 66,
                               } }>
-                                 <Touch 
+
+                                 {/* <Touch 
                                     txt="apagar tudo"
                                     onPressIn={ () => { Keyboard.dismiss() } }
                                     onPressOut={ () => { 
@@ -674,7 +675,7 @@ export default function CustomersView( { ...props } ) {
                                     }}
                                     txt="erase DBs"
                                     onPress={ async () => { await AsyncStorage.removeItem( "customers" ) } }
-                                 />
+                                 /> */}
                                  <Touch 
                                     touchSty={{
                                        backgroundColor: "#00559C",

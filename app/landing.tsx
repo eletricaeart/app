@@ -90,26 +90,26 @@ export default function Landing( { ...props } ) {
                               <Section style={{ gap: 16, width: "80%", }}>
                               
                                  <ViewA animation="bounceInDown" style={{ width: "100%", }}>
-                                    <Pressable style={{ elevation: 10, width: "100%", }} onPress={ () => {} }>
+                                    <Pressable style={{ elevation: 10, width: "100%", }} onPress={ () => router.push( "/signin" ) }>
                                        <Btn style={{ backgroundColor: "#212329", }}>
                                           {/* <Link href="/auth/signin"> */}
-                                          <Link href="/signin">
+                                          {/* <Link href="/signin"> */}
                                              <BtnTxt style={{ color: "#eee", }}>
                                                 Acessar sua conta 
                                              </BtnTxt>
-                                          </Link>
+                                          {/* </Link> */}
                                        </Btn> 
                                     </Pressable>
                                  </ViewA>
       
                                  <ViewA animation="bounceIn" style={{ width: "100%", }}>
-                                    <Pressable style={{ elevation: 15, width: "100%", shadowColor: "#27f", }} onPress={ () => {} }>
+                                    <Pressable style={{ elevation: 15, width: "100%", shadowColor: "#27f", }} onPress={ () => router.push( "/signup" ) }>
                                        <Btn >
-                                          <Link href="/signup">
+                                          {/* <Link href="/signup"> */}
                                              <BtnTxt>
                                                 Criar uma conta
                                              </BtnTxt>
-                                          </Link>
+                                          {/* </Link> */}
                                        </Btn> 
                                     </Pressable>
                                  </ViewA>

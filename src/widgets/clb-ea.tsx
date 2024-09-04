@@ -23,6 +23,7 @@ import * as Colores from "@/src/widgets/clb-colors";
 import { Icon } from "./clb-icons";
 import { Link, } from "expo-router";
 import { H4, T } from "./ui";
+import { color } from "native-base/lib/typescript/theme/styled-system";
 // import { Link, useLinkProps, } from "@react-navigation/native";
 
 
@@ -254,12 +255,10 @@ export function UsersCard( { ...props } ) {
 
          <View style={ s.customerInfo }>
             {/* <Link to={{ screen: "customer", params: { id: 'jane' } }}> */}
-            <Link href="https://github.com">
-               {/* <c.H4>Anselmo Sammarco Nunes</c.H4> */}
-               <c.H4 color="#242526">{ name }</c.H4>
-               {/* <c.T>(13) 99148-6078</c.T> */}
-               <c.T color="#777">{ tel }</c.T>
-            </Link>   
+            {/* <c.H4>Anselmo Sammarco Nunes</c.H4> */}
+            <H4 style={{ color:"#242526" }}>{ name }</H4>
+            {/* <c.T>(13) 99148-6078</c.T> */}
+            <T style={{ color:"#777" }}>{ tel }</T>
          </View>
 
          <View style={ s.sideBtn }>

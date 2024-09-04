@@ -51,6 +51,28 @@ export default function SignInView( { ...props } ) {
 
    ;
 
+   useEffect( () => {
+      onAuthStateChanged( FirebaseAuth, User => {
+         async function load() {
+            if( User ) {
+               const jsn = JSON.stringify( User );
+               await AsyncStorage.setItem( "User", jsn );
+            }
+         }
+         load();
+         console.log( "onAuthStateChanged() signup: ", User );
+         setUser( User ); 
+      } );
+   }, [] ); 
+
+
+   useEffect( () => {
+      if( User ) {
+         router.replace( "/home" );
+      }
+      console.log( "User exist, so changing signin to /home" );
+   }, [User] );
+
    async function HandleSignIn() {
       setLoading( true );
 
@@ -132,12 +154,6 @@ export default function SignInView( { ...props } ) {
          CreateUserSpace().then( r => setUser( r ) );
       } );
    }
-
-   useEffect( () => {
-      if( User ) {
-         router.replace( "/home" );
-      }
-   }, [User] );
 
    return( <>
       <AppbarStick>

@@ -57,6 +57,29 @@ export default function SignUpView( { ...props } ) {
 
    ;
 
+   useEffect( () => {
+      onAuthStateChanged( FirebaseAuth, User => {
+         async function load() {
+            if( User ) {
+               const jsn = JSON.stringify( User );
+               await AsyncStorage.setItem( "User", jsn );
+            }
+         }
+         load();
+         console.log( "onAuthStateChanged() signup: ", User );
+         setUser( User ); 
+      } );
+   }, [] ); 
+
+
+   useEffect( () => {
+      if( User ) {
+         router.replace( "/home" );
+      }
+      console.log( "User exist, so chancging signup to /home" );
+   }, [User] );
+
+
    async function HandleSignUp() {
       /* then( user => {
          if( user ) {
@@ -124,14 +147,6 @@ export default function SignUpView( { ...props } ) {
       } );
       
    }
-
-   useEffect( () => {
-      if( User ) {
-         router.replace( "/home" );
-      }
-      console.log( "User exist, so chancging to /home" );
-   }, [User] );
-
 
    return( <>
       <AppbarStick>

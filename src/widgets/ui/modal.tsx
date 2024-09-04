@@ -44,8 +44,10 @@ export function ModalCardCenter( { ...props } ) {
 export function ModalFullPage( { ...props } ) {
 
    return(
-      <Modal visible={ props.ModalVisibility } 
-         onRequestClose={ () => { props.setModalVisibility( false ) } }
+      // <Modal visible={ props.ModalVisibility }  
+      // onRequestClose={ () => { props.setModalVisibility( false ) } }
+      <Modal visible={ props.ModalVisibility }  
+         onRequestClose={ () => props.onRequestClose() }
          animationType="slide"
          presentationStyle="formSheet"
       >
