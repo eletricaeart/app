@@ -379,7 +379,7 @@ export default function BudgetsView( { ...props } ) {
             setTempTotal( "0" );
             setBudgetName( "" );
             setReceiptValue( ( 0 ).toString() );
-            // here 1
+            
             setService( {
                description: "",
                services: [],
@@ -712,6 +712,7 @@ export default function BudgetsView( { ...props } ) {
                            <Text style={ s.label }>Cliente</Text>
                            <Text style={ [ s.input, { paddingTop: 18,  } ] }
                            onPress={ () => {
+                              SetCustomers();
                               setModalCustomerVisibility( !ModalCustomerVisibility );
                            } }>
                               { Customer.name }
@@ -1263,6 +1264,7 @@ export default function BudgetsView( { ...props } ) {
                                                 setCustomer( {
                                                    name: item.name,
                                                    id: item.id,
+                                                   
                                                 } );
                                                 setModalCustomerVisibility( !ModalCustomerVisibility );
                                              } }
@@ -1270,6 +1272,7 @@ export default function BudgetsView( { ...props } ) {
                                              <ea.CustomersCard
                                                 key={ item.id }
                                                 name={ item.name }
+                                                data={ item }
                                              />
                                           </Pressable>
                                        </> }

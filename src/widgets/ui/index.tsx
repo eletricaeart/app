@@ -149,6 +149,18 @@ export const
       align-self: center;
    `
    ,
+   Item = styled.View`
+      flex-direction: row;
+      padding: 8px;
+      gap: 8px;
+   `
+   ,
+   Div = styled.View`
+      border-color: #9997;
+      border-width: 1px;
+      border-style: dashed;
+   `
+   ,
    Tiles = styled.View`
       /* background: #FFF; */
       width: 100%;

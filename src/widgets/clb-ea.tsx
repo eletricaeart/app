@@ -196,7 +196,10 @@ export function UsersCard( { ...props } ) {
    const 
       child = props.children 
       ,
-      profile = props.profile || require( "@/src/images/Avatar/default_avatar_masc_ico.webp" )
+      defaultPic = props.data.gender == "Masculino" ?
+         require( "@/src/images/Avatar/default_avatar_masc_ico.webp" )
+         :
+         require( "@/src/images/Avatar/default_avatar_fem_ico.webp" )
       ,
       name = props.name || "Nome do Cliente"
       ,
@@ -251,7 +254,10 @@ export function UsersCard( { ...props } ) {
             <Pressable style={[ s.picture ]} onPress={ () => {
                alert( "foto" );
             } }>
-               <Image source={ profile } style={[ s.img ]} resizeMode="contain"/>
+               <Image 
+                  source={ props.data.profilepic || defaultPic }
+                  style={[ s.img ]} resizeMode="contain"
+               />
             </Pressable>
          </View>
 
@@ -301,7 +307,10 @@ export function CustomersCard( { ...props } ) {
    const 
       child = props.children 
       ,
-      profile = props.profile || require( "@/src/images/Avatar/default_avatar_masc_ico.webp" )
+      defaultPic = props.data.gender == "Masculino" ?
+         require( "@/src/images/Avatar/default_avatar_masc_ico.webp" )
+         :
+         require( "@/src/images/Avatar/default_avatar_fem_ico.webp" )
       ,
       name = props.name || "Nome do Cliente"
       ,
@@ -356,7 +365,10 @@ export function CustomersCard( { ...props } ) {
             <Pressable style={[ s.picture ]} onPress={ () => {
                // alert( "foto" );
             } }>
-               <Image source={ profile } style={[ s.img ]} resizeMode="contain"/>
+            <Image 
+               source={ props.data.profilepic || defaultPic }
+               style={[ s.img ]} resizeMode="contain"
+            />
             </Pressable>
          </View>
 

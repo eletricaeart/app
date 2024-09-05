@@ -9,6 +9,7 @@ import {
 
 import {
    FAB, Portal, PaperProvider,
+   List,
 } from "react-native-paper";
 
 import styled from "styled-components/native";
@@ -48,9 +49,10 @@ import {
    Center, Centered, 
    Card, BackSheet, 
    Duo, H1, H2, H3, H4, H5, H6,
-   TT, T, T1, T2, Homepage, P, PP, 
+   TT, T, T1, T2, Homepage, P, PP,
+   Div, Item,
 } from "@/src/widgets/ui";
-
+import { ModalCardCenter, ModalFullPage } from "@/src/widgets/ui/modal";
 
 
 /* == [ properties ]
@@ -58,6 +60,7 @@ import {
 
 interface customer {
    name: string; 
+   gender: string;
    email?: string; 
    cellphone?: string;
    whatsapp?: string;
@@ -141,6 +144,10 @@ export default function CustomersView( { ...props } ) {
       [ ModalVisibility, setModalVisibility ] = useState( false )
       ,
       [ ModalMenuVisibility, setModalMenuVisibility ] = useState( false )
+      ,
+      [ ModalGender, setModalGender ] = useState( false )
+      ,
+      [ ModalGenderVisibility, setModalGenderVisibility ] = useState( false )
    ;
 
    async function FetchLocalCustomers() {
@@ -263,6 +270,8 @@ export default function CustomersView( { ...props } ) {
    const 
       [ Name, setName ] = useState( "" )
       ,
+      [ Gender, setGender ] = useState( "" )
+      ,
       [ Cellphone, setCellphone ] = useState( "" )
       ,
       [ Whatsapp, setWhatsapp ] = useState( "" )
@@ -301,6 +310,7 @@ export default function CustomersView( { ...props } ) {
    const 
       inputs = [
          setName,
+         setGender,
          setCellphone,
          setWhatsapp,
          setPhone,
@@ -322,6 +332,7 @@ export default function CustomersView( { ...props } ) {
          // id: `c:${ Math.round( Math.random() * 999 ) }-${ Math.round( Math.random() * 999 ) }`,
          id: uuid.v4(),
          name: Name,
+         gender: Gender,
          cellphone: Cellphone,
          whatsapp: Whatsapp,
          phone: Phone,
@@ -503,6 +514,15 @@ export default function CustomersView( { ...props } ) {
                                  ref={ id_Name }
                                  onChangeText={ setName }
                                  />
+                              </c.Section>
+
+                              <c.Section>
+                                 <Text style={ s.label }>Gênero</Text>
+                                 <Pressable style={ s.input }
+                                    onPress={ () => { setModalGender( true ) } }
+                                 >
+                                    <Text>{ Gender }</Text>
+                                 </Pressable>
                               </c.Section>
 
                               <c.Section contato section>
@@ -709,6 +729,46 @@ export default function CustomersView( { ...props } ) {
       >
          <Text>Modal Menu</Text>
       </Modal>
+
+
+         {/*  == [ Modal - Gênero ]
+         == == == == == == == == ==  */}
+         <ModalFullPage ModalVisibility={ ModalGender } onRequestClose={ () => setModalGender( false ) }
+         overlay={
+            <ModalCardCenter 
+            setState={ setModalGender } 
+            useState={ ModalGender }
+            trigger={ ModalGender }
+            >
+               <Centered style={{ paddingTop: 8, paddingBottom: 18, }}>
+                  <H3>Selecione o gênero</H3>
+               </Centered>
+
+               <Content style={{ gap: 8, }}>
+                  <Item>
+                     <P style={{ color: "#555", }}
+                     onPress={ () => {
+                        setGender( "Masculino" );
+                        setModalGender( !ModalGender );
+                     } }
+                     >
+                        Masculino
+                     </P>
+                  </Item>
+                  <Div />
+                  <Item>
+                     <P style={{ color: "#555", }}
+                     onPress={ () => {
+                        setGender( "Feminino" );
+                        setModalGender( !ModalGender );
+                     } }
+                     >
+                        Feminino
+                     </P>
+                  </Item>
+               </Content>
+            </ModalCardCenter>
+         }></ModalFullPage>
       
 
       <Portal>

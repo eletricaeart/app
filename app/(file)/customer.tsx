@@ -27,6 +27,12 @@ import {
 export default function CustomerView( { ...props } ) {
    const 
       [ Customer, setCustomer ] = useState( {} )
+      ,
+      defaultPic = {
+         fem: require( "@/src/images/Avatar/default_avatar_fem_720p.webp" ),
+         masc: require( "@/src/images/Avatar/default_avatar_masc_720p.webp" )
+      }
+      
    ;
 
    async function GetCustomer() {
@@ -81,10 +87,11 @@ export default function CustomerView( { ...props } ) {
                   justifyContent: "center",
                }}
             >
-               <ImageBackground source={ require( "@/src/images/Avatar/default_avatar_masc_720p.webp" ) } 
-                  // resizeMode="stretch" 
-                  // resizeMode="center" 
-                  // resizeMode="contain" 
+               <ImageBackground 
+                  source={ 
+                     Customer.profilePic || Customer.gender == "Masculino" ?
+                     defaultPic.masc : defaultPic.fem
+                  } 
                   resizeMode="cover" 
                   style={{
                      width: "100%",
@@ -107,28 +114,31 @@ export default function CustomerView( { ...props } ) {
 
                <Card style={{ padding: 22, backgroundColor: "#fff", gap: 20, }}>
                   <H3 style={{ color: "#27f" }}>Dados Pessoais</H3>
-                  <FlatList data={ [ { rg: "41.445.792-4", cpf: "346.372.258-50", gender: "Ferminino" } ] }
-                     renderItem={ ({item}) => <View key={ item.cpf }>
-                        <View style={{flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
-                           <H3 style={{ color: "#555" }}>RG </H3>
-                           <P style={{ color: "#777" }}>{ item.rg }</P>
-                        </View>
+                  {
+                     Customer &&
+                     <View>
+                        <View key={ Customer.cpf }>
+                           <View style={{flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
+                              <H3 style={{ color: "#555" }}>RG </H3>
+                              <P style={{ color: "#777" }}>{ Customer.rg }</P>
+                           </View>
 
-                        <View style={{ backgroundColor: "#9995", height: 1, marginTop: 16, marginBottom: 16, }}/>
-                        
-                        <View style={{flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
-                           <H3 style={{ color: "#555" }}>CPF </H3>
-                           <P style={{ color: "#777" }}>{ item.cpf }</P>
-                        </View>
+                           <View style={{ backgroundColor: "#9995", height: 1, marginTop: 16, marginBottom: 16, }}/>
+                           
+                           <View style={{flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
+                              <H3 style={{ color: "#555" }}>CPF </H3>
+                              <P style={{ color: "#777" }}>{ Customer.cpf }</P>
+                           </View>
 
-                        <View style={{ backgroundColor: "#9995", height: 1, marginTop: 16, marginBottom: 16, }}/>
-                        
-                        <View style={{flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
-                           <H3 style={{ color: "#555" }}>Gênero </H3>
-                           <P style={{ color: "#777" }}>{ item.gender }</P>
+                           <View style={{ backgroundColor: "#9995", height: 1, marginTop: 16, marginBottom: 16, }}/>
+                           
+                           <View style={{flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
+                              <H3 style={{ color: "#555" }}>Gênero </H3>
+                              <P style={{ color: "#777" }}>{ Customer.gender }</P>
+                           </View>
                         </View>
-                     </View> }
-                  />
+                     </View>
+                  }
                </Card>
 
                <Card style={{ padding: 22, backgroundColor: "#fff", gap: 20, }}>
