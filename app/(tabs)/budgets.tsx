@@ -8,6 +8,7 @@ import {
    Button,
    KeyboardAvoidingView,
    ActivityIndicator,
+   ToastAndroid,
 } from "react-native";
 
 import {
@@ -367,7 +368,7 @@ export default function BudgetsView( { ...props } ) {
             SaveDataOnFbRDB( { 
                ref: `users/${ user.uid }/budgets/${ obj.id }`,
                data: obj,
-               okMsg: "Enviado pra nuvem!",
+               okMsg: "Documento salvo!",
                errMsg: "Deu ruim no envio mano!"
             } );
 
@@ -875,6 +876,7 @@ export default function BudgetsView( { ...props } ) {
                                  );
                                  RegisterNewBudget().then( () => {
                                     setModalVisibility( !ModalVisibility );
+                                    // ToastAndroid.show(  );
                                  } );
                                  // if( Service.services.length > 0 ) {
                                  //    RegisterNewBudget();

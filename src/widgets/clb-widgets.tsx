@@ -387,7 +387,7 @@ export function BudgetCardList( { ...props } ) {
          }}
       >
          <View style={{
-               // backgroundColor: "#afb",
+               backgroundColor: "#afb",
                height: "100%",
                flex: .45 - .18,
                paddingTop: 18,
@@ -513,7 +513,7 @@ export function BudgetCardList( { ...props } ) {
                         LoadBudget();
                         setFmenuState( !FmenuState );
                      } }>
-                        <P style={{  }}>get pdf</P>
+                        <P style={{  }}>ver o documento</P>
                      </Pressable>
                      <Pressable onPress={ () => alert( "oi" ) }>
                         <P style={{  }}>editar</P>

@@ -225,6 +225,7 @@ export default function CustomersView( { ...props } ) {
          ).then( r => {
             // reset inputs
             inputs.forEach( i => i( "" ) );
+            setGender( "Masculino" );
             // close modal
             setModalVisibility( false );
             // fetch local customers
@@ -235,8 +236,8 @@ export default function CustomersView( { ...props } ) {
          SaveDataOnFbRDB( { 
             ref: `users/${ userInfo.uid }/customers/${ props.object.id }`,
             data: props.object,
-            okMsg: "Enviado pra nuvem!",
-            errMsg: "Deu ruim no envio mano!"
+            okMsg: "Cliente cadastrado!",
+            errMsg: "Deu ruim no cadasdtro!"
          } );
          
       } else {
@@ -270,7 +271,7 @@ export default function CustomersView( { ...props } ) {
    const 
       [ Name, setName ] = useState( "" )
       ,
-      [ Gender, setGender ] = useState( "" )
+      [ Gender, setGender ] = useState( "Masculino" )
       ,
       [ Cellphone, setCellphone ] = useState( "" )
       ,

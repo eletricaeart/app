@@ -208,19 +208,20 @@ export function UsersCard( { ...props } ) {
    const s = StyleSheet.create( {
       card: {
          flexDirection: "row",
-         backgroundColor: "#fff",
+         backgroundColor: "#e5e5e5",
          borderRadius: 16,
          padding: 16,
          borderColor: "#fc0",
          borderWidth: 0,
-         elevation: 15,
+         elevation: 3,
+         shadowColor: "#7777",
          width: "95%",
          height: 93,
          margin: "auto",
       },
       picture: {
          aspectRatio: 1, 
-         backgroundColor: "#009ee6",
+         backgroundColor: "#009ee600",
          // backgroundColor: "#00559c",
          borderRadius: 1000,
          alignItems: "center",

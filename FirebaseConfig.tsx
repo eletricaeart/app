@@ -16,6 +16,7 @@ import { getFirestore } from "firebase/firestore";
 import { getDatabase, ref, child, get, set, update, remove, } from "firebase/database";
 import { Database } from "firebase/database";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ToastAndroid } from "react-native";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -72,9 +73,11 @@ export async function SaveDataOnFbRDB( { ...props } ) {
    await set( ref( FirebaseDB, props.ref ), 
       props.data
    ).then( () => {
-      alert( props.okMsg || "data has been sent to the cloud" );
+      // alert( props.okMsg || "data has been sent to the cloud" );
+      ToastAndroid.show( props.okMsg || "data has been sent to the cloud", ToastAndroid.SHORT );
    } ).catch( err => {
-      alert( props.errMsg || "deu ruim no envio pra nuvem" );
+      // alert( || "deu ruim no envio pra nuvem" );
+      ToastAndroid.show( props.errMsg  || "deu ruim no envio pra nuvem", ToastAndroid.SHORT );
    } );
 }
 
