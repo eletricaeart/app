@@ -175,7 +175,7 @@ export default function CustomerView( { ...props } ) {
                </Card>
 
                <Card style={{ padding: 22, backgroundColor: "#fff", gap: 20, }}>
-                  <H3 style={{ color: "#27f" }}>Contato</H3>
+                  <H3 style={{ color: "#27f" }}>Endereço</H3>
                   {
                      Customer &&
                      <View>
