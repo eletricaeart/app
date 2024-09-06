@@ -21,14 +21,31 @@ import customer from "./customer";
 
 /** == [ properties ]
  * == == == == == == == == == */
-
+interface customer_i {
+   name: string;
+   gender: string;
+   rg: string;
+   cpf: string;
+   email: string;
+   cellphone: string;
+   whatsapp: string;
+   phone: string;
+   phone2: string;
+   cep: string;
+   logradouro: string;
+   complemento: string;
+   district: string;
+   city: string;
+   uf: string;
+   notes: string;
+}
    
 
 /** == [ exports ]
  * == == == == == == == == == */
 export default function EditCustomerView() {
    const 
-      [ Customer, setCustomer ] = useState( { ...SetCustomer() } )
+      [ Customer, setCustomer ] = useState( {} )
       ,
       defaultPic = {
          fem: require( "@/src/images/Avatar/default_avatar_fem_720p.webp" ),
@@ -44,7 +61,7 @@ export default function EditCustomerView() {
       [ Email, setEmail ] = useState( "" ),
       [ Gender, setGender ] = useState( "" ),
       [ Logradouro, setLogradouro ] = useState( "" ),
-      [ Name, setName ] = useState( "" ),
+      [ Name, setName ] = useState( Customer.name ),
       [ Notes, setNotes ] = useState( "" ),
       [ Number, setNumber ] = useState( "" ),
       [ Phone, setPhone ] = useState( "" ),
@@ -79,26 +96,7 @@ export default function EditCustomerView() {
    }
    
    useEffect( () => {
-      SetCustomer().then( () => {
-
-      // setCellPhone( Customer.cellphone );
-      // setCep( Customer.cep );
-      // setComplemento( Customer.complemento );
-      // setCpf( Customer.cpf );
-      // setDistrict( Customer.district );
-      // setCity( Customer.city );
-      // setEmail( Customer.email );
-      // setGender( Customer.gender );
-      // setLogradouro( Customer.logradouro );
-      // setName( Customer.name );
-      // setNotes( Customer.Notes );
-      // setNumber( Customer.number );
-      // setPhone( Customer.phone );
-      // setPhone2( Customer.phone2 );
-      // setRG( Customer.rg );
-      // setUF( Customer.uf );
-      // setWhatsApp( Customer.whatsapp ); 
-      } );
+      SetCustomer();
       // setCellPhone( Customer.cellphone );
       // setCep( Customer.cep );
       // setComplemento( Customer.complemento );

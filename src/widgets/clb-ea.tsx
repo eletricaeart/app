@@ -213,7 +213,7 @@ export function UsersCard( { ...props } ) {
          flexDirection: "row",
          backgroundColor: "#e5e5e5",
          borderRadius: 16,
-         padding: 16,
+         // padding: 16,
          borderColor: "#fc0",
          borderWidth: 0,
          elevation: 3,
@@ -221,6 +221,7 @@ export function UsersCard( { ...props } ) {
          width: "95%",
          height: 93,
          margin: "auto",
+         overflow: "hidden",
       },
       picture: {
          aspectRatio: 1, 
@@ -230,6 +231,7 @@ export function UsersCard( { ...props } ) {
          alignItems: "center",
          justifyContent: "center",
          height: "100%",
+         padding: 16,
       },
       img: {
          width: "100%", height: "100%",
@@ -239,31 +241,29 @@ export function UsersCard( { ...props } ) {
          justifyContent: "center",
          flex: 1,
          width: 70,
-         paddingLeft: 16,
-         // backgroundColor: "#4565",
+         // paddingLeft: 16,
+         // backgroundColor: "#fc7",
       },
       sideBtn: {
          width: "auto",
-         // paddingRight: 8,
+         padding: 16,
          alignItems: "center",
          justifyContent: "center",
-         // backgroundColor: "#456",
+         // backgroundColor: "#fc7",
       },
    } )
 
    return( <>
       <View style={[ s.card, props.style ]}>
 
-         <View style={[ s.picture ]}>
-            <Pressable style={[ s.picture ]} onPress={ () => {
-               alert( "foto" );
-            } }>
-               <Image 
-                  source={ props.data.profilepic || defaultPic }
-                  style={[ s.img ]} resizeMode="contain"
-               />
-            </Pressable>
-         </View>
+         <Pressable style={[ s.picture ]} onPress={ () => {
+            alert( "foto" );
+         } }>
+            <Image 
+               source={ props.data.profilepic || defaultPic }
+               style={[ s.img ]} resizeMode="contain"
+            />
+         </Pressable>
 
          <Pressable style={ s.customerInfo } onPress={ () => {
             async function LoadCustomerView() {
@@ -289,8 +289,7 @@ export function UsersCard( { ...props } ) {
             <T style={{ color:"#777" }}>{ tel }</T>
          </Pressable>
 
-         <View style={ s.sideBtn }>
-            <Pressable onPress={ () => {
+         <Pressable style={[ s.sideBtn ]} onPress={ () => {
                // ToastAndroid.show(
                //    props.name,
                //    ToastAndroid.SHORT,
@@ -298,8 +297,8 @@ export function UsersCard( { ...props } ) {
                setMenuSTate( !MenuState );
             } }>
                <Icon i="mc" name="dots-vertical" color="#777"/>
-            </Pressable>
-         </View>
+            
+         </Pressable>
 
          <Menu style={{ display: MenuState ? "flex" : "none", backgroundColor: "#0075BD" , zIndex: 999, position: "absolute" }}>
             <Pressable onPress={ () => {
