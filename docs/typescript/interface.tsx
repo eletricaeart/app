@@ -10,4 +10,7 @@ interface Iuser {
 
 const 
    [ User, setUser ] = useState<Iuser>( { displayName: "", uid: "" } )
+   ,
+   [ Customers, setCustomers ] = useState<any[]>( [] )
 ;
+
