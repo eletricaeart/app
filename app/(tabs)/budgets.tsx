@@ -58,7 +58,7 @@ import { GetTotal } from "@/src/scripts/receipts";
 import MaskInput, { formatWithMask, Masks } from "react-native-mask-input";
 import useBudgetsFB from "@/src/hooks/useBudgetsFB";
 import { css } from "styled-components";
-import { Fmenu } from "@/src/widgets/ui";
+import { Menu } from "@/src/widgets/ui";
 
 
 

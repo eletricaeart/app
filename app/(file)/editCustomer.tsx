@@ -2,7 +2,7 @@
 
 /** == [ @imports ] 
  * == == == == == == == == == */
-import { AppbarStick, BackButton, Card, H1, H2, H3, P, } from "@/src/widgets/ui";
+import { AppbarStick, BackButton, Card, H1, H2, H3, InputText, P, } from "@/src/widgets/ui";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Stack } from "expo-router";
 import React, { useState, useEffect } from "react";
@@ -13,8 +13,10 @@ import {
    ScrollView,
    Image,
    ImageBackground,
-   FlatList, 
+   FlatList,
+   TextInput, 
 } from "react-native";
+import customer from "./customer";
 
 
 /** == [ properties ]
@@ -24,15 +26,32 @@ import {
 
 /** == [ exports ]
  * == == == == == == == == == */
-export default function CustomerView( { ...props } ) {
+export default function EditCustomerView() {
    const 
-      [ Customer, setCustomer ] = useState( {} )
+      [ Customer, setCustomer ] = useState( { ...SetCustomer() } )
       ,
       defaultPic = {
          fem: require( "@/src/images/Avatar/default_avatar_fem_720p.webp" ),
          masc: require( "@/src/images/Avatar/default_avatar_masc_720p.webp" )
       }
-      
+      ,
+      [ CellPhone, setCellPhone ] = useState( Customer.name ),
+      [ Cep, setCep ] = useState( "" ),
+      [ Complemento, setComplemento ] = useState( "" ),
+      [ Cpf, setCpf ] = useState( "" ),
+      [ City, setCity ] = useState( "" ),
+      [ District, setDistrict ] = useState( "" ),
+      [ Email, setEmail ] = useState( "" ),
+      [ Gender, setGender ] = useState( "" ),
+      [ Logradouro, setLogradouro ] = useState( "" ),
+      [ Name, setName ] = useState( "" ),
+      [ Notes, setNotes ] = useState( "" ),
+      [ Number, setNumber ] = useState( "" ),
+      [ Phone, setPhone ] = useState( "" ),
+      [ Phone2, setPhone2 ] = useState( "" ),
+      [ RG, setRG ] = useState( "" ),
+      [ UF, setUF ] = useState( "" ),
+      [ WhatsApp, setWhatsApp ] = useState( "" )
    ;
 
    async function GetCustomer() {
@@ -50,16 +69,53 @@ export default function CustomerView( { ...props } ) {
 
    async function SetCustomer() {
       try {
-         await GetCustomer().then(
+         const customer = await GetCustomer().then(
             returned => setCustomer( returned )
          );
+         return customer;
       } catch( err: any ) {
          console.error( "SetCustomer() err: \n\n\n", err );
       }
    }
    
    useEffect( () => {
-      SetCustomer();
+      SetCustomer().then( () => {
+
+      // setCellPhone( Customer.cellphone );
+      // setCep( Customer.cep );
+      // setComplemento( Customer.complemento );
+      // setCpf( Customer.cpf );
+      // setDistrict( Customer.district );
+      // setCity( Customer.city );
+      // setEmail( Customer.email );
+      // setGender( Customer.gender );
+      // setLogradouro( Customer.logradouro );
+      // setName( Customer.name );
+      // setNotes( Customer.Notes );
+      // setNumber( Customer.number );
+      // setPhone( Customer.phone );
+      // setPhone2( Customer.phone2 );
+      // setRG( Customer.rg );
+      // setUF( Customer.uf );
+      // setWhatsApp( Customer.whatsapp ); 
+      } );
+      // setCellPhone( Customer.cellphone );
+      // setCep( Customer.cep );
+      // setComplemento( Customer.complemento );
+      // setCpf( Customer.cpf );
+      // setDistrict( Customer.district );
+      // setCity( Customer.city );
+      // setEmail( Customer.email );
+      // setGender( Customer.gender );
+      // setLogradouro( Customer.logradouro );
+      // setName( Customer.name );
+      // setNotes( Customer.Notes );
+      // setNumber( Customer.number );
+      // setPhone( Customer.phone );
+      // setPhone2( Customer.phone2 );
+      // setRG( Customer.rg );
+      // setUF( Customer.uf );
+      // setWhatsApp( Customer.whatsapp ); 
    }, [] );
 
 
@@ -107,7 +163,11 @@ export default function CustomerView( { ...props } ) {
                }}
             >
                <View style={{ gap: 16 }}>
-                  <H2 style={{ color: "#555" }}>{ Customer.name }</H2>
+                  <H2 style={{ color: "#555" }}>{ Name }
+                     <TextInput 
+                        onChangeText={ text => setName( text ) }
+                     />
+                  </H2>
                
                   <P style={{ color: "#777" }}>Rua Henrique Dias, 125 - Aviação Praia Grande - SP, 11702-600</P>
                </View>
@@ -119,22 +179,41 @@ export default function CustomerView( { ...props } ) {
                      <View>
                         <View key={ Customer.cpf }>
                            <View style={{flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
+                              <H3 style={{ color: "#555" }}>Name </H3>
+                              <InputText style={ s.InputText }
+                                 value={ Name } 
+                                 onChangeText={ text => setName( text ) }
+                              />
+                           </View>
+
+                           <View style={{ backgroundColor: "#9995", height: 1, marginTop: 16, marginBottom: 16, }}/>
+                           
+                           <View style={{flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
                               <H3 style={{ color: "#555" }}>RG </H3>
-                              <P style={{ color: "#777" }}>{ Customer.rg }</P>
+                              <InputText style={ s.InputText }
+                                 value={ RG } 
+                                 onChangeText={ text => setRG( text ) }
+                              />
                            </View>
 
                            <View style={{ backgroundColor: "#9995", height: 1, marginTop: 16, marginBottom: 16, }}/>
                            
                            <View style={{flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
                               <H3 style={{ color: "#555" }}>CPF </H3>
-                              <P style={{ color: "#777" }}>{ Customer.cpf }</P>
+                              <InputText style={ s.InputText }
+                                 value={ Cpf } 
+                                 onChangeText={ text => setCpf( text ) }
+                              />
                            </View>
 
                            <View style={{ backgroundColor: "#9995", height: 1, marginTop: 16, marginBottom: 16, }}/>
                            
                            <View style={{flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
                               <H3 style={{ color: "#555" }}>Gênero </H3>
-                              <P style={{ color: "#777" }}>{ Customer.gender }</P>
+                              <InputText style={ s.InputText }
+                                 value={ Gender } 
+                                 onChangeText={ text => setGender( text ) }
+                              />
                            </View>
                         </View>
                      </View>
@@ -149,35 +228,50 @@ export default function CustomerView( { ...props } ) {
                         <View key={ Customer.cpf }>
                            <View style={{flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
                               <H3 style={{ color: "#555" }}>Celular </H3>
-                              <P style={{ color: "#777" }}>{ Customer.cellphone }</P>
+                              <InputText style={ s.InputText }
+                                 value={ CellPhone } 
+                                 onChangeText={ text => setCellPhone( text ) }
+                              />
                            </View>
 
                            <View style={{ backgroundColor: "#9995", height: 1, marginTop: 16, marginBottom: 16, }}/>
                            
                            <View style={{flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
                               <H3 style={{ color: "#555" }}>WhatsApp </H3>
-                              <P style={{ color: "#777" }}>{ Customer.whatsapp }</P>
+                              <InputText style={ s.InputText }
+                                 value={ WhatsApp } 
+                                 onChangeText={ text => setWhatsApp( text ) }
+                              />
                            </View>
 
                            <View style={{ backgroundColor: "#9995", height: 1, marginTop: 16, marginBottom: 16, }}/>
                            
                            <View style={{flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
                               <H3 style={{ color: "#555" }}>Telefone </H3>
-                              <P style={{ color: "#777" }}>{ Customer.phone }</P>
+                              <InputText style={ s.InputText }
+                                 value={ Phone } 
+                                 onChangeText={ text => setPhone( text ) }
+                              />
                            </View>
 
                            <View style={{ backgroundColor: "#9995", height: 1, marginTop: 16, marginBottom: 16, }}/>
                            
                            <View style={{flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
                               <H3 style={{ color: "#555" }}>Telefone secundário </H3>
-                              <P style={{ color: "#777" }}>{ Customer.phone2 }</P>
+                              <InputText style={ s.InputText }
+                                 value={ Phone2 } 
+                                 onChangeText={ text => setPhone2( text ) }
+                              />
                            </View>
 
                            <View style={{ backgroundColor: "#9995", height: 1, marginTop: 16, marginBottom: 16, }}/>
                            
                            <View style={{flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
                               <H3 style={{ color: "#555" }}>Email </H3>
-                              <P style={{ color: "#777" }}>{ Customer.email }</P>
+                              <InputText style={ s.InputText }
+                                 value={ Email } 
+                                 onChangeText={ text => setEmail( text ) }
+                              />
                            </View>
                         </View>
                      </View>
@@ -192,49 +286,70 @@ export default function CustomerView( { ...props } ) {
                         <View key={ Customer.cep }>
                            <View style={{flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
                               <H3 style={{ color: "#555" }}>CEP </H3>
-                              <P style={{ color: "#777" }}>{ Customer.cep }</P>
+                              <InputText style={ s.InputText }
+                                 value={ Cep } 
+                                 onChangeText={ text => setCep( text ) }
+                              />
                            </View>
 
                            <View style={{ backgroundColor: "#9995", height: 1, marginTop: 16, marginBottom: 16, }}/>
                            
                            <View style={{flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
                               <H3 style={{ color: "#555" }}>Rua </H3>
-                              <P style={{ color: "#777" }}>{ Customer.logradouro }</P>
+                              <InputText style={ s.InputText }
+                                 value={ Logradouro } 
+                                 onChangeText={ text => setLogradouro( text ) }
+                              />
                            </View>
 
                            <View style={{ backgroundColor: "#9995", height: 1, marginTop: 16, marginBottom: 16, }}/>
                            
                            <View style={{flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
                               <H3 style={{ color: "#555" }}>Número </H3>
-                              <P style={{ color: "#777" }}>{ Customer.number }</P>
+                              <InputText style={ s.InputText }
+                                 value={ Number } 
+                                 onChangeText={ text => setNumber( text ) }
+                              />
                            </View>
 
                            <View style={{ backgroundColor: "#9995", height: 1, marginTop: 16, marginBottom: 16, }}/>
                            
                            <View style={{flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
                               <H3 style={{ color: "#555" }}>Complemento </H3>
-                              <P style={{ color: "#777" }}>{ Customer.complemento }</P>
+                              <InputText style={ s.InputText }
+                                 value={ Complemento }
+                                 onChangeText={ text => setComplemento( text ) } 
+                              />
                            </View>
 
                            <View style={{ backgroundColor: "#9995", height: 1, marginTop: 16, marginBottom: 16, }}/>
                            
                            <View style={{flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
                               <H3 style={{ color: "#555" }}>Bairro </H3>
-                              <P style={{ color: "#777" }}>{ Customer.district }</P>
+                              <InputText style={ s.InputText }
+                                 value={ District } 
+                                 onChangeText={ text => setDistrict( text ) }
+                              />
                            </View>
 
                            <View style={{ backgroundColor: "#9995", height: 1, marginTop: 16, marginBottom: 16, }}/>
                            
                            <View style={{flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
                               <H3 style={{ color: "#555" }}>Cidade </H3>
-                              <P style={{ color: "#777" }}>{ Customer.city }</P>
+                              <InputText style={ s.InputText }
+                                 value={ City } 
+                                 onChangeText={ text => setCity( text ) }
+                              />
                            </View>
 
                            <View style={{ backgroundColor: "#9995", height: 1, marginTop: 16, marginBottom: 16, }}/>
                            
                            <View style={{flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
                               <H3 style={{ color: "#555" }}>Estado </H3>
-                              <P style={{ color: "#777" }}>{ Customer.uf }</P>
+                              <InputText style={ s.InputText }
+                                 value={ UF } 
+                                 onChangeText={ text => setUF( text ) }
+                              />
                            </View>
                         </View>
                      </View>
@@ -249,7 +364,10 @@ export default function CustomerView( { ...props } ) {
                      Customer &&
                      <View>
                         <View key={ Customer.cep }>
-                           { Customer && Customer.notes }
+                           <InputText style={ s.InputText }
+                              value={ Notes } 
+                              onChangeText={ text => setNotes( text ) }
+                           />
                         </View>
                      </View>
                   }
@@ -297,5 +415,17 @@ const
          alignItems: "center",
          justifyContent: "center",
       },
+      InputText: { 
+         color: "#777", 
+         textAlign: "right",
+         borderColor: "#fff0",
+         borderWidth: 0,
+         // backgroundColor: "#27f",
+         // width: "100%",
+         flex: 1,
+         // height: "100%"
+      }
+      ,
+
    } )
 ;

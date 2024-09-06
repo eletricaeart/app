@@ -1,6 +1,6 @@
 
 
-import React from "react";
+import React, { useState } from "react";
 
 import {
    StyleSheet,
@@ -11,6 +11,7 @@ import {
    Button,
    Dimensions,
    Pressable,
+   ToastAndroid,
 } from "react-native";
 
 import {
@@ -22,7 +23,7 @@ import * as Colores from "@/src/widgets/clb-colors";
 
 import { Icon } from "./clb-icons";
 import { Link, router, } from "expo-router";
-import { H4, T } from "./ui";
+import { H4, Menu, P, T } from "./ui";
 import { color } from "native-base/lib/typescript/theme/styled-system";
 import CustomerView from "@/app/(file)/customer";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -194,6 +195,8 @@ export function EACard() {
  */
 export function UsersCard( { ...props } ) {
    const 
+      [ MenuState, setMenuSTate ] = useState<boolean>( false )
+      ,
       child = props.children 
       ,
       defaultPic = props.data.gender == "Masculino" ?
@@ -288,12 +291,42 @@ export function UsersCard( { ...props } ) {
 
          <View style={ s.sideBtn }>
             <Pressable onPress={ () => {
-               alert( props.name || "menu" );
+               // ToastAndroid.show(
+               //    props.name,
+               //    ToastAndroid.SHORT,
+               // );
+               setMenuSTate( !MenuState );
             } }>
                <Icon i="mc" name="dots-vertical" color="#777"/>
             </Pressable>
          </View>
 
+         <Menu style={{ display: MenuState ? "flex" : "none", backgroundColor: "#0075BD" , zIndex: 999, position: "absolute" }}>
+            <Pressable onPress={ () => {
+               setMenuSTate( !MenuState );
+               async function LoadCustomerView() {
+                  async function handle() {
+                     try {
+                        const json = JSON.stringify( props.data );
+                        await AsyncStorage.setItem( "customer", json );
+                     } catch( err: any ) {
+                        console.error( "LoadCustomerView() err: \n\n\n", err );
+                     }
+                  }
+                  handle().then( () => {
+                     router.push( "/editCustomer" );
+                  } );
+               }
+               LoadCustomerView();
+            } }>
+               <P style={{ color: "#eee" }}>Editar</P>
+            </Pressable>
+            <Pressable onPress={ () => {
+               setMenuSTate( !MenuState );
+            } }>
+               <P style={{ color: "#eee" }}>Deletar</P>
+            </Pressable>
+         </Menu>
       </View>
    </> );
 }

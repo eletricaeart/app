@@ -30,7 +30,7 @@ import Routes from "@/app/routes";
 import Homepage from "@/app/homepage";
 import { Str2Brl } from "../utils";
 import { H3, P } from "./clb-html";
-import { PP, Fmenu } from "./ui";
+import { PP, Menu } from "./ui";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 
@@ -367,11 +367,11 @@ export function Sheet( { ...props } ) {
  */
 export function BudgetCardList( { ...props } ) {
    const 
-      [ FmenuState, setFmenuState ] = useState<boolean>( false )
+      [ MenuState, setMenuState ] = useState<boolean>( false )
    ;
 
    useEffect( () => {
-      setFmenuState( false );
+      setMenuState( false );
    }, [] );
    return(
       <View
@@ -445,7 +445,7 @@ export function BudgetCardList( { ...props } ) {
                   alignItems: "center",
                   justifyContent: "center",
                }}
-               onPress={ () => setFmenuState( !FmenuState ) }
+               onPress={ () => setMenuState( !MenuState ) }
             >
                { 
                   props.budget.isPaid ? ( 
@@ -487,8 +487,8 @@ export function BudgetCardList( { ...props } ) {
                }
             </Pressable>
          </View>
-               { FmenuState &&
-                  <Fmenu style={{}}>
+               { MenuState &&
+                  <Menu style={{}}>
                      <Pressable onPress={ () => {
                         const 
                            budgetHook = {
@@ -511,7 +511,7 @@ export function BudgetCardList( { ...props } ) {
                            handle().then( () => router.push( "../getBudgetPdf" ) );
                         }
                         LoadBudget();
-                        setFmenuState( !FmenuState );
+                        setMenuState( !MenuState );
                      } }>
                         <P style={{  }}>ver o documento</P>
                      </Pressable>
@@ -521,7 +521,7 @@ export function BudgetCardList( { ...props } ) {
                      <Pressable onPress={ () => alert( "oi" ) }>
                         <P style={{  }}>deletar</P>
                      </Pressable>
-                  </Fmenu>
+                  </Menu>
                }
 
       </View>

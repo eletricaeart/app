@@ -1,6 +1,8 @@
 
 
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
+import { useState } from "react";
 import { View, Pressable } from "react-native";
 import { Text, } from "react-native-animatable";
 import styled from "styled-components/native";
@@ -194,7 +196,7 @@ export const
       overflow: hidden;
    `
    ,
-   Fmenu = styled.View`
+   Menu = styled.View`
       /* background: #fff; */
       background: #e5e5e5;
       position: absolute;
@@ -250,6 +252,13 @@ export const
       border-width: 1px;
       padding: 8px 14px;
       color: #000;
+   `
+   ,
+   InputText = styled.TextInput`
+      margin: 0;
+      padding: 0;
+      font-size: 16px;
+      font-weight: 500;
    `
    ,
    Btn = styled.View`
@@ -332,4 +341,50 @@ export function BackButton( { ...props } ) {
          <Text animation="bounceInLeft" style={{ fontWeight: "bold", color: props.color || "#fff9", fontSize: 28, }}>&lt;</Text>
       </Pressable>
    );
+}
+
+
+export function FloatMenu( { ...props } ) {
+   const 
+      [ DisplayState, setDisplayState ] = useState<boolean>( false )
+      ,
+      onPress = ""
+   ;
+
+   return( <>
+      <Menu style={{}}>
+         {/* <Pressable onPress={ () => {
+            const 
+               budgetHook = {
+                  budgetId: props.budget.id,
+                  ownerId: props.budget.owner,
+               }
+            ;
+            async function LoadBudget() {
+               async function handle() {
+                  try {
+                     const 
+                        json = JSON.stringify( budgetHook )
+                     ;
+
+                     await AsyncStorage.setItem( "budgetHook", json );
+                  } catch( err: any ) {
+                     console.error( "LoadBudget() err: \n\n\n", err );
+                  }
+               }
+               handle().then( () => router.push( "../getBudgetPdf" ) );
+            }
+            LoadBudget();
+            setMenuState( !MenuState );
+         } }>
+            <P style={{  }}>ver o documento</P>
+         </Pressable>
+         <Pressable onPress={ () => alert( "oi" ) }>
+            <P style={{  }}>editar</P>
+         </Pressable>
+         <Pressable onPress={ () => alert( "oi" ) }>
+            <P style={{  }}>deletar</P>
+         </Pressable> */}
+      </Menu>
+   </> );
 }
