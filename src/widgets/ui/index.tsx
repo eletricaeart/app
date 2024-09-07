@@ -315,7 +315,7 @@ export function AppbarStick( { ...props } ) {
    return(
       <View
          style={{
-            backgroundColor: "#21232900",
+            backgroundColor: props.bg || "#21232900",
             width: "100%", height: 60,
             position: "absolute", top: 0, left: 0,
             zIndex: 999,
@@ -332,8 +332,10 @@ export function BackButton( { ...props } ) {
          style={{
             backgroundColor: props.bg || "#fff1",
             width: 50, height: 50,
+            margin: 5,
             borderRadius: 16,
-            // position: "absolute", zIndex: 6,
+            position: "absolute", zIndex: 6,
+            top: 0, left: 0,
             alignItems: "center", justifyContent: "center",
          }}
          onPress={ () => router.back() }

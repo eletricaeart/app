@@ -16,6 +16,7 @@ import {
    Image,
    ImageBackground,
    ActivityIndicator,
+   Pressable,
 } from "react-native";
 
 import { Appbar, } from "react-native-paper";
@@ -29,15 +30,18 @@ import { Tiles, Tile, Header, T1, VSplit, HeaderBanner, T2, T, } from "@/src/wid
 import { GetObjData, } from "@/src/widgets/clb-dbs";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getAuth } from "firebase/auth";
+import { router } from "expo-router";
 
 
 const 
    items = [
-      { id: 1, name: "Google", src: "https://google.com" }
+      { id: 1, name: "Google", src: "/drywall" }
       ,
-      { id: 2, name: "Facebook", src: "https://facebook.com" }
+      { id: 2, name: "Facebook", src: "/drywall" }
       ,
-      { id: 3, name: "YouTube", src: "https://youtube.com" }
+      { id: 3, name: "YouTube", src: "/drywall" }
+      ,
+      { id: 4, name: "Calculadoras", src: "/drywall" }
    ]
 ;
 
@@ -114,11 +118,17 @@ export default function Home( { ...props } ) {
          <Tiles>
             {
                items.map( item => {
-                  return( <Tile key={ item.id }>
-                     <Text style={{ fontSize: 22, color: "#333", fontWeight: 800, }}>{ item.name }</Text>
-                     <Text style={{ fontSize: 18, color: "#fc0fc0", }}>{ item.id }</Text>
-                     <Text style={{ fontSize: 14, color: "#777", }}>{ item.src }</Text>
-                  </Tile> );
+                  return( <>
+                     <Tile key={ item.id } >
+                        <Pressable onPress={ () => router.push( item.src ) }
+                           style={{ flex: 1, }}
+                        >
+                           <Text style={{ fontSize: 22, color: "#333", fontWeight: 800, }}>{ item.name }</Text>
+                           <Text style={{ fontSize: 18, color: "#fc0fc0", }}>{ item.id }</Text>
+                           <Text style={{ fontSize: 14, color: "#777", }}>{ item.src }</Text>
+                        </Pressable>
+                     </Tile>
+                  </> );
                } )
             }
          </Tiles>
