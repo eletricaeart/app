@@ -1,0 +1,796 @@
+
+
+<!DOCTYPE html>
+<html lang="pt-br">
+   <head>
+      <title></title>
+      
+      <link rel="icon" href="src/pix/logo.svg" type="svg+xml">
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+      <!--- == [ stylesheets ]
+      == == == == == == == == == --->
+      <link rel="stylesheet" href="./src/assets/css/clb.css">
+      <!--- == [ scripts ]
+      == == == == == == == == == --->
+      <script src="./src/assets/Scripts/CLB.js" defer></script>
+      <script src="./src/assets/Scripts/Appbar.js" defer></script>
+      <style>
+         tr > *:nth-child( 1 ) {
+         }
+         tr > *:nth-child( 2 ) {
+         }
+         tr > *:nth-child( 3 ) {
+            width: 10%;
+         }
+         tr > *:nth-child( 4 ) {
+            width: 10%;
+         }
+      </style>
+   </head>
+   <body>
+      <appbar></appbar>
+      <home-page>
+         <calculadora section="">
+            <header>
+               <content>
+                  <t1>Calcular</t1>
+               </content>
+            </header>
+            <content>
+               <form action="" id="form">
+                  <!--label>
+                     <lt>Tipo de placa</lt>
+                     <select input id="input_tipoDaChapa">
+                        <option id="option_st">st</option>
+                        <option id="option_lev">lev</option>
+                     </select>
+                  </label-->
+                  <label>
+                     <lt>Comprimento</lt>
+                     <input type="number" id="input_length" step="0.01" placeholder="comprimento">
+                  </label>
+                  <label>
+                     <lt>Largura</lt>
+                     <input type="number" id="input_width" step="0.01" placeholder="largura">
+                  </label>
+                  <label>
+                     <lt>Rebaixo</lt>
+                     <input type="number" id="input_rebaixo" step="0.01" placeholder="Rebaixo">
+                  </label>
+                  <label>
+                     <lt>Área ( metro quadrado )</lt>
+                     <input type="number" id="input_area" step="0.01" placeholder="área">
+                  </label>
+                     
+                  <label>
+                     <lt>Perímetro ( metro linear )</lt>
+                     <input type="number" id="input_perímetro" step="0.01" placeholder="Perímetro">
+                  </label>
+                     
+                  <label>
+                     <input type="submit" id="submit_calcular" value="CALCULAR">
+                  </label>
+               </form>
+            </content>
+         </calculadora>
+         <lista-de-materiais section pd="5vw 0">
+            <header>
+               <content>
+                  <h2>Lista de materiais</h2>
+               </content>
+            </header>
+            
+            <orcamento section id="outputs" gap>
+               <style>
+                  table#table_orcamento {
+                     background: #18161c;
+                     width: 95dvw;
+                     margin: auto;
+                     border-radius: 13px;
+                     overflow: hidden;
+                  }
+                  
+                  th {
+                     background: #060;
+                  }
+                  
+                  tbody > *:nth-child( odd ) {
+                     background: #212329;
+                  }
+                  
+                  tbody > tr > td:nth-child( 1 ) {
+                     /* 59054 */
+                     text-align: right;
+                  }
+                  
+                  tbody > tr > td:nth-child( 2 ) {
+                     /* 59054 */
+                     text-align: left;
+                  }
+                  
+                  tfooter {
+                     display: flex;
+                  }
+                     
+                  tfooter > tr {
+                     display: flex;
+                     flex: 1;
+                  }
+                  
+                  #tfooterData {
+                     flex: 1;
+                     text-align: center;
+                     background: #060;
+                  }
+               </style>
+               <table id="table_orcamento">
+                  <thead>
+                     <tr>
+                        <th>QTD</th>
+                        <th>DESCRIÇÃO</th>
+                        <th>R$ Unt.</th>
+                        <th>R$ Total</th>
+                     </tr>
+                  </thead>
+                  <tbody id="tbody">
+                     <tr>
+                        <td id="output_chapas">0</td>
+                        <td>Chapas de gesso st</td>
+                        <td id="output_chapas_unit">0</td>
+                        <td  id="output_chapas_total">0</td>
+                     </tr>
+                     <tr>
+                        <td id="output_tabicas"></td>
+                        <td>Tabica branca 3m</td>
+                        <td>0</td>
+                        <td>0</td>
+                     </tr>
+                     <tr>
+                        <td id="output_perfis"></td>
+                        <td>Perfil F-530</td>
+                        <td>0</td>
+                        <td>0</td>
+                     </tr>
+                     <tr>
+                        <td id="output_tirantes"></td>
+                        <td>Tirantes ( Arame 10 )</td>
+                        <td>0</td>
+                        <td>0</td>
+                     </tr>
+                     <tr>
+                        <td id="output_reguladores"></td>
+                        <td>Regulador</td>
+                        <td>0</td>
+                        <td>0</td>
+                     </tr>
+                     <tr>
+                        <td id="output_unioes"></td>
+                        <td>união</td>
+                        <td>0</td>
+                        <td>0</td>
+                     </tr>
+                     <tr>
+                        <td id="output_gn25"></td>
+                        <td>Parafusos GN 25</td>
+                        <td>0</td>
+                        <td>0</td>
+                     </tr>
+                     <tr>
+                        <td id="output_fixadores"></td>
+                        <td>Parafusos Fixadores</td>
+                        <td>0</td>
+                        <td>0</td>
+                     </tr>
+                     <tr>
+                        <td id="output_metal"></td>
+                        <td>Parafusos metal metal</td>
+                        <td>0</td>
+                        <td>0</td>
+                     </tr>
+                     <tr>
+                        <td id="output_buchas"></td>
+                        <td>Parafuso 4,5 x 45 com bucha</td>
+                        <td>0</td>
+                        <td>0</td>
+                     </tr>
+                     <tr>
+                        <td id="output_fitas"></td>
+                        <td>Fita de papel</td>
+                        <td>0</td>
+                        <td>0</td>
+                     </tr>
+                     <tr>
+                        <td id="output_massas"></td>
+                        <td>Massa DryWall</td>
+                        <td id="output_massas_unit">0</td>
+                        <td id="output_massas_total">0</td>
+                     </tr>
+                     <tr>
+                     </tr>
+                  </tbody>
+                  <tfooter>
+                     <tr>
+                        <td colspan="4" id="tfooterData">
+                           Valor Total R$: 
+                        </td>
+                     </tr>
+                  </tfooter>
+               </table>
+            </orcamento>
+         </lista-de-materiais>
+      </home-page>
+      
+      <script>
+         "use strict";
+         
+         let 
+            curso = {
+               "00": {
+                  id: "lucasimfilm",
+                  link: "https://www.youtube.com/playlist?list=PLR4y5o7CVsiAow_ezbZVDlasiT7uvJvp5",
+               },
+               20: {
+                  id: "COMO CALCULAR MATERIAL DRYWALL DE PAREDE SEM USAR APLICATIVO AULA 20",
+                  link: "https://www.youtube.com/watch?v=g7eKiAlhH9A&list=PLR4y5o7CVsiAow_ezbZVDlasiT7uvJvp5&index=29",
+               },
+               24: {
+                  id: "FORRO DE GESSO DRYWALL CALCULAR ÁREA E PERÍMETRO AULA 24",
+                  link: "https://www.youtube.com/watch?v=McZStejZ-EA&list=PLR4y5o7CVsiAow_ezbZVDlasiT7uvJvp5&index=35",
+               },
+               30: {
+                  id: "COMO FAZER E CALCULAR MATERIAL FORRO GESSO DRYWALL AULA 30",
+                  link: "https://www.youtube.com/watch?v=ifev7GkNBrQ&list=PLR4y5o7CVsiAow_ezbZVDlasiT7uvJvp5&index=43",
+               },
+            }
+         ;
+         
+         
+         const 
+            itens = [
+               {
+                  id: 0,
+                  name: "Placa ST 1.2 x 1.8",
+                  value: 38.9,
+               },
+               {
+                  id: 1,
+                  name: "Perfil F530",
+                  value: 19.9,
+               },
+               {
+                  id: 2,
+                  name: "Tabica branca",
+                  value: 24.9,
+               },
+               {
+                  id: 3,
+                  name: "Regulador",
+                  value: 1.49,
+               },
+               {
+                  id: 4,
+                  name: "Arame 10",
+                  value: 19.9,
+               },
+               {
+                  id: 5,
+                  name: "União",
+                  value: 1.3,
+               },
+               {
+                  id: 6,
+                  name: "Parafuso GN25",
+                  value: 0.055,
+               },
+               {
+                  id: 7,
+                  name: "Massa DryWall",
+                  value: 37.4,
+               },
+               {
+                  id: 8,
+                  name: "Fixador",
+                  value: .181,
+               },
+               {
+                  id: 0,
+                  name: "",
+                  value: 0,
+               },
+            ]
+            ,
+            tiposDePlacas = {
+               st: ( 1.80 * 1.20 ),
+               ru: ( 1.80 * 1.20 ),
+               rf: ( 1.80 * 1.20 ),
+               lev: ( 2.40 * 1.20 ),
+            }
+            ,
+            values = {
+               chapa: 0,
+               Length: 0,
+               Width: 0,
+               rebaixo: 0,
+               area: 0,
+               perímetro: 0,
+               chapas: 0,
+               montantes: 0,
+               guias: 0,
+               tabicas: 0,
+               unioes: 0,
+               perfis: 0,
+               reguladores: 0,
+               fixadores: 0,
+               tirantes: 0,
+               gn25: 0,
+               buchas: 0,
+               metal: 0,
+               massas: 0,
+               fitas: 0,
+            }
+            ,
+            db = []
+            ,
+            area = ( width, height ) => {
+               return(
+                  width * height
+               );
+            }
+            ,
+            perímetro = ( width, height ) => {
+               return( 
+                  // ( width + height ) * 2 
+                  ( width * 2 ) + ( height * 2 )
+               );
+            }
+            ,
+            chapas = ( width, height ) => {
+               return(
+                  Math.ceil( ( ( width * height ) / ( 1.2 * 1.8 ) * 1.05 ) )
+               );
+            },
+            montantes = () => {
+               return( "" );
+            }
+            ,
+            guias = () => {
+               return( "" );
+            }
+            ,
+            tabicas = ( width, height ) => {
+               return(
+                  Math.ceil( perímetro( width, height ) / 3 )
+               );
+            }
+            ,
+            perfis = ( width ) => {
+               return(
+                  Math.floor( width / .6 )
+               );
+            }
+            ,
+            reguladores = ( width ) => {
+               return(
+                  perfis( width ) * 3
+               );
+               /* 
+                  =================================
+                  |   |   |   |   |   |   |   |   I
+                  |   @   |   @   |   @   |   @   | .6
+                  |   |   |   |   |   |   |   |   |
+                  |   |   |   |   |   |   |   |   |
+                  |   @   |   @   |   @   |   @   | 1
+                  |   |   |   |   |   |   |   |   |
+                  |   |   |   |   |   |   |   |   |
+                  |   @   |   @   |   @   |   @   | .6
+                  |   |   |   |   |   |   |   |   |
+                  =================================
+               */
+            }
+            ,
+            fixadores = ( width ) => {
+               return(
+                  reguladores( width )
+               );
+            }
+            ,
+            tirantes = ( width, rebaixo ) => {
+               return(
+                  /* return metros */
+                  Math.ceil( ( reguladores( width ) * rebaixo ) / 3 ) * 3
+               );
+            }
+            ,
+            parafusos = {
+               gn25: ( width, height ) => {
+                  return(
+                     chapas( width, height ) * 27
+                  );
+               },
+               buchas: ( width, height ) => {
+                  let tabs = ( tabicas( width, height ) / .5 );
+                  return( 
+                     // ( tabcas( width, height ) / .5 )
+                     tabs + ( tabs * 2 )
+                  );
+               },
+               metal: ( width ) => {
+                  return(
+                     perfis( width ) * 2
+                  );
+               },
+            }
+            ,
+            massas = ( width, height ) => {
+               return(
+                  Math.ceil( area( width, height ) / 10 ) * 5
+               );
+            }
+         ;
+         
+         
+         
+         /* == [ events ]
+         == == == == == == == == == */
+         addEventListener( "load", () => {
+            
+            function createData() {
+               values.Length = input_length.value;
+               values.Width = input_width.value;
+               values.rebaixo = input_rebaixo.value;
+               values.area = area( values.Length, values.Width );
+               values.perímetro = perímetro( values.Length, values.Width );
+               values.chapas = chapas( values.Length, values.Width );
+               values.tabicas = tabicas( values.Length, values.Width );
+               values.perfis = perfis( values.Length );
+               values.tirantes = tirantes( values.Length, values.rebaixo );
+               values.reguladores = reguladores( values.Length );
+               values.fixadores = fixadores( values.Length );
+               // values.unioes = unioes(  );
+               values.gn25 = parafusos.gn25( values.Length, values.Width );
+               values.buchas = parafusos.buchas( values.Length, values.Width );
+               values.metal = parafusos.metal( values.Length );
+               // values.fitas = fitas( values.Length );
+               values.massas = massas( values.Length, values.Width );
+            }
+            
+            function createDB() {
+               let data = {
+                     id: db.length + 1,
+                     area: {
+                        name: "Área ( metro quadrado )",
+                        qtd: values.area,
+                     },
+                     perímetro: {
+                        name: "Perímetro ( metro linear )",
+                        qtd: values.perímetro,
+                     },
+                     chapas: {
+                        name: "Chapas de gesso st.",
+                        qtd: values.chapas,
+                        unit: 38.90,
+                        total: fix( 38.90 * values.chapas ),
+                     },
+                     tabicas: {
+                        name: "Tabica branca 3m",
+                        qtd: values.tabicas,
+                        unit: 12.81,
+                        total: fix( 12.81 * values.tabicas ),
+                     },
+                     perfis: {
+                        name: "Perfil canaleta F-530",
+                        qtd: values.perfis,
+                        unit: 11.90,
+                        total: fix( 11.90 * values.perfis ),
+                     },
+                     tirantes: {
+                        name: "Tirantes ( Arame 10 )",
+                        qtd: values.tirantes,
+                        unit: 19.90,
+                        total: fix( 19.90 * values.tirantes ),
+                     },
+                     reguladores: {
+                        name: "Regulador",
+                        qtd: values.reguladores,
+                        unit: 1.49,
+                        total: fix( 1.49 * values.reguladores ),
+                     },
+                     fixadores: {
+                        name: "Parafusos Fixadores",
+                        qtd: values.fixadores,
+                        unit: 0.139,
+                        total: fix( 0.139 * values.fixadores ),
+                     },
+                     unioes: {
+                        name: "União",
+                        qtd: values.unioes,
+                        unit: 1.30,
+                        total: fix( 1.30 * values.unioes ),
+                     },
+                     gn25: {
+                        name: "Parafusos GN 25",
+                        qtd: values.gn25,
+                        unit: 0.055,
+                        total: fix( 0.055 * values.gn25 ),
+                     },
+                     buchas: {
+                        name: "Parafuso 4,5 x 45 com bucha",
+                        qtd: values.buchas,
+                        unit: 0.181,
+                        total: fix( 0.181 * values.buchas ),
+                     },
+                     fitas: {
+                        name: "Fita de papel",
+                        qtd: values.fitas,
+                        unit: 55.00,
+                        total: fix( 55.00 * values.fitas ),
+                     },
+                     massas: {
+                        name: "Massa DryWall",
+                        qtd: values.massas,
+                        unit: 37.40,
+                        total: fix( 37.40 * values.massas ),
+                     },
+                  };
+               db.push( data );
+            }
+            
+            function createTable() {
+               
+            }
+            
+            function outputData() {
+               input_area.value = values.area;
+               input_perímetro.value = values.perímetro;
+               output_chapas.innerText = values.chapas;
+               output_chapas_unit.innerText = (38.40).toLocaleString( "pt-br", { style: "currency", currency: "BRL" } );
+               output_chapas_total.innerText = ( 38.90 * values.chapas ).toFixed( 2 );
+               // toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+               
+               output_tabicas.innerText = values.tabicas;
+               output_perfis.innerText = values.perfis;
+               output_tirantes.innerText = values.tirantes;
+               output_reguladores.innerText = values.reguladores;
+               output_fixadores.innerText = values.fixadores;
+               //output_unioes.innerText = values.unioes;
+               output_gn25.innerText = values.gn25;
+               output_buchas.innerText = values.buchas;
+               output_fitas.innerText = values.fitas;
+               output_massas.innerText = values.massas;
+            }
+            
+            form.addEventListener( "submit", () => {
+               event.preventDefault();
+               
+               if( input_length.value != "" ) {
+                  createData();
+                  outputData();
+                  createDB();
+                  _( db );
+               } else {
+                  
+               }
+            } );
+            
+         } );
+         
+      </script>
+   </body>
+</html>
+
+<!--
+quebrar 600
+privada 400
+ralo 200
+-->
+<script>
+drywall {
+   Entrada {
+      W 4.605
+      L 4.625
+   
+     Caixote {
+         W 4.605
+         H 60
+         L 60
+     }
+   }
+
+   area c {
+      C 3.50
+      W 2.31
+   
+      F2 {
+         W 1.23
+         L .20
+      }
+   }
+}
+
+Gesso liso {
+   Entrada {
+      Parede a {
+         h 2.95
+         w 1.26 
+         
+         h 
+         w .38
+         
+         h 
+         w .58
+         
+         h 
+         w .38 
+         
+         h .6
+         w 4.625
+         
+         
+      }
+      parede b {
+         
+      }
+   }
+   area a {
+      parede a {
+         h 2.6 
+         w 3.05 
+      } 
+      parede b {
+         h 
+         w 4.65 
+      }
+      parede c {
+         h 
+         w 3.06 
+      }
+      parede d {
+         h 
+         w 1.09
+         
+         h 
+         w .15 
+         
+         l .15 
+         w 3.58
+         
+         h .25
+         w 3.58
+         
+         teto {
+            w 3.07
+            l 4.66
+         }
+      }
+   }
+   area b {
+      teto {
+         w 2.52 
+         l 3.58
+      }
+      
+      parede 0 {
+         h .25
+         w 2.61
+         
+         h 2.31 
+         w .65
+      }
+      parede a {
+         h .25
+         l 3.58
+      }
+      parede b {
+         h 2.6 
+         w 1.54 
+         
+         h .5 
+         w 1 
+      } 
+      parede c {
+         h 
+         w 3.58
+         
+         h 2.3
+         w .3
+      }
+   }
+   area c {
+      teto {
+         w 1
+         l 2.8 
+      }
+      parede 0 {
+         h .6 
+         w 1
+      }
+      parede a {
+         h 2.6
+         w 2.92
+      }
+      parede b {
+         h 
+         w 1.07
+      }
+      p c {
+         h 2.6 
+         w .67 
+         
+         h .6 
+         w .86
+         
+         h .6 
+         w 1.56 
+         
+         
+      }
+   }
+   area d( banheiro 1 ) {
+      teto {
+         w 1.27 
+         l 1.18 
+         
+         moldura {
+            .96 
+            1.27
+            .95 
+            1.29
+         }
+      }
+      teto 2 {
+         w 1.67 
+         l .96 
+         
+         moldura {
+            1.48
+            2.46 
+            1.47 
+            2.47 
+         }
+      }
+   }
+   area e( banheiro 2 ) {
+      w 1.38 
+      l 2.37 
+   }
+   fundos {
+      teto {
+         w .7 
+         l 3.56
+      }
+      p a {
+         h 2.49 
+         w .93 
+      }
+      p b {
+         h 
+         w 3.56
+      }
+      p c {
+         h 
+         w .73
+      }
+      p d {
+         h 
+         w .56
+         
+         h .25 
+         w 3
+      }
+   }
+   
+}
+
+nunes {
+   1.97 
+   3.68
+   
+   1.61
+   1.53 
+   
+   1.81
+}
+</script>
