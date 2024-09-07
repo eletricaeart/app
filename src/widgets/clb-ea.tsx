@@ -27,6 +27,7 @@ import { H4, Menu, P, T } from "./ui";
 import { color } from "native-base/lib/typescript/theme/styled-system";
 import CustomerView from "@/app/(file)/customer";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { LoadCustomerView } from "../services/customerServices";
 // import { Link, useLinkProps, } from "@react-navigation/native";
 
 
@@ -303,20 +304,7 @@ export function UsersCard( { ...props } ) {
          <Menu style={{ display: MenuState ? "flex" : "none", backgroundColor: "#0075BD" , zIndex: 999, position: "absolute" }}>
             <Pressable onPress={ () => {
                setMenuSTate( !MenuState );
-               async function LoadCustomerView() {
-                  async function handle() {
-                     try {
-                        const json = JSON.stringify( props.data );
-                        await AsyncStorage.setItem( "customer", json );
-                     } catch( err: any ) {
-                        console.error( "LoadCustomerView() err: \n\n\n", err );
-                     }
-                  }
-                  handle().then( () => {
-                     router.push( "/editCustomer" );
-                  } );
-               }
-               LoadCustomerView();
+               LoadCustomerView( props.data );
             } }>
                <P style={{ color: "#eee" }}>Editar</P>
             </Pressable>
