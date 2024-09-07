@@ -3,6 +3,7 @@
 /** == [ @imports ] 
  * == == == == == == == == == */
 import { AppbarStick, BackButton, Card, H1, H2, H3, P, } from "@/src/widgets/ui";
+import { AniButton } from "@/src/widgets/ui/animated";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Stack } from "expo-router";
 import React, { useState, useEffect } from "react";
@@ -75,6 +76,7 @@ export default function CustomerView( { ...props } ) {
          <ScrollView 
             style={{
                width: "100%",
+               backgroundColor: "#e5e5e5",
             }}
          >
 
@@ -104,6 +106,10 @@ export default function CustomerView( { ...props } ) {
                style={{
                   padding: 18,
                   gap: 36,
+                  backgroundColor: "#f2f2f2",
+                  borderBottomLeftRadius: 33,
+                  borderBottomRightRadius: 33,
+                  paddingBottom: 58,
                }}
             >
                <View style={{ gap: 16 }}>
@@ -281,7 +287,28 @@ export default function CustomerView( { ...props } ) {
                   }
                </Card>
             </View>
-
+            
+               
+            {/* footer */}
+            <View 
+               style={{ 
+                  // backgroundColor: "#e5e5e5", 
+                  width: "100%",
+                  // height: 150,
+                  marginTop: 24,
+                  marginBottom: 24,
+                  padding: 16,
+                  gap: 16,
+               }}
+            >
+               <AniButton text="Editar" 
+                  onPress={ () => {
+                     // 
+                  } }
+               />
+               {/* <AniButton text="Deletar" bg="#8bd" onPress={ () => {} }/> */}
+               <AniButton text="Deletar" bg="#b55" onPress={ () => {} }/>
+            </View>
          </ScrollView>
       </View>
    </> );

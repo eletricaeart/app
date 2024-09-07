@@ -15,38 +15,44 @@ import {
    ImageBackground,
    FlatList,
    TextInput,
-   ActivityIndicator, 
+   ActivityIndicator,
+   Pressable,
+   ToastAndroid, 
 } from "react-native";
 import customer from "./customer";
+import { AniButton } from "@/src/widgets/ui/animated";
 
 
 /** == [ properties ]
  * == == == == == == == == == */
 interface customer_i {
+   id: string;
    name: string;
    gender: string;
-   rg: string;
    cpf: string;
+   rg: string;
    email: string;
    cellphone: string;
    whatsapp: string;
    phone: string;
    phone2: string;
-   cep: string;
    logradouro: string;
+   number: string;
    complemento: string;
    district: string;
    city: string;
    uf: string;
-   notes: string;
+   cep: string;
+   note: string;
 }
-   
 
 /** == [ exports ]
  * == == == == == == == == == */
 export default function EditCustomerView() {
    const 
-      [ Customer, setCustomer ] = useState( {} )
+      [ Customer, setCustomer ] = useState<customer_i | null>( null )
+      ,
+      [ NewCustomer, setNewCustomer ] = useState<customer_i | null>( null )
       ,
       [ Loaded, setLoaded ] = useState( false )
       ,
@@ -65,7 +71,7 @@ export default function EditCustomerView() {
       [ Gender, setGender ] = useState( "" ),
       [ Logradouro, setLogradouro ] = useState( "" ),
       [ Name, setName ] = useState( "" ),
-      [ Notes, setNotes ] = useState( "" ),
+      [ Note, setNote ] = useState( "" ),
       [ Number, setNumber ] = useState( "" ),
       [ Phone, setPhone ] = useState( "" ),
       [ Phone2, setPhone2 ] = useState( "" ),
@@ -79,7 +85,10 @@ export default function EditCustomerView() {
          const 
             json = await AsyncStorage.getItem( "customer" )
             ,
+            // set #1
             customer = await JSON.parse( json )
+            // set #2
+            // customer: customer_i = await JSON.parse( json )
          ;
          return customer;
       } catch( err: any ) {
@@ -89,9 +98,12 @@ export default function EditCustomerView() {
 
    async function SetCustomer() {
       try {
-         const customer = await GetCustomer().then(
-            returned => setCustomer( returned )
-         );
+         // set #1
+         const customer: customer_i = await GetCustomer();
+         setCustomer( customer );
+         // set #2
+         // const customer = await GetCustomer();
+         // setCustomer( customer! );
          return customer;
       } catch( err: any ) {
          console.error( "SetCustomer() err: \n\n\n", err );
@@ -99,24 +111,24 @@ export default function EditCustomerView() {
    }
    
    useEffect( () => {
-      SetCustomer().then( () => {
-         setCellPhone( Customer.cellphone );
-         setCep( Customer.cep );
-         setComplemento( Customer.complemento );
-         setCpf( Customer.cpf );
-         setDistrict( Customer.district );
-         setCity( Customer.city );
-         setEmail( Customer.email );
-         setGender( Customer.gender );
-         setLogradouro( Customer.logradouro );
-         setName( Customer.name );
-         setNotes( Customer.Notes );
-         setNumber( Customer.number );
-         setPhone( Customer.phone );
-         setPhone2( Customer.phone2 );
-         setRG( Customer.rg );
-         setUF( Customer.uf );
-         setWhatsApp( Customer.whatsapp ); 
+      SetCustomer().then( customer => {
+         setCellPhone( customer.cellphone );
+         setCep( customer.cep );
+         setComplemento( customer.complemento );
+         setCpf( customer.cpf );
+         setDistrict( customer.district );
+         setCity( customer.city );
+         setEmail( customer.email );
+         setGender( customer.gender );
+         setLogradouro( customer.logradouro );
+         setName( customer.name );
+         setNote( customer.Note );
+         setNumber( customer.number );
+         setPhone( customer.phone );
+         setPhone2( customer.phone2 );
+         setRG( customer.rg );
+         setUF( customer.uf );
+         setWhatsApp( customer.whatsapp ); 
       } ).then( () => setLoaded( true ) );
    }, [] );
 
@@ -133,11 +145,12 @@ export default function EditCustomerView() {
          <ScrollView 
             style={{
                width: "100%",
+               backgroundColor: "#e5e5e5",
             }}
          >
 
          {
-            Loaded ? 
+            !Loaded ? 
                <ActivityIndicator color="#daa520"/> :
             // ) : ( 
 
@@ -169,6 +182,10 @@ export default function EditCustomerView() {
                   style={{
                      padding: 18,
                      gap: 36,
+                     backgroundColor: "#f2f2f2",
+                     borderBottomLeftRadius: 33,
+                     borderBottomRightRadius: 33,
+                     paddingBottom: 58,
                   }}
                >
                   <View style={{ gap: 16 }}>
@@ -178,7 +195,9 @@ export default function EditCustomerView() {
                         />
                      </H2>
                   
-                     <P style={{ color: "#777" }}>Rua Henrique Dias, 125 - Aviação Praia Grande - SP, 11702-600</P>
+                     <P style={{ color: "#777" }}>
+                        { Logradouro }, { Number } - { District } { City } - { UF }, { Cep }
+                     </P>
                   </View>
 
                   <Card style={{ padding: 22, backgroundColor: "#fff", gap: 20, }}>
@@ -325,7 +344,7 @@ export default function EditCustomerView() {
                               
                               <View style={{flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
                                  <H3 style={{ color: "#555" }}>Complemento </H3>
-                                 <InputText style={ s.InputText }
+                                 <InputText style={[ s.InputText,/*  { width: "100%" } */ ]}
                                     value={ Complemento }
                                     onChangeText={ text => setComplemento( text ) } 
                                  />
@@ -374,8 +393,8 @@ export default function EditCustomerView() {
                         <View>
                            <View key={ Customer.cep }>
                               <InputText style={ s.InputText }
-                                 value={ Notes } 
-                                 onChangeText={ text => setNotes( text ) }
+                                 value={ Note } 
+                                 onChangeText={ text => setNote( text ) }
                               />
                            </View>
                         </View>
@@ -408,12 +427,26 @@ export default function EditCustomerView() {
                      }
                   </Card>
                </View>
-
+               
+               {/* footer */}
+               <View 
+                  style={{ 
+                     // backgroundColor: "#e5e5e5", 
+                     width: "100%",
+                     // height: 150,
+                     marginTop: 24,
+                     marginBottom: 24,
+                     padding: 16,
+                     gap: 16,
+                  }}
+               >
+                  <AniButton text="Salvar" onPress={ () => {} }/>
+                  <AniButton text="Cancelar" bg="#8cb7d0" onPress={ () => {} }/>
+               </View>
             </> 
 
          //    )
          }
-
          </ScrollView>
       </View>
    </> );
@@ -435,7 +468,7 @@ const
          borderColor: "#fff0",
          borderWidth: 0,
          // backgroundColor: "#27f",
-         // width: "100%",
+         width: "100%",
          flex: 1,
          // height: "100%"
       }
