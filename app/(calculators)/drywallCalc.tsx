@@ -177,11 +177,22 @@ export default function DryWallCalculatorView( { ...props } ) {
                />
                <AniButton text="Calcular"
                   onPress={ () => {
-                     const value = Calculate( Width!.value, Height!.value );
+            const value = Calculate( Width!.value, Height!.value );
 
                      console.log( "calculate() value: ", value );
                   } }
                />
+            </View>
+
+            <View>
+               {
+                  Areas && Areas.map( item => <>
+                     <Label style={{ flexDirection: "row" }} key={ item.area }>
+                        <Input value={ item.width } style={{ width: "40%", backgroundColor: "#16181c", color: "#eee" }}/>
+                        <Input value={ item.height } style={{ width: "40%", backgroundColor: "#16181c", color: "#eee" }}/>
+                     </Label>
+                  </> )
+               }
             </View>
 
             <View style={{ paddingTop: 36, paddingBottom: 66, }}>
