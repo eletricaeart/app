@@ -129,9 +129,10 @@ export function Header( { ...props } ) {
    ;
 
    return( <>
-      <View style={ { backgroundColor: "#00338C", 
+      <View style={ { backgroundColor: props.bg || "#00338C", 
          paddingTop: 24, paddingBottom: 24, 
          paddingLeft: 16, paddingRight: 16,
+         marginBottom: props?.mb
       } }>
          <Text style={ { 
             fontSize: 18, color: "#fff",

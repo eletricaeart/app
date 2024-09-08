@@ -5,7 +5,7 @@
 import { CalculateDryWall, CalculateDryWallRoof } from "@/src/services/calculators";
 import { Icon } from "@/src/widgets/clb-icons";
 import { Header } from "@/src/widgets/clb-widgets";
-import { AppbarStick, BackButton, Duo, H2, H3, H4, H5, Input, Label, LabelText, P } from "@/src/widgets/ui";
+import { AppbarStick, BackButton, Duo, H2, H3, H4, H5, Input, Label, LabelText, P, T1 } from "@/src/widgets/ui";
 import { AniButton } from "@/src/widgets/ui/animated";
 import { Stack } from "expo-router";
 import React, { useState, useEffect } from "react";
@@ -14,7 +14,8 @@ import {
    View,
    Text,
    ScrollView,
-   Pressable, 
+   Pressable,
+   FlatList, 
 } from "react-native";
 import { parse } from "react-native-svg";
 
@@ -27,49 +28,134 @@ interface inputTextValue_i {
 }
 
 interface area_i {
+   id: string;
+
    width: number;
    height: number;
    area: number;
+   perimetro: number;
+
+   displayWidth: string;
+   displayHeight: string;
+   displayArea: string;
+   displayPerimetro: string;
 }
 
 /** == [ exports ]
  * == == == == == == == == == */
 export default function DryWallCalculatorView( { ...props } ) {
    const 
-      [ Areas, setAreas ] = useState<area_i []>( [] ),
-      [ Width, setWidth ] = useState<inputTextValue_i | undefined>( { text: "", value: 0 } ),
-      [ Height, setHeight ] = useState<inputTextValue_i | undefined>( { text: "", value: 0 } ),
-      [ Area, setArea ] = useState<inputTextValue_i | undefined>( { text: "", value: 0 } ),
-      [ Perimetro, setPerimetro ] = useState<inputTextValue_i | undefined>( { text: "", value: 0 } ),
-      [ PanelsNeeded, setPanelsNeeded ] = useState<string | undefined>(),
-      [ PanelsAreaNeeded, setPanelsAreaNeeded ] = useState<string | undefined>(),
-      [ Guias, setGuias ] = useState<inputTextValue_i | undefined>( { text: "", value: 0 } ),
-      [ Montantes, setMontantes ] = useState<inputTextValue_i | undefined>( { text: "", value: 0 } ),
-      [ GN25, setGN25 ] = useState<inputTextValue_i | undefined>( { text: "", value: 0 } ),
-      [ Lfix, setLfix ] = useState<inputTextValue_i | undefined>( { text: "", value: 0 } ),
-      [ MetalMetal, setMetalMetal ] = useState<inputTextValue_i | undefined>( { text: "", value: 0 } ),
-      [ Massa, setMassa ] = useState<inputTextValue_i | undefined>( { text: "", value: 0 } ),
-      [ FitaTelada, setFitaTelada ] = useState<inputTextValue_i | undefined>( { text: "", value: 0 } ),
-      [ BandaAcústica, setBandaAcústica ] = useState<inputTextValue_i | undefined>( { text: "", value: 0 } ),
-      [ LãDeVidro, setLãDeVidro ] = useState<inputTextValue_i | undefined>( { text: "", value: 0 } )
+      [ Areas, setAreas ] = useState<area_i []>( [] )
+      ,
+      [ Width, setWidth ] = useState<inputTextValue_i | undefined>( { 
+         text: "", value: 0 
+      } )
+      ,
+      [ Height, setHeight ] = useState<inputTextValue_i | undefined>( { 
+         text: "", value: 0 
+      } )
+      ,
+      [ Area, setArea ] = useState<inputTextValue_i | undefined>( { 
+         text: "", value: 0 
+      } )
+      ,
+      [ Perimetro, setPerimetro ] = useState<inputTextValue_i | undefined>( { 
+         text: "", value: 0 
+      } )
+      ,
+      [ PanelsNeeded, setPanelsNeeded ] = useState<string | undefined>()
+      ,
+      [ PanelsAreaNeeded, setPanelsAreaNeeded ] = useState<string | undefined>()
+      ,
+      [ Guias, setGuias ] = useState<inputTextValue_i | undefined>( { 
+         text: "", value: 0 
+      } )
+      ,
+      [ Montantes, setMontantes ] = useState<inputTextValue_i | undefined>( { 
+         text: "", value: 0 
+      } )
+      ,
+      [ GN25, setGN25 ] = useState<inputTextValue_i | undefined>( { 
+         text: "", value: 0 
+      } )
+      ,
+      [ Lfix, setLfix ] = useState<inputTextValue_i | undefined>( { 
+         text: "", value: 0 
+      } )
+      ,
+      [ MetalMetal, setMetalMetal ] = useState<inputTextValue_i | undefined>( { 
+         text: "", value: 0 
+      } )
+      ,
+      [ Massa, setMassa ] = useState<inputTextValue_i | undefined>( { 
+         text: "", value: 0 
+      } )
+      ,
+      [ FitaTelada, setFitaTelada ] = useState<inputTextValue_i | undefined>( { 
+         text: "", value: 0 
+      } )
+      ,
+      [ BandaAcústica, setBandaAcústica ] = useState<inputTextValue_i | undefined>( { 
+         text: "", value: 0 
+      } )
+      ,
+      [ LãDeVidro, setLãDeVidro ] = useState<inputTextValue_i | undefined>( { 
+         text: "", value: 0 
+      } )
    ;
 
    async function Calculate( Width: number, Height: number ) {
       try {
          const data = CalculateDryWall( Width, Height ).then( r => { 
-            setArea( { text: r?.wallArea.toString(), value: parseFloat( r?.wallArea ) } );
-            setPerimetro( { text: r?.wallPerimetro.toString(), value: parseFloat( r?.wallPerimetro ) } );
+            setArea( { 
+               text: r?.wallArea.toString(), 
+               value: parseFloat( r.wallArea ) 
+            } );
+            setPerimetro( { 
+               text: r?.wallPerimetro.toString(), 
+               value: parseFloat( r?.wallPerimetro ) 
+            } );
             setPanelsNeeded( r.panelsNeeded.toString() );
-            setPanelsAreaNeeded( { text: r?.panelsAreaNeeded.toString(), value: parseFloat( r?.panelsAreaNeeded ) } );
-            setGuias( { text: r?.guiasNeeded.toString(), value: parseFloat( r?.guiasNeeded ) } );
-            setMontantes( { text: r?.montantesNeeded.toString(), value: parseFloat( r?.montantesNeeded ) } );
-            setGN25( { text: r?.gn25Needed.toString(), value: parseFloat( r?.gn25Needed ) } );
-            setLfix( { text: r?.lfixNeeded.toString(), value: parseFloat( r?.lfixNeeded ) } );
-            setMetalMetal( { text: r?.screwMMNeeded.toString(), value: parseFloat( r?.screwMMNeeded ) } );
-            setMassa( { text: r?.massaNeeded.toString(), value: parseFloat( r?.massaNeeded ) } );
-            setFitaTelada( { text: r?.tapeNeeded.toString(), value: parseFloat( r?.tapeNeeded ) } );
-            setBandaAcústica( { text: r?.bandaAcústicaNeeded.toString(), value: parseFloat( r?.bandaAcústicaNeeded ) } );
-            setLãDeVidro( { text: r?.panelsAreaNeeded.toString(), value: parseFloat( r?.panelsAreaNeeded ) } );
+            setPanelsAreaNeeded( { 
+               text: r?.panelsAreaNeeded.toString(), 
+               value: parseFloat( r?.panelsAreaNeeded ) 
+            } );
+            setGuias( { 
+               text: r?.guiasNeeded.toString(), 
+               value: parseFloat( r?.guiasNeeded ) 
+            } );
+            setMontantes( { 
+               text: r?.montantesNeeded.toString(), 
+               value: parseFloat( r?.montantesNeeded ) 
+            } );
+            setGN25( { 
+               text: r?.gn25Needed.toString(), 
+               value: parseFloat( r?.gn25Needed ) 
+            } );
+            setLfix( { 
+               text: r?.lfixNeeded.toString(), 
+               value: parseFloat( r?.lfixNeeded ) 
+            } );
+            setMetalMetal( { 
+               text: r?.screwMMNeeded.toString(), 
+               value: parseFloat( r?.screwMMNeeded ) 
+            } );
+            setMassa( { 
+               text: r?.massaNeeded.toString(), 
+               value: parseFloat( r?.massaNeeded ) 
+            } );
+            setFitaTelada( { 
+               text: r?.tapeNeeded.toString(), 
+               value: parseFloat( r?.tapeNeeded ) 
+            } );
+            setBandaAcústica( { 
+               text: r?.bandaAcústicaNeeded.toString(), 
+               value: parseFloat( r?.bandaAcústicaNeeded ) 
+            } );
+            setLãDeVidro( { 
+               text: r?.panelsAreaNeeded.toString(), 
+               value: parseFloat( r?.panelsAreaNeeded ) 
+            } );
 
             console.log( "PanelsNeeded: ", parseFloat( r.panelsNeeded ) );
          } );
@@ -81,14 +167,22 @@ export default function DryWallCalculatorView( { ...props } ) {
    async function CreateAreaList() {
       try {
          const 
-            data: area_i = {
+            item: area_i = {
+               id: `${ Areas.length }`,
+
                width: Width!.value,
                height: Height!.value,
                area: Width!.value * Height!.value,
+               perimetro: ( Width!.value * 2 ) + ( Height!.value * 2 ),
+               
+               displayWidth: Width!.text,
+               displayHeight: Height!.text,
+               displayArea: ( Width!.value * Height!.value ).toString(),
+               displayPerimetro: ( ( Width!.value * 2 ) + ( Height!.value * 2 ) ).toString(),
             }
          ;
          
-         Areas.push( data );
+         Areas.push( item );
          setWidth( { text: "", value: 0 } );
          setHeight( { text: "", value: 0 } );
 
@@ -99,12 +193,17 @@ export default function DryWallCalculatorView( { ...props } ) {
    }
 
    useEffect( () => {
-      let area = 0;
+      let data = { area: 0, perimetro: 0 };
+
       Areas.forEach( item => {
-         area += item.area;
+         data.area += item.area;
+         data.perimetro += item.perimetro;
       } );
-      setArea( { text: area.toString(), value: area } );
-      console.log( "area:: ", area );
+
+      setArea( { text: data.area.toString(), value: data.area } );
+      setPerimetro( { text: data.perimetro.toString(), value: data.perimetro } );
+
+      console.log( "data.area:: ", data.area, "data.perimetro:: ", data.perimetro );
    }, [Areas.length] );
 
    return( <>
@@ -180,7 +279,8 @@ export default function DryWallCalculatorView( { ...props } ) {
                   onPress={ () => {
                      // const value = Calculate( Width!.value, Height!.value );
                      {
-                        Width?.text && Height?.text ? 
+                        // Width?.text && Height?.text ? 
+                        Width?.value && Height?.value ? 
                         CreateAreaList() : console.log( "" );
                      }
                      console.log( "calculate() value: " );
@@ -197,15 +297,64 @@ export default function DryWallCalculatorView( { ...props } ) {
 
             <View>
                {
-                  Areas && Areas.map( item => <>
-                     <Label style={{ flexDirection: "row", justifyContent: "center" }} key={ item.area }>
-                        <Input value={ item.width } style={{ width: "40%", backgroundColor: "#16181c", color: "#eee" }}/>
-                        <Input value={ item.height } style={{ width: "40%", backgroundColor: "#16181c", color: "#eee" }}/>
-                        <Pressable>
-                           <Icon name="trash" i="entypo" color="#f33"/>
-                        </Pressable>
-                     </Label>
-                  </> )
+                  Areas && 
+                  // Areas.map( item => <>
+                  //    <Label style={{ flexDirection: "row", justifyContent: "center", alignItems: "center", }} key={ `Label-${ Areas.length }` }>
+                  //       <Input value={ item.displayWidth } style={{ width: "40%", backgroundColor: "#16181c", color: "#eee" }} key={ `Item-width:${ Areas.length }` }/>
+                  //       <Input value={ item.displayHeight } style={{ width: "40%", backgroundColor: "#16181c", color: "#eee" }} key={ `Item-height:${ Areas.length }` }/>
+                  //       <Pressable
+                  //          onPress={ () => {
+                  //             const bkp = Areas;
+                  //             bkp.splice( parseInt( item.id ), 1 );
+                  //             setAreas( bkp );
+                  //             setWidth( { text: "", value: 0 } );
+                  //             // console.log( "Areas.length: ", Areas.length, "item.id: ", item.id );
+                  //          } }
+                  //       >
+                  //          <Icon name="trash" i="entypo" color="#f33"/>
+                  //       </Pressable>
+                  //    </Label>
+                  // </> )
+                  <FlatList 
+                     ListHeaderComponent={ <>
+                        <Header bg="#1b1d22" mb={ 18 }>
+                           <T1 style={{ color: "#e5e5e5", }}>Medidas das paredes</T1>
+                        </Header>
+                     </> }
+                     data={ Areas }
+                     renderItem={ ({item}) => <>
+                        {/* <View
+                           key={ item.id }
+                           name={ item.name }
+                           data={ item }
+                        /> */}
+                        <Label style={{ flexDirection: "row", justifyContent: "center", alignItems: "center", }} key={ `Label-${ Areas.length }` }>
+                           <Input value={ item.displayWidth } style={{ width: "40%", backgroundColor: "#16181c", color: "#eee" }} key={ `Item-width:${ Areas.length }` }/>
+                           <Input value={ item.displayHeight } style={{ width: "40%", backgroundColor: "#16181c", color: "#eee" }} key={ `Item-height:${ Areas.length }` }/>
+                           <Pressable
+                              onPress={ () => {
+                                 const bkp = Areas;
+                                 bkp.splice( parseInt( item.id ), 1 );
+                                 setAreas( bkp );
+                                 setWidth( { text: "", value: 0 } );
+                                 // console.log( "Areas.length: ", Areas.length, "item.id: ", item.id );
+                              } }
+                           >
+                              <Icon name="trash" i="entypo" color="#f33"/>
+                           </Pressable>
+                        </Label>
+                     </> }
+                     keyExtractor={ item => item.id } 
+                     ItemSeparatorComponent={ 
+                        () => <View style={{ height: 16, }}/>
+                     }
+                     style={{ 
+                        width: "100%", 
+                        // backgroundColor: "#27f",
+                        paddingBottom: 0,
+                     }} 
+                     contentContainerStyle={{ padding: 16, paddingBottom: 38, }}
+                  />
                }
             </View>
 

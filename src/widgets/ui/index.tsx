@@ -13,7 +13,7 @@ export const
    TT= styled.Text`
       margin: 0;
       padding: 0;
-      font-size: 32;
+      font-size: 32px;
       font-weight: bold;
    `
    ,
@@ -30,7 +30,7 @@ export const
    H1 = styled.Text`
       margin: 0;
       padding: 0;
-      font-size: 32;
+      font-size: 32px;
       font-weight: bold;
       color: #333;
    `
@@ -38,7 +38,7 @@ export const
    H2 = styled.Text`
       margin: 0;
       padding: 0;
-      font-size: 24;
+      font-size: 24px;
       font-weight: bold;
       color: #333;
    `
@@ -54,7 +54,7 @@ export const
    H4 = styled.Text`
       margin: 0;
       padding: 0;
-      font-size: 18;
+      font-size: 18px;
       font-weight: bold;
       color: #333;
    `
@@ -62,7 +62,7 @@ export const
    H5 = styled.Text`
       margin: 0;
       padding: 0;
-      font-size: 14;
+      font-size: 14px;
       font-weight: bold;
       color: #333;
    `
@@ -70,7 +70,7 @@ export const
    H6 = styled.Text`
       margin: 0;
       padding: 0;
-      font-size: 12;
+      font-size: 12px;
       font-weight: bold;
       color: #333;
    `
@@ -92,7 +92,7 @@ export const
    PP = styled.Text`
       margin: 0;
       padding: 0;
-      font-size: 12;
+      font-size: 12px;
       font-weight: bold;
       color: #333;
    `
@@ -143,11 +143,11 @@ export const
    ,
    BackSheet = styled.View`
       background-color: #959595;
-      border-top-right-radius: 24;
-      border-top-left-radius: 24;
+      border-top-right-radius: 24px;
+      border-top-left-radius: 24px;
       width: 90%;
-      height: 15;
-      margin-top: 10;
+      height: 15px;
+      margin-top: 10px;
       align-self: center;
    `
    ,
