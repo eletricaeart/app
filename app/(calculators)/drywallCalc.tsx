@@ -76,6 +76,26 @@ export default function DryWallCalculatorView( { ...props } ) {
       }
    }
 
+   async function CreateAreaList() {
+      try {
+         const 
+            data: area_i = {
+               width: Width!.value,
+               height: Height!.value,
+               area: Width!.value * Height!.value,
+            }
+         ;
+         
+         Areas.push( data );
+         setWidth( { text: "", value: 0 } );
+         setHeight( { text: "", value: 0 } );
+
+         console.log( Areas );
+      } catch( err: any ) {
+         console.error( "CreateAreaList() err: \n\n\n", err );
+      }
+   }
+
    return( <>
       <Stack.Screen options={{ headerShown: true, title: "Calculadora de DryWall", statusBarColor: "#16181c",
          header: ({}) => ( <>
@@ -145,11 +165,14 @@ export default function DryWallCalculatorView( { ...props } ) {
             </Duo>
 
             <View style={[ {  padding: 18, gap: 24, } ]}>
-               <AniButton text="Adicionar" bg="#339"
+               <AniButton text="Adicionar" bg={ Width?.text && Height?.text ? "#339" : "#555" }
                   onPress={ () => {
-                     const value = Calculate( Width!.value, Height!.value );
-
-                     console.log( "calculate() value: ", value );
+                     // const value = Calculate( Width!.value, Height!.value );
+                     {
+                        Width?.text && Height?.text ? 
+                        CreateAreaList() : console.log( "" );
+                     }
+                     console.log( "calculate() value: " );
                   } }
                />
                <AniButton text="Calcular"
