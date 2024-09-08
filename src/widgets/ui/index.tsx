@@ -138,7 +138,7 @@ export const
    ,
    Duo = styled.View`
       flex-direction: "row";
-      gap: 8;
+      gap: 8px;
    `
    ,
    BackSheet = styled.View`

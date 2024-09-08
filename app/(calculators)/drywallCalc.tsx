@@ -7,6 +7,7 @@ import { Icon } from "@/src/widgets/clb-icons";
 import { Header } from "@/src/widgets/clb-widgets";
 import { AppbarStick, BackButton, Duo, H2, H3, H4, H5, Input, Label, LabelText, P, T1 } from "@/src/widgets/ui";
 import { AniButton } from "@/src/widgets/ui/animated";
+import { transformFileSync } from "@babel/core";
 import { Stack } from "expo-router";
 import React, { useState, useEffect } from "react";
 import { 
@@ -17,28 +18,61 @@ import {
    Pressable,
    FlatList, 
 } from "react-native";
-import { parse } from "react-native-svg";
+import uuid from "react-native-uuid";
 
 
 /** == [ properties ]
  * == == == == == == == == == */
 interface inputTextValue_i {
-   text: string;
-   value: number;
+   text: string | undefined;
+   value: number | undefined;
 }
 
 interface area_i {
-   id: string;
+   id: string | number[];
 
+   width: number | undefined;
+   height: number | undefined;
+   area: number | undefined;
+   perimetro: number | undefined;
+
+   displayWidth: string | undefined;
+   displayHeight: string | undefined;
+   displayArea: string;
+   displayPerimetro: string;
+}
+
+interface materials_i {
    width: number;
    height: number;
    area: number;
    perimetro: number;
+   chapas: number;
+   guias: number;
+   montantes: number;
+   gn25: number;
+   lfix: number;
+   parafusoMM: number;
+   fitaTelada: number;
+   massa: number;
+   bandaAcústica: number;
+   lãDeVidro: number;
 
    displayWidth: string;
    displayHeight: string;
    displayArea: string;
    displayPerimetro: string;
+   displayChapas: string;
+   displayGuias: string;
+   displayMontantes: string;
+   displayGn25: string;
+   displayLfix: string;
+   displayParafusoMM: string;
+   displayFitaTelada: string;
+   displayMassa: string;
+   displayBandaAcústica: string;
+   displayLãDeVidro: string;
+   
 }
 
 /** == [ exports ]
@@ -47,59 +81,62 @@ export default function DryWallCalculatorView( { ...props } ) {
    const 
       [ Areas, setAreas ] = useState<area_i []>( [] )
       ,
-      [ Width, setWidth ] = useState<inputTextValue_i | undefined>( { 
+      [ MaterialsNeeded, setMaterialsNeeded ] = useState<materials_i[]>( [] )
+      ,
+      // [ Width, setWidth ] = useState<inputTextValue_i | undefined>( { 
+      [ Width, setWidth ] = useState<inputTextValue_i>( { 
          text: "", value: 0 
       } )
       ,
-      [ Height, setHeight ] = useState<inputTextValue_i | undefined>( { 
+      [ Height, setHeight ] = useState<inputTextValue_i>( { 
          text: "", value: 0 
       } )
       ,
-      [ Area, setArea ] = useState<inputTextValue_i | undefined>( { 
+      [ Area, setArea ] = useState<inputTextValue_i>( { 
          text: "", value: 0 
       } )
       ,
-      [ Perimetro, setPerimetro ] = useState<inputTextValue_i | undefined>( { 
+      [ Perimetro, setPerimetro ] = useState<inputTextValue_i>( { 
          text: "", value: 0 
       } )
       ,
-      [ PanelsNeeded, setPanelsNeeded ] = useState<string | undefined>()
+      [ PanelsNeeded, setPanelsNeeded ] = useState<string>()
       ,
-      [ PanelsAreaNeeded, setPanelsAreaNeeded ] = useState<string | undefined>()
+      [ PanelsAreaNeeded, setPanelsAreaNeeded ] = useState<string>()
       ,
-      [ Guias, setGuias ] = useState<inputTextValue_i | undefined>( { 
+      [ Guias, setGuias ] = useState<inputTextValue_i>( { 
          text: "", value: 0 
       } )
       ,
-      [ Montantes, setMontantes ] = useState<inputTextValue_i | undefined>( { 
+      [ Montantes, setMontantes ] = useState<inputTextValue_i>( { 
          text: "", value: 0 
       } )
       ,
-      [ GN25, setGN25 ] = useState<inputTextValue_i | undefined>( { 
+      [ GN25, setGN25 ] = useState<inputTextValue_i>( { 
          text: "", value: 0 
       } )
       ,
-      [ Lfix, setLfix ] = useState<inputTextValue_i | undefined>( { 
+      [ Lfix, setLfix ] = useState<inputTextValue_i>( { 
          text: "", value: 0 
       } )
       ,
-      [ MetalMetal, setMetalMetal ] = useState<inputTextValue_i | undefined>( { 
+      [ MetalMetal, setMetalMetal ] = useState<inputTextValue_i>( { 
          text: "", value: 0 
       } )
       ,
-      [ Massa, setMassa ] = useState<inputTextValue_i | undefined>( { 
+      [ Massa, setMassa ] = useState<inputTextValue_i>( { 
          text: "", value: 0 
       } )
       ,
-      [ FitaTelada, setFitaTelada ] = useState<inputTextValue_i | undefined>( { 
+      [ FitaTelada, setFitaTelada ] = useState<inputTextValue_i>( { 
          text: "", value: 0 
       } )
       ,
-      [ BandaAcústica, setBandaAcústica ] = useState<inputTextValue_i | undefined>( { 
+      [ BandaAcústica, setBandaAcústica ] = useState<inputTextValue_i>( { 
          text: "", value: 0 
       } )
       ,
-      [ LãDeVidro, setLãDeVidro ] = useState<inputTextValue_i | undefined>( { 
+      [ LãDeVidro, setLãDeVidro ] = useState<inputTextValue_i>( { 
          text: "", value: 0 
       } )
    ;
@@ -109,55 +146,56 @@ export default function DryWallCalculatorView( { ...props } ) {
          const data = CalculateDryWall( Width, Height ).then( r => { 
             setArea( { 
                text: r?.wallArea.toString(), 
-               value: parseFloat( r.wallArea ) 
+               // value: parseFloat( r?.wallArea ) 
+               value: r?.wallArea 
             } );
             setPerimetro( { 
                text: r?.wallPerimetro.toString(), 
-               value: parseFloat( r?.wallPerimetro ) 
+               value: r?.wallPerimetro 
             } );
             setPanelsNeeded( r.panelsNeeded.toString() );
             setPanelsAreaNeeded( { 
                text: r?.panelsAreaNeeded.toString(), 
-               value: parseFloat( r?.panelsAreaNeeded ) 
+               value: r?.panelsAreaNeeded 
             } );
             setGuias( { 
                text: r?.guiasNeeded.toString(), 
-               value: parseFloat( r?.guiasNeeded ) 
+               value: r?.guiasNeeded 
             } );
             setMontantes( { 
                text: r?.montantesNeeded.toString(), 
-               value: parseFloat( r?.montantesNeeded ) 
+               value: r?.montantesNeeded 
             } );
             setGN25( { 
                text: r?.gn25Needed.toString(), 
-               value: parseFloat( r?.gn25Needed ) 
+               value: r?.gn25Needed
             } );
             setLfix( { 
                text: r?.lfixNeeded.toString(), 
-               value: parseFloat( r?.lfixNeeded ) 
+               value: r?.lfixNeeded
             } );
             setMetalMetal( { 
                text: r?.screwMMNeeded.toString(), 
-               value: parseFloat( r?.screwMMNeeded ) 
+               value: r?.screwMMNeeded
             } );
             setMassa( { 
                text: r?.massaNeeded.toString(), 
-               value: parseFloat( r?.massaNeeded ) 
+               value: r?.massaNeeded
             } );
             setFitaTelada( { 
                text: r?.tapeNeeded.toString(), 
-               value: parseFloat( r?.tapeNeeded ) 
+               value: r?.tapeNeeded
             } );
             setBandaAcústica( { 
                text: r?.bandaAcústicaNeeded.toString(), 
-               value: parseFloat( r?.bandaAcústicaNeeded ) 
+               value: r?.bandaAcústicaNeeded
             } );
             setLãDeVidro( { 
                text: r?.panelsAreaNeeded.toString(), 
-               value: parseFloat( r?.panelsAreaNeeded ) 
+               value: r?.panelsAreaNeeded
             } );
 
-            console.log( "PanelsNeeded: ", parseFloat( r.panelsNeeded ) );
+            console.log( "PanelsNeeded: ", r?.panelsNeeded );
          } );
       } catch( err: any ) {
          console.error( "Calculate() err: \n\n\n", err );
@@ -168,7 +206,7 @@ export default function DryWallCalculatorView( { ...props } ) {
       try {
          const 
             item: area_i = {
-               id: `${ Areas.length }`,
+               id: uuid.v4(),
 
                width: Width!.value,
                height: Height!.value,
@@ -181,15 +219,32 @@ export default function DryWallCalculatorView( { ...props } ) {
                displayPerimetro: ( ( Width!.value * 2 ) + ( Height!.value * 2 ) ).toString(),
             }
          ;
-         
          Areas.push( item );
          setWidth( { text: "", value: 0 } );
          setHeight( { text: "", value: 0 } );
 
-         console.log( Areas );
+         console.log( "Areas[]: ", Areas );
       } catch( err: any ) {
          console.error( "CreateAreaList() err: \n\n\n", err );
       }
+   }
+
+   async function CreateMaterialsNeeded() {
+      try {
+         const 
+            datas = [ ...Areas ]
+            ,
+            materials: materials_i[] = []
+         ;
+
+         datas.forEach( data => {
+            CalculateDryWall( data.width!, data.height! ).then( returned => {
+               const material: materials_i = {
+                  // here
+               }
+            } );
+         } );
+      } catch( err: any ) { console.log( "CreateMaterialsNeeded() err: ", err ); }
    }
 
    useEffect( () => {
@@ -277,13 +332,13 @@ export default function DryWallCalculatorView( { ...props } ) {
             <View style={[ {  padding: 18, gap: 24, } ]}>
                <AniButton text="Adicionar" bg={ Width?.text && Height?.text ? "#339" : "#555" }
                   onPress={ () => {
-                     // const value = Calculate( Width!.value, Height!.value );
-                     {
-                        // Width?.text && Height?.text ? 
-                        Width?.value && Height?.value ? 
-                        CreateAreaList() : console.log( "" );
-                     }
-                     console.log( "calculate() value: " );
+                     // {  
+                        if( Width?.value && Height?.value ) {
+                           CreateAreaList();
+                        }
+                        // Width?.value && Height?.value ? 
+                        // CreateAreaList() : "";
+                     // }
                   } }
                />
                <AniButton text="Calcular"
@@ -298,28 +353,15 @@ export default function DryWallCalculatorView( { ...props } ) {
             <View>
                {
                   Areas && 
-                  // Areas.map( item => <>
-                  //    <Label style={{ flexDirection: "row", justifyContent: "center", alignItems: "center", }} key={ `Label-${ Areas.length }` }>
-                  //       <Input value={ item.displayWidth } style={{ width: "40%", backgroundColor: "#16181c", color: "#eee" }} key={ `Item-width:${ Areas.length }` }/>
-                  //       <Input value={ item.displayHeight } style={{ width: "40%", backgroundColor: "#16181c", color: "#eee" }} key={ `Item-height:${ Areas.length }` }/>
-                  //       <Pressable
-                  //          onPress={ () => {
-                  //             const bkp = Areas;
-                  //             bkp.splice( parseInt( item.id ), 1 );
-                  //             setAreas( bkp );
-                  //             setWidth( { text: "", value: 0 } );
-                  //             // console.log( "Areas.length: ", Areas.length, "item.id: ", item.id );
-                  //          } }
-                  //       >
-                  //          <Icon name="trash" i="entypo" color="#f33"/>
-                  //       </Pressable>
-                  //    </Label>
-                  // </> )
                   <FlatList 
                      ListHeaderComponent={ <>
-                        <Header bg="#1b1d22" mb={ 18 }>
+                        <Header bg="#1b1d22">
                            <T1 style={{ color: "#e5e5e5", }}>Medidas das paredes</T1>
                         </Header>
+                        <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center", gap: 16, paddingTop: 8, paddingBottom: 8, }}>
+                           <P style={{ width: "40%", color: "#999" }}>largura </P>
+                           <P style={{ width: "40%", color: "#999" }}>altura </P>
+                        </View>
                      </> }
                      data={ Areas }
                      renderItem={ ({item}) => <>
@@ -328,13 +370,14 @@ export default function DryWallCalculatorView( { ...props } ) {
                            name={ item.name }
                            data={ item }
                         /> */}
-                        <Label style={{ flexDirection: "row", justifyContent: "center", alignItems: "center", }} key={ `Label-${ Areas.length }` }>
-                           <Input value={ item.displayWidth } style={{ width: "40%", backgroundColor: "#16181c", color: "#eee" }} key={ `Item-width:${ Areas.length }` }/>
-                           <Input value={ item.displayHeight } style={{ width: "40%", backgroundColor: "#16181c", color: "#eee" }} key={ `Item-height:${ Areas.length }` }/>
+                        <Label style={{ flexDirection: "row", justifyContent: "center", alignItems: "center", gap: 16, }} key={ `Label-${ item.id }` }>
+                           <Input value={ item.displayWidth } style={{ width: "40%", backgroundColor: "#16181c", color: "#eee" }} key={ `Item-width:${ item.id }` }/>
+                           <Input value={ item.displayHeight } style={{ width: "40%", backgroundColor: "#16181c", color: "#eee" }} key={ `Item-height:${ item.id }` }/>
                            <Pressable
                               onPress={ () => {
+                                 // console.log( "Areas.findIndex: ", Areas.findIndex( predicate => predicate.id == item.id ) );
                                  const bkp = Areas;
-                                 bkp.splice( parseInt( item.id ), 1 );
+                                 bkp.splice( Areas.findIndex( predicate => predicate.id == item.id ), 1 );
                                  setAreas( bkp );
                                  setWidth( { text: "", value: 0 } );
                                  // console.log( "Areas.length: ", Areas.length, "item.id: ", item.id );
@@ -346,14 +389,13 @@ export default function DryWallCalculatorView( { ...props } ) {
                      </> }
                      keyExtractor={ item => item.id } 
                      ItemSeparatorComponent={ 
-                        () => <View style={{ height: 16, }}/>
+                        () => <View style={{ height: 2, }}/>
                      }
-                     style={{ 
+                     contentContainerStyle={{ 
                         width: "100%", 
-                        // backgroundColor: "#27f",
-                        paddingBottom: 0,
-                     }} 
-                     contentContainerStyle={{ padding: 16, paddingBottom: 38, }}
+                        marginTop: 24,
+                        padding: 0, paddingBottom: 38, 
+                     }}
                   />
                }
             </View>
