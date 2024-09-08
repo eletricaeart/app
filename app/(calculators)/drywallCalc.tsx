@@ -210,13 +210,13 @@ export default function DryWallCalculatorView( { ...props } ) {
 
                width: Width!.value,
                height: Height!.value,
-               area: Width!.value * Height!.value,
-               perimetro: ( Width!.value * 2 ) + ( Height!.value * 2 ),
+               area: Width!.value! * Height!.value!,
+               perimetro: ( Width!.value! * 2 ) + ( Height!.value! * 2 ),
                
                displayWidth: Width!.text,
                displayHeight: Height!.text,
-               displayArea: ( Width!.value * Height!.value ).toString(),
-               displayPerimetro: ( ( Width!.value * 2 ) + ( Height!.value * 2 ) ).toString(),
+               displayArea: ( Width!.value! * Height!.value! ).toString(),
+               displayPerimetro: ( ( Width!.value! * 2 ) + ( Height!.value! * 2 ) ).toString(),
             }
          ;
          Areas.push( item );
@@ -240,8 +240,39 @@ export default function DryWallCalculatorView( { ...props } ) {
          datas.forEach( data => {
             CalculateDryWall( data.width!, data.height! ).then( returned => {
                const material: materials_i = {
-                  // here
+                  width: data.width!,
+                  height: data.width!,
+                  area: data.width! * data.height!,
+                  perimetro: ( data.width! * 2 ) + ( data.height! * 2 ),
+                  chapas: returned!.panelsNeeded!,
+                  guias: returned!.guiasNeeded!,
+                  montantes: returned!.montantesNeeded!,
+                  gn25: returned!.gn25Needed!,
+                  lfix: returned!.lfixNeeded!,
+                  parafusoMM: returned!.screwMMNeeded!,
+                  fitaTelada: returned!.tapeNeeded!,
+                  massa: returned!.massaNeeded!,
+                  bandaAcústica: returned!.bandaAcústicaNeeded!,
+                  lãDeVidro: returned!.lãDeVidroNeeded!,
+
+                  displayWidth: ( data.width! ).toString(),
+                  displayHeight: ( data.width! ).toString(),
+                  displayArea: ( data.width! * data.height! ).toString(),
+                  displayPerimetro: ( ( data.width! * 2 ) + ( data.height! * 2 ) ).toString(),
+                  displayChapas: ( returned?.panelsNeeded! ).toString(),
+                  displayGuias: ( returned?.guiasNeeded! ).toString(),
+                  displayMontantes: ( returned?.montantesNeeded! ).toString(),
+                  displayGn25: ( returned?.gn25Needed! ).toString(),
+                  displayLfix: ( returned?.lfixNeeded! ).toString(),
+                  displayParafusoMM: ( returned?.screwMMNeeded! ).toString(),
+                  displayFitaTelada: ( returned?.tapeNeeded! ).toString(),
+                  displayMassa: ( returned?.massaNeeded! ).toString(),
+                  displayBandaAcústica: ( returned?.bandaAcústicaNeeded! ).toString(),
+                  displayLãDeVidro: ( returned?.lãDeVidroNeeded! ).toString(),
                }
+
+               materials.push( material );
+               console.log( "materials: ", materials );
             } );
          } );
       } catch( err: any ) { console.log( "CreateMaterialsNeeded() err: ", err ); }
@@ -343,9 +374,9 @@ export default function DryWallCalculatorView( { ...props } ) {
                />
                <AniButton text="Calcular"
                   onPress={ () => {
-            const value = Calculate( Width!.value, Height!.value );
-
-                     console.log( "calculate() value: ", value );
+                     // const value = Calculate( Width!.value, Height!.value );
+                     CreateMaterialsNeeded();
+                     // console.log( "calculate() value: ", value );
                   } }
                />
             </View>
