@@ -3,6 +3,7 @@
 /** == [ @imports ] 
  * == == == == == == == == == */
 import { CalculateDryWall, CalculateDryWallRoof } from "@/src/services/calculators";
+import { Icon } from "@/src/widgets/clb-icons";
 import { Header } from "@/src/widgets/clb-widgets";
 import { AppbarStick, BackButton, Duo, H2, H3, H4, H5, Input, Label, LabelText, P } from "@/src/widgets/ui";
 import { AniButton } from "@/src/widgets/ui/animated";
@@ -12,7 +13,8 @@ import {
    StyleSheet,
    View,
    Text,
-   ScrollView, 
+   ScrollView,
+   Pressable, 
 } from "react-native";
 import { parse } from "react-native-svg";
 
@@ -95,6 +97,15 @@ export default function DryWallCalculatorView( { ...props } ) {
          console.error( "CreateAreaList() err: \n\n\n", err );
       }
    }
+
+   useEffect( () => {
+      let area = 0;
+      Areas.forEach( item => {
+         area += item.area;
+      } );
+      setArea( { text: area.toString(), value: area } );
+      console.log( "area:: ", area );
+   }, [Areas.length] );
 
    return( <>
       <Stack.Screen options={{ headerShown: true, title: "Calculadora de DryWall", statusBarColor: "#16181c",
@@ -187,9 +198,12 @@ export default function DryWallCalculatorView( { ...props } ) {
             <View>
                {
                   Areas && Areas.map( item => <>
-                     <Label style={{ flexDirection: "row" }} key={ item.area }>
+                     <Label style={{ flexDirection: "row", justifyContent: "center" }} key={ item.area }>
                         <Input value={ item.width } style={{ width: "40%", backgroundColor: "#16181c", color: "#eee" }}/>
                         <Input value={ item.height } style={{ width: "40%", backgroundColor: "#16181c", color: "#eee" }}/>
+                        <Pressable>
+                           <Icon name="trash" i="entypo" color="#f33"/>
+                        </Pressable>
                      </Label>
                   </> )
                }

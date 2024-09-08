@@ -12,16 +12,20 @@ import {
 
 } from "react-native";
 
-import { FontAwesome, FontAwesome6 } from '@expo/vector-icons';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { 
+   FontAwesome, 
+   FontAwesome6,
+   MaterialCommunityIcons,
+   MaterialIcons,
+   AntDesign,
+   Ionicons,
+   SimpleLineIcons,
+   Entypo,
+} from '@expo/vector-icons';
 // <MaterialCommunityIcons name="receipt" size={24} color="black" />
-import { MaterialIcons } from '@expo/vector-icons';
 // <MaterialIcons name="receipt" size={24} color="black" />
-import { AntDesign } from '@expo/vector-icons';
 // <AntDesign name="stepforward" size={24} color="black" />
-import { Ionicons } from '@expo/vector-icons';
 // <Ionicons name="accessibility" size={24} color="black" />
-import { SimpleLineIcons } from '@expo/vector-icons';
 // <SimpleLineIcons name="user" size={24} color="black" />
 
 
@@ -60,6 +64,9 @@ export function Icon( { ...props } ) {
       break;
 
       case "l": return( <SimpleLineIcons name={ name } size={ size } color={ color } style={[ props.style ]}/> );
+      break;
+
+      case "entypo": return( <Entypo name={ name } size={ size } color={ color } style={[ props.style ]}/> );
       break;
    }
    // return( <>
