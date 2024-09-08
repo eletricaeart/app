@@ -23,7 +23,7 @@ export const
                backgroundColor: props.bg || "#0075BD",
                borderRadius: 13,
                overflow: "hidden",
-               width: "80%",
+               width: "100%",
                height: 56,
                marginLeft: "auto",
                marginRight: "auto",

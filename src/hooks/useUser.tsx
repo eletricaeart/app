@@ -12,11 +12,11 @@ async function FetchUser( userId: string ) {
 async function FetchLocalUser() {
    try {
       const 
-         data = await AsyncStorage.getItem( "user" )
+         json = await AsyncStorage.getItem( "user" )
          ,
-         jsonData = await JSON.parse( data )
+         user = await JSON.parse( json )
       ;
-      return jsonData;
+      return user;
    } catch( err: any ) {
       console.error( "FetchLocalUser() err: \n\n\n", err );
    }

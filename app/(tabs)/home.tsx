@@ -35,13 +35,15 @@ import { router } from "expo-router";
 
 const 
    items = [
-      { id: 1, name: "Google", src: "/drywall" }
+      { id: 1, name: "Parede de DryWall", src: "/drywallCalc",
+         icon: "calculator", icn: "f", iconColor: "#fc0fc0",
+         size: 46
+      }
       ,
-      { id: 2, name: "Facebook", src: "/drywall" }
-      ,
-      { id: 3, name: "YouTube", src: "/drywall" }
-      ,
-      { id: 4, name: "Calculadoras", src: "/drywall" }
+      { id: 2, name: "Forro de DryWall", src: "/drywallRoofCalc",
+         icon: "calculator", icn: "f", iconColor: "#fc0",
+         size: 46
+      }
    ]
 ;
 
@@ -111,8 +113,9 @@ export default function Home( { ...props } ) {
                <T style={{ color: "#ddd", }}>Tudo bem!?</T>
             </Header>
          </HeaderBanner>
-         <Header>
-            <T1 style={{ color: "#daa520", }}>Home (tabs)</T1>
+         <Header style={{ flexDirection: "row", gap: 16 }}>
+            <Icon name="calculator" i="f" color="#00559C"/>
+            <T1 style={{ color: "#daa520", }}>Calculadoras</T1>
          </Header>
          <VSplit />
          <Tiles>
@@ -123,9 +126,10 @@ export default function Home( { ...props } ) {
                         <Pressable onPress={ () => router.push( item.src ) }
                            style={{ flex: 1, }}
                         >
+                           <Icon name={ item.icon } color={ item.iconColor } i={ item.icn } size={ item.size }/>
+                           <Text style={{ fontSize: 18, color: "#fc0fc0", }}>calculadora</Text>
                            <Text style={{ fontSize: 22, color: "#333", fontWeight: 800, }}>{ item.name }</Text>
-                           <Text style={{ fontSize: 18, color: "#fc0fc0", }}>{ item.id }</Text>
-                           <Text style={{ fontSize: 14, color: "#777", }}>{ item.src }</Text>
+                           {/* <Text style={{ fontSize: 14, color: "#777", }}>{ item.src }</Text> */}
                         </Pressable>
                      </Tile>
                   </> );
