@@ -390,11 +390,11 @@ export default function DryWallCalculatorView( { ...props } ) {
                            <T1 style={{ color: "#e5e5e5", }}>Medidas das paredes</T1>
                         </Header>
                         <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center", gap: 16, paddingTop: 8, paddingBottom: 8, paddingLeft: 8 }}>
-                           <P style={{ flex: 1, color: "#999", paddingTop: 8, paddingBottom: 8,  paddingLeft: 14, }}>largura </P>
-                           <P style={{ flex: 1, color: "#999", paddingTop: 8, paddingBottom: 8,  paddingLeft: 14,  }}>altura </P>
-                           <P style={{ flex: 1, color: "#999", paddingTop: 8, paddingBottom: 8,  paddingLeft: 14,  }}>área </P>
-                           <P style={{ flex: 1, color: "#999", paddingTop: 8, paddingBottom: 8,  paddingLeft: 14,  }}>linear </P>
-                           <P style={{ flex: 1, color: "#999", paddingTop: 8, paddingBottom: 8,  paddingLeft: 14,  }}> </P>
+                           <P style={{ flex: 1, color: "#999", paddingTop: 8, paddingBottom: 8, paddingLeft: 14, }}>largura </P>
+                           <P style={{ flex: 1, color: "#999", paddingTop: 8, paddingBottom: 8, paddingLeft: 14, }}>altura </P>
+                           <P style={{ flex: 1, color: "#999", paddingTop: 8, paddingBottom: 8, paddingLeft: 14, }}>área </P>
+                           <P style={{ flex: 1, color: "#999", paddingTop: 8, paddingBottom: 8, paddingLeft: 14, }}>linear </P>
+                           <P style={{ flex: 1, color: "#999", paddingTop: 8, paddingBottom: 8, paddingLeft: 14, }}> </P>
                         </View>
                      </> }
                      data={ Areas }
@@ -439,8 +439,8 @@ export default function DryWallCalculatorView( { ...props } ) {
             <View style={{ paddingTop: 36, paddingBottom: 66, }}>
                <View style={[ s.table ]}>
                   <View style={[ s.tableHeader ]}>
-                     <H5 style={[ s.tableHeaderText ]}>QTD</H5>
-                     <H5 style={[ s.tableHeaderText, { flex: 1, textAlign: "center" }]}>Descrição</H5>
+                     <H5 style={[ s.tableHeaderQtdText ]}>QTD</H5>
+                     <H5 style={[ s.tableHeaderCenterText, ]}>Descrição</H5>
                      <H5 style={[ s.tableHeaderText ]}>R$ Unit.</H5>
                      <H5 style={[ s.tableHeaderText ]}>R$ Tot.</H5>
                   </View>
@@ -448,7 +448,7 @@ export default function DryWallCalculatorView( { ...props } ) {
                   {/* table body */}
                   <View style={[]}>
                      <View style={[ s.tableRowEven ]}>
-                        <P style={[ s.tableText ]}>
+                        <P style={[ s.tableQtdText ]}>
                            { PanelsNeeded }
                         </P>
                         <P style={[ s.tableTextDescription ]}>
@@ -462,7 +462,7 @@ export default function DryWallCalculatorView( { ...props } ) {
                         </P>
                      </View>
                      <View style={[ s.tableRowOdd ]}>
-                        <P style={[ s.tableText ]}>
+                        <P style={[ s.tableQtdText ]}>
                            { Guias?.text }
                         </P>
                         <P style={[ s.tableTextDescription ]}>
@@ -476,7 +476,7 @@ export default function DryWallCalculatorView( { ...props } ) {
                         </P>
                      </View>
                      <View style={[ s.tableRowEven ]}>
-                        <P style={[ s.tableText ]}>
+                        <P style={[ s.tableQtdText ]}>
                            { Montantes?.text }
                         </P>
                         <P style={[ s.tableTextDescription ]}>
@@ -490,7 +490,7 @@ export default function DryWallCalculatorView( { ...props } ) {
                         </P>
                      </View>
                      <View style={[ s.tableRowOdd ]}>
-                        <P style={[ s.tableText ]}>
+                        <P style={[ s.tableQtdText ]}>
                            { GN25?.text }
                         </P>
                         <P style={[ s.tableTextDescription ]}>
@@ -504,7 +504,7 @@ export default function DryWallCalculatorView( { ...props } ) {
                         </P>
                      </View>
                      <View style={[ s.tableRowEven ]}>
-                        <P style={[ s.tableText ]}>
+                        <P style={[ s.tableQtdText ]}>
                            { Lfix?.text }
                         </P>
                         <P style={[ s.tableTextDescription ]}>
@@ -518,7 +518,7 @@ export default function DryWallCalculatorView( { ...props } ) {
                         </P>
                      </View>
                      <View style={[ s.tableRowOdd ]}>
-                        <P style={[ s.tableText ]}>
+                        <P style={[ s.tableQtdText ]}>
                            { MetalMetal?.text }
                         </P>
                         <P style={[ s.tableTextDescription ]}>
@@ -532,7 +532,7 @@ export default function DryWallCalculatorView( { ...props } ) {
                         </P>
                      </View>
                      <View style={[ s.tableRowEven ]}>
-                        <P style={[ s.tableText ]}>
+                        <P style={[ s.tableQtdText ]}>
                            { FitaTelada?.text }
                         </P>
                         <P style={[ s.tableTextDescription ]}>
@@ -546,7 +546,7 @@ export default function DryWallCalculatorView( { ...props } ) {
                         </P>
                      </View>
                      <View style={[ s.tableRowOdd ]}>
-                        <P style={[ s.tableText ]}>
+                        <P style={[ s.tableQtdText ]}>
                            { Massa?.text } kg
                         </P>
                         <P style={[ s.tableTextDescription ]}>
@@ -560,7 +560,7 @@ export default function DryWallCalculatorView( { ...props } ) {
                         </P>
                      </View>
                      <View style={[ s.tableRowEven ]}>
-                        <P style={[ s.tableText ]}>
+                        <P style={[ s.tableQtdText ]}>
                            { BandaAcústica?.text }
                         </P>
                         <P style={[ s.tableTextDescription ]}>
@@ -574,7 +574,7 @@ export default function DryWallCalculatorView( { ...props } ) {
                         </P>
                      </View>
                      <View style={[ s.tableRowOdd ]}>
-                        <P style={[ s.tableText ]}>
+                        <P style={[ s.tableQtdText ]}>
                            { LãDeVidro?.text }
                         </P>
                         <P style={[ s.tableTextDescription ]}>
@@ -634,9 +634,24 @@ const
          flexDirection: "row",
          alignItems: "center"
       },
+      tableHeaderQtdText: {
+         color: "#27f",
+         // width: "15%", 
+         flex: .8,
+         textAlign: "right",
+      },
+      tableHeaderCenterText: {
+         color: "#27f",
+         // width: "15%", 
+         flex: 2,
+         paddingLeft: 16,
+         textAlign: "left",
+      },
       tableHeaderText: {
          color: "#27f",
-         width: "15%", textAlign: "center",
+         // width: "15%", 
+         flex: .8,
+         textAlign: "center",
       },
       tableRowOdd: {
          // backgroundColor: "#515359",
@@ -651,7 +666,8 @@ const
          flexDirection: "row",
          alignItems: "center"
       },
-      tableText: { color: "#fff", width: "15%", textAlign: "center" },
-      tableTextDescription: { color: "#fff", flex: 1, textAlign: "left" },
+      tableQtdText: { fontSize: 15, color: "#fff", /* width: "15%" */ flex: .8, textAlign: "right", fontWeight: 300, },
+      tableText: { fontSize: 15, color: "#fff", /* width: "15%" */ flex: .8, textAlign: "center", fontWeight: 300, },
+      tableTextDescription: { fontSize: 15, color: "#ccc", flex: 2, textAlign: "left", fontWeight: 500, paddingLeft: 16, },
    } )
 ;
