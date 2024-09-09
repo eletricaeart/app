@@ -19,7 +19,7 @@ import {
    FlatList, 
 } from "react-native";
 import uuid from "react-native-uuid";
-
+import {Picker} from '@react-native-picker/picker';
 
 /** == [ properties ]
  * == == == == == == == == == */
@@ -78,6 +78,8 @@ interface materials_i {
 /** == [ exports ]
  * == == == == == == == == == */
 export default function DryWallCalculatorView( { ...props } ) {
+   const [selectedLanguage, setSelectedLanguage] = useState();
+   
    const 
       [ Areas, setAreas ] = useState<area_i []>( [] )
       ,
@@ -359,6 +361,15 @@ export default function DryWallCalculatorView( { ...props } ) {
                   />
                </Label>
             </Duo>
+
+            <Picker
+               selectedValue={selectedLanguage}
+               onValueChange={(itemValue, itemIndex) =>
+                  setSelectedLanguage(itemValue)
+               }>
+               <Picker.Item label="Java" value="java" />
+               <Picker.Item label="JavaScript" value="js" />
+            </Picker>
 
             <View style={[ {  padding: 18, gap: 24, } ]}>
                <AniButton text="Adicionar" bg={ Width?.text && Height?.text ? "#339" : "#555" }
