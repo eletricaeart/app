@@ -78,7 +78,8 @@ interface materials_i {
 /** == [ exports ]
  * == == == == == == == == == */
 export default function DryWallCalculatorView( { ...props } ) {
-   const [ SelectedMontante, setSelectedMontante ] = useState();
+   const [ SelectedMontante, setSelectedMontante ] = useState<string>( "Montantes de 70" );
+   const [ MoreOptionsEnabled, setMoreOptionsEnabled ] = useState<boolean>( false );
 
    const 
       [ Areas, setAreas ] = useState<area_i []>( [] )
@@ -362,17 +363,31 @@ export default function DryWallCalculatorView( { ...props } ) {
                </Label>
             </Duo>
 
-            <Picker
-               selectedValue={ SelectedMontante }
-               onValueChange={( itemValue, itemIndex ) =>
-                  setSelectedMontante( itemValue )
-               }
-               style={ s.picker }
+            <View
+               style={{
+
+               }}
             >
-               <Picker.Item label="Montantes de 90" value="Montantes de 90" />
-               <Picker.Item label="Montantes de 70" value="Montantes de 70" />
-               <Picker.Item label="Montantes de 48" value="Montantes de 48" />
-            </Picker>
+               <H5 style={{ color: "#aaa", paddingLeft: 16, paddingTop: 16, paddingBottom: 16, }}
+                  onPress={ () => setMoreOptionsEnabled( !MoreOptionsEnabled ) }
+               >
+                  Mais opções
+               </H5>
+               {  MoreOptionsEnabled && 
+                  <Picker
+                     selectedValue={ SelectedMontante }
+                     onValueChange={( itemValue, itemIndex ) =>
+                        setSelectedMontante( itemValue )
+                     }
+                     style={ s.picker }
+                  >
+                     <Picker.Item label="Montantes de 90" value="Montantes de 90" />
+                     <Picker.Item label="Montantes de 70" value="Montantes de 70" />
+                     <Picker.Item label="Montantes de 48" value="Montantes de 48" />
+                  </Picker>
+               }
+               <View style={ s.divisor }/>
+            </View>
 
             <View style={[ {  padding: 18, gap: 24, } ]}>
                <AniButton text="Adicionar" bg={ Width?.text && Height?.text ? "#339" : "#555" }
@@ -703,6 +718,8 @@ const
          paddingLeft: 8,
          color: "#eee",
          borderColor: "#9995",
-      }
+      },
+      divisor: { backgroundColor: "#eee3", width: "90%", height: 1, margin: "auto", marginTop: 16, marginBottom: 16, },
+
    } )
 ;
