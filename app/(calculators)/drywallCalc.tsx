@@ -389,9 +389,12 @@ export default function DryWallCalculatorView( { ...props } ) {
                         <Header bg="#1b1d22">
                            <T1 style={{ color: "#e5e5e5", }}>Medidas das paredes</T1>
                         </Header>
-                        <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center", gap: 16, paddingTop: 8, paddingBottom: 8, }}>
-                           <P style={{ width: "40%", color: "#999" }}>largura </P>
-                           <P style={{ width: "40%", color: "#999" }}>altura </P>
+                        <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center", gap: 16, paddingTop: 8, paddingBottom: 8, paddingLeft: 8 }}>
+                           <P style={{ flex: 1, color: "#999", paddingTop: 8, paddingBottom: 8,  paddingLeft: 14, }}>largura </P>
+                           <P style={{ flex: 1, color: "#999", paddingTop: 8, paddingBottom: 8,  paddingLeft: 14,  }}>altura </P>
+                           <P style={{ flex: 1, color: "#999", paddingTop: 8, paddingBottom: 8,  paddingLeft: 14,  }}>área </P>
+                           <P style={{ flex: 1, color: "#999", paddingTop: 8, paddingBottom: 8,  paddingLeft: 14,  }}>linear </P>
+                           <P style={{ flex: 1, color: "#999", paddingTop: 8, paddingBottom: 8,  paddingLeft: 14,  }}> </P>
                         </View>
                      </> }
                      data={ Areas }
@@ -401,9 +404,11 @@ export default function DryWallCalculatorView( { ...props } ) {
                            name={ item.name }
                            data={ item }
                         /> */}
-                        <Label style={{ flexDirection: "row", justifyContent: "center", alignItems: "center", gap: 16, }} key={ `Label-${ item.id }` }>
-                           <Input value={ item.displayWidth } style={{ width: "40%", backgroundColor: "#16181c", color: "#eee" }} key={ `Item-width:${ item.id }` }/>
-                           <Input value={ item.displayHeight } style={{ width: "40%", backgroundColor: "#16181c", color: "#eee" }} key={ `Item-height:${ item.id }` }/>
+                        <Label style={{ flexDirection: "row", justifyContent: "center", alignItems: "center", gap: 8, }} key={ `Label-${ item.id }` }>
+                           <Input value={ item.displayWidth } style={{ flex: 1, backgroundColor: "#16181c", color: "#eee" }} key={ `Item-width:${ item.id }` }/>
+                           <Input value={ item.displayHeight } style={{ flex: 1, backgroundColor: "#16181c", color: "#eee" }} key={ `Item-height:${ item.id }` }/>
+                           <Input value={ item.displayArea } style={{ flex: 1, backgroundColor: "#16181c", color: "#eee" }} key={ `Item-height:${ item.id }` }/>
+                           <Input value={ item.displayPerimetro } style={{ flex: 1, backgroundColor: "#16181c", color: "#eee" }} key={ `Item-height:${ item.id }` }/>
                            <Pressable
                               onPress={ () => {
                                  // console.log( "Areas.findIndex: ", Areas.findIndex( predicate => predicate.id == item.id ) );
