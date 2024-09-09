@@ -78,8 +78,8 @@ interface materials_i {
 /** == [ exports ]
  * == == == == == == == == == */
 export default function DryWallCalculatorView( { ...props } ) {
-   const [selectedLanguage, setSelectedLanguage] = useState();
-   
+   const [ SelectedMontante, setSelectedMontante ] = useState();
+
    const 
       [ Areas, setAreas ] = useState<area_i []>( [] )
       ,
@@ -363,12 +363,15 @@ export default function DryWallCalculatorView( { ...props } ) {
             </Duo>
 
             <Picker
-               selectedValue={selectedLanguage}
-               onValueChange={(itemValue, itemIndex) =>
-                  setSelectedLanguage(itemValue)
-               }>
-               <Picker.Item label="Java" value="java" />
-               <Picker.Item label="JavaScript" value="js" />
+               selectedValue={ SelectedMontante }
+               onValueChange={( itemValue, itemIndex ) =>
+                  setSelectedMontante( itemValue )
+               }
+               style={ s.picker }
+            >
+               <Picker.Item label="Montantes de 90" value="Montantes de 90" />
+               <Picker.Item label="Montantes de 70" value="Montantes de 70" />
+               <Picker.Item label="Montantes de 48" value="Montantes de 48" />
             </Picker>
 
             <View style={[ {  padding: 18, gap: 24, } ]}>
@@ -491,7 +494,7 @@ export default function DryWallCalculatorView( { ...props } ) {
                            { Montantes?.text }
                         </P>
                         <P style={[ s.tableTextDescription ]}>
-                           Montantes
+                           { SelectedMontante }
                         </P>
                         <P style={[ s.tableText ]}>
                            {}
@@ -680,5 +683,26 @@ const
       tableQtdText: { fontSize: 15, color: "#fff", /* width: "15%" */ flex: .8, textAlign: "right", fontWeight: 300, },
       tableText: { fontSize: 15, color: "#fff", /* width: "15%" */ flex: .8, textAlign: "center", fontWeight: 300, },
       tableTextDescription: { fontSize: 15, color: "#ccc", flex: 2, textAlign: "left", fontWeight: 500, paddingLeft: 16, },
+      
+      picker: {
+         backgroundColor: "#1b1d22",
+         width: "90%",
+         margin: "auto",
+         borderRadius: 13,
+         height: 36,
+         paddingLeft: 8,
+         color: "#eee",
+         borderColor: "#9995",
+      },
+      pickerItem: {
+         backgroundColor: "#1b1d22",
+         width: "90%",
+         margin: "auto",
+         borderRadius: 13,
+         height: 36,
+         paddingLeft: 8,
+         color: "#eee",
+         borderColor: "#9995",
+      }
    } )
 ;
