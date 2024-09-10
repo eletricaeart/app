@@ -16,10 +16,12 @@ import {
    Text,
    ScrollView,
    Pressable,
-   FlatList, 
+   FlatList,
+   Switch, 
 } from "react-native";
 import uuid from "react-native-uuid";
 import {Picker} from '@react-native-picker/picker';
+import { isEnabled } from "react-native/Libraries/Performance/Systrace";
 
 /** == [ properties ]
  * == == == == == == == == == */
@@ -80,6 +82,20 @@ interface materials_i {
 export default function DryWallCalculatorView( { ...props } ) {
    const [ SelectedMontante, setSelectedMontante ] = useState<string>( "Montantes de 70" );
    const [ MoreOptionsEnabled, setMoreOptionsEnabled ] = useState<boolean>( false );
+
+
+   // switch banda acústica
+   const 
+      [ IsBandaAcústicaEnabled, setIsBandaAcústicaEnabled ] = useState<boolean>( false )
+      ,
+      toggleSwitch_bandaAcústica = () => setIsBandaAcústicaEnabled( prevState => !prevState )
+   ;
+   // switch lã de vidro
+   const 
+      [ IsLãDeVidroEnabled, setIsLãDeVidroEnabled ] = useState<boolean>( false )
+      ,
+      toggleSwitch_lãDeVidro = () => setIsLãDeVidroEnabled( prevState => !prevState )
+   ;
 
    const 
       [ Areas, setAreas ] = useState<area_i []>( [] )
@@ -373,19 +389,43 @@ export default function DryWallCalculatorView( { ...props } ) {
                >
                   Mais opções
                </H5>
-               {  MoreOptionsEnabled && 
-                  <Picker
-                     selectedValue={ SelectedMontante }
-                     onValueChange={( itemValue, itemIndex ) =>
-                        setSelectedMontante( itemValue )
-                     }
-                     style={ s.picker }
-                  >
-                     <Picker.Item label="Montantes de 90" value="Montantes de 90" />
-                     <Picker.Item label="Montantes de 70" value="Montantes de 70" />
-                     <Picker.Item label="Montantes de 48" value="Montantes de 48" />
-                  </Picker>
-               }
+               {  MoreOptionsEnabled && <>
+                  <View style={ s.pickerCapsule }>
+                     <Picker
+                        selectedValue={ SelectedMontante }
+                        onValueChange={( itemValue, itemIndex ) =>
+                           setSelectedMontante( itemValue )
+                        }
+                        style={ s.picker }
+                     >
+                        <Picker.Item label="Montantes de 90" value="Montantes de 90" />
+                        <Picker.Item label="Montantes de 70" value="Montantes de 70" />
+                        <Picker.Item label="Montantes de 48" value="Montantes de 48" />
+                     </Picker>
+                  </View>
+
+                  <View style={{ flexDirection: "row", paddingTop: 8, alignItems: "center", justifyContent: "space-between", gap: 16, width: "90%", margin: "auto", paddingLeft: 8, paddingRight: 8, }}>
+                     <P style={{ color: "#aaa" }}>Incluir banda acústica</P>
+                     <Switch 
+                        trackColor={{ false: '#767577', true: '#81b0ff' }}
+                        thumbColor={ IsBandaAcústicaEnabled ? '#00559C' : '#f4f3f4' }
+                        ios_backgroundColor="#3e3e3e"
+                        onValueChange={ toggleSwitch_bandaAcústica }
+                        value={ IsBandaAcústicaEnabled }
+                     />
+                  </View>
+
+                  <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 16, width: "90%", margin: "auto", paddingLeft: 8, paddingRight: 8, }}>
+                     <P style={{ color: "#aaa" }}>Incluir lã de vidro</P>
+                     <Switch 
+                        trackColor={{ false: '#767577', true: '#81b0ff' }}
+                        thumbColor={ IsLãDeVidroEnabled ? '#00559C' : '#f4f3f4' }
+                        ios_backgroundColor="#3e3e3e"
+                        onValueChange={ toggleSwitch_lãDeVidro }
+                        value={ IsLãDeVidroEnabled }
+                     />
+                  </View>
+               </> }  
                <View style={ s.divisor }/>
             </View>
 
@@ -588,34 +628,38 @@ export default function DryWallCalculatorView( { ...props } ) {
                            {}
                         </P>
                      </View>
-                     <View style={[ s.tableRowEven ]}>
-                        <P style={[ s.tableQtdText ]}>
-                           { BandaAcústica?.text }
-                        </P>
-                        <P style={[ s.tableTextDescription ]}>
-                           Banda Acústica
-                        </P>
-                        <P style={[ s.tableText ]}>
-                           {}
-                        </P>
-                        <P style={[ s.tableText ]}>
-                           {}
-                        </P>
-                     </View>
-                     <View style={[ s.tableRowOdd ]}>
-                        <P style={[ s.tableQtdText ]}>
-                           { LãDeVidro?.text }
-                        </P>
-                        <P style={[ s.tableTextDescription ]}>
-                           Lã de vidro
-                        </P>
-                        <P style={[ s.tableText ]}>
-                           {}
-                        </P>
-                        <P style={[ s.tableText ]}>
-                           {}
-                        </P>
-                     </View>
+                     { IsBandaAcústicaEnabled && 
+                        <View style={[ s.tableRowEven ]}>
+                           <P style={[ s.tableQtdText ]}>
+                              { BandaAcústica?.text }
+                           </P>
+                           <P style={[ s.tableTextDescription ]}>
+                              Banda Acústica
+                           </P>
+                           <P style={[ s.tableText ]}>
+                              {}
+                           </P>
+                           <P style={[ s.tableText ]}>
+                              {}
+                           </P>
+                        </View>
+                     }
+                     { IsLãDeVidroEnabled && 
+                        <View style={[ IsBandaAcústicaEnabled ? s.tableRowOdd : s.tableRowEven ]}>
+                           <P style={[ s.tableQtdText ]}>
+                              { LãDeVidro?.text }
+                           </P>
+                           <P style={[ s.tableTextDescription ]}>
+                              Lã de vidro
+                           </P>
+                           <P style={[ s.tableText ]}>
+                              {}
+                           </P>
+                           <P style={[ s.tableText ]}>
+                              {}
+                           </P>
+                        </View>
+                     }
                   </View>
                </View>
             </View>
@@ -699,17 +743,28 @@ const
       tableText: { fontSize: 15, color: "#fff", /* width: "15%" */ flex: .8, textAlign: "center", fontWeight: 300, },
       tableTextDescription: { fontSize: 15, color: "#ccc", flex: 2, textAlign: "left", fontWeight: 500, paddingLeft: 16, },
       
+      pickerCapsule: {
+         width: "90%",
+         height: 56,
+         margin: "auto",
+         borderRadius: 14, 
+         overflow: "hidden", 
+         backgroundColor: "#244", 
+      },
       picker: {
          backgroundColor: "#1b1d22",
-         width: "90%",
-         margin: "auto",
+         width: "100%",
+         // margin: "auto",
          borderRadius: 13,
-         height: 36,
+         // height: 36,
+         height: "100%",
          paddingLeft: 8,
          color: "#eee",
          borderColor: "#9995",
+         overflow: "hidden",
       },
       pickerItem: {
+         overflow: "hidden",
          backgroundColor: "#1b1d22",
          width: "90%",
          margin: "auto",
