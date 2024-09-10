@@ -447,7 +447,7 @@ export default function CustomersView( { ...props } ) {
                         }
                         style={{ 
                            width: "100%", 
-                           // backgroundColor: "#27f",
+                           // backgroundColor: "#eaebef",
                            paddingBottom: 0,
                         }} 
                         contentContainerStyle={{ padding: 16, paddingBottom: 38, }}
