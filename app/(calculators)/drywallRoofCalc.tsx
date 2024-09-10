@@ -370,7 +370,6 @@ const
       input: { backgroundColor: "#1b1d22", color: "#eee", height: 56 },
 
       table: {
-         // backgroundColor: "#515359",
          borderRadius: 24,
          width: "95%",
          marginLeft: "auto",
@@ -385,9 +384,24 @@ const
          flexDirection: "row",
          alignItems: "center"
       },
+      tableHeaderQtdText: {
+         color: "#27f",
+         // width: "15%", 
+         flex: .8,
+         textAlign: "right",
+      },
+      tableHeaderCenterText: {
+         color: "#27f",
+         // width: "15%", 
+         flex: 2,
+         paddingLeft: 16,
+         textAlign: "left",
+      },
       tableHeaderText: {
          color: "#27f",
-         width: "15%", textAlign: "center",
+         // width: "15%", 
+         flex: .8,
+         textAlign: "center",
       },
       tableRowOdd: {
          // backgroundColor: "#515359",
@@ -402,7 +416,77 @@ const
          flexDirection: "row",
          alignItems: "center"
       },
-      tableText: { color: "#fff", width: "15%", textAlign: "center" },
-      tableTextDescription: { color: "#fff", flex: 1, textAlign: "left" },
+      tableQtdText: { fontSize: 15, color: "#fff", /* width: "15%" */ flex: .8, textAlign: "right", fontWeight: 300, },
+      tableText: { fontSize: 15, color: "#fff", /* width: "15%" */ flex: .8, textAlign: "center", fontWeight: 300, },
+      tableTextDescription: { fontSize: 15, color: "#ccc", flex: 2, textAlign: "left", fontWeight: 500, paddingLeft: 16, },
+      
+      tableFooter: {
+         backgroundColor: "#16181c",
+         height: 46,
+         flexDirection: "row",
+         alignItems: "center",
+         justifyContent: "space-around"
+      },
+      tableFooterText: {
+         color: "#bbf",
+      },
+      tableFooterTotalText: {
+         color: "#fb0",
+      },
+      tableFooterLinearText: {
+         color: "#27f",
+      },
+      tableFooterRow: {
+         backgroundColor: "#1b1d22",
+         height: 46,
+         flexDirection: "row",
+         alignItems: "center",
+         justifyContent: "space-around"
+      },
+      tableFooterRowText: {
+         color: "#fff",
+         width: "100%",
+         textAlign: "center",
+      },
+      tableFooterRowTotalText: {
+         color: "#fff",
+         fontWeight: "bold",
+         width: "100%",
+         textAlign: "center",
+      },
+
+      pickerCapsule: {
+         width: "90%",
+         height: 56,
+         margin: "auto",
+         borderRadius: 14, 
+         overflow: "hidden", 
+         backgroundColor: "#244", 
+      },
+      picker: {
+         backgroundColor: "#1b1d22",
+         width: "100%",
+         // margin: "auto",
+         borderRadius: 13,
+         // height: 36,
+         height: "100%",
+         paddingLeft: 8,
+         color: "#eee",
+         borderColor: "#9995",
+         overflow: "hidden",
+      },
+      pickerItem: {
+         overflow: "hidden",
+         backgroundColor: "#1b1d22",
+         width: "90%",
+         margin: "auto",
+         borderRadius: 13,
+         height: 36,
+         paddingLeft: 8,
+         color: "#eee",
+         borderColor: "#9995",
+      },
+      divisor: { backgroundColor: "#eee3", width: "90%", height: 1, margin: "auto", marginTop: 16, marginBottom: 16, },
+
    } )
 ;

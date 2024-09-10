@@ -160,12 +160,70 @@ export default function DryWallCalculatorView( { ...props } ) {
       } )
    ;
 
+   async function SetMaterialsNeeded( materials ) {
+      try {
+         setMaterialsNeeded( materials ); // here
+         setArea( { 
+            text: r?.wallArea.toString(), 
+            value: r?.wallArea 
+         } );
+         setPerimetro( { 
+            text: r?.wallPerimetro.toString(), 
+            value: r?.wallPerimetro 
+         } );
+         setPanelsNeeded( r.panelsNeeded.toString() );
+         setPanelsAreaNeeded( { 
+            text: r?.panelsAreaNeeded.toString(), 
+            value: r?.panelsAreaNeeded 
+         } );
+         setGuias( { 
+            text: r?.guiasNeeded.toString(), 
+            value: r?.guiasNeeded 
+         } );
+         setMontantes( { 
+            text: r?.montantesNeeded.toString(), 
+            value: r?.montantesNeeded 
+         } );
+         setGN25( { 
+            text: r?.gn25Needed.toString(), 
+            value: r?.gn25Needed
+         } );
+         setLfix( { 
+            text: r?.lfixNeeded.toString(), 
+            value: r?.lfixNeeded
+         } );
+         setMetalMetal( { 
+            text: r?.screwMMNeeded.toString(), 
+            value: r?.screwMMNeeded
+         } );
+         setMassa( { 
+            text: r?.massaNeeded.toString(), 
+            value: r?.massaNeeded
+         } );
+         setFitaTelada( { 
+            text: r?.tapeNeeded.toString(), 
+            value: r?.tapeNeeded
+         } );
+         setBandaAcústica( { 
+            text: r?.bandaAcústicaNeeded.toString(), 
+            value: r?.bandaAcústicaNeeded
+         } );
+         setLãDeVidro( { 
+            text: r?.panelsAreaNeeded.toString(), 
+            value: r?.panelsAreaNeeded
+         } );
+
+         console.log( "PanelsNeeded: ", r?.panelsNeeded );
+      } catch( err: any ) {
+         console.error( "SetMaterialsNeeded() err: \n\n\n", err );
+      }
+   }
+
    async function Calculate( Width: number, Height: number ) {
       try {
-         const data = CalculateDryWall( Width, Height ).then( r => { 
+         const data = CalculateDryWall( Width, Height )/*.then( r => { 
             setArea( { 
                text: r?.wallArea.toString(), 
-               // value: parseFloat( r?.wallArea ) 
                value: r?.wallArea 
             } );
             setPerimetro( { 
@@ -215,7 +273,64 @@ export default function DryWallCalculatorView( { ...props } ) {
             } );
 
             console.log( "PanelsNeeded: ", r?.panelsNeeded );
-         } );
+         } ); */
+         /* Areas.forEach( area => {
+            const item: materials_i = {
+               area: 0,
+               bandaAcústica: 0,
+               chapas: 0,
+               fitaTelada: 0,
+               gn25: 0,
+               guias: 0,
+               height: 0,
+               lfix: 0,
+               lãDeVidro: 0,
+               massa: 0,
+               montantes: 0,
+               parafusoMM: 0,
+               perimetro: 0,
+               width: 0,
+               
+               displayArea: "",
+               displayBandaAcústica: "",
+               displayChapas: "",
+               displayFitaTelada: "",
+               displayGn25: "",
+               displayGuias: "",
+               displayHeight: "",
+               displayLfix: "",
+               displayLãDeVidro: "",
+               displayMassa: "",
+               displayMontantes: "",
+               displayParafusoMM: "",
+               displayPerimetro: "",
+               displayWidth: "",
+            };
+            CalculateDryWall( area.width!, area.height! ).then( r => { 
+               item.width = area.width;
+               item.height = area.height;
+               item.area = r?.wallArea;
+               item.perimetro = r?.wallPerimetro;
+               item.bandaAcústica = r?.bandaAcústicaNeeded;
+               item.chapas = r?.panelsNeeded
+               item.fitaTelada = r?.tapeNeeded
+               item.gn25 = r?.gn25Needed
+               item.guias = r?.guiasNeeded
+               item.lfix = r?.lfixNeeded
+               item.lãDeVidro = r?.lãDeVidroNeeded
+               item.massa = r?.massaNeeded
+               item.montantes = r?.montantesNeeded
+               item.parafusoMM = r?.screwMMNeeded
+   
+               console.log( "PanelsNeeded cada medida: ", r?.panelsNeeded );
+            } ).then( () => {
+               const data = [ ...MaterialsNeeded ];
+               data.push( item );
+               setMaterialsNeeded( data );
+               console.table( MaterialsNeeded );
+            } );
+            
+         } ); */
       } catch( err: any ) {
          console.error( "Calculate() err: \n\n\n", err );
       }
@@ -293,6 +408,8 @@ export default function DryWallCalculatorView( { ...props } ) {
                materials.push( material );
                console.log( "materials: ", materials );
             } );
+
+            return materials;
          } );
       } catch( err: any ) { console.log( "CreateMaterialsNeeded() err: ", err ); }
    }
@@ -444,7 +561,10 @@ export default function DryWallCalculatorView( { ...props } ) {
                <AniButton text="Calcular"
                   onPress={ () => {
                      // const value = Calculate( Width!.value, Height!.value );
-                     CreateMaterialsNeeded();
+                     CreateMaterialsNeeded().then( materials => {
+                        SetMaterialsNeeded( materials );
+                        console.table( materials );
+                     } );
                      // console.log( "calculate() value: ", value );
                   } }
                />
@@ -476,8 +596,8 @@ export default function DryWallCalculatorView( { ...props } ) {
                         <Label style={{ flexDirection: "row", justifyContent: "center", alignItems: "center", gap: 8, }} key={ `Label-${ item.id }` }>
                            <Input value={ item.displayWidth } style={{ flex: 1, backgroundColor: "#16181c", color: "#eee" }} key={ `Item-width:${ item.id }` }/>
                            <Input value={ item.displayHeight } style={{ flex: 1, backgroundColor: "#16181c", color: "#eee" }} key={ `Item-height:${ item.id }` }/>
-                           <Input value={ item.displayArea } style={{ flex: 1, backgroundColor: "#16181c", color: "#eee" }} key={ `Item-height:${ item.id }` }/>
-                           <Input value={ item.displayPerimetro } style={{ flex: 1, backgroundColor: "#16181c", color: "#eee" }} key={ `Item-height:${ item.id }` }/>
+                           <Input value={ item.displayArea } style={{ flex: 1, backgroundColor: "#16181c", color: "#eee" }} key={ `Item-area:${ item.id }` }/>
+                           <Input value={ item.displayPerimetro } style={{ flex: 1, backgroundColor: "#16181c", color: "#eee" }} key={ `Item-perimetro:${ item.id }` }/>
                            <Pressable
                               onPress={ () => {
                                  // console.log( "Areas.findIndex: ", Areas.findIndex( predicate => predicate.id == item.id ) );
@@ -505,7 +625,9 @@ export default function DryWallCalculatorView( { ...props } ) {
                }
             </View>
 
+            {/* table with materials needed */}
             <View style={{ paddingTop: 36, paddingBottom: 66, }}>
+               {/* table head */}
                <View style={[ s.table ]}>
                   <View style={[ s.tableHeader ]}>
                      <H5 style={[ s.tableHeaderQtdText ]}>QTD</H5>
@@ -660,6 +782,24 @@ export default function DryWallCalculatorView( { ...props } ) {
                            </P>
                         </View>
                      }
+
+                     {/* table footer */}
+                     <View style={[ s.tableFooter ]}>
+                        <H5 style={[ s.tableFooterText ]}>Área Total</H5>
+                        <H5 style={[ s.tableFooterText, ]}>Linear Total</H5>
+                        <H5 style={[ s.tableFooterTotalText ]}>Valor total R$</H5>
+                     </View>
+                     <View style={ s.tableFooterRow }>
+                        <P style={[ s.tableFooterRowText ]}>
+                           { Area.text }
+                        </P>
+                        <P style={[ s.tableFooterRowText ]}>
+                           { Perimetro.text }
+                        </P>
+                        <P style={[ s.tableFooterRowTotalText ]}>
+                           {  }
+                        </P>
+                     </View>
                   </View>
                </View>
             </View>
@@ -692,7 +832,6 @@ const
       input: { backgroundColor: "#1b1d22", color: "#eee", height: 56 },
 
       table: {
-         // backgroundColor: "#515359",
          borderRadius: 24,
          width: "95%",
          marginLeft: "auto",
@@ -743,6 +882,41 @@ const
       tableText: { fontSize: 15, color: "#fff", /* width: "15%" */ flex: .8, textAlign: "center", fontWeight: 300, },
       tableTextDescription: { fontSize: 15, color: "#ccc", flex: 2, textAlign: "left", fontWeight: 500, paddingLeft: 16, },
       
+      tableFooter: {
+         backgroundColor: "#16181c",
+         height: 46,
+         flexDirection: "row",
+         alignItems: "center",
+         justifyContent: "space-around"
+      },
+      tableFooterText: {
+         color: "#bbf",
+      },
+      tableFooterTotalText: {
+         color: "#fb0",
+      },
+      tableFooterLinearText: {
+         color: "#27f",
+      },
+      tableFooterRow: {
+         backgroundColor: "#1b1d22",
+         height: 46,
+         flexDirection: "row",
+         alignItems: "center",
+         justifyContent: "space-around"
+      },
+      tableFooterRowText: {
+         color: "#fff",
+         width: "100%",
+         textAlign: "center",
+      },
+      tableFooterRowTotalText: {
+         color: "#fff",
+         fontWeight: "bold",
+         width: "100%",
+         textAlign: "center",
+      },
+
       pickerCapsule: {
          width: "90%",
          height: 56,
