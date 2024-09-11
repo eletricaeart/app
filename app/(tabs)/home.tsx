@@ -44,6 +44,11 @@ const
          icon: "calculator", icn: "f", iconColor: "#fc0",
          size: 46
       }
+      ,
+      { id: 3, name: "Forro de DryWall novo", src: "/drywallCalcRoof",
+         icon: "calculator", icn: "f", iconColor: "#27f",
+         size: 46
+      }
    ]
 ;
 

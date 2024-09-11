@@ -55,7 +55,7 @@ let
  * forro
  */
 export async function CalculateDryWallRoof(
-   length: number, width: number, rebaixo: number
+   length: number, width: number, rebaixo?: number
 ) {
    try {
       const 
@@ -69,6 +69,8 @@ export async function CalculateDryWallRoof(
          ,
          tabicasNeeded = Math.ceil( roofPerimetro / 3 )
          ,
+         cantoneirasNeeded = Math.ceil( roofPerimetro / 3 )
+         ,
          perfisNeeded = Math.floor( width / .6 )
          ,
          reguladoresNeeded = perfisNeeded * 3
@@ -80,7 +82,7 @@ export async function CalculateDryWallRoof(
          tirantesNeeded = rebaixo ? (
             Math.ceil( ( reguladoresNeeded * rebaixo ) / 14 )
          ) : (
-            Math.ceil( ( reguladoresNeeded * .5 ) / 14 )
+            Math.ceil( ( reguladoresNeeded ) / 14 )
          )
          ,
          gn25Needed = panelsNeeded * 30
@@ -95,7 +97,15 @@ export async function CalculateDryWallRoof(
          ,
          uniõesNeeded = ( width / 3 ) * perfisNeeded
          ,
+         uniãoNeeded = ( width / 3 ) * perfisNeeded
+         ,
          tapeNeeded = Math.ceil( roofArea / 150 )
+         ,
+         // 0,9 * roofArea
+         bandaAcústicaNeeded = 0.9 * roofArea
+         ,
+         // 1 * roofArea
+         lãDeVidroNeeded = 1 * roofArea
       ;
       
       return {
@@ -103,6 +113,7 @@ export async function CalculateDryWallRoof(
          roofPerimetro,
          panelsNeeded,
          tabicasNeeded,
+         cantoneirasNeeded,
          perfisNeeded,
          reguladoresNeeded,
          lfixNeeded,
@@ -112,8 +123,11 @@ export async function CalculateDryWallRoof(
          screwMMNeeded,
          pregosNeeded,
          uniõesNeeded,
+         uniãoNeeded,
          tapeNeeded,
          massaNeeded,
+         bandaAcústicaNeeded,
+         lãDeVidroNeeded,
       }
    } catch( err: any ) { console.error( "CalculateDrywallRoof() err: ", err ); }
 }
