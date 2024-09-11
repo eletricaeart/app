@@ -554,7 +554,7 @@ export default function DryWallCalculatorView( { ...props } ) {
                            style={ s.picker }
                         >
                            <Picker.Item label="Tabica" value="Tabica" />
-                           <Picker.Item label="Cantoneira" value="Cantoneira" />
+                           <Picker.Item label="Cantoneira 25.30" value="Cantoneira 25.30" />
                         </Picker>
                      </View>
 

@@ -53,6 +53,34 @@ let
 
 /**
  * forro
+ * 
+ * https://www.youtube.com/watch?v=SLB0TG4DAG8&t=436s
+ * comprimento: 3,10m
+ * largura: 2,75m
+ * area: 
+ * linear: 11,70m
+ * 
+ * cantoneiras: 4 barras
+ * tabicas: 4 barras
+ * 
+ * // com canaleta
+ * // ( ( ( largura - 1,20 ) / 1 ): arredondado pra baixo + 2 ) * cantoneiras
+ * // -- 
+ * // com tabica
+ * // ( ( ( largura - ,60 ) / 1 ): arredondado pra baixo + 2 ) * tabicas
+ * tirante: 15 un: com-canaleta / 18 un: com-tabicas
+ * 
+ * // igual o tirante
+ * regulador: 15un / 18un
+ * 
+ * canaleta: 5 barras / 6 barras
+ * chapa: 5 chapas
+ * gn25: 2 centos
+ *  1 cento
+ *  1 saco 5 kg
+ *  1 rolo
+ *  não  
+ * 
  */
 export async function CalculateDryWallRoof(
    length: number, width: number, rebaixo?: number
@@ -67,8 +95,12 @@ export async function CalculateDryWallRoof(
          ,
          panelsNeeded = Math.ceil( ( ( length * width ) / panelArea * 1.05 ) )
          ,
+         // metro linear / 3m : arredonda pra cima
+         // ou 
+         // ( ( comprimento / .60 ) => quantidade x ( largura / 3m ) => tamanho ) + 1
          tabicasNeeded = Math.ceil( roofPerimetro / 3 )
          ,
+         // ( comprimento / .60 ) => quantidade x ( largura / 3m ) => tamanho
          cantoneirasNeeded = Math.ceil( roofPerimetro / 3 )
          ,
          perfisNeeded = Math.floor( width / .6 )
