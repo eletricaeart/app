@@ -131,10 +131,11 @@ export async function CalculateDryWall(
          panelArea = 1.8 * 1.2
          ,
          // comprimento x altura = área da parede
-         wallArea = width * height
+         wallArea = ( width * height ).toFixed( 2 )
          ,
          // 
-         wallPerimetro = ( width * 2 ) + ( height * 2 )
+         // wallPerimetro = ( width * 2 ) + ( height * 2 )
+         wallPerimetro = width
          ,
          // área de parede / área da chapa + 5% de desperdício do material = número de chapas
          panelsNeeded = Math.ceil( ( wallArea / panelArea * 1.05 ) ) * 2
@@ -150,7 +151,7 @@ export async function CalculateDryWall(
          ,
          // 15 * wallArea ou wallArea * 2 * panelArea * 15
          // gn25Needed = ( panelsNeeded * panelArea ) * 15
-         gn25Needed = panelsAreaNeeded * 15
+         gn25Needed = Math.ceil( panelsAreaNeeded * 15 )
          ,
          lfixNeeded = ( guiasNeeded / .5 )
          ,

@@ -7,7 +7,6 @@ import { Icon } from "@/src/widgets/clb-icons";
 import { Header } from "@/src/widgets/clb-widgets";
 import { AppbarStick, BackButton, Duo, H2, H3, H4, H5, Input, Label, LabelText, P, T1 } from "@/src/widgets/ui";
 import { AniButton } from "@/src/widgets/ui/animated";
-import { transformFileSync } from "@babel/core";
 import { Stack } from "expo-router";
 import React, { useState, useEffect } from "react";
 import { 
@@ -21,7 +20,6 @@ import {
 } from "react-native";
 import uuid from "react-native-uuid";
 import {Picker} from '@react-native-picker/picker';
-import { isEnabled } from "react-native/Libraries/Performance/Systrace";
 
 /** == [ properties ]
  * == == == == == == == == == */
@@ -102,237 +100,174 @@ export default function DryWallCalculatorView( { ...props } ) {
       ,
       [ MaterialsNeeded, setMaterialsNeeded ] = useState<materials_i[]>( [] )
       ,
-      // [ Width, setWidth ] = useState<inputTextValue_i | undefined>( { 
-      [ Width, setWidth ] = useState<inputTextValue_i>( { 
-         text: "", value: 0 
-      } )
+      [ Width, setWidth ] = useState<inputTextValue_i>( 
+         { text: "", value: 0 }
+      )
       ,
-      [ Height, setHeight ] = useState<inputTextValue_i>( { 
-         text: "", value: 0 
-      } )
+      [ Height, setHeight ] = useState<inputTextValue_i>( 
+         { text: "", value: 0 }
+      )
       ,
-      [ Area, setArea ] = useState<inputTextValue_i>( { 
-         text: "", value: 0 
-      } )
+      [ Area, setArea ] = useState<inputTextValue_i>( 
+         { text: "", value: 0 }
+      )
       ,
-      [ Perimetro, setPerimetro ] = useState<inputTextValue_i>( { 
-         text: "", value: 0 
-      } )
+      [ Perimetro, setPerimetro ] = useState<inputTextValue_i>( 
+         { text: "", value: 0 }
+      )
       ,
       [ PanelsNeeded, setPanelsNeeded ] = useState<string>()
       ,
       [ PanelsAreaNeeded, setPanelsAreaNeeded ] = useState<string>()
       ,
-      [ Guias, setGuias ] = useState<inputTextValue_i>( { 
-         text: "", value: 0 
-      } )
+      [ Guias, setGuias ] = useState<inputTextValue_i>( 
+         { text: "", value: 0 }
+      )
       ,
-      [ Montantes, setMontantes ] = useState<inputTextValue_i>( { 
-         text: "", value: 0 
-      } )
+      [ Montantes, setMontantes ] = useState<inputTextValue_i>( 
+         { text: "", value: 0 }
+      )
       ,
-      [ GN25, setGN25 ] = useState<inputTextValue_i>( { 
-         text: "", value: 0 
-      } )
+      [ GN25, setGN25 ] = useState<inputTextValue_i>( 
+         { text: "", value: 0 }
+      )
       ,
-      [ Lfix, setLfix ] = useState<inputTextValue_i>( { 
-         text: "", value: 0 
-      } )
+      [ Lfix, setLfix ] = useState<inputTextValue_i>( 
+         { text: "", value: 0 }
+      )
       ,
-      [ MetalMetal, setMetalMetal ] = useState<inputTextValue_i>( { 
-         text: "", value: 0 
-      } )
+      [ MetalMetal, setMetalMetal ] = useState<inputTextValue_i>( 
+         { text: "", value: 0 }
+      )
       ,
-      [ Massa, setMassa ] = useState<inputTextValue_i>( { 
-         text: "", value: 0 
-      } )
+      [ Massa, setMassa ] = useState<inputTextValue_i>( 
+         { text: "", value: 0 }
+      )
       ,
-      [ FitaTelada, setFitaTelada ] = useState<inputTextValue_i>( { 
-         text: "", value: 0 
-      } )
+      [ FitaTelada, setFitaTelada ] = useState<inputTextValue_i>( 
+         { text: "", value: 0 }
+      )
       ,
-      [ BandaAcústica, setBandaAcústica ] = useState<inputTextValue_i>( { 
-         text: "", value: 0 
-      } )
+      [ BandaAcústica, setBandaAcústica ] = useState<inputTextValue_i>( 
+         { text: "", value: 0 }
+      )
       ,
-      [ LãDeVidro, setLãDeVidro ] = useState<inputTextValue_i>( { 
-         text: "", value: 0 
-      } )
+      [ LãDeVidro, setLãDeVidro ] = useState<inputTextValue_i>( 
+         { text: "", value: 0 }
+      )
    ;
 
-   async function SetMaterialsNeeded( materials ) {
+   async function DisplayMaterialsNeeded( materials ) {  
       try {
-         setMaterialsNeeded( materials ); // here
-         setArea( { 
-            text: r?.wallArea.toString(), 
-            value: r?.wallArea 
-         } );
-         setPerimetro( { 
-            text: r?.wallPerimetro.toString(), 
-            value: r?.wallPerimetro 
-         } );
-         setPanelsNeeded( r.panelsNeeded.toString() );
-         setPanelsAreaNeeded( { 
-            text: r?.panelsAreaNeeded.toString(), 
-            value: r?.panelsAreaNeeded 
-         } );
-         setGuias( { 
-            text: r?.guiasNeeded.toString(), 
-            value: r?.guiasNeeded 
-         } );
-         setMontantes( { 
-            text: r?.montantesNeeded.toString(), 
-            value: r?.montantesNeeded 
-         } );
-         setGN25( { 
-            text: r?.gn25Needed.toString(), 
-            value: r?.gn25Needed
-         } );
-         setLfix( { 
-            text: r?.lfixNeeded.toString(), 
-            value: r?.lfixNeeded
-         } );
-         setMetalMetal( { 
-            text: r?.screwMMNeeded.toString(), 
-            value: r?.screwMMNeeded
-         } );
-         setMassa( { 
-            text: r?.massaNeeded.toString(), 
-            value: r?.massaNeeded
-         } );
-         setFitaTelada( { 
-            text: r?.tapeNeeded.toString(), 
-            value: r?.tapeNeeded
-         } );
-         setBandaAcústica( { 
-            text: r?.bandaAcústicaNeeded.toString(), 
-            value: r?.bandaAcústicaNeeded
-         } );
-         setLãDeVidro( { 
-            text: r?.panelsAreaNeeded.toString(), 
-            value: r?.panelsAreaNeeded
+         const materialsNeeded = {
+            width: 0,
+            height: 0,
+            area: 0,
+            perimetro: 0,
+            chapas: 0,
+            guias: 0,
+            montantes: 0,
+            gn25: 0,
+            lfix: 0,
+            parafusoMM: 0,
+            fitaTelada: 0,
+            massa: 0,
+            bandaAcústica: 0,
+            lãDeVidro: 0,
+         };
+
+         materials.forEach( material => {
+               materialsNeeded.width += material.width;
+               materialsNeeded.height += material.height;
+               materialsNeeded.area += material.area;
+               materialsNeeded.perimetro += material.perimetro;
+               materialsNeeded.chapas += material.chapas;
+               materialsNeeded.guias += material.guias;
+               materialsNeeded.montantes += material.montantes;
+               materialsNeeded.gn25 += material.gn25;
+               materialsNeeded.lfix += material.lfix;
+               materialsNeeded.parafusoMM += material.parafusoMM;
+               materialsNeeded.fitaTelada += material.fitaTelada;
+               materialsNeeded.massa += material.massa;
+               materialsNeeded.bandaAcústica += material.bandaAcústica;
+               materialsNeeded.lãDeVidro += material.lãDeVidro;
          } );
 
-         console.log( "PanelsNeeded: ", r?.panelsNeeded );
+         setMaterialsNeeded( materials );
+         
+         setArea(
+            { 
+               text: materialsNeeded?.area.toString(), 
+               value: materialsNeeded?.area 
+            } 
+         );
+         setPerimetro(
+            { 
+               text: materialsNeeded?.perimetro.toString(), 
+               value: materialsNeeded?.perimetro 
+            } 
+         );
+         setPanelsNeeded( materialsNeeded.chapas.toString() );
+         setGuias(
+            { 
+               text: materialsNeeded?.guias.toString(), 
+               value: materialsNeeded?.guias 
+            } 
+         );
+         setMontantes(
+            { 
+               text: materialsNeeded?.montantes.toString(), 
+               value: materialsNeeded?.montantes 
+            } 
+         );
+         setGN25(
+            { 
+               text: materialsNeeded?.gn25.toString(), 
+               value: materialsNeeded?.gn25
+            } 
+         );
+         setLfix(
+            { 
+               text: materialsNeeded?.lfix.toString(), 
+               value: materialsNeeded?.lfix
+            } 
+         );
+         setMetalMetal(
+            { 
+               text: materialsNeeded?.parafusoMM.toString(), 
+               value: materialsNeeded?.parafusoMM
+            } 
+         );
+         setMassa(
+            { 
+               text: materialsNeeded?.massa.toString(), 
+               value: materialsNeeded?.massa
+            } 
+         );
+         setFitaTelada(
+            { 
+               text: materialsNeeded?.fitaTelada.toString(), 
+               value: materialsNeeded?.fitaTelada
+            } 
+         );
+         setBandaAcústica(
+            { 
+               text: materialsNeeded?.bandaAcústica.toString(), 
+               value: materialsNeeded?.bandaAcústica
+            } 
+         );
+         setLãDeVidro(
+            { 
+               text: materialsNeeded?.lãDeVidro.toString(), 
+               value: materialsNeeded?.lãDeVidro
+            } 
+         );
+
+         console.log( "chapas: ", materialsNeeded?.chapas );
+
+         console.log( "DisplayMaterialsNeeded( materials ) materials: ", materials );
       } catch( err: any ) {
-         console.error( "SetMaterialsNeeded() err: \n\n\n", err );
-      }
-   }
-
-   async function Calculate( Width: number, Height: number ) {
-      try {
-         const data = CalculateDryWall( Width, Height )/*.then( r => { 
-            setArea( { 
-               text: r?.wallArea.toString(), 
-               value: r?.wallArea 
-            } );
-            setPerimetro( { 
-               text: r?.wallPerimetro.toString(), 
-               value: r?.wallPerimetro 
-            } );
-            setPanelsNeeded( r.panelsNeeded.toString() );
-            setPanelsAreaNeeded( { 
-               text: r?.panelsAreaNeeded.toString(), 
-               value: r?.panelsAreaNeeded 
-            } );
-            setGuias( { 
-               text: r?.guiasNeeded.toString(), 
-               value: r?.guiasNeeded 
-            } );
-            setMontantes( { 
-               text: r?.montantesNeeded.toString(), 
-               value: r?.montantesNeeded 
-            } );
-            setGN25( { 
-               text: r?.gn25Needed.toString(), 
-               value: r?.gn25Needed
-            } );
-            setLfix( { 
-               text: r?.lfixNeeded.toString(), 
-               value: r?.lfixNeeded
-            } );
-            setMetalMetal( { 
-               text: r?.screwMMNeeded.toString(), 
-               value: r?.screwMMNeeded
-            } );
-            setMassa( { 
-               text: r?.massaNeeded.toString(), 
-               value: r?.massaNeeded
-            } );
-            setFitaTelada( { 
-               text: r?.tapeNeeded.toString(), 
-               value: r?.tapeNeeded
-            } );
-            setBandaAcústica( { 
-               text: r?.bandaAcústicaNeeded.toString(), 
-               value: r?.bandaAcústicaNeeded
-            } );
-            setLãDeVidro( { 
-               text: r?.panelsAreaNeeded.toString(), 
-               value: r?.panelsAreaNeeded
-            } );
-
-            console.log( "PanelsNeeded: ", r?.panelsNeeded );
-         } ); */
-         /* Areas.forEach( area => {
-            const item: materials_i = {
-               area: 0,
-               bandaAcústica: 0,
-               chapas: 0,
-               fitaTelada: 0,
-               gn25: 0,
-               guias: 0,
-               height: 0,
-               lfix: 0,
-               lãDeVidro: 0,
-               massa: 0,
-               montantes: 0,
-               parafusoMM: 0,
-               perimetro: 0,
-               width: 0,
-               
-               displayArea: "",
-               displayBandaAcústica: "",
-               displayChapas: "",
-               displayFitaTelada: "",
-               displayGn25: "",
-               displayGuias: "",
-               displayHeight: "",
-               displayLfix: "",
-               displayLãDeVidro: "",
-               displayMassa: "",
-               displayMontantes: "",
-               displayParafusoMM: "",
-               displayPerimetro: "",
-               displayWidth: "",
-            };
-            CalculateDryWall( area.width!, area.height! ).then( r => { 
-               item.width = area.width;
-               item.height = area.height;
-               item.area = r?.wallArea;
-               item.perimetro = r?.wallPerimetro;
-               item.bandaAcústica = r?.bandaAcústicaNeeded;
-               item.chapas = r?.panelsNeeded
-               item.fitaTelada = r?.tapeNeeded
-               item.gn25 = r?.gn25Needed
-               item.guias = r?.guiasNeeded
-               item.lfix = r?.lfixNeeded
-               item.lãDeVidro = r?.lãDeVidroNeeded
-               item.massa = r?.massaNeeded
-               item.montantes = r?.montantesNeeded
-               item.parafusoMM = r?.screwMMNeeded
-   
-               console.log( "PanelsNeeded cada medida: ", r?.panelsNeeded );
-            } ).then( () => {
-               const data = [ ...MaterialsNeeded ];
-               data.push( item );
-               setMaterialsNeeded( data );
-               console.table( MaterialsNeeded );
-            } );
-            
-         } ); */
-      } catch( err: any ) {
-         console.error( "Calculate() err: \n\n\n", err );
+         console.error( "DisplayMaterialsNeeded() err: \n\n\n", err );
       }
    }
 
@@ -344,13 +279,13 @@ export default function DryWallCalculatorView( { ...props } ) {
 
                width: Width!.value,
                height: Height!.value,
-               area: Width!.value! * Height!.value!,
-               perimetro: ( Width!.value! * 2 ) + ( Height!.value! * 2 ),
+               area: parseFloat( ( Width!.value! * Height!.value! ).toFixed( 2 ) ),
+               perimetro: Width!.value!,
                
                displayWidth: Width!.text,
                displayHeight: Height!.text,
-               displayArea: ( Width!.value! * Height!.value! ).toString(),
-               displayPerimetro: ( ( Width!.value! * 2 ) + ( Height!.value! * 2 ) ).toString(),
+               displayArea: ( ( Width!.value! * Height!.value! ) ).toFixed( 2 ).toString(),
+               displayPerimetro: Width!.value!.toString(),
             }
          ;
          Areas.push( item );
@@ -377,7 +312,7 @@ export default function DryWallCalculatorView( { ...props } ) {
                   width: data.width!,
                   height: data.width!,
                   area: data.width! * data.height!,
-                  perimetro: ( data.width! * 2 ) + ( data.height! * 2 ),
+                  perimetro: data.width!,
                   chapas: returned!.panelsNeeded!,
                   guias: returned!.guiasNeeded!,
                   montantes: returned!.montantesNeeded!,
@@ -392,7 +327,7 @@ export default function DryWallCalculatorView( { ...props } ) {
                   displayWidth: ( data.width! ).toString(),
                   displayHeight: ( data.width! ).toString(),
                   displayArea: ( data.width! * data.height! ).toString(),
-                  displayPerimetro: ( ( data.width! * 2 ) + ( data.height! * 2 ) ).toString(),
+                  displayPerimetro: data.width!.toString(),
                   displayChapas: ( returned?.panelsNeeded! ).toString(),
                   displayGuias: ( returned?.guiasNeeded! ).toString(),
                   displayMontantes: ( returned?.montantesNeeded! ).toString(),
@@ -406,11 +341,11 @@ export default function DryWallCalculatorView( { ...props } ) {
                }
 
                materials.push( material );
-               console.log( "materials: ", materials );
+               console.log( "CreateMaterialsNeeded() materials: ", materials );
+               
             } );
-
-            return materials;
          } );
+         return materials;
       } catch( err: any ) { console.log( "CreateMaterialsNeeded() err: ", err ); }
    }
 
@@ -506,66 +441,63 @@ export default function DryWallCalculatorView( { ...props } ) {
                >
                   Mais opções
                </H5>
-               {  MoreOptionsEnabled && <>
-                  <View style={ s.pickerCapsule }>
-                     <Picker
-                        selectedValue={ SelectedMontante }
-                        onValueChange={( itemValue, itemIndex ) =>
-                           setSelectedMontante( itemValue )
-                        }
-                        style={ s.picker }
-                     >
-                        <Picker.Item label="Montantes de 90" value="Montantes de 90" />
-                        <Picker.Item label="Montantes de 70" value="Montantes de 70" />
-                        <Picker.Item label="Montantes de 48" value="Montantes de 48" />
-                     </Picker>
-                  </View>
+               {  
+                  MoreOptionsEnabled && <>
+                     <View style={ s.pickerCapsule }>
+                        <Picker
+                           selectedValue={ SelectedMontante }
+                           onValueChange={( itemValue, itemIndex ) =>
+                              setSelectedMontante( itemValue )
+                           }
+                           style={ s.picker }
+                        >
+                           <Picker.Item label="Montantes de 90" value="Montantes de 90" />
+                           <Picker.Item label="Montantes de 70" value="Montantes de 70" />
+                           <Picker.Item label="Montantes de 48" value="Montantes de 48" />
+                        </Picker>
+                     </View>
 
-                  <View style={{ flexDirection: "row", paddingTop: 8, alignItems: "center", justifyContent: "space-between", gap: 16, width: "90%", margin: "auto", paddingLeft: 8, paddingRight: 8, }}>
-                     <P style={{ color: "#aaa" }}>Incluir banda acústica</P>
-                     <Switch 
-                        trackColor={{ false: '#767577', true: '#81b0ff' }}
-                        thumbColor={ IsBandaAcústicaEnabled ? '#00559C' : '#f4f3f4' }
-                        ios_backgroundColor="#3e3e3e"
-                        onValueChange={ toggleSwitch_bandaAcústica }
-                        value={ IsBandaAcústicaEnabled }
-                     />
-                  </View>
+                     <View style={{ flexDirection: "row", paddingTop: 8, alignItems: "center", justifyContent: "space-between", gap: 16, width: "90%", margin: "auto", paddingLeft: 8, paddingRight: 8, }}>
+                        <P style={{ color: "#aaa" }}>Incluir banda acústica</P>
+                        <Switch 
+                           trackColor={{ false: '#767577', true: '#81b0ff' }}
+                           thumbColor={ IsBandaAcústicaEnabled ? '#00559C' : '#f4f3f4' }
+                           ios_backgroundColor="#3e3e3e"
+                           onValueChange={ toggleSwitch_bandaAcústica }
+                           value={ IsBandaAcústicaEnabled }
+                        />
+                     </View>
 
-                  <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 16, width: "90%", margin: "auto", paddingLeft: 8, paddingRight: 8, }}>
-                     <P style={{ color: "#aaa" }}>Incluir lã de vidro</P>
-                     <Switch 
-                        trackColor={{ false: '#767577', true: '#81b0ff' }}
-                        thumbColor={ IsLãDeVidroEnabled ? '#00559C' : '#f4f3f4' }
-                        ios_backgroundColor="#3e3e3e"
-                        onValueChange={ toggleSwitch_lãDeVidro }
-                        value={ IsLãDeVidroEnabled }
-                     />
-                  </View>
-               </> }  
+                     <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 16, width: "90%", margin: "auto", paddingLeft: 8, paddingRight: 8, }}>
+                        <P style={{ color: "#aaa" }}>Incluir lã de vidro</P>
+                        <Switch 
+                           trackColor={{ false: '#767577', true: '#81b0ff' }}
+                           thumbColor={ IsLãDeVidroEnabled ? '#00559C' : '#f4f3f4' }
+                           ios_backgroundColor="#3e3e3e"
+                           onValueChange={ toggleSwitch_lãDeVidro }
+                           value={ IsLãDeVidroEnabled }
+                        />
+                     </View>
+                  </> 
+               }  
                <View style={ s.divisor }/>
             </View>
 
             <View style={[ {  padding: 18, gap: 24, } ]}>
                <AniButton text="Adicionar" bg={ Width?.text && Height?.text ? "#339" : "#555" }
                   onPress={ () => {
-                     // {  
-                        if( Width?.value && Height?.value ) {
-                           CreateAreaList();
-                        }
-                        // Width?.value && Height?.value ? 
-                        // CreateAreaList() : "";
-                     // }
+                     if( Width?.value && Height?.value ) {
+                        CreateAreaList();
+                     }
                   } }
                />
                <AniButton text="Calcular"
                   onPress={ () => {
-                     // const value = Calculate( Width!.value, Height!.value );
                      CreateMaterialsNeeded().then( materials => {
-                        SetMaterialsNeeded( materials );
+                        DisplayMaterialsNeeded( materials );
+                        console.log( "Calcular().then( DisplayMaterialsNeeded() materials: " );
                         console.table( materials );
                      } );
-                     // console.log( "calculate() value: ", value );
                   } }
                />
             </View>
@@ -724,7 +656,7 @@ export default function DryWallCalculatorView( { ...props } ) {
                      </View>
                      <View style={[ s.tableRowEven ]}>
                         <P style={[ s.tableQtdText ]}>
-                           { FitaTelada?.text }
+                           { FitaTelada?.text } m
                         </P>
                         <P style={[ s.tableTextDescription ]}>
                            Fita telada
@@ -753,7 +685,7 @@ export default function DryWallCalculatorView( { ...props } ) {
                      { IsBandaAcústicaEnabled && 
                         <View style={[ s.tableRowEven ]}>
                            <P style={[ s.tableQtdText ]}>
-                              { BandaAcústica?.text }
+                              { BandaAcústica?.text } m
                            </P>
                            <P style={[ s.tableTextDescription ]}>
                               Banda Acústica
@@ -769,7 +701,7 @@ export default function DryWallCalculatorView( { ...props } ) {
                      { IsLãDeVidroEnabled && 
                         <View style={[ IsBandaAcústicaEnabled ? s.tableRowOdd : s.tableRowEven ]}>
                            <P style={[ s.tableQtdText ]}>
-                              { LãDeVidro?.text }
+                              { LãDeVidro?.text } m
                            </P>
                            <P style={[ s.tableTextDescription ]}>
                               Lã de vidro
