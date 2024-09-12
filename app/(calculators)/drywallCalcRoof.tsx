@@ -23,6 +23,16 @@ import {Picker} from '@react-native-picker/picker';
 
 /** == [ properties ]
  * == == == == == == == == == */
+type Strumber = {
+   text: string;
+   value: number;
+}
+
+type drywall_type = {
+   cantoneiras: Strumber;
+   tabicas: Strumber;
+}
+
 interface inputDataType_i {
    text: string | undefined;
    value: number | undefined;
@@ -30,65 +40,41 @@ interface inputDataType_i {
 
 interface ceilingSupport_i {
    type: string;
-   qtd: number;
-   displayQtd: string;
+   qtd: Strumber;
 }
 
 interface area_i {
    id: string | number[];
 
-   length: number | undefined;
-   width: number | undefined;
-   area: number | undefined;
-   perimetro: number | undefined;
-
-   displayLength: string | undefined;
-   displayWidth: string | undefined;
-   displayArea: string;
-   displayPerimetro: string;
+   length: Strumber;
+   width: Strumber;
+   area: Strumber;
+   perimetro: Strumber;
 }
 
 interface materials_i {
-   length: number;
-   width: number;
-   area: number;
-   perimetro: number;
-   chapas: number;
-   tabicas: number;
-   cantoneiras: number;
-   perfis: number;
-   reguladores: number;
-   união: number;
-   tirantes: number;
-   pregos: number;
-   gn25: number;
-   lfix: number;
-   parafusoMM: number;
-   fitaTelada: number;
-   massa: number;
-   bandaAcústica: number;
-   lãDeVidro: number;
-
-   displayLength: string;
-   displayWidth: string;
-   displayArea: string;
-   displayPerimetro: string;
-   displayChapas: string;
-   displayTabicas: string;
-   displayCantoneiras: string;
-   displayPerfis: string;
-   displayTirantes: string;
-   displayReguladores: string;
-   displayUnião: string;
-   displayPregos: string;
-   displayGn25: string;
-   displayLfix: string;
-   displayParafusoMM: string;
-   displayFitaTelada: string;
-   displayMassa: string;
-   displayBandaAcústica: string;
-   displayLãDeVidro: string;
-   
+   length: Strumber;
+   width: Strumber;
+   area: Strumber;
+   perimetro: Strumber;
+   chapas: Strumber;
+   tabicas: Strumber;
+   cantoneiras: Strumber;
+   perfis: drywall_type;
+   reguladores: drywall_type;
+   união: drywall_type;
+   tirantes: {
+      qtd: drywall_type;
+      metros: drywall_type;
+   };
+   pregos: Strumber;
+   gn25: Strumber;
+   lfix: drywall_type;
+   parafusoMM: drywall_type;
+   fitaTelada: Strumber;
+   massa: Strumber;
+   bandaAcústica: Strumber;
+   lãDeVidro: Strumber;
 }
 
 /** == [ exports ]
@@ -120,89 +106,52 @@ export default function DryWallCalculatorView( { ...props } ) {
       ,
       [ MaterialsNeeded, setMaterialsNeeded ] = useState<materials_i[]>( [] )
       ,
-      [ Length, setLength ] = useState<inputDataType_i>( 
-         { text: "", value: 0 }
-      )
+      [ Length, setLength ] = useState<inputDataType_i>()
       ,
-      [ Width, setWidth ] = useState<inputDataType_i>( 
-         { text: "", value: 0 }
-      )
+      [ Width, setWidth ] = useState<inputDataType_i>()
       ,
-      [ Rebaixo, setRebaixo ] = useState<inputDataType_i>( 
-         { text: "", value: 0 }
-      )
+      [ Rebaixo, setRebaixo ] = useState<inputDataType_i>()
       ,
-      [ Area, setArea ] = useState<inputDataType_i>( 
-         { text: "", value: 0 }
-      )
+      [ Area, setArea ] = useState<inputDataType_i>()
       ,
-      [ Perimetro, setPerimetro ] = useState<inputDataType_i>( 
-         { text: "", value: 0 }
-      )
+      [ Perimetro, setPerimetro ] = useState<inputDataType_i>()
       ,
       [ PanelsNeeded, setPanelsNeeded ] = useState<string>()
       ,
-      [ PanelsAreaNeeded, setPanelsAreaNeeded ] = useState<string>()
+      [ GN25, setGN25 ] = useState<inputDataType_i>()
       ,
-      [ GN25, setGN25 ] = useState<inputDataType_i>( 
-         { text: "", value: 0 }
-      )
+      [ Tabicas, setTabicas ] = useState<inputDataType_i>()
       ,
-      [ Tabicas, setTabicas ] = useState<inputDataType_i>( 
-         { text: "", value: 0 }
-      )
+      [ Cantoneiras, setCantoneiras ] = useState<inputDataType_i>()
       ,
-      [ Cantoneiras, setCantoneiras ] = useState<inputDataType_i>( 
-         { text: "", value: 0 }
-      )
+      // [ Tirantes, setTirantes ] = useState<inputDataType_i>( 
+      //    { text: "", value: 0 }
+      // )
+      [ Tirantes, setTirantes ] = useState<
+         { qtd: drywall_type; metros: drywall_type }
+      >()
       ,
-      [ Tirantes, setTirantes ] = useState<inputDataType_i>( 
-         { text: "", value: 0 }
-      )
+      [ Reguladores, setReguladores ] = useState<drywall_type>()
       ,
-      [ Reguladores, setReguladores ] = useState<inputDataType_i>( 
-         { text: "", value: 0 }
-      )
+      [ Perfis, setPerfis ] = useState<drywall_type>()
       ,
-      [ Perfis, setPerfis ] = useState<inputDataType_i>( 
-         { text: "", value: 0 }
-      )
+      [ União, setUnião ] = useState<drywall_type>()
       ,
-      [ União, setUnião ] = useState<inputDataType_i>( 
-         { text: "", value: 0 }
-      )
+      [ Pregos, setPregos ] = useState<inputDataType_i>()
       ,
-      [ Pregos, setPregos ] = useState<inputDataType_i>( 
-         { text: "", value: 0 }
-      )
+      [ Lfix, setLfix ] = useState<drywall_type>()
       ,
-      [ Lfix, setLfix ] = useState<inputDataType_i>( 
-         { text: "", value: 0 }
-      )
+      [ MetalMetal, setMetalMetal ] = useState<drywall_type>()
       ,
-      [ MetalMetal, setMetalMetal ] = useState<inputDataType_i>( 
-         { text: "", value: 0 }
-      )
+      [ Massa, setMassa ] = useState<inputDataType_i>()
       ,
-      [ Massa, setMassa ] = useState<inputDataType_i>( 
-         { text: "", value: 0 }
-      )
+      [ FitaTelada, setFitaTelada ] = useState<inputDataType_i>()
       ,
-      [ FitaTelada, setFitaTelada ] = useState<inputDataType_i>( 
-         { text: "", value: 0 }
-      )
+      [ BandaAcústica, setBandaAcústica ] = useState<inputDataType_i>()
       ,
-      [ BandaAcústica, setBandaAcústica ] = useState<inputDataType_i>( 
-         { text: "", value: 0 }
-      )
+      [ LãDeVidro, setLãDeVidro ] = useState<inputDataType_i>()
       ,
-      [ LãDeVidro, setLãDeVidro ] = useState<inputDataType_i>( 
-         { text: "", value: 0 }
-      )
-      ,
-      [ CeilingSupport, setCeilingSupport ] = useState<ceilingSupport_i>(
-         { type: "Tabica", qtd: 0, displayQtd: "" }
-      )
+      [ CeilingSupport, setCeilingSupport ] = useState<ceilingSupport_i>()
    ;
 
    async function DisplayMaterialsNeeded( materials ) {  
@@ -215,13 +164,21 @@ export default function DryWallCalculatorView( { ...props } ) {
             chapas: 0,
             tabicas: 0,
             cantoneiras: 0,
-            perfis: 0,
-            tirantes: 0,
-            reguladores: 0,
-            união: 0,
+            perfis_cantoneiras: 0,
+            perfis_tabicas: 0,
+            tirantes_cantoneiras_qtd: 0,
+            tirantes_cantoneiras_metros: 0,
+            tirantes_tabicas_qtd: 0,
+            tirantes_tabicas_metros: 0,
+            reguladores_cantoneiras: 0,
+            reguladores_tabicas: 0,
+            união_cantoneiras: 0,
+            união_tabicas: 0,
             gn25: 0,
-            lfix: 0,
-            parafusoMM: 0,
+            lfix_cantoneiras: 0,
+            lfix_tabicas: 0,
+            parafusoMM_cantoneiras: 0,
+            parafusoMM_tabicas: 0,
             pregos: 0,
             fitaTelada: 0,
             massa: 0,
@@ -237,18 +194,27 @@ export default function DryWallCalculatorView( { ...props } ) {
                materialsNeeded.chapas += material.chapas;
                materialsNeeded.tabicas += material.tabicas;
                materialsNeeded.cantoneiras += material.cantoneiras;
-               materialsNeeded.perfis += material.perfis;
-               materialsNeeded.tirantes += material.tirantes;
-               materialsNeeded.reguladores += material.reguladores;
-               materialsNeeded.união += material.união;
-               materialsNeeded.gn25 += material.gn25;
-               materialsNeeded.lfix += material.lfix;
-               materialsNeeded.parafusoMM += material.parafusoMM;
                materialsNeeded.pregos += material.pregos;
                materialsNeeded.fitaTelada += material.fitaTelada;
                materialsNeeded.massa += material.massa;
                materialsNeeded.bandaAcústica += material.bandaAcústica;
+               materialsNeeded.gn25 += material.gn25;
                materialsNeeded.lãDeVidro += material.lãDeVidro;
+
+               materialsNeeded.perfis_cantoneiras += material.perfis;
+               materialsNeeded.perfis_tabicas += material.perfis;
+               materialsNeeded.tirantes_cantoneiras_qtd += material.tirantes;
+               materialsNeeded.tirantes_cantoneiras_metros += material.tirantes;
+               materialsNeeded.tirantes_tabicas_qtd += material.tirantes;
+               materialsNeeded.tirantes_tabicas_metros += material.tirantes;
+               materialsNeeded.reguladores_cantoneiras += material.reguladores;
+               materialsNeeded.reguladores_tabicas += material.reguladores;
+               materialsNeeded.união_cantoneiras += material.união;
+               materialsNeeded.união_tabicas += material.união;
+               materialsNeeded.lfix_cantoneiras += material.lfix;
+               materialsNeeded.lfix_tabicas += material.lfix;
+               materialsNeeded.parafusoMM_cantoneiras += material.parafusoMM;
+               materialsNeeded.parafusoMM_tabicas += material.parafusoMM;
          } );
 
          setMaterialsNeeded( materials );
@@ -284,46 +250,10 @@ export default function DryWallCalculatorView( { ...props } ) {
                value: materialsNeeded?.cantoneiras
             } 
          );
-         setPerfis(
-            { 
-               text: materialsNeeded?.perfis.toString(), 
-               value: materialsNeeded?.perfis
-            } 
-         );
-         setTirantes(
-            { 
-               text: materialsNeeded?.tirantes.toString(), 
-               value: materialsNeeded?.tirantes
-            } 
-         );
-         setReguladores(
-            { 
-               text: materialsNeeded?.reguladores.toString(), 
-               value: materialsNeeded?.reguladores
-            } 
-         );
-         setUnião(
-            { 
-               text: materialsNeeded?.união.toString(), 
-               value: materialsNeeded?.união
-            } 
-         );
          setPregos(
             { 
                text: materialsNeeded?.pregos.toString(), 
                value: materialsNeeded?.pregos
-            } 
-         );
-         setLfix(
-            { 
-               text: materialsNeeded?.lfix.toString(), 
-               value: materialsNeeded?.lfix
-            } 
-         );
-         setMetalMetal(
-            { 
-               text: materialsNeeded?.parafusoMM.toString(), 
-               value: materialsNeeded?.parafusoMM
             } 
          );
          setMassa(
@@ -351,7 +281,96 @@ export default function DryWallCalculatorView( { ...props } ) {
             } 
          );
 
+
+         setPerfis(
+            { 
+               cantoneiras: {
+                  text: materialsNeeded?.perfis_cantoneiras.toString(),
+                  value: materialsNeeded?.perfis_cantoneiras
+               },
+               tabicas: {
+                  text: materialsNeeded?.perfis_tabicas.toString(),
+                  value: materialsNeeded?.perfis_tabicas
+               }
+            } 
+         );
+         setReguladores(
+            { 
+               cantoneiras: {
+                  text: materialsNeeded?.reguladores_cantoneiras.toString(),
+                  value: materialsNeeded?.reguladores_cantoneiras
+               },
+               tabicas: {
+                  text: materialsNeeded?.reguladores_tabicas.toString(),
+                  value: materialsNeeded?.reguladores_tabicas
+               }
+            } 
+         );
+         setUnião(
+            { 
+               cantoneiras: {
+                  text: materialsNeeded?.união_cantoneiras.toString(),
+                  value: materialsNeeded?.união_cantoneiras
+               },
+               tabicas: {
+                  text: materialsNeeded?.união_tabicas.toString(),
+                  value: materialsNeeded?.união_tabicas
+               }
+            } 
+         );
+         setLfix(
+            { 
+               cantoneiras: {
+                  text: materialsNeeded?.lfix_cantoneiras.toString(),
+                  value: materialsNeeded?.lfix_cantoneiras
+               },
+               tabicas: {
+                  text: materialsNeeded?.lfix_tabicas.toString(),
+                  value: materialsNeeded?.lfix_tabicas
+               }
+            } 
+         );
+         setMetalMetal(
+            { 
+               cantoneiras: {
+                  text: materialsNeeded?.parafusoMM_cantoneiras.toString(),
+                  value: materialsNeeded?.parafusoMM_cantoneiras
+               },
+               tabicas: {
+                  text: materialsNeeded?.parafusoMM_tabicas.toString(),
+                  value: materialsNeeded?.parafusoMM_tabicas
+               }
+            } 
+         );
+         setTirantes(
+            { 
+               qtd: {
+                  cantoneiras: {
+                     text: materialsNeeded?.tirantes_cantoneiras_qtd.toString(),
+                     value: materialsNeeded?.tirantes_cantoneiras_qtd
+                  },
+                  tabicas: {
+                     text: materialsNeeded?.tirantes_tabicas_qtd.toString(),
+                     value: materialsNeeded?.tirantes_tabicas_qtd
+                  }
+               },
+               metros: {
+                  cantoneiras: {
+                     text: materialsNeeded?.tirantes_cantoneiras_metros.toString(),
+                     value: materialsNeeded?.tirantes_cantoneiras_metros
+                  },
+                  tabicas: {
+                     text: materialsNeeded?.tirantes_tabicas_metros.toString(),
+                     value: materialsNeeded?.tirantes_tabicas_metros
+                  }
+               }
+            } 
+         );
+         
+
          console.log( "chapas: ", materialsNeeded?.chapas );
+         console.log( "materialsNeeded: ", materialsNeeded );
+         console.log( "materials: ", materials );
 
          console.log( "DisplayMaterialsNeeded( materials ) materials: ", materials );
       } catch( err: any ) {
@@ -365,15 +384,16 @@ export default function DryWallCalculatorView( { ...props } ) {
             item: area_i = {
                id: uuid.v4(),
 
-               length: Length!.value,
-               width: Width!.value,
-               area: parseFloat( ( Width!.value! * Length!.value! ).toFixed( 2 ) ),
-               perimetro: ( Length!.value! * 2 ) + ( Width!.value! * 2 ),
-               
-               displayLength: Length!.text,
-               displayWidth: Width!.text,
-               displayArea: ( ( Width!.value! * Length!.value! ) ).toFixed( 2 ).toString(),
-               displayPerimetro: (( Length!.value! * 2 ) + ( Width!.value! * 2 )).toString(),
+               length: { text: Length!.text, value: Length!.value, },
+               width: { text: Width!.text, value: Width!.value, },
+               area: {
+                  text: ( Width!.value! * Length!.value! ).toFixed( 2 ),
+                  value: parseFloat( ( Width!.value! * Length!.value! ).toFixed( 2 ) )
+               },
+               perimetro: {
+                  text: ( ( Length!.value! * 2 ) + ( Width!.value! * 2 ) ).toString(),
+                  value: ( Length!.value! * 2 ) + ( Width!.value! * 2 ),
+               },
             }
          ;
          Areas.push( item );
@@ -395,51 +415,134 @@ export default function DryWallCalculatorView( { ...props } ) {
          ;
 
          datas.forEach( data => {
-            CalculateDryWallRoof( data.length!, data.width! ).then( returned => {
+            CalculateDryWallRoof( data.length.value!, data.width.value! ).then( returned => {
                const material: materials_i = {
-                  length: data.width!,
-                  width: data.width!,
-                  area: data.width! * data.length!,
-                  perimetro: ( data.length! * 2 ) + ( data.width! * 2 ),
-                  chapas: returned!.panelsNeeded!,
-                  gn25: returned!.gn25Needed!,
+                  length: { 
+                     text: data.width.value!.toString(), 
+                     value: data.width.value! 
+                  },
+                  width: { 
+                     text: data.width.value!.toString(), 
+                     value: data.width.value! 
+                  },
+                  area: { 
+                     text: ( data.width.value! * data.length.value! ).toString(), 
+                     value: data.width.value! * data.length.value! 
+                  },
+                  perimetro: {
+                     text: ( ( data.length.value! * 2 ) + ( data.width.value! * 2 ) ).toString(),
+                     value: ( data.length.value! * 2 ) + ( data.width.value! * 2 ),
+                  },
+                  chapas: {
+                     text: returned!.panelsNeeded!.toString(),
+                     value: returned!.panelsNeeded!
+                  },
+                  gn25: {
+                     text: returned!.gn25Needed!.toString(),
+                     value: returned!.gn25Needed!
+                  },
 
-                  tabicas: returned!.tabicasNeeded!,
-                  cantoneiras: returned!.cantoneirasNeeded!,
-                  perfis: returned!.perfisNeeded!,
-                  tirantes: returned!.tirantesNeeded!,
-                  reguladores: returned!.reguladoresNeeded!,
-                  união: returned!.uniãoNeeded!,
-                  pregos: returned!.pregosNeeded!,
-
-                  lfix: returned!.lfixNeeded!,
-                  parafusoMM: returned!.screwMMNeeded!,
-                  fitaTelada: returned!.tapeNeeded!,
-                  massa: returned!.massaNeeded!,
-                  bandaAcústica: returned!.bandaAcústicaNeeded!,
-                  lãDeVidro: returned!.lãDeVidroNeeded!,
-
-                  displayLength: ( data.width! ).toString(),
-                  displayWidth: ( data.width! ).toString(),
-                  displayArea: ( data.width! * data.length! ).toString(),
-                  displayPerimetro: ( ( data.length! * 2 ) + ( data.width! * 2 ) ).toString(),
-                  displayChapas: ( returned?.panelsNeeded! ).toString(),
-                  displayGn25: ( returned?.gn25Needed! ).toString(),
-
-                  displayTabicas: ( returned?.tabicasNeeded! ).toString(),
-                  displayCantoneiras: ( returned?.cantoneirasNeeded! ).toString(),
-                  displayPerfis: ( returned?.perfisNeeded! ).toString(),
-                  displayTirantes: ( returned?.tirantesNeeded! ).toString(),
-                  displayReguladores: ( returned?.reguladoresNeeded! ).toString(),
-                  displayUnião: ( returned?.uniãoNeeded! ).toString(),
-                  displayPregos: ( returned?.pregosNeeded! ).toString(),
+                  tabicas: {
+                     text: returned!.tabicasNeeded!.toString(),
+                     value: returned!.tabicasNeeded!,
+                  },
+                  cantoneiras: {
+                     text: returned!.cantoneirasNeeded!.toString(),
+                     value: returned!.cantoneirasNeeded!,
+                  },
+                  pregos: {
+                     text: returned!.pregosNeeded!.toString(),
+                     value: returned!.pregosNeeded!,
+                  },
+                  fitaTelada: {
+                     text: returned!.tapeNeeded!.toString(),
+                     value: returned!.tapeNeeded!,
+                  },
+                  massa: {
+                     text: returned!.massaNeeded!.toString(),
+                     value: returned!.massaNeeded!,
+                  },
+                  bandaAcústica: {
+                     text: returned!.bandaAcústicaNeeded!.toString(),
+                     value: returned!.bandaAcústicaNeeded!,
+                  },
+                  lãDeVidro: {
+                     text: returned!.lãDeVidroNeeded!.toString(),
+                     value: returned!.lãDeVidroNeeded!,
+                  },
                   
-                  displayLfix: ( returned?.lfixNeeded! ).toString(),
-                  displayParafusoMM: ( returned?.screwMMNeeded! ).toString(),
-                  displayFitaTelada: ( returned?.tapeNeeded! ).toString(),
-                  displayMassa: ( returned?.massaNeeded! ).toString(),
-                  displayBandaAcústica: ( returned?.bandaAcústicaNeeded! ).toString(),
-                  displayLãDeVidro: ( returned?.lãDeVidroNeeded! ).toString(),
+                  perfis: {
+                     cantoneiras: {
+                        text: returned!.perfis_cantoneirasNeeded!.toString(),
+                        value: returned!.perfis_cantoneirasNeeded!,
+                     },
+                     tabicas: {
+                        text: returned!.perfis_tabicasNeeded.toString(), 
+                        value: returned!.perfis_tabicasNeeded, 
+                     },
+                  },
+                  tirantes: {
+                     qtd: {
+                        cantoneiras: {
+                           text: returned!.tirantesNeeded.qtd.cantoneiras.toString(),
+                           value: returned!.tirantesNeeded.qtd.cantoneiras,
+                        },
+                        tabicas: {
+                           text: returned!.tirantesNeeded.qtd.tabicas.toString(),
+                           value: returned!.tirantesNeeded.qtd.tabicas,
+                        },
+                     },
+                     metros: {
+                        cantoneiras: {
+                           text: returned!.tirantesNeeded.metros.cantoneiras.toString(),
+                           value: returned!.tirantesNeeded.metros.cantoneiras,
+                        },
+                        tabicas: {
+                           text: returned!.tirantesNeeded.metros.tabicas.toString(),
+                           value: returned!.tirantesNeeded.metros.tabicas,
+                        },
+                     },
+                  },
+                  reguladores: {
+                     cantoneiras: {
+                        text: returned!.reguladoresForCantoneirasNeeded.toString(),
+                        value: returned!.reguladoresForCantoneirasNeeded,
+                     },
+                     tabicas: {
+                        text: returned!.reguladoresForTabicasNeeded.toString(),
+                        value: returned!.reguladoresForTabicasNeeded,
+                     },
+                  },
+                  união: {
+                     cantoneiras: {
+                        text: returned!.uniãoNeeded.cantoneiras.toString(),
+                        value: returned!.uniãoNeeded.cantoneiras,
+                     },
+                     tabicas: {
+                        text: returned!.uniãoNeeded.tabicas.toString(),
+                        value: returned!.uniãoNeeded.tabicas,
+                     },
+                  },
+                  lfix: {
+                     cantoneiras: {
+                        text: returned!.lfixNeeded.cantoneiras.toString(),
+                        value: returned!.lfixNeeded.cantoneiras,
+                     },
+                     tabicas: {
+                        text: returned!.lfixNeeded.tabicas.toString(),
+                        value: returned!.lfixNeeded.tabicas,
+                     },
+                  },
+                  parafusoMM: {
+                     cantoneiras: {
+                        text: returned!.screwMMNeeded.cantoneiras.toString(),
+                        value: returned!.screwMMNeeded.cantoneiras,
+                     },
+                     tabicas: {
+                        text: returned!.screwMMNeeded.tabicas.toString(),
+                        value: returned!.screwMMNeeded.tabicas,
+                     },
+                  },
                }
 
                materials.push( material );
@@ -455,8 +558,8 @@ export default function DryWallCalculatorView( { ...props } ) {
       let data = { area: 0, perimetro: 0 };
 
       Areas.forEach( item => {
-         data.area += item.area;
-         data.perimetro += item.perimetro;
+         data.area += item.area.value;
+         data.perimetro += item.perimetro.value;
       } );
 
       setArea( { text: data.area.toString(), value: data.area } );
@@ -490,21 +593,21 @@ export default function DryWallCalculatorView( { ...props } ) {
             </View>
             <Duo style={[ s.duo ]}>
                <Label style={[ s.label ]}>
-                  <LabelText style={[ s.labelText ]}>Largura</LabelText>
-                  <Input value={ Width?.text } 
+                  <LabelText style={[ s.labelText ]}>Comprimento</LabelText>
+                  <Input value={ Length?.text } 
                      onChangeText={ text => {
                         const t2n = parseFloat( text );
-                        setWidth( { text: text, value: t2n } ); 
+                        setLength( { text: text, value: t2n } ); 
                      } } 
                      inputMode="numeric" style={[ s.input, ]}
                   />
                </Label>
                <Label style={[ s.label ]}>
-                  <LabelText style={[ s.labelText ]}>Altura</LabelText>
-                  <Input value={ Length?.text } 
+                  <LabelText style={[ s.labelText ]}>Largura</LabelText>
+                  <Input value={ Width?.text } 
                      onChangeText={ text => {
                         const t2n = parseFloat( text );
-                        setLength( { text: text, value: t2n } ); 
+                        setWidth( { text: text, value: t2n } ); 
                      } } 
                      inputMode="numeric" style={[ s.input, ]}
                   />
@@ -627,10 +730,10 @@ export default function DryWallCalculatorView( { ...props } ) {
                            data={ item }
                         /> */}
                         <Label style={{ flexDirection: "row", justifyContent: "center", alignItems: "center", gap: 8, }} key={ `Label-${ item.id }` }>
-                           <Input value={ item.displayLength } style={{ flex: 1, backgroundColor: "#16181c", color: "#eee" }} key={ `Item-length:${ item.id }` }/>
-                           <Input value={ item.displayWidth } style={{ flex: 1, backgroundColor: "#16181c", color: "#eee" }} key={ `Item-width:${ item.id }` }/>
-                           <Input value={ item.displayArea } style={{ flex: 1, backgroundColor: "#16181c", color: "#eee" }} key={ `Item-area:${ item.id }` }/>
-                           <Input value={ item.displayPerimetro } style={{ flex: 1, backgroundColor: "#16181c", color: "#eee" }} key={ `Item-perimetro:${ item.id }` }/>
+                           <Input value={ item.length.text } style={{ flex: 1, backgroundColor: "#16181c", color: "#eee" }} key={ `Item-length:${ item.id }` }/>
+                           <Input value={ item.width.text } style={{ flex: 1, backgroundColor: "#16181c", color: "#eee" }} key={ `Item-width:${ item.id }` }/>
+                           <Input value={ item.area.text } style={{ flex: 1, backgroundColor: "#16181c", color: "#eee" }} key={ `Item-area:${ item.id }` }/>
+                           <Input value={ item.perimetro.text } style={{ flex: 1, backgroundColor: "#16181c", color: "#eee" }} key={ `Item-perimetro:${ item.id }` }/>
                            <Pressable
                               onPress={ () => {
                                  // console.log( "Areas.findIndex: ", Areas.findIndex( predicate => predicate.id == item.id ) );
@@ -688,7 +791,7 @@ export default function DryWallCalculatorView( { ...props } ) {
 
                      <View style={[ s.tableRowOdd ]}>
                         <P style={[ s.tableQtdText ]}>
-                           { CeilingSupport.displayQtd }
+                           { CeilingSupport?.type }
                         </P>
                         <P style={[ s.tableTextDescription ]}>
                            { SelectedCeilingSupportType }
@@ -778,7 +881,7 @@ export default function DryWallCalculatorView( { ...props } ) {
 
                      <View style={[ s.tableRowOdd ]}>
                         <P style={[ s.tableQtdText ]}>
-                           { Lfix?.text }
+                           { Lfix?.tabicas.text }
                         </P>
                         <P style={[ s.tableTextDescription ]}>
                            Lfix
@@ -793,7 +896,7 @@ export default function DryWallCalculatorView( { ...props } ) {
 
                      <View style={[ s.tableRowEven ]}>
                         <P style={[ s.tableQtdText ]}>
-                           { MetalMetal?.text }
+                           { MetalMetal?.tabicas.text }
                         </P>
                         <P style={[ s.tableTextDescription ]}>
                            Parafusos metal metal
@@ -808,7 +911,7 @@ export default function DryWallCalculatorView( { ...props } ) {
 
                      <View style={[ s.tableRowOdd ]}>
                         <P style={[ s.tableQtdText ]}>
-                           { MetalMetal?.text }
+                           { MetalMetal?.tabicas.text }
                         </P>
                         <P style={[ s.tableTextDescription ]}>
                            Prego
@@ -890,10 +993,10 @@ export default function DryWallCalculatorView( { ...props } ) {
                      </View>
                      <View style={ s.tableFooterRow }>
                         <P style={[ s.tableFooterRowText ]}>
-                           { Area.text }
+                           { Area?.text }
                         </P>
                         <P style={[ s.tableFooterRowText ]}>
-                           { Perimetro.text }
+                           { Perimetro?.text }
                         </P>
                         <P style={[ s.tableFooterRowTotalText ]}>
                            {  }
