@@ -110,10 +110,10 @@ export async function CalculateDryWallRoof(
          ,
          
          // ( ( ( largura - 1,20 ) / 1,20 ): arredondado pra baixo + 2 ) * cantoneiras
-         reguladoresForCantoneirasNeeded = ( ( Math.floor( width - 1.20 ) / 1.20 ) + 2 ) * cantoneirasNeeded
+         reguladoresForCantoneirasNeeded = Math.floor( ( ( Math.floor( width - 1.20 ) / 1.20 ) + 2 ) * cantoneirasNeeded )
          ,
          // ( ( ( largura - ,60 ) / 1,20 ): arredondado pra baixo + 2 ) * tabicas
-         reguladoresForTabicasNeeded = ( ( Math.floor( width - .60 ) / 1.20 ) + 2 ) * tabicasNeeded
+         reguladoresForTabicasNeeded = Math.floor( ( ( Math.floor( width - .60 ) / 1.20 ) + 2 ) * tabicasNeeded )
          ,
          // 1 kg de arame 10: 14 metros
          // ( ( ( largura - 1,20 ) / 1,20 ): arredondado pra baixo + 2 ) * cantoneiras
@@ -121,14 +121,18 @@ export async function CalculateDryWallRoof(
             qtd: { cantoneiras: reguladoresForCantoneirasNeeded, tabicas: reguladoresForTabicasNeeded },
             metros: {
                cantoneiras: rebaixo ? (
-                  Math.ceil( ( reguladoresForCantoneirasNeeded * rebaixo ) / 14 )
+                  // Math.ceil( ( ( reguladoresForCantoneirasNeeded * rebaixo ) / 14 ) )
+                  ( ( reguladoresForCantoneirasNeeded * rebaixo ) / 14 ) /* *  */
                ) : (
-                  Math.ceil( ( reguladoresForCantoneirasNeeded ) / 14 )
+                  // Math.ceil( ( ( reguladoresForCantoneirasNeeded * 1 ) / 14 ) )
+                  ( ( reguladoresForCantoneirasNeeded * 1 ) / 14 ) /* *  */
                ),
                tabicas: rebaixo ? (
-                  Math.ceil( ( reguladoresForTabicasNeeded * rebaixo ) / 14 )
+                  // Math.ceil( ( ( reguladoresForTabicasNeeded * rebaixo ) / 14 ) )
+                  ( ( reguladoresForTabicasNeeded * rebaixo ) / 14 ) /* * */ 
                ) : (
-                  Math.ceil( ( reguladoresForTabicasNeeded ) / 14 )
+                  // Math.ceil( ( ( reguladoresForTabicasNeeded * 1 ) / 14 ) )
+                  ( ( reguladoresForTabicasNeeded * 1 ) / 14 ) /* *  */
                ),
             }
          }

@@ -5,7 +5,7 @@
 import { CalculateDryWall, CalculateDryWallRoof } from "@/src/services/calculators";
 import { Icon } from "@/src/widgets/clb-icons";
 import { Header } from "@/src/widgets/clb-widgets";
-import { AppbarStick, BackButton, Duo, H2, H3, H4, H5, Input, Label, LabelText, P, T1 } from "@/src/widgets/ui";
+import { AppbarStick, BackButton, Duo, H2, H3, H4, H5, Input, Label, LabelText, P, PP, T1 } from "@/src/widgets/ui";
 import { AniButton } from "@/src/widgets/ui/animated";
 import { Stack } from "expo-router";
 import React, { useState, useEffect } from "react";
@@ -203,16 +203,16 @@ export default function DryWallCalculatorView( { ...props } ) {
                materialsNeeded.gn25 += material.gn25.value;
                materialsNeeded.lãDeVidro += material.lãDeVidro.value;
 
-               materialsNeeded.perfis_cantoneiras += material.perfis.value;
-               materialsNeeded.perfis_tabicas += material.perfis.value;
-               materialsNeeded.tirantes_cantoneiras_qtd += material.tirantes.value;
-               materialsNeeded.tirantes_cantoneiras_metros += material.tirantes.value;
-               materialsNeeded.tirantes_tabicas_qtd += material.tirantes.value;
-               materialsNeeded.tirantes_tabicas_metros += material.tirantes.value;
-               materialsNeeded.reguladores_cantoneiras += material.reguladores.value;
-               materialsNeeded.reguladores_tabicas += material.reguladores.value;
-               materialsNeeded.união_cantoneiras += material.união.value;
-               materialsNeeded.união_tabicas += material.união.value;
+               materialsNeeded.perfis_cantoneiras += material.perfis.cantoneiras.value;
+               materialsNeeded.perfis_tabicas += material.perfis.tabicas.value;
+               materialsNeeded.tirantes_cantoneiras_qtd += material.tirantes.qtd.cantoneiras.value;
+               materialsNeeded.tirantes_cantoneiras_metros += material.tirantes.metros.cantoneiras.value;
+               materialsNeeded.tirantes_tabicas_qtd += material.tirantes.qtd.tabicas.value;
+               materialsNeeded.tirantes_tabicas_metros += material.tirantes.metros.tabicas.value;
+               materialsNeeded.reguladores_cantoneiras += material.reguladores.cantoneiras.value;
+               materialsNeeded.reguladores_tabicas += material.reguladores.tabicas.value;
+               materialsNeeded.união_cantoneiras += material.união.cantoneiras.value;
+               materialsNeeded.união_tabicas += material.união.tabicas.value;
                materialsNeeded.lfix_cantoneiras += material.lfix.cantoneiras.value;
                materialsNeeded.lfix_tabicas += material.lfix.tabicas.value;
                materialsNeeded.parafusoMM_cantoneiras += material.parafusoMM.cantoneiras.value;
@@ -348,21 +348,21 @@ export default function DryWallCalculatorView( { ...props } ) {
             { 
                qtd: {
                   cantoneiras: {
-                     text: materialsNeeded?.tirantes_cantoneiras_qtd.toString(),
+                     text: (materialsNeeded?.tirantes_cantoneiras_qtd).toString(),
                      value: materialsNeeded?.tirantes_cantoneiras_qtd
                   },
                   tabicas: {
-                     text: materialsNeeded?.tirantes_tabicas_qtd.toString(),
+                     text: (materialsNeeded?.tirantes_tabicas_qtd).toString(),
                      value: materialsNeeded?.tirantes_tabicas_qtd
                   }
                },
                metros: {
                   cantoneiras: {
-                     text: materialsNeeded?.tirantes_cantoneiras_metros.toString(),
+                     text: (materialsNeeded?.tirantes_cantoneiras_metros).toString(),
                      value: materialsNeeded?.tirantes_cantoneiras_metros
                   },
                   tabicas: {
-                     text: materialsNeeded?.tirantes_tabicas_metros.toString(),
+                     text: (materialsNeeded?.tirantes_tabicas_metros).toString(),
                      value: materialsNeeded?.tirantes_tabicas_metros
                   }
                }
@@ -778,7 +778,8 @@ export default function DryWallCalculatorView( { ...props } ) {
                   <View style={[]}>
                      <View style={[ s.tableRowEven ]}>
                         <P style={[ s.tableQtdText ]}>
-                           { PanelsNeeded }
+                           { PanelsNeeded } 
+                           <PP style={{ color: "#060", }}> un.</PP>
                         </P>
                         <P style={[ s.tableTextDescription ]}>
                            Chapas de gesso ST.
@@ -799,7 +800,8 @@ export default function DryWallCalculatorView( { ...props } ) {
                               ) : (
                                  Cantoneiras?.text
                               )
-                           }
+                           } 
+                           <PP style={{ color: "#060", }}> un.</PP>
                         </P>
                         <P style={[ s.tableTextDescription ]}>
                            { SelectedCeilingSupportType }
@@ -816,11 +818,12 @@ export default function DryWallCalculatorView( { ...props } ) {
                         <P style={[ s.tableQtdText ]}>
                            { 
                               SelectedCeilingSupportType == "Tabica" ? (
-                                 Perfis!.tabicas.text
+                                 Perfis?.tabicas.text
                               ) : (
-                                 Perfis!.cantoneiras.text
+                                 Perfis?.cantoneiras.text
                               )
-                           }
+                           } 
+                           <PP style={{ color: "#060", }}> un.</PP>
                         </P>
                         <P style={[ s.tableTextDescription ]}>
                            Perfil F530
@@ -835,7 +838,14 @@ export default function DryWallCalculatorView( { ...props } ) {
 
                      <View style={[ s.tableRowOdd ]}>
                         <P style={[ s.tableQtdText ]}>
-                           { GN25?.text }
+                           { 
+                              SelectedCeilingSupportType == "Tabica" ? (
+                                 Tirantes?.metros.tabicas.text
+                              ) : (
+                                 Tirantes?.metros.cantoneiras.text
+                              )
+                           }
+                           <PP style={{ color: "#060", }}> m.</PP>
                         </P>
                         <P style={[ s.tableTextDescription ]}>
                            Tirantes ( Arame 10 )
@@ -850,7 +860,14 @@ export default function DryWallCalculatorView( { ...props } ) {
 
                      <View style={[ s.tableRowEven ]}>
                         <P style={[ s.tableQtdText ]}>
-                           { GN25?.text }
+                           { 
+                              SelectedCeilingSupportType == "Tabica" ? (
+                                 Reguladores?.tabicas.text
+                              ) : (
+                                 Reguladores?.cantoneiras.text
+                              )
+                           } 
+                           <PP style={{ color: "#060", }}> un.</PP>
                         </P>
                         <P style={[ s.tableTextDescription ]}>
                            Regulador
@@ -865,7 +882,14 @@ export default function DryWallCalculatorView( { ...props } ) {
 
                      <View style={[ s.tableRowOdd ]}>
                         <P style={[ s.tableQtdText ]}>
-                           { GN25?.text }
+                           { 
+                              SelectedCeilingSupportType == "Tabica" ? (
+                                 União?.tabicas.text
+                              ) : (
+                                 União?.cantoneiras.text
+                              )
+                           } 
+                           <PP style={{ color: "#060", }}> un.</PP>
                         </P>
                         <P style={[ s.tableTextDescription ]}>
                            União
@@ -881,6 +905,7 @@ export default function DryWallCalculatorView( { ...props } ) {
                      <View style={[ s.tableRowEven ]}>
                         <P style={[ s.tableQtdText ]}>
                            { GN25?.text }
+                           <PP style={{ color: "#060", }}> un.</PP>
                         </P>
                         <P style={[ s.tableTextDescription ]}>
                            Parafusos GN 25
@@ -895,7 +920,14 @@ export default function DryWallCalculatorView( { ...props } ) {
 
                      <View style={[ s.tableRowOdd ]}>
                         <P style={[ s.tableQtdText ]}>
-                           { Lfix?.tabicas.text }
+                           { 
+                              SelectedCeilingSupportType == "Tabica" ? (
+                                 Lfix?.tabicas.text
+                              ) : (
+                                 Lfix?.cantoneiras.text
+                              )
+                           } 
+                           <PP style={{ color: "#060", }}> un.</PP>
                         </P>
                         <P style={[ s.tableTextDescription ]}>
                            Lfix
@@ -910,7 +942,14 @@ export default function DryWallCalculatorView( { ...props } ) {
 
                      <View style={[ s.tableRowEven ]}>
                         <P style={[ s.tableQtdText ]}>
-                           { MetalMetal?.tabicas.text }
+                           { 
+                              SelectedCeilingSupportType == "Tabica" ? (
+                                 MetalMetal?.tabicas.text
+                              ) : (
+                                 MetalMetal?.cantoneiras.text
+                              )
+                           } 
+                           <PP style={{ color: "#060", }}> un.</PP>
                         </P>
                         <P style={[ s.tableTextDescription ]}>
                            Parafusos metal metal
@@ -925,7 +964,14 @@ export default function DryWallCalculatorView( { ...props } ) {
 
                      <View style={[ s.tableRowOdd ]}>
                         <P style={[ s.tableQtdText ]}>
-                           { MetalMetal?.tabicas.text }
+                           { 
+                              SelectedCeilingSupportType == "Tabica" ? (
+                                 Pregos?.text
+                              ) : (
+                                 Pregos?.text
+                              )
+                           } 
+                           <PP style={{ color: "#060", }}> un.</PP>
                         </P>
                         <P style={[ s.tableTextDescription ]}>
                            Prego
@@ -940,7 +986,8 @@ export default function DryWallCalculatorView( { ...props } ) {
 
                      <View style={[ s.tableRowEven ]}>
                         <P style={[ s.tableQtdText ]}>
-                           { FitaTelada?.text } m
+                           { FitaTelada?.text } 
+                           <PP style={{ color: "#060", }}> m.</PP>
                         </P>
                         <P style={[ s.tableTextDescription ]}>
                            Fita telada
@@ -954,7 +1001,8 @@ export default function DryWallCalculatorView( { ...props } ) {
                      </View>
                      <View style={[ s.tableRowOdd ]}>
                         <P style={[ s.tableQtdText ]}>
-                           { Massa?.text } kg
+                           { Massa?.text } 
+                           <PP style={{ color: "#060", }}> kg.</PP>
                         </P>
                         <P style={[ s.tableTextDescription ]}>
                            Massa para DryWall
@@ -985,7 +1033,8 @@ export default function DryWallCalculatorView( { ...props } ) {
                      { IsLãDeVidroEnabled && 
                         <View style={[ IsBandaAcústicaEnabled ? s.tableRowOdd : s.tableRowEven ]}>
                            <P style={[ s.tableQtdText ]}>
-                              { LãDeVidro?.text } m
+                              { LãDeVidro?.text } 
+                              <PP>m</PP>
                            </P>
                            <P style={[ s.tableTextDescription ]}>
                               Lã de vidro
