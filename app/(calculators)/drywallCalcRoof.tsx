@@ -838,14 +838,21 @@ export default function DryWallCalculatorView( { ...props } ) {
 
                      <View style={[ s.tableRowOdd ]}>
                         <P style={[ s.tableQtdText ]}>
-                           { 
+                           {/* { 
                               SelectedCeilingSupportType == "Tabica" ? (
                                  Tirantes?.metros.tabicas.text
                               ) : (
                                  Tirantes?.metros.cantoneiras.text
                               )
+                           } */}
+                           { 
+                              SelectedCeilingSupportType == "Tabica" ? (
+                                 Tirantes?.qtd.tabicas.text
+                              ) : (
+                                 Tirantes?.qtd.cantoneiras.text
+                              )
                            }
-                           <PP style={{ color: "#060", }}> m.</PP>
+                           <PP style={{ color: "#060", }}> un.</PP>
                         </P>
                         <P style={[ s.tableTextDescription ]}>
                            Tirantes ( Arame 10 )
@@ -953,6 +960,7 @@ export default function DryWallCalculatorView( { ...props } ) {
                         </P>
                         <P style={[ s.tableTextDescription ]}>
                            Parafusos metal metal
+                           <PP style={{ color: "#27f" }}> LA 13</PP>
                         </P>
                         <P style={[ s.tableText ]}>
                            {}

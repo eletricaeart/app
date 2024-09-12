@@ -95,53 +95,50 @@ export async function CalculateDryWallRoof(
          ,
          panelsNeeded = Math.ceil( ( ( length * width ) / panelArea ) * 1.05 )
          ,
-         // perimetro / 3 : arredondado pra cima
          cantoneirasNeeded = Math.ceil( roofPerimetro / 3 )
          ,
-         // perimetro / 3 : arredondado pra cima
-         tabicasNeeded = Math.ceil( ( roofPerimetro / 3 ) + 1 )
+         tabicasNeeded = Math.ceil( ( roofPerimetro / 3 ) )
          ,
-         // ( ( comprimento / ,60 : arredondado pra baixo ) * ( largura / 3 ) ) : arredondado pra cima
-         // perfisNeeded = Math.floor( width / .6 )
-         // perfis for cantoneiras
-         perfis_cantoneirasNeeded = Math.floor( width / .6 ),
-         // perfis for tabicas 
-         perfis_tabicasNeeded = Math.floor( ( width / .6 ) + 2 )
+         perfis_cantoneirasNeeded = Math.floor( width / .6 )
          ,
-         
-         // ( ( ( largura - 1,20 ) / 1,20 ): arredondado pra baixo + 2 ) * cantoneiras
-         reguladoresForCantoneirasNeeded = Math.floor( ( ( Math.floor( width - 1.20 ) / 1.20 ) + 2 ) * cantoneirasNeeded )
+         perfis_tabicasNeeded = Math.floor( ( width / .6 ) + 1 )
          ,
-         // ( ( ( largura - ,60 ) / 1,20 ): arredondado pra baixo + 2 ) * tabicas
-         reguladoresForTabicasNeeded = Math.floor( ( ( Math.floor( width - .60 ) / 1.20 ) + 2 ) * tabicasNeeded )
+         // reguladoresForCantoneirasNeeded = Math.floor( ( ( Math.floor( width - 1.20 ) / 1.20 ) + 2 ) * cantoneirasNeeded )
+         reguladoresForCantoneirasNeeded = Math.floor( ( ( Math.floor( width - 1.20 ) / 1.20 ) + 2 ) * perfis_cantoneirasNeeded )
          ,
-         // 1 kg de arame 10: 14 metros
-         // ( ( ( largura - 1,20 ) / 1,20 ): arredondado pra baixo + 2 ) * cantoneiras
+         // reguladoresForTabicasNeeded = Math.floor( ( ( Math.floor( width - .60 ) / 1.20 ) + 2 ) * tabicasNeeded )
+         reguladoresForTabicasNeeded = Math.floor( ( ( Math.floor( width - .60 ) / 1.20 ) + 2 ) * perfis_tabicasNeeded )
+         ,
+
+
+
          tirantesNeeded = {
             qtd: { cantoneiras: reguladoresForCantoneirasNeeded, tabicas: reguladoresForTabicasNeeded },
             metros: {
                cantoneiras: rebaixo ? (
-                  // Math.ceil( ( ( reguladoresForCantoneirasNeeded * rebaixo ) / 14 ) )
-                  ( ( reguladoresForCantoneirasNeeded * rebaixo ) / 14 ) /* *  */
+                  ( ( reguladoresForCantoneirasNeeded * rebaixo ) / 14 ) * cantoneirasNeeded
                ) : (
-                  // Math.ceil( ( ( reguladoresForCantoneirasNeeded * 1 ) / 14 ) )
-                  ( ( reguladoresForCantoneirasNeeded * 1 ) / 14 ) /* *  */
+                  ( ( reguladoresForCantoneirasNeeded * 1 ) / 14 ) * cantoneirasNeeded
                ),
                tabicas: rebaixo ? (
-                  // Math.ceil( ( ( reguladoresForTabicasNeeded * rebaixo ) / 14 ) )
-                  ( ( reguladoresForTabicasNeeded * rebaixo ) / 14 ) /* * */ 
+                  ( ( reguladoresForTabicasNeeded * rebaixo ) / 14 ) * tabicasNeeded
                ) : (
-                  // Math.ceil( ( ( reguladoresForTabicasNeeded * 1 ) / 14 ) )
-                  ( ( reguladoresForTabicasNeeded * 1 ) / 14 ) /* *  */
+                  ( ( reguladoresForTabicasNeeded * 1 ) / 14 ) * tabicasNeeded
                ),
             }
          }
          ,
+         // massaNeeded = Math.ceil( roofArea / 10 ) * 5
+         massaNeeded = Math.ceil( .50 * roofArea )
+         ,
+         // tapeNeeded = Math.ceil( roofArea / 150 )
+         tapeNeeded = Math.ceil( 1.5 * roofArea )
+         ,
+
+
          gn25Needed = panelsNeeded * 30
          ,
          lfixNeeded = {
-            // cantoneiras: ( tabicasNeeded / .5 ) * 2,
-            // tabicas: ( tabicasNeeded / .5 ) * 2,
             cantoneiras: reguladoresForCantoneirasNeeded,
             tabicas: reguladoresForTabicasNeeded,
          }
@@ -153,19 +150,13 @@ export async function CalculateDryWallRoof(
          ,
          pregosNeeded = tabicasNeeded * 8
          ,
-         massaNeeded = Math.ceil( roofArea / 10 ) * 5
-         ,
          uniãoNeeded = {
-            cantoneiras: ( width / 3 ) * perfis_cantoneirasNeeded,
-            tabicas: ( width / 3 ) * perfis_tabicasNeeded,
+            cantoneiras: Math.floor( width / 3 ) * perfis_cantoneirasNeeded,
+            tabicas: Math.floor( width / 3 ) * perfis_tabicasNeeded,
          }
          ,
-         tapeNeeded = Math.ceil( roofArea / 150 )
-         ,
-         // 0,9 * roofArea
          bandaAcústicaNeeded = 0.9 * roofArea
          ,
-         // 1 * roofArea
          lãDeVidroNeeded = 1 * roofArea
       ;
       
@@ -268,7 +259,6 @@ export async function CalculateDryWall(
 
 
 
-
 export async function CalculateDryWallRoof_bkp(
    length: number, width: number, rebaixo?: number
 ) {
@@ -280,43 +270,72 @@ export async function CalculateDryWallRoof_bkp(
          ,
          roofPerimetro = ( length * 2 ) + ( width * 2 )
          ,
-         panelsNeeded = Math.ceil( ( ( length * width ) / panelArea * 1.05 ) )
+         panelsNeeded = Math.ceil( ( ( length * width ) / panelArea ) * 1.05 )
          ,
-         // metro linear / 3m : arredonda pra cima
-         // ou 
-         // ( ( comprimento / .60 ) => quantidade x ( largura / 3m ) => tamanho ) + 1
-         tabicasNeeded = Math.ceil( roofPerimetro / 3 )
-         ,
-         // ( comprimento / .60 ) => quantidade x ( largura / 3m ) => tamanho
+         // perimetro / 3 : arredondado pra cima
          cantoneirasNeeded = Math.ceil( roofPerimetro / 3 )
          ,
-         perfisNeeded = Math.floor( width / .6 )
+         // perimetro / 3 : arredondado pra cima
+         tabicasNeeded = Math.ceil( ( roofPerimetro / 3 ) )
          ,
-         reguladoresNeeded = perfisNeeded * 3
+         // ( ( comprimento / ,60 : arredondado pra baixo ) * ( largura / 3 ) ) : arredondado pra cima
+         // perfisNeeded = Math.floor( width / .6 )
+         // perfis for cantoneiras
+         perfis_cantoneirasNeeded = Math.floor( width / .6 ),
+         // perfis for tabicas 
+         perfis_tabicasNeeded = Math.floor( ( width / .6 ) + 2 )
          ,
-         lfixNeeded = reguladoresNeeded
+         
+         // ( ( ( largura - 1,20 ) / 1,20 ): arredondado pra baixo + 2 ) * cantoneiras
+         reguladoresForCantoneirasNeeded = Math.floor( ( ( Math.floor( width - 1.20 ) / 1.20 ) + 2 ) * cantoneirasNeeded )
          ,
-
+         // ( ( ( largura - ,60 ) / 1,20 ): arredondado pra baixo + 2 ) * tabicas
+         reguladoresForTabicasNeeded = Math.floor( ( ( Math.floor( width - .60 ) / 1.20 ) + 2 ) * tabicasNeeded )
+         ,
          // 1 kg de arame 10: 14 metros
-         tirantesNeeded = rebaixo ? (
-            Math.ceil( ( reguladoresNeeded * rebaixo ) / 14 )
-         ) : (
-            Math.ceil( ( reguladoresNeeded ) / 14 )
-         )
+         // ( ( ( largura - 1,20 ) / 1,20 ): arredondado pra baixo + 2 ) * cantoneiras
+         tirantesNeeded = {
+            qtd: { cantoneiras: reguladoresForCantoneirasNeeded, tabicas: reguladoresForTabicasNeeded },
+            metros: {
+               cantoneiras: rebaixo ? (
+                  // Math.ceil( ( ( reguladoresForCantoneirasNeeded * rebaixo ) / 14 ) )
+                  ( ( reguladoresForCantoneirasNeeded * rebaixo ) / 14 ) * cantoneirasNeeded
+               ) : (
+                  // Math.ceil( ( ( reguladoresForCantoneirasNeeded * 1 ) / 14 ) )
+                  ( ( reguladoresForCantoneirasNeeded * 1 ) / 14 ) * cantoneirasNeeded
+               ),
+               tabicas: rebaixo ? (
+                  // Math.ceil( ( ( reguladoresForTabicasNeeded * rebaixo ) / 14 ) )
+                  ( ( reguladoresForTabicasNeeded * rebaixo ) / 14 ) * tabicasNeeded
+               ) : (
+                  // Math.ceil( ( ( reguladoresForTabicasNeeded * 1 ) / 14 ) )
+                  ( ( reguladoresForTabicasNeeded * 1 ) / 14 ) * tabicasNeeded
+               ),
+            }
+         }
          ,
          gn25Needed = panelsNeeded * 30
          ,
-         lfixForTabicasNeeded = ( tabicasNeeded / .5 ) * 2
+         lfixNeeded = {
+            // cantoneiras: ( tabicasNeeded / .5 ) * 2,
+            // tabicas: ( tabicasNeeded / .5 ) * 2,
+            cantoneiras: reguladoresForCantoneirasNeeded,
+            tabicas: reguladoresForTabicasNeeded,
+         }
          ,
-         screwMMNeeded = perfisNeeded * 4
+         screwMMNeeded = {
+            cantoneiras: perfis_cantoneirasNeeded * 4,
+            tabicas: perfis_tabicasNeeded * 4,
+         }
          ,
          pregosNeeded = tabicasNeeded * 8
          ,
          massaNeeded = Math.ceil( roofArea / 10 ) * 5
          ,
-         uniõesNeeded = ( width / 3 ) * perfisNeeded
-         ,
-         uniãoNeeded = ( width / 3 ) * perfisNeeded
+         uniãoNeeded = {
+            cantoneiras: ( width / 3 ) * perfis_cantoneirasNeeded,
+            tabicas: ( width / 3 ) * perfis_tabicasNeeded,
+         }
          ,
          tapeNeeded = Math.ceil( roofArea / 150 )
          ,
@@ -333,15 +352,15 @@ export async function CalculateDryWallRoof_bkp(
          panelsNeeded,
          tabicasNeeded,
          cantoneirasNeeded,
-         perfisNeeded,
-         reguladoresNeeded,
-         lfixNeeded,
+         perfis_cantoneirasNeeded,
+         perfis_tabicasNeeded,
          tirantesNeeded,
+         reguladoresForCantoneirasNeeded,
+         reguladoresForTabicasNeeded,
+         lfixNeeded,
          gn25Needed,
-         lfixForTabicasNeeded,
          screwMMNeeded,
          pregosNeeded,
-         uniõesNeeded,
          uniãoNeeded,
          tapeNeeded,
          massaNeeded,
