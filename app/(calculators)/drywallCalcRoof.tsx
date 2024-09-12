@@ -145,7 +145,7 @@ export default function DryWallCalculatorView( { ...props } ) {
       ,
       [ Massa, setMassa ] = useState<inputDataType_i>()
       ,
-      [ FitaTelada, setFitaTelada ] = useState<inputDataType_i>()
+      [ FitaTelada, setFitaTelada ] = useState<Strumber>()
       ,
       [ BandaAcústica, setBandaAcústica ] = useState<inputDataType_i>()
       ,
@@ -187,34 +187,36 @@ export default function DryWallCalculatorView( { ...props } ) {
          };
 
          materials.forEach( material => {
-               materialsNeeded.length += material.length;
-               materialsNeeded.width += material.width;
-               materialsNeeded.area += material.area;
-               materialsNeeded.perimetro += material.perimetro;
-               materialsNeeded.chapas += material.chapas;
-               materialsNeeded.tabicas += material.tabicas;
-               materialsNeeded.cantoneiras += material.cantoneiras;
-               materialsNeeded.pregos += material.pregos;
-               materialsNeeded.fitaTelada += material.fitaTelada;
-               materialsNeeded.massa += material.massa;
-               materialsNeeded.bandaAcústica += material.bandaAcústica;
-               materialsNeeded.gn25 += material.gn25;
-               materialsNeeded.lãDeVidro += material.lãDeVidro;
+            console.log( "oi material: \n\n\n", material );
+            console.log( "oi materialsNeeded: \n\n\n", materialsNeeded );
+               materialsNeeded.length += material.length.value;
+               materialsNeeded.width += material.width.value;
+               materialsNeeded.area += material.area.value;
+               materialsNeeded.perimetro += material.perimetro.value;
+               materialsNeeded.chapas += material.chapas.value;
+               materialsNeeded.tabicas += material.tabicas.value;
+               materialsNeeded.cantoneiras += material.cantoneiras.value;
+               materialsNeeded.pregos += material.pregos.value;
+               materialsNeeded.fitaTelada += material.fitaTelada.value;
+               materialsNeeded.massa += material.massa.value;
+               materialsNeeded.bandaAcústica += material.bandaAcústica.value;
+               materialsNeeded.gn25 += material.gn25.value;
+               materialsNeeded.lãDeVidro += material.lãDeVidro.value;
 
-               materialsNeeded.perfis_cantoneiras += material.perfis;
-               materialsNeeded.perfis_tabicas += material.perfis;
-               materialsNeeded.tirantes_cantoneiras_qtd += material.tirantes;
-               materialsNeeded.tirantes_cantoneiras_metros += material.tirantes;
-               materialsNeeded.tirantes_tabicas_qtd += material.tirantes;
-               materialsNeeded.tirantes_tabicas_metros += material.tirantes;
-               materialsNeeded.reguladores_cantoneiras += material.reguladores;
-               materialsNeeded.reguladores_tabicas += material.reguladores;
-               materialsNeeded.união_cantoneiras += material.união;
-               materialsNeeded.união_tabicas += material.união;
-               materialsNeeded.lfix_cantoneiras += material.lfix;
-               materialsNeeded.lfix_tabicas += material.lfix;
-               materialsNeeded.parafusoMM_cantoneiras += material.parafusoMM;
-               materialsNeeded.parafusoMM_tabicas += material.parafusoMM;
+               materialsNeeded.perfis_cantoneiras += material.perfis.value;
+               materialsNeeded.perfis_tabicas += material.perfis.value;
+               materialsNeeded.tirantes_cantoneiras_qtd += material.tirantes.value;
+               materialsNeeded.tirantes_cantoneiras_metros += material.tirantes.value;
+               materialsNeeded.tirantes_tabicas_qtd += material.tirantes.value;
+               materialsNeeded.tirantes_tabicas_metros += material.tirantes.value;
+               materialsNeeded.reguladores_cantoneiras += material.reguladores.value;
+               materialsNeeded.reguladores_tabicas += material.reguladores.value;
+               materialsNeeded.união_cantoneiras += material.união.value;
+               materialsNeeded.união_tabicas += material.união.value;
+               materialsNeeded.lfix_cantoneiras += material.lfix.cantoneiras.value;
+               materialsNeeded.lfix_tabicas += material.lfix.tabicas.value;
+               materialsNeeded.parafusoMM_cantoneiras += material.parafusoMM.cantoneiras.value;
+               materialsNeeded.parafusoMM_tabicas += material.parafusoMM.tabicas.value;
          } );
 
          setMaterialsNeeded( materials );
@@ -791,7 +793,13 @@ export default function DryWallCalculatorView( { ...props } ) {
 
                      <View style={[ s.tableRowOdd ]}>
                         <P style={[ s.tableQtdText ]}>
-                           { CeilingSupport?.type }
+                           { 
+                              SelectedCeilingSupportType == "Tabica" ? (
+                                 Tabicas?.text
+                              ) : (
+                                 Cantoneiras?.text
+                              )
+                           }
                         </P>
                         <P style={[ s.tableTextDescription ]}>
                            { SelectedCeilingSupportType }
@@ -806,7 +814,13 @@ export default function DryWallCalculatorView( { ...props } ) {
 
                      <View style={[ s.tableRowEven ]}>
                         <P style={[ s.tableQtdText ]}>
-                           {  }
+                           { 
+                              SelectedCeilingSupportType == "Tabica" ? (
+                                 Perfis!.tabicas.text
+                              ) : (
+                                 Perfis!.cantoneiras.text
+                              )
+                           }
                         </P>
                         <P style={[ s.tableTextDescription ]}>
                            Perfil F530

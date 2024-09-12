@@ -99,7 +99,7 @@ export async function CalculateDryWallRoof(
          cantoneirasNeeded = Math.ceil( roofPerimetro / 3 )
          ,
          // perimetro / 3 : arredondado pra cima
-         tabicasNeeded = Math.ceil( roofPerimetro / 3 )
+         tabicasNeeded = Math.ceil( ( roofPerimetro / 3 ) + 1 )
          ,
          // ( ( comprimento / ,60 : arredondado pra baixo ) * ( largura / 3 ) ) : arredondado pra cima
          // perfisNeeded = Math.floor( width / .6 )
