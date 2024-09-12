@@ -369,3 +369,81 @@ export async function CalculateDryWallRoof_bkp(
       }
    } catch( err: any ) { console.error( "CalculateDrywallRoof() err: ", err ); }
 }
+
+
+/* 
+suite: 3.7 * 3:: 11.1 {
+   chapas: 6
+   canaleta: 7
+   tabica: 5
+   regulador: 14
+   união: 5
+   tirante: 14
+   gn25: 200
+   ta13: 100
+}
+sala: 3 * 3::  {
+   chapas: 5
+   canaleta: 6
+   tabica: 4
+   regulador: 12
+   união: 5
+   tirante: 12
+   gn25: 200
+   ta13: 100
+}
+area: 3.5 * 2 {
+   chapas: 4
+   canaleta: 4
+   tabica: 3
+   regulador: 9
+   união: 4
+   tirante: 9
+   gn25: 100
+   ta13: 100
+}
+cozinha:  {
+   chapas: 
+   canaleta: 
+   tabica: 
+   regulador: 
+   união: 
+   tirante: 
+   gn25: 
+   ta13: 
+}
+corredor: 2 *  {
+   chapas: 
+   canaleta: 
+   tabica: 
+   regulador: 
+   união: 
+   tirante: 
+   gn25: 
+   ta13: 
+}
+quarto 1: 
+quarto 2: 
+parte: [
+	3 * 1.5, {
+      chapas: 3
+      canaleta: 3
+      tabica: 2
+      regulador: 6
+      união: 3
+      tirante: 6
+      gn25: 100
+      ta13: 100
+   }
+   2.5 *  {
+      chapas: 
+      canaleta: 
+      tabica: 
+      regulador: 
+      união: 
+      tirante: 
+      gn25: 
+      ta13: 
+   }
+]
+*/
