@@ -40,7 +40,7 @@ const
          size: 46
       }
       ,
-      { id: 2, name: "Forro de DryWall", src: "//drywallCalcRoof",
+      { id: 2, name: "Forro de DryWall", src: "/drywallCalcRoof",
          icon: "calculator", icn: "f", iconColor: "#fc0",
          size: 46
       }

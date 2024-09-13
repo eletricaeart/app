@@ -1175,7 +1175,7 @@ const
          color: "#bbf",
       },
       tableFooterTotalText: {
-         color: "#fb0",
+         color: "#5aad02",
       },
       tableFooterLinearText: {
          color: "#27f",
