@@ -35,13 +35,6 @@ export function calculateSheetrockMaterialsNeeded(
 
    return numPanelsNeeded + jointCompoundNeeded + screwsNeeded + tapeNeeded;
 }
-
-let 
-   length = 10 // in feet
-   ,
-   width = 20 // in feet
-;
-
 // const 
 //    totalMaterialsNeeded = calculateSheetrockMaterialsNeeded( length, width )
 // ;
@@ -89,7 +82,7 @@ export async function CalculateDryWallRoof(
       const 
          panelArea = 1.8 * 1.2
          ,
-         roofArea = length * width
+         roofArea = ( length * width ) * 1.05
          ,
          roofPerimetro = ( length * 2 ) + ( width * 2 )
          ,
@@ -97,17 +90,17 @@ export async function CalculateDryWallRoof(
          ,
          cantoneirasNeeded = Math.ceil( roofPerimetro / 3 )
          ,
-         tabicasNeeded = Math.ceil( ( roofPerimetro / 3 ) )
+         tabicasNeeded = Math.ceil( roofPerimetro / 3 )
          ,
-         perfis_cantoneirasNeeded = Math.floor( width / .6 )
+         perfis_cantoneirasNeeded = Math.ceil( width / .60 )
          ,
-         perfis_tabicasNeeded = Math.floor( ( width / .6 ) + 1 )
+         perfis_tabicasNeeded = Math.ceil( width / .60 ) + 1 
          ,
          // reguladoresForCantoneirasNeeded = Math.floor( ( ( Math.floor( width - 1.20 ) / 1.20 ) + 2 ) * cantoneirasNeeded )
-         reguladoresForCantoneirasNeeded = Math.floor( ( ( Math.floor( width - 1.20 ) / 1.20 ) + 2 ) * perfis_cantoneirasNeeded )
+         reguladoresForCantoneirasNeeded = Math.ceil( ( ( width - .60 ) / 1.20 ) + 1 ) * perfis_cantoneirasNeeded
          ,
          // reguladoresForTabicasNeeded = Math.floor( ( ( Math.floor( width - .60 ) / 1.20 ) + 2 ) * tabicasNeeded )
-         reguladoresForTabicasNeeded = Math.floor( ( ( Math.floor( width - .60 ) / 1.20 ) + 2 ) * perfis_tabicasNeeded )
+         reguladoresForTabicasNeeded = Math.round( ( ( width - .30 ) / 1.20 ) + 1 ) * perfis_tabicasNeeded
          ,
 
 
@@ -129,7 +122,7 @@ export async function CalculateDryWallRoof(
          }
          ,
          // massaNeeded = Math.ceil( roofArea / 10 ) * 5
-         massaNeeded = Math.ceil( .50 * roofArea )
+         massaNeeded = Math.ceil( .5 * roofArea )
          ,
          // tapeNeeded = Math.ceil( roofArea / 150 )
          tapeNeeded = Math.ceil( 1.5 * roofArea )
@@ -138,7 +131,7 @@ export async function CalculateDryWallRoof(
 
          gn25Needed = panelsNeeded * 30
          ,
-         lfixNeeded = {
+         welifixNeeded = {
             cantoneiras: reguladoresForCantoneirasNeeded,
             tabicas: reguladoresForTabicasNeeded,
          }
@@ -159,7 +152,99 @@ export async function CalculateDryWallRoof(
          ,
          lãDeVidroNeeded = 1 * roofArea
       ;
+
+      const 
+         calc = {
+            area: ( length: number, width: number ): number => {
+               // const value = Math.ceil( length * width );
+               const value = length * width;
+               console.log( "area : \n\n\n", value );
+               return value;
+            }
+            ,
+            perimetro: ( length: number, width: number ): number => {
+               const value = ( length * 2 ) + ( width * 2 );
+               console.log( "perimetro : \n\n\n", value );
+               return value;
+            }
+            ,
+            cantoneiras_ou_tabicas: ( length: number, width: number ): number => {
+               const value = Math.ceil( calc.perimetro( length, width ) / 3 );
+               console.log( "cantoneiras_ou_tabicas : \n\n\n", value );
+               return value;
+            }
+            ,
+            perfisF530: {
+               paraCantoneiras: ( width: number ): number => {
+                  const 
+                     value = (
+                        Math.ceil( width / .60 ) 
+                     )
+                  ;
+                  console.log( "perfis paraCantoneiras : \n\n\n", value );
+                  return value;
+               },
+               paraTabicas: ( width: number ): number => {
+                  const 
+                     value = (
+                        Math.ceil( width / .60 ) + 1 
+                     )
+                  ;
+                  console.log( "perfis paraTabicas : \n\n\n", value );
+                  return value;
+               },
+            }
+            ,
+            tirantes: {
+               paraCantoneiras: ( width: number ): number => {
+                  const 
+                     value = (
+                        Math.ceil( ( ( width - .60 ) / 1.20 ) + 1 ) * ( calc.perfisF530.paraCantoneiras( width ) )
+                     )
+                  ;
+                  console.log( "tirantes paraCantoneiras : \n\n\n", value );
+                  return value;
+               },
+               paraTabicas: ( width: number ): number => {
+                  const 
+                     value = (
+                        Math.round( ( ( width - .30 ) / 1.20 ) + 1 ) * ( calc.perfisF530.paraTabicas( width ) )
+                     )
+                  ;
+                  console.log( "tirantes paraTabicas : \n\n\n", value );
+                  return value;
+               },
+            }
+            ,
+            massa: ( length: number, width: number ): number => {
+               const value = (
+                  Math.ceil( .5 * calc.area( length, width ) )
+               );
+               console.log( "massa : \n\n\n", value );
+               return value;
+            }
+            ,
+            fita: ( length: number, width: number ): number => {
+               const value = (
+                  Math.ceil( 1.5 * calc.area( length, width ) )
+               );
+               console.log( "fita : \n\n\n", value );
+               return value;
+            }
+            ,
+         }
+      ;
       
+      calc.area( length, width );
+      calc.cantoneiras_ou_tabicas( length, width );
+      calc.fita( length, width );
+      calc.massa( length, width );
+      calc.perfisF530.paraCantoneiras( width );
+      calc.perfisF530.paraTabicas( width );
+      calc.perimetro( length, width );
+      calc.tirantes.paraCantoneiras( width );
+      calc.tirantes.paraTabicas( width );
+
       return {
          roofArea,
          roofPerimetro,
@@ -171,7 +256,7 @@ export async function CalculateDryWallRoof(
          tirantesNeeded,
          reguladoresForCantoneirasNeeded,
          reguladoresForTabicasNeeded,
-         lfixNeeded,
+         welifixNeeded,
          gn25Needed,
          screwMMNeeded,
          pregosNeeded,
@@ -219,7 +304,7 @@ export async function CalculateDryWall(
          // gn25Needed = ( panelsNeeded * panelArea ) * 15
          gn25Needed = Math.ceil( panelsAreaNeeded * 15 )
          ,
-         lfixNeeded = ( guiasNeeded / .5 )
+         welifixNeeded = ( guiasNeeded / .5 )
          ,
          screwMMNeeded = montantesNeeded * 4
          ,
@@ -247,7 +332,7 @@ export async function CalculateDryWall(
          montantesNeededFor,
          montantesNeeded,
          gn25Needed,
-         lfixNeeded,
+         welifixNeeded,
          screwMMNeeded,
          massaNeeded,
          tapeNeeded,
@@ -316,7 +401,7 @@ export async function CalculateDryWallRoof_bkp(
          ,
          gn25Needed = panelsNeeded * 30
          ,
-         lfixNeeded = {
+         welifixNeeded = {
             // cantoneiras: ( tabicasNeeded / .5 ) * 2,
             // tabicas: ( tabicasNeeded / .5 ) * 2,
             cantoneiras: reguladoresForCantoneirasNeeded,
@@ -357,7 +442,7 @@ export async function CalculateDryWallRoof_bkp(
          tirantesNeeded,
          reguladoresForCantoneirasNeeded,
          reguladoresForTabicasNeeded,
-         lfixNeeded,
+         welifixNeeded,
          gn25Needed,
          screwMMNeeded,
          pregosNeeded,

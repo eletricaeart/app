@@ -487,14 +487,16 @@ export default function BudgetsView( { ...props } ) {
                         keyExtractor={ item => item.id } 
                         ItemSeparatorComponent={ 
                            () => <View style={{ 
-                              height: 1, 
-                              backgroundColor: "#ccc" ,
+                              height: 8, 
+                              backgroundColor: "#ccc0" ,
                               width: "90%",
                               margin: "auto",
                            }}/>
                         }
                         style={{
                            flex: 1,
+                           backgroundColor: "#e5e5e5",
+                           padding: 16,
                         }}
                      />
                   }

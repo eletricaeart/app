@@ -8,6 +8,8 @@ import { Header } from "@/src/widgets/clb-widgets";
 import { AppbarStick, BackButton, Duo, H2, H3, H4, H5, Input, Label, LabelText, P, PP, T1 } from "@/src/widgets/ui";
 import { AniButton } from "@/src/widgets/ui/animated";
 import { Stack } from "expo-router";
+import { printToFileAsync, } from "expo-print";
+import { shareAsync, } from "expo-sharing";
 import React, { useState, useEffect } from "react";
 import { 
    StyleSheet,
@@ -20,6 +22,9 @@ import {
 } from "react-native";
 import uuid from "react-native-uuid";
 import {Picker} from '@react-native-picker/picker';
+import { invoiceHtml } from "@/src/services/invoicePDF";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { forroPdfHtml } from "@/src/services/forroDryWallPDF";
 
 /** == [ properties ]
  * == == == == == == == == == */
@@ -69,7 +74,7 @@ interface materials_i {
    };
    pregos: Strumber;
    gn25: Strumber;
-   lfix: drywall_type;
+   welifix: drywall_type;
    parafusoMM: drywall_type;
    fitaTelada: Strumber;
    massa: Strumber;
@@ -139,7 +144,7 @@ export default function DryWallCalculatorView( { ...props } ) {
       ,
       [ Pregos, setPregos ] = useState<inputDataType_i>()
       ,
-      [ Lfix, setLfix ] = useState<drywall_type>()
+      [ Welifix, setWelifix ] = useState<drywall_type>()
       ,
       [ MetalMetal, setMetalMetal ] = useState<drywall_type>()
       ,
@@ -175,8 +180,8 @@ export default function DryWallCalculatorView( { ...props } ) {
             união_cantoneiras: 0,
             união_tabicas: 0,
             gn25: 0,
-            lfix_cantoneiras: 0,
-            lfix_tabicas: 0,
+            welifix_cantoneiras: 0,
+            welifix_tabicas: 0,
             parafusoMM_cantoneiras: 0,
             parafusoMM_tabicas: 0,
             pregos: 0,
@@ -213,8 +218,8 @@ export default function DryWallCalculatorView( { ...props } ) {
                materialsNeeded.reguladores_tabicas += material.reguladores.tabicas.value;
                materialsNeeded.união_cantoneiras += material.união.cantoneiras.value;
                materialsNeeded.união_tabicas += material.união.tabicas.value;
-               materialsNeeded.lfix_cantoneiras += material.lfix.cantoneiras.value;
-               materialsNeeded.lfix_tabicas += material.lfix.tabicas.value;
+               materialsNeeded.welifix_cantoneiras += material.welifix.cantoneiras.value;
+               materialsNeeded.welifix_tabicas += material.welifix.tabicas.value;
                materialsNeeded.parafusoMM_cantoneiras += material.parafusoMM.cantoneiras.value;
                materialsNeeded.parafusoMM_tabicas += material.parafusoMM.tabicas.value;
          } );
@@ -223,13 +228,13 @@ export default function DryWallCalculatorView( { ...props } ) {
          
          setArea(
             { 
-               text: materialsNeeded?.area.toString(), 
+               text: materialsNeeded?.area.toFixed( 2 ), 
                value: materialsNeeded?.area 
             } 
          );
          setPerimetro(
             { 
-               text: materialsNeeded?.perimetro.toString(), 
+               text: materialsNeeded?.perimetro.toFixed( 2 ), 
                value: materialsNeeded?.perimetro 
             } 
          );
@@ -320,15 +325,15 @@ export default function DryWallCalculatorView( { ...props } ) {
                }
             } 
          );
-         setLfix(
+         setWelifix(
             { 
                cantoneiras: {
-                  text: materialsNeeded?.lfix_cantoneiras.toString(),
-                  value: materialsNeeded?.lfix_cantoneiras
+                  text: materialsNeeded?.welifix_cantoneiras.toString(),
+                  value: materialsNeeded?.welifix_cantoneiras
                },
                tabicas: {
-                  text: materialsNeeded?.lfix_tabicas.toString(),
-                  value: materialsNeeded?.lfix_tabicas
+                  text: materialsNeeded?.welifix_tabicas.toString(),
+                  value: materialsNeeded?.welifix_tabicas
                }
             } 
          );
@@ -525,14 +530,14 @@ export default function DryWallCalculatorView( { ...props } ) {
                         value: returned!.uniãoNeeded.tabicas,
                      },
                   },
-                  lfix: {
+                  welifix: {
                      cantoneiras: {
-                        text: returned!.lfixNeeded.cantoneiras.toString(),
-                        value: returned!.lfixNeeded.cantoneiras,
+                        text: returned!.welifixNeeded.cantoneiras.toString(),
+                        value: returned!.welifixNeeded.cantoneiras,
                      },
                      tabicas: {
-                        text: returned!.lfixNeeded.tabicas.toString(),
-                        value: returned!.lfixNeeded.tabicas,
+                        text: returned!.welifixNeeded.tabicas.toString(),
+                        value: returned!.welifixNeeded.tabicas,
                      },
                   },
                   parafusoMM: {
@@ -564,11 +569,14 @@ export default function DryWallCalculatorView( { ...props } ) {
          data.perimetro += item.perimetro.value;
       } );
 
-      setArea( { text: data.area.toString(), value: data.area } );
-      setPerimetro( { text: data.perimetro.toString(), value: data.perimetro } );
+      setArea( { text: data.area.toFixed( 2 ), value: data.area } );
+      setPerimetro( { text: data.perimetro.toFixed( 2 ), value: data.perimetro } );
 
       console.log( "data.area:: ", data.area, "data.perimetro:: ", data.perimetro );
    }, [Areas.length] );
+
+
+   
 
    return( <>
       <Stack.Screen options={{ headerShown: true, title: "Calculadora de DryWall", statusBarColor: "#16181c",
@@ -714,7 +722,7 @@ export default function DryWallCalculatorView( { ...props } ) {
                   <FlatList 
                      ListHeaderComponent={ <>
                         <Header bg="#1b1d22">
-                           <T1 style={{ color: "#e5e5e5", }}>Medidas dos </T1>
+                           <T1 style={{ color: "#e5e5e5", }}>Medidas dos tetos</T1>
                         </Header>
                         <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center", gap: 16, paddingTop: 8, paddingBottom: 8, paddingLeft: 8 }}>
                            <P style={{ flex: 1, color: "#999", paddingTop: 8, paddingBottom: 8, paddingLeft: 14, }}>comprimento </P>
@@ -801,7 +809,7 @@ export default function DryWallCalculatorView( { ...props } ) {
                                  Cantoneiras?.text
                               )
                            } 
-                           <PP style={{ color: "#060", }}> un.</PP>
+                           <PP style={{ color: "#060", }}> bar.</PP>
                         </P>
                         <P style={[ s.tableTextDescription ]}>
                            { SelectedCeilingSupportType }
@@ -823,7 +831,7 @@ export default function DryWallCalculatorView( { ...props } ) {
                                  Perfis?.cantoneiras.text
                               )
                            } 
-                           <PP style={{ color: "#060", }}> un.</PP>
+                           <PP style={{ color: "#060", }}> bar.</PP>
                         </P>
                         <P style={[ s.tableTextDescription ]}>
                            Perfil F530
@@ -855,7 +863,8 @@ export default function DryWallCalculatorView( { ...props } ) {
                            <PP style={{ color: "#060", }}> un.</PP>
                         </P>
                         <P style={[ s.tableTextDescription ]}>
-                           Tirantes ( Arame 10 )
+                           Tirantes
+                           <PP style={{ color: "#27f" }}> ( Arame 10 )</PP>
                         </P>
                         <P style={[ s.tableText ]}>
                            {}
@@ -929,15 +938,15 @@ export default function DryWallCalculatorView( { ...props } ) {
                         <P style={[ s.tableQtdText ]}>
                            { 
                               SelectedCeilingSupportType == "Tabica" ? (
-                                 Lfix?.tabicas.text
+                                 Welifix?.tabicas.text
                               ) : (
-                                 Lfix?.cantoneiras.text
+                                 Welifix?.cantoneiras.text
                               )
                            } 
                            <PP style={{ color: "#060", }}> un.</PP>
                         </P>
                         <P style={[ s.tableTextDescription ]}>
-                           Lfix
+                           Welifix
                         </P>
                         <P style={[ s.tableText ]}>
                            {}
@@ -959,8 +968,8 @@ export default function DryWallCalculatorView( { ...props } ) {
                            <PP style={{ color: "#060", }}> un.</PP>
                         </P>
                         <P style={[ s.tableTextDescription ]}>
-                           Parafusos metal metal
-                           <PP style={{ color: "#27f" }}> LA 13</PP>
+                           Parafusos LA13
+                           <PP style={{ color: "#27f" }}> metal metal</PP>
                         </P>
                         <P style={[ s.tableText ]}>
                            {}

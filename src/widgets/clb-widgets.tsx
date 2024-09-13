@@ -380,11 +380,13 @@ export function BudgetCardList( { ...props } ) {
          // key={ props.id }
          name={ props.name }
          style={{
-            // backgroundColor: "#afc",
+            backgroundColor: "#fff",
             height: 120,
             flexDirection: "row",
             marginTop: 4,
             marginBottom: 4,
+            borderRadius: 24,
+            overflow: "hidden",
          }}
       >
          <View style={{
@@ -417,10 +419,12 @@ export function BudgetCardList( { ...props } ) {
                paddingBottom: 18,
                paddingLeft: 9,
                paddingRight: 9,
+               gap: 6,
             }}
          >
             <H3>{ props.budget.name }</H3>
-            <P style={{ color: "#777" }}>{ Str2Brl( props.budget.receiptValue ) }</P>
+            <P color="#888">{ Str2Brl( props.budget.receiptValue ) }</P>
+            <P>{ props.budget.owner }</P>
          </View>
 
          <View style={{
@@ -445,14 +449,17 @@ export function BudgetCardList( { ...props } ) {
                   paddingRight: 18,
                   alignItems: "center",
                   justifyContent: "center",
+                  gap: 8,
                }}
                onPress={ () => setMenuState( !MenuState ) }
             >
+               <P>{ props.budget.dateOfIssue }</P>
                { 
                   props.budget.isPaid ? ( 
                      <View
                         style={{
-                           backgroundColor: "#27f3",
+                           // backgroundColor: "#27f3",
+                           backgroundColor: "#0075BD",
                            width: "100%",
                            paddingTop: 2,
                            paddingBottom: 2,
@@ -463,14 +470,15 @@ export function BudgetCardList( { ...props } ) {
                            justifyContent: "center",
                         }}
                      >
-                        <PP style={{ color: "#27f", fontWeight: "bold" }}>
+                        <PP style={{ color: /* "#27f" */ "#fff", fontWeight: "bold" }}>
                            Pago
                         </PP>
                      </View>
                   ) : (
                      <View
                         style={{
-                           backgroundColor: "#f723",
+                           // backgroundColor: "#f723",
+                           backgroundColor: "#f72",
                            paddingTop: 2,
                            paddingBottom: 2,
                            paddingLeft: 6,
@@ -480,7 +488,7 @@ export function BudgetCardList( { ...props } ) {
                            justifyContent: "center",
                         }}
                      >
-                        <PP style={{ color: "#f72", fontWeight: "bold" }}>
+                        <PP style={{ color: /* "#f72" */"#fff", fontWeight: "bold" }}>
                            Receber
                         </PP>
                      </View>

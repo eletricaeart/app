@@ -77,7 +77,7 @@ export default function Landing( { ...props } ) {
                         <Image source={ require( "@/src/images/EA/globo-de-plasma-700.png" ) } style={ { height: "100%", resizeMode: "contain", } }/>
                      </ViewA>
       
-                     <Txt animation="zoomInUp">Welcome landing view</Txt>
+                     {/* <Txt animation="zoomInUp">Welcome landing view</Txt> */}
                   
                      {/* <KeyboardAvoidingView behavior="position" style={[ { width: "80%", } ]}>
                      </KeyboardAvoidingView>  */}
