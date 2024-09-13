@@ -19,7 +19,7 @@ export const
          animation="bounceIn"
       >
          <Pressable onPress={ props.onPress }
-            style={{
+            style={ ( pressed ) => [ {
                backgroundColor: props.bg || "#0075BD",
                borderRadius: 13,
                overflow: "hidden",
@@ -29,11 +29,13 @@ export const
                marginRight: "auto",
                elevation: props.elevation || 3,
                shadowColor: props.shadow || "#000",
-               borderColor: props.border?.color || "#27f0",
-               borderWidth: props.border?.width || 2,
+               // borderColor: props.border?.color || "#27f0",
+               borderColor: pressed ? "#27f0" : "#daa520",
+               // borderWidth: props.border?.width || 2,
+               borderWidth: 5,
                alignItems: "center",
                justifyContent: "center",   
-            }}
+            } ] }
          >
             { 
                (props.children)

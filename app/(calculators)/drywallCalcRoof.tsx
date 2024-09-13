@@ -706,6 +706,13 @@ export default function DryWallCalculatorView( { ...props } ) {
                   } }
                />
                <AniButton text="Calcular"
+                  styles={
+                     ( { pressed } ) => [
+                        {
+                           backgroundColor: pressed ? "#daa520" : "#0075BD"
+                        }
+                     ]
+                  }
                   onPress={ () => {
                      CreateMaterialsNeeded().then( materials => {
                         DisplayMaterialsNeeded( materials );
