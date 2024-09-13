@@ -8,8 +8,11 @@ import { initializeApp } from "firebase/app";
 
 // Have to do ts-ignore as getReactNativePersistence is not detected by ts compiler with firebase 10.3.0
 // @ts-ignore 
-import { initializeAuth, getReactNativePersistence, getAuth } from "@firebase/auth";
-
+import { 
+   initializeAuth, 
+   getReactNativePersistence, 
+   getAuth 
+} from "@firebase/auth";
 // import AsyncStorage from "@react-native-async-storage/async-storage";
 import ReactNativeAsyncStorage from "@react-native-async-storage/async-storage";
 import { getFirestore } from "firebase/firestore";
@@ -36,6 +39,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 export const FirebaseApp = initializeApp(firebaseConfig);
+
 export const FirebaseAuth = getAuth( FirebaseApp );
 
 // initializeAuth( FirebaseApp, {
