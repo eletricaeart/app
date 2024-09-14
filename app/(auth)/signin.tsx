@@ -177,6 +177,7 @@ export default function SignInView( { ...props } ) {
                         value={ Email }
                         onChangeText={ ( text ) => setEmail( text ) }
                         inputMode="email"
+                        autoCapitalize="none"
                         cursorColor={ "#00559C" }
                      />
                   </Label>
@@ -188,6 +189,7 @@ export default function SignInView( { ...props } ) {
                         value={ Password }
                         onChangeText={ ( text ) => setPassword( text ) }
                         inputMode="text"
+                        autoCapitalize="none"
                         cursorColor={ "#00559C" }
                      />
                   </Label>

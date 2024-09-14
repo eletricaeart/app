@@ -170,6 +170,7 @@ export default function SignUpView( { ...props } ) {
                         value={ Name }
                         onChangeText={ ( text ) => setName( text ) }
                         inputMode="text"
+                        autoCapitalize="none"
                         cursorColor={ "#00559C" }
                      />
                   </Label>
@@ -180,6 +181,7 @@ export default function SignUpView( { ...props } ) {
                         value={ Email }
                         onChangeText={ ( text ) => setEmail( text ) }
                         keyboardType="email-address"
+                        autoCapitalize="none"
                         cursorColor={ "#00559C" }
                      />
                   </Label>

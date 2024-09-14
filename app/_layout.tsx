@@ -1,7 +1,7 @@
 
 
 import React, { useEffect, useState } from "react";
-import { Stack } from "expo-router";
+import { router, Stack, useSegments } from "expo-router";
 import * as SplashScreen from 'expo-splash-screen';
 import 'react-native-reanimated';
 import { useFonts } from 'expo-font';
@@ -17,22 +17,9 @@ import { FirebaseAuth } from "@/FirebaseConfig";
 import {
    getAuth,
    onAuthStateChanged,
-   User,
+   User, 
 } from "firebase/auth";
 
-import {
-   AppBar,
-   AppBarLeft,
-   AppBarRight,
-   PageFooter,
-} from "@/src/widgets/clb-widgets";
-
-import { Icon } from "@/src/widgets/clb-icons";
-import {
-   DarkTheme,
-   DefaultTheme,
-   ThemeProvider,
-} from "@react-navigation/native";
 
 
 export {
@@ -41,8 +28,6 @@ export {
 } from "expo-router";
 
 export const unstable_settings = {
-   // Ensure that reloading on `/modal` keeps a back button present.
-   // initialRouteName: "(tabs)",
    initialRouteName: "/landing",
 };
 
@@ -50,18 +35,18 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
    const 
-      [ User, setUser ] = useState<User | null>( null )
+      // [ User, setUser ] = useState<User | null>( null )
+      [ User, setUser ] = useState<User | null>()
       , 
+      [ Initializing, setInitializing ] = useState( true )
+      ,
       [loaded] = useFonts( {
         SpaceMono: require('@/src/fonts/SpaceMono-Regular.ttf'),
         GodOfThunder: require('@/src/fonts/GodOfThunder.ttf'),
-      } )   
+      } )
+      ,
+      segments = useSegments()   
    ;
-   // const colorScheme = useColorScheme();
-   // Expo Router uses Error Boundaries to catch errors in the navigation tree.
-   // useEffect( () => {
-   //    if( error ) throw error;
-   // }, [error] );
 
    useEffect( () => {
      if( loaded ) {
@@ -73,14 +58,24 @@ export default function RootLayout() {
       onAuthStateChanged( FirebaseAuth, user => {
          console.log( { user } );
          setUser( user ); 
+         if( Initializing ) { setInitializing( false ); }
       } );
    }, [] );
+
+   useEffect( () => {
+      if( Initializing ) { return; }
+      const inTabs = segments[ 0 ] === "(tabs)";
+      if( User && !inTabs ) {
+         router.replace( "/(tabs)/home" )
+      } else if( !User && inTabs ) {
+         router.replace( "/" );
+      }
+   }, [ User, Initializing ] );
  
    if( !loaded ) { return null; }
 
 
    return( <> 
-      {/* <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}> */}
          <Stack initialRouteName="landing" 
             screenOptions={{ 
                // animation: "none" 
@@ -92,11 +87,8 @@ export default function RootLayout() {
             <Stack.Screen name="(tabs)" options={{ headerShown: false, statusBarColor: "#00559c" }} />
             <Stack.Screen name="(home)" options={{ headerShown: false, statusBarColor: "#00559c" }} />
             <Stack.Screen name="(auth)" options={{ headerShown: false, animation: "none"  }} />
-            {/* <Stack.Screen name="modal" options={{ presentation: "modal" }} /> */}
-            {/* <Stack.Screen name="signin" options={{ headerShown: false , presentation: "fullScreenModal", statusBarColor: "#1b1d22", animation: "none", }} />
-            <Stack.Screen name="signup" options={{ headerShown: false , presentation: "modal", statusBarColor: "#1b1d22", animation: "none", }} /> */}
+            {/* <Stack.Screen name="signup" options={{ headerShown: false , presentation: "modal", statusBarColor: "#1b1d22", animation: "none", }} /> */}
          </Stack>
-      {/* </ThemeProvider> */}
    </> );
 }
 

@@ -41,7 +41,8 @@ import { get, child, ref, getDatabase } from "firebase/database";
  * == == == == == == == == == */
 export default function Landing( { ...props } ) {
    const 
-      [ User, setUser ] = useState<User | null>( null ),
+      // [ User, setUser ] = useState<User | null>( null ),
+      [ User, setUser ] = useState<User | null>(),
       [ Loading, setLoading ] = useState( false )
 
    ;
