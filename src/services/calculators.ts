@@ -1,6 +1,7 @@
 
 
-
+// https://www.trevodrywall.com.br/calculadoras
+// https://www.artesana.com.br/forro-de-gesso-calcular-art?gad_source=1&gclid=CjwKCAjwufq2BhAmEiwAnZqw8vKI2p49FW-Jexp9Z1I7p9iUTEwS_ecsYfcBezA5DSEyIt2GT75EpRoCxygQAvD_BwE
 
 
 export function calculateSheetrockMaterialsNeeded(
