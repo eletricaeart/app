@@ -59,6 +59,7 @@ export default function Home( { ...props } ) {
       [ Loading, setLoading ] = useState( false )
    ;
 
+
    async function FetchLocalUser() {
       // fetch & return user from localStorage
       try {
