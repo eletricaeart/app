@@ -32,6 +32,7 @@ import {
    signOut,
 } from "firebase/auth";
 import { get, child, ref, getDatabase } from "firebase/database";
+import { AniButton } from "@/src/widgets/ui/animated";
 
 /** == [ properties ]
  * == == == == == == == == == */
@@ -88,32 +89,23 @@ export default function Landing( { ...props } ) {
                            Loading ? (
                               <ActivityIndicator size="large" color="#00559c"/> 
                            ) : ( 
-                              <Section style={{ gap: 16, width: "80%", }}>
-                              
-                                 <ViewA animation="bounceInDown" style={{ width: "100%", }}>
-                                    <Pressable style={{ elevation: 10, width: "100%", }} onPress={ () => router.push( "/signin" ) }>
-                                       <Btn style={{ backgroundColor: "#212329", }}>
-                                          {/* <Link href="/auth/signin"> */}
-                                          {/* <Link href="/signin"> */}
-                                             <BtnTxt style={{ color: "#eee", }}>
-                                                Acessar sua conta 
-                                             </BtnTxt>
-                                          {/* </Link> */}
-                                       </Btn> 
-                                    </Pressable>
-                                 </ViewA>
-      
-                                 <ViewA animation="bounceIn" style={{ width: "100%", }}>
-                                    <Pressable style={{ elevation: 15, width: "100%", shadowColor: "#27f", }} onPress={ () => router.push( "/signup" ) }>
-                                       <Btn >
-                                          {/* <Link href="/signup"> */}
-                                             <BtnTxt>
-                                                Criar uma conta
-                                             </BtnTxt>
-                                          {/* </Link> */}
-                                       </Btn> 
-                                    </Pressable>
-                                 </ViewA>
+                              <Section style={{ width: "80%", }}>
+
+
+                                 <AniButton title="acessar sua conta"
+                                    animation="bounceInDown"
+                                    bg="#212329"
+                                    onPress={ () => {
+                                       router.push( "/signin" )
+                                    } }
+                                 />
+                                 <AniButton title="Criar uma conta"
+                                    // animation="bounceInDown"
+                                    bg="#00559c"
+                                    onPress={ () => {
+                                       router.push( "/signup" )
+                                    } }
+                                 />
       
                               </Section> 
                            )

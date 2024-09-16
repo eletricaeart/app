@@ -31,6 +31,7 @@ import {
 import { get, child, ref, getDatabase } from "firebase/database";
 import ResetStorage from "@/src/services/resetStorage";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { AniButton } from "@/src/widgets/ui/animated";
 
 
 /** == [ properties ]
@@ -203,13 +204,11 @@ export default function SignInView( { ...props } ) {
                      ) : ( 
                         <Section style={{ gap: 16, width: "80%", }}>
                         
-                           <Pressable style={{ elevation: 10, width: "100%", }} onPress={ () => { HandleSignIn() } }>
-                              <Btn style={{ backgroundColor: "#212329", }}>
-                                 <BtnTxt style={{ color: "#eee", }}>
-                                    Login
-                                 </BtnTxt>
-                              </Btn> 
-                           </Pressable>
+                           <AniButton title="Login"
+                              animation="bounceInDown"
+                              bg="#212329"
+                              onPress={ () => { HandleSignIn() } }
+                           />
 
                         </Section> 
                      )

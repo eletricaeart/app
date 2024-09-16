@@ -53,6 +53,7 @@ import {
    Div, Item,
 } from "@/src/widgets/ui";
 import { ModalCardCenter, ModalFullPage } from "@/src/widgets/ui/modal";
+import { AniButton } from "@/src/widgets/ui/animated";
 
 
 /* == [ properties ]
@@ -680,32 +681,9 @@ export default function CustomersView( { ...props } ) {
                                  marginBottom: 66,
                               } }>
 
-                                 {/* <Touch 
-                                    txt="apagar tudo"
-                                    onPressIn={ () => { Keyboard.dismiss() } }
-                                    onPressOut={ () => { 
-                                       Form.ClearInputs( inputs ); 
-                                       id_Name.current.focus(); 
-                                    } }
-                                 />
-                                 <Touch 
-                                    touchSty={{
-                                       backgroundColor: "#9c5500",
-                                    }}
-                                    txtSty={{
-                                       color: "#fff",
-                                    }}
-                                    txt="erase DBs"
-                                    onPress={ async () => { await AsyncStorage.removeItem( "customers" ) } }
-                                 /> */}
-                                 <Touch 
-                                    touchSty={{
-                                       backgroundColor: "#00559C",
-                                    }}
-                                    txtSty={{
-                                       color: "#fff",
-                                    }}
-                                    txt="cadastrar"
+                                 <AniButton title="cadastrar"
+                                    animation="bounceIn"
+                                    bg="#00559C"
                                     onPress={ () => { RegisterCustomerOnBase( { dbs_name: "customers", object: customersList } ) } }
                                  />
                               </c.Section>

@@ -59,6 +59,7 @@ import MaskInput, { formatWithMask, Masks } from "react-native-mask-input";
 import useBudgetsFB from "@/src/hooks/useBudgetsFB";
 import { css } from "styled-components";
 import { Menu } from "@/src/widgets/ui";
+import { AniButton } from "@/src/widgets/ui/animated";
 
 
 
@@ -865,10 +866,10 @@ export default function BudgetsView( { ...props } ) {
                            marginBottom: 66,
                         } }>
                            
-                           <Touch 
-                              touchSty={{ backgroundColor: "#00559C", }}
-                              txtSty={{ color: "#fff", }}
-                              txt="cadastrar"
+                        
+                           <AniButton title="cadastrar"
+                              animation="bounceIn"
+                              bg="#00559C"
                               onPress={ () => { 
                                  console.log(
                                     "Budget: \n\n\n", 

@@ -18,14 +18,15 @@ export const
       const s = StyleSheet.create( {
          btnSlot: {
             width: props.w || "100%",
-            padding: 16,
+            padding: 9,
+            // backgroundColor: '#fff',
          },
          btn: {
             backgroundColor: props.bg || "#0075BD",
             borderRadius: 13,
             overflow: "hidden",
             width: "100%",
-            height: props.h || 56,
+            height: props.h || 48,
             marginHorizontal: "auto",
             elevation: props.elevation || 3,
             shadowColor: props.shadow || "#000",
@@ -35,7 +36,7 @@ export const
       } );
       return(
       <ViewA style={ s.btnSlot }
-         animation="bounceIn"
+         animation={ props.animation || "bounceIn" }
       >
          <Pressable onPress={ props.onPress }
             style={ ( { pressed } ) => [ { 

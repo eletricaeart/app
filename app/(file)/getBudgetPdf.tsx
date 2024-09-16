@@ -13,6 +13,7 @@ import { Brl2Float, CutRS, FixBrl, Float2Brl, Str2Brl } from "@/src/utils";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import budgets from "../(tabs)/budgets";
 import { router, Stack } from "expo-router";
+import { AniButton } from "@/src/widgets/ui/animated";
 
 
 
@@ -582,26 +583,14 @@ export default function GetBudgetPdfView() {
             zIndex: 9,
          }}
       >
-         <Pressable
+         <AniButton title="baixar em pdf"
+            animation="bounceIn"
+            w="80%"
+            bg="#00559C"
             onPress={ () => {
                GeneratePDF();
             } }
-            style={{
-               backgroundColor: "#1df", 
-               width: "90%", height: 56,
-               padding: 16, borderRadius: 13,
-               elevation: 5,
-               alignItems: "center", justifyContent: "center",
-            }}
-         >
-            <Text
-               style={{
-                  fontWeight: "bold",
-                  color: "#00559C",
-                  fontSize: 16,
-               }}
-            >BAIXAR EM PDF</Text>
-         </Pressable>
+         />
       </View>
    </>);
 };

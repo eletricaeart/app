@@ -31,6 +31,7 @@ import {
 import { get, child, ref, getDatabase } from "firebase/database";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import ResetStorage from "@/src/services/resetStorage";
+import { AniButton } from "@/src/widgets/ui/animated";
 
 
 /** == [ properties ]
@@ -206,16 +207,11 @@ export default function SignUpView( { ...props } ) {
                      ) : ( 
                         <Section style={{ gap: 16, width: "80%", }}>
                         
-                           <Pressable 
-                              style={{ elevation: 10, width: "100%", }} 
-                              onPress={ HandleSignUp }
-                           >
-                              <Btn style={{ backgroundColor: "#212329", }}>
-                                 <BtnTxt style={{ color: "#eee", }}>
-                                    Cadastrar sua conta
-                                 </BtnTxt>
-                              </Btn> 
-                           </Pressable>
+                           <AniButton title="Cadastrar sua conta"
+                              animation="bounceInDown"
+                              bg="#212329"
+                              onPress={ () => { HandleSignUp() } }
+                           />
 
                         </Section> 
                      )
