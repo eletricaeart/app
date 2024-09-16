@@ -283,16 +283,14 @@ export async function CalculateDryWall(
          panelArea = 1.8 * 1.2
          ,
          // comprimento x altura = área da parede
-         wallArea = ( width * height ).toFixed( 2 )
+         // wallArea = ( width * height ).toFixed( 2 )
+         wallArea = ( width * height ) * 1.05
          ,
          // 
-         // wallPerimetro = ( width * 2 ) + ( height * 2 )
-         wallPerimetro = width
+         wallPerimetro = ( width * 2 ) + ( height * 2 )
          ,
          // área de parede / área da chapa + 5% de desperdício do material = número de chapas
          panelsNeeded = Math.ceil( ( wallArea / panelArea * 1.05 ) ) * 2
-         ,
-         panelsAreaNeeded = panelsNeeded * panelArea
          ,
          // comprimento x altura da parede = tamanho da parede / tamanho da guia = número de peças
          guiasNeeded = Math.ceil( ( width * 2 ) / 3 )
@@ -303,22 +301,23 @@ export async function CalculateDryWall(
          ,
          // 15 * wallArea ou wallArea * 2 * panelArea * 15
          // gn25Needed = ( panelsNeeded * panelArea ) * 15
-         gn25Needed = Math.ceil( panelsAreaNeeded * 15 )
+         gn25Needed = Math.ceil( wallArea * 25 )
          ,
-         welifixNeeded = ( guiasNeeded / .5 )
+         welifixNeeded = Math.ceil( wallPerimetro / .6 )
          ,
-         screwMMNeeded = montantesNeeded * 4
+         screwMMNeeded = montantesNeeded * 6
          ,
          // 0,5 * wallArea
          // massaNeeded = Math.ceil( roofArea / 10 ) * 5
-         massaNeeded = Math.ceil( 0.5 * panelsAreaNeeded )
+         massaNeeded = Math.ceil( 0.5 * ( wallArea * 2 ) )
          ,
          // 1,4 kg * wallArea
          // tapeNeeded = Math.ceil( roofArea / 150 )
-         tapeNeeded = Math.ceil( 1.4 * panelsAreaNeeded )
+         // tapeNeeded = Math.ceil( 1.4 * panelsAreaNeeded )
+         tapeNeeded = Math.ceil( 3 * wallArea )
          ,
          // 0,9 * wallArea
-         bandaAcústicaNeeded = 0.9 * wallArea
+         bandaAcústicaNeeded = wallPerimetro
          ,
          // 1 * wallArea
          lãDeVidroNeeded = 1 * wallArea
@@ -328,7 +327,6 @@ export async function CalculateDryWall(
          wallArea,
          wallPerimetro,
          panelsNeeded,
-         panelsAreaNeeded,
          guiasNeeded,
          montantesNeededFor,
          montantesNeeded,
@@ -454,6 +452,77 @@ export async function CalculateDryWallRoof_bkp(
          lãDeVidroNeeded,
       }
    } catch( err: any ) { console.error( "CalculateDrywallRoof() err: ", err ); }
+}
+
+
+
+export async function CalculateDryWall_bkp(
+   width: number, height: number
+) {
+   try {
+      const 
+         // comprimento x altura = área da placa
+         panelArea = 1.8 * 1.2
+         ,
+         // comprimento x altura = área da parede
+         wallArea = ( width * height ).toFixed( 2 )
+         ,
+         // 
+         // wallPerimetro = ( width * 2 ) + ( height * 2 )
+         wallPerimetro = width
+         ,
+         // área de parede / área da chapa + 5% de desperdício do material = número de chapas
+         panelsNeeded = Math.ceil( ( wallArea / panelArea * 1.05 ) ) * 2
+         ,
+         panelsAreaNeeded = panelsNeeded * panelArea
+         ,
+         // comprimento x altura da parede = tamanho da parede / tamanho da guia = número de peças
+         guiasNeeded = Math.ceil( ( width * 2 ) / 3 )
+         ,
+         // comprimento da parede / distância entre montantes + montantes das extremidades = número de montantes
+         montantesNeededFor = Math.ceil( ( width / .4 ) + 2 ),
+         montantesNeeded = Math.ceil( ( width / .6 ) + 2 )
+         ,
+         // 15 * wallArea ou wallArea * 2 * panelArea * 15
+         // gn25Needed = ( panelsNeeded * panelArea ) * 15
+         gn25Needed = Math.ceil( panelsAreaNeeded * 15 )
+         ,
+         welifixNeeded = ( guiasNeeded / .5 )
+         ,
+         screwMMNeeded = montantesNeeded * 4
+         ,
+         // 0,5 * wallArea
+         // massaNeeded = Math.ceil( roofArea / 10 ) * 5
+         massaNeeded = Math.ceil( 0.5 * panelsAreaNeeded )
+         ,
+         // 1,4 kg * wallArea
+         // tapeNeeded = Math.ceil( roofArea / 150 )
+         tapeNeeded = Math.ceil( 1.4 * panelsAreaNeeded )
+         ,
+         // 0,9 * wallArea
+         bandaAcústicaNeeded = 0.9 * wallArea
+         ,
+         // 1 * wallArea
+         lãDeVidroNeeded = 1 * wallArea
+      ;
+      
+      return {
+         wallArea,
+         wallPerimetro,
+         panelsNeeded,
+         panelsAreaNeeded,
+         guiasNeeded,
+         montantesNeededFor,
+         montantesNeeded,
+         gn25Needed,
+         welifixNeeded,
+         screwMMNeeded,
+         massaNeeded,
+         tapeNeeded,
+         bandaAcústicaNeeded,
+         lãDeVidroNeeded,
+      }
+   } catch( err: any ) { console.error( "CalculateDrywall() err: ", err ); }
 }
 
 

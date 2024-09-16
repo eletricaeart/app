@@ -697,15 +697,15 @@ export default function DryWallCalculatorView( { ...props } ) {
                <View style={ s.divisor }/>
             </View>
 
-            <View style={[ {  padding: 18, gap: 24, } ]}>
-               <AniButton text="Adicionar" bg={ Width?.text && Length?.text ? "#339" : "#555" }
+            <View style={[ {  padding: 18, } ]}>
+               <AniButton title="Adicionar" bg={ Width?.text && Length?.text ? "#339" : "#555" }
                   onPress={ () => {
                      if( Width?.value && Length?.value ) {
                         CreateAreaList();
                      }
                   } }
                />
-               <AniButton text="Calcular"
+               <AniButton title="Calcular"
                   styles={
                      ( { pressed } ) => [
                         {

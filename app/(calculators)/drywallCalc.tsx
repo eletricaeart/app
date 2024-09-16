@@ -5,7 +5,7 @@
 import { CalculateDryWall, CalculateDryWallRoof } from "@/src/services/calculators";
 import { Icon } from "@/src/widgets/clb-icons";
 import { Header } from "@/src/widgets/clb-widgets";
-import { AppbarStick, BackButton, Duo, H2, H3, H4, H5, Input, Label, LabelText, P, T1 } from "@/src/widgets/ui";
+import { AppbarStick, BackButton, Duo, H2, H3, H4, H5, Input, Label, LabelText, P, PP, T1 } from "@/src/widgets/ui";
 import { AniButton } from "@/src/widgets/ui/animated";
 import { Stack } from "expo-router";
 import React, { useState, useEffect } from "react";
@@ -51,7 +51,7 @@ interface materials_i {
    guias: number;
    montantes: number;
    gn25: number;
-   lfix: number;
+   welifix: number;
    parafusoMM: number;
    fitaTelada: number;
    massa: number;
@@ -66,7 +66,7 @@ interface materials_i {
    displayGuias: string;
    displayMontantes: string;
    displayGn25: string;
-   displayLfix: string;
+   displayWelifix: string;
    displayParafusoMM: string;
    displayFitaTelada: string;
    displayMassa: string;
@@ -132,7 +132,7 @@ export default function DryWallCalculatorView( { ...props } ) {
          { text: "", value: 0 }
       )
       ,
-      [ Lfix, setLfix ] = useState<inputTextValue_i>( 
+      [ Welifix, setWelifix ] = useState<inputTextValue_i>( 
          { text: "", value: 0 }
       )
       ,
@@ -168,7 +168,7 @@ export default function DryWallCalculatorView( { ...props } ) {
             guias: 0,
             montantes: 0,
             gn25: 0,
-            lfix: 0,
+            welifix: 0,
             parafusoMM: 0,
             fitaTelada: 0,
             massa: 0,
@@ -185,7 +185,7 @@ export default function DryWallCalculatorView( { ...props } ) {
                materialsNeeded.guias += material.guias;
                materialsNeeded.montantes += material.montantes;
                materialsNeeded.gn25 += material.gn25;
-               materialsNeeded.lfix += material.lfix;
+               materialsNeeded.welifix += material.welifix;
                materialsNeeded.parafusoMM += material.parafusoMM;
                materialsNeeded.fitaTelada += material.fitaTelada;
                materialsNeeded.massa += material.massa;
@@ -226,10 +226,10 @@ export default function DryWallCalculatorView( { ...props } ) {
                value: materialsNeeded?.gn25
             } 
          );
-         setLfix(
+         setWelifix(
             { 
-               text: materialsNeeded?.lfix.toString(), 
-               value: materialsNeeded?.lfix
+               text: materialsNeeded?.welifix.toString(), 
+               value: materialsNeeded?.welifix
             } 
          );
          setMetalMetal(
@@ -317,7 +317,7 @@ export default function DryWallCalculatorView( { ...props } ) {
                   guias: returned!.guiasNeeded!,
                   montantes: returned!.montantesNeeded!,
                   gn25: returned!.gn25Needed!,
-                  lfix: returned!.lfixNeeded!,
+                  welifix: returned!.welifixNeeded!,
                   parafusoMM: returned!.screwMMNeeded!,
                   fitaTelada: returned!.tapeNeeded!,
                   massa: returned!.massaNeeded!,
@@ -332,7 +332,7 @@ export default function DryWallCalculatorView( { ...props } ) {
                   displayGuias: ( returned?.guiasNeeded! ).toString(),
                   displayMontantes: ( returned?.montantesNeeded! ).toString(),
                   displayGn25: ( returned?.gn25Needed! ).toString(),
-                  displayLfix: ( returned?.lfixNeeded! ).toString(),
+                  displayWelifix: ( returned?.welifixNeeded! ).toString(),
                   displayParafusoMM: ( returned?.screwMMNeeded! ).toString(),
                   displayFitaTelada: ( returned?.tapeNeeded! ).toString(),
                   displayMassa: ( returned?.massaNeeded! ).toString(),
@@ -483,15 +483,15 @@ export default function DryWallCalculatorView( { ...props } ) {
                <View style={ s.divisor }/>
             </View>
 
-            <View style={[ {  padding: 18, gap: 24, } ]}>
-               <AniButton text="Adicionar" bg={ Width?.text && Height?.text ? "#339" : "#555" }
+            <View style={[ {  padding: 18, } ]}>
+               <AniButton title="Adicionar" bg={ Width?.text && Height?.text ? "#339" : "#555" }
                   onPress={ () => {
                      if( Width?.value && Height?.value ) {
                         CreateAreaList();
                      }
                   } }
                />
-               <AniButton text="Calcular"
+               <AniButton title="Calcular"
                   onPress={ () => {
                      CreateMaterialsNeeded().then( materials => {
                         DisplayMaterialsNeeded( materials );
@@ -573,6 +573,7 @@ export default function DryWallCalculatorView( { ...props } ) {
                      <View style={[ s.tableRowEven ]}>
                         <P style={[ s.tableQtdText ]}>
                            { PanelsNeeded }
+                           <PP style={{ color: "#060", }}> un.</PP>
                         </P>
                         <P style={[ s.tableTextDescription ]}>
                            Chapas de gesso ST.
@@ -587,6 +588,7 @@ export default function DryWallCalculatorView( { ...props } ) {
                      <View style={[ s.tableRowOdd ]}>
                         <P style={[ s.tableQtdText ]}>
                            { Guias?.text }
+                           <PP style={{ color: "#060", }}> bar.</PP>
                         </P>
                         <P style={[ s.tableTextDescription ]}>
                            Guias
@@ -601,6 +603,7 @@ export default function DryWallCalculatorView( { ...props } ) {
                      <View style={[ s.tableRowEven ]}>
                         <P style={[ s.tableQtdText ]}>
                            { Montantes?.text }
+                           <PP style={{ color: "#060", }}> bar.</PP>
                         </P>
                         <P style={[ s.tableTextDescription ]}>
                            { SelectedMontante }
@@ -615,6 +618,7 @@ export default function DryWallCalculatorView( { ...props } ) {
                      <View style={[ s.tableRowOdd ]}>
                         <P style={[ s.tableQtdText ]}>
                            { GN25?.text }
+                           <PP style={{ color: "#060", }}> un.</PP>
                         </P>
                         <P style={[ s.tableTextDescription ]}>
                            Parafusos GN 25
@@ -628,10 +632,11 @@ export default function DryWallCalculatorView( { ...props } ) {
                      </View>
                      <View style={[ s.tableRowEven ]}>
                         <P style={[ s.tableQtdText ]}>
-                           { Lfix?.text }
+                           { Welifix?.text }
+                           <PP style={{ color: "#060", }}> un.</PP>
                         </P>
                         <P style={[ s.tableTextDescription ]}>
-                           Lfix
+                           Welifix
                         </P>
                         <P style={[ s.tableText ]}>
                            {}
@@ -643,9 +648,11 @@ export default function DryWallCalculatorView( { ...props } ) {
                      <View style={[ s.tableRowOdd ]}>
                         <P style={[ s.tableQtdText ]}>
                            { MetalMetal?.text }
+                           <PP style={{ color: "#060", }}> un.</PP>
                         </P>
                         <P style={[ s.tableTextDescription ]}>
-                           Parafusos metal metal
+                           Parafusos LA13
+                           <PP style={{ color: "#27f" }}> metal metal</PP>
                         </P>
                         <P style={[ s.tableText ]}>
                            {}
@@ -656,7 +663,8 @@ export default function DryWallCalculatorView( { ...props } ) {
                      </View>
                      <View style={[ s.tableRowEven ]}>
                         <P style={[ s.tableQtdText ]}>
-                           { FitaTelada?.text } m
+                           { FitaTelada?.text }
+                           <PP style={{ color: "#060", }}> m.</PP>
                         </P>
                         <P style={[ s.tableTextDescription ]}>
                            Fita telada
@@ -670,7 +678,8 @@ export default function DryWallCalculatorView( { ...props } ) {
                      </View>
                      <View style={[ s.tableRowOdd ]}>
                         <P style={[ s.tableQtdText ]}>
-                           { Massa?.text } kg
+                           { Massa?.text }
+                           <PP style={{ color: "#060", }}> kg.</PP>
                         </P>
                         <P style={[ s.tableTextDescription ]}>
                            Massa para DryWall
@@ -685,7 +694,8 @@ export default function DryWallCalculatorView( { ...props } ) {
                      { IsBandaAcústicaEnabled && 
                         <View style={[ s.tableRowEven ]}>
                            <P style={[ s.tableQtdText ]}>
-                              { BandaAcústica?.text } m
+                              { BandaAcústica?.text }
+                              <PP style={{ color: "#060", }}> m.</PP>
                            </P>
                            <P style={[ s.tableTextDescription ]}>
                               Banda Acústica
@@ -701,7 +711,8 @@ export default function DryWallCalculatorView( { ...props } ) {
                      { IsLãDeVidroEnabled && 
                         <View style={[ IsBandaAcústicaEnabled ? s.tableRowOdd : s.tableRowEven ]}>
                            <P style={[ s.tableQtdText ]}>
-                              { LãDeVidro?.text } m
+                              { LãDeVidro?.text }
+                              <PP style={{ color: "#060", }}> m2.</PP>
                            </P>
                            <P style={[ s.tableTextDescription ]}>
                               Lã de vidro

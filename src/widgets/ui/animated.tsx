@@ -14,35 +14,43 @@ import { P } from ".";
 
 
 export const 
-   AniButton = ( { ...props } ) => (
-      <ViewA style={[]}
+   AniButton = ( { ...props } ) => {
+      const s = StyleSheet.create( {
+         btnSlot: {
+            width: props.w || "100%",
+            padding: 16,
+         },
+         btn: {
+            backgroundColor: props.bg || "#0075BD",
+            borderRadius: 13,
+            overflow: "hidden",
+            width: "100%",
+            height: props.h || 56,
+            marginHorizontal: "auto",
+            elevation: props.elevation || 3,
+            shadowColor: props.shadow || "#000",
+            alignItems: "center",
+            justifyContent: "center",  
+         },
+      } );
+      return(
+      <ViewA style={ s.btnSlot }
          animation="bounceIn"
       >
          <Pressable onPress={ props.onPress }
-            style={ ( pressed ) => [ {
-               backgroundColor: props.bg || "#0075BD",
-               borderRadius: 13,
-               overflow: "hidden",
-               width: props.width || "100%",
-               height: 56,
-               marginLeft: "auto",
-               marginRight: "auto",
-               elevation: props.elevation || 3,
-               shadowColor: props.shadow || "#000",
-               // borderColor: props.border?.color || "#27f0",
-               borderColor: pressed ? "#27f0" : "#daa520",
-               // borderWidth: props.border?.width || 2,
-               borderWidth: 5,
-               alignItems: "center",
-               justifyContent: "center",   
-            } ] }
+            style={ ( { pressed } ) => [ { 
+               opacity: pressed ? .5 : 1,
+            }, s.btn ] }
          >
             { 
                (props.children)
                ||
-               <P style={{ color: "#eee", fontWeight: "bold", fontSize: 20 }}>{ props.text }</P>
+               <P style={{ color: "#eee", textTransform: "capitalize", fontWeight: "bold", fontSize: 20 }}>
+                  { props.title || "send" }
+               </P>
             }
          </Pressable>
       </ViewA>
    )
+}
 ;
