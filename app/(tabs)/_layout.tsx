@@ -22,6 +22,7 @@ import {
 } from "@/src/widgets/clb-ea";
 
 import { Icon } from "@/src/widgets/clb-icons";
+import FloatMenu from "@/src/widgets/ui/animated/elements/FloatMenu";
 
 // const Tab = createBottomTabNavigator();
 
@@ -152,14 +153,15 @@ export default function Layout() {
                </Modal> */}
 
                {  MenuLeftVisibility &&
-                  <View style={{ flex: 1, position: "absolute", top: 50, left: -50,
-                     width: 200, height: 350, backgroundColor: "#f5f5f5",
-                     borderRadius: 24, elevation: 10,
-                     padding: 16,
-                     borderColor: "#7773", borderWidth: 1,
-                  }}>
-                     <View style={{}}></View>
-                  </View>
+                  // <View style={{ flex: 1, position: "absolute", top: 50, left: -50,
+                  //    width: 200, height: 350, backgroundColor: "#f5f5f5",
+                  //    borderRadius: 24, elevation: 10,
+                  //    padding: 16,
+                  //    borderColor: "#7773", borderWidth: 1,
+                  // }}>
+                  //    <View style={{}}></View>
+                  // </View>
+                  <FloatMenu />
                }
             </> );
           },
