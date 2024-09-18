@@ -67,18 +67,19 @@ export function AppBarLeft( { ...props } ) {
 
    return( <>
       <Pressable 
-      style={{ 
-         borderRadius: 100,
-         justifyContent: "center", 
-         overflow: "hidden",
-         marginLeft: 8,
-         aspectRatio: 1,
-         width: 45,
-      }}
-      android_ripple={{ color: "#fff", 
-         radius: 24,
-         foreground: true,
-      }}
+         style={{ 
+            borderRadius: 100,
+            justifyContent: "center", 
+            overflow: "hidden",
+            marginLeft: 8,
+            aspectRatio: 1,
+            width: 45,
+         }}
+         android_ripple={{ color: "#fff", 
+            radius: 24,
+            foreground: true,
+         }}
+         onPress={ props.onPress }
       >
          <View style={{ 
             alignItems: "center",

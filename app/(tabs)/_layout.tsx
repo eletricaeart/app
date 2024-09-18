@@ -22,7 +22,9 @@ import {
 } from "@/src/widgets/clb-ea";
 
 import { Icon } from "@/src/widgets/clb-icons";
-import FloatMenu from "@/src/widgets/ui/animated/elements/FloatMenu";
+import {
+   FloatMenu, Drawer,
+} from "@/src/widgets/ui/modals";
 
 // const Tab = createBottomTabNavigator();
 
@@ -30,10 +32,12 @@ export default function Layout() {
    const 
       [ ModalMenuVisibility, setModalMenuVisibility ] = useState( false )
       ,
-      [ MenuLeftVisibility, setMenuLeftVisibility ] = useState( false )
+      [ FloatMenuEnable, setFloatMenuEnable ] = useState( false )
+      ,
+      [ DrawerEnable, setDrawerEnable ] = useState( false )
    ;
 
-  return (
+   return (
     <Tabs
       initialRouteName="home"  
       screenOptions={{
@@ -74,7 +78,16 @@ export default function Layout() {
          ,
          headerLeft: () => (
             <>
-               <AppBarLeft />
+               <AppBarLeft 
+                  onPress={ () => { setDrawerEnable( !DrawerEnable ) } }
+               />
+               {
+                  DrawerEnable && 
+                  <Drawer 
+                     enable={ () => setDrawerEnable( !DrawerEnable ) }
+                     bg="#0075BD"
+                  />
+               }
             </>
          )
          ,
@@ -133,7 +146,7 @@ export default function Layout() {
                   foreground: true,
                }}
                onPress={ () => {
-                  setMenuLeftVisibility( !MenuLeftVisibility );
+                  setFloatMenuEnable( !FloatMenuEnable );
                } }
                >
                   <View style={{ 
@@ -144,24 +157,30 @@ export default function Layout() {
                   </View>
                </Pressable>
 
-               {/* <Modal visible={ ModalMenuVisibility } 
-                  onRequestClose={ () => { setModalMenuVisibility( false ) } }
-                  animationType="slide"
-                  presentationStyle="formSheet"
-               >
-                  <Text>Modal Menu</Text>
-               </Modal> */}
-
-               {  MenuLeftVisibility &&
-                  // <View style={{ flex: 1, position: "absolute", top: 50, left: -50,
-                  //    width: 200, height: 350, backgroundColor: "#f5f5f5",
-                  //    borderRadius: 24, elevation: 10,
-                  //    padding: 16,
-                  //    borderColor: "#7773", borderWidth: 1,
-                  // }}>
-                  //    <View style={{}}></View>
-                  // </View>
-                  <FloatMenu />
+               {  FloatMenuEnable &&
+                  <FloatMenu 
+                     enable={ () => setFloatMenuEnable( !FloatMenuEnable ) }
+                     itens={ [
+                        {
+                           name: "item do menu",
+                           icon: "receipt",
+                           iconFamily: "mc",
+                           onPress: () => { alert( "oi" ); }
+                        }, 
+                        {
+                           name: "item do menu",
+                           icon: "receipt",
+                           iconFamily: "mc",
+                           onPress: () => { alert( "oi" ); }
+                        }, 
+                        {
+                           name: "item do menu",
+                           icon: "receipt",
+                           iconFamily: "mc",
+                           onPress: () => { alert( "oi" ); }
+                        }, 
+                     ] }
+                  />
                }
             </> );
           },
