@@ -4,6 +4,7 @@ import { Icon } from "@/src/widgets/clb-icons";
 import React, { useState, useEffect, } from "react";
 
 import {
+   Image,
    Modal,
    Pressable,
    StyleSheet,
@@ -11,6 +12,11 @@ import {
    View,
    useWindowDimensions,
 } from "react-native";
+
+import {
+   H2,
+   P, 
+} from "@/src/widgets/ui/index";
 
 import {
    View as DrawerView, 
@@ -89,6 +95,46 @@ const Drawer = ( { ...props } ) => {
                // gap: 16,
             }}
          >
+            <View>
+               <H2 
+                  style={{
+                     color:"#ccc"
+                  }}
+               >Anselmo Sammarco</H2>
+               <Image source={ require( "../../../images/Avatar/default_avatar_masc_ico.webp" ) }
+                  resizeMode="cover" 
+                  style={{ 
+                     width: 120, 
+                     height: 120, 
+                     marginVertical: 50,
+                     marginHorizontal: "auto",
+                     borderRadius: 1000,
+                     padding: 8,
+                     elevation: 3,
+                     borderColor:"#00559C",
+                     borderWidth: 6,
+                  }}
+               />   
+            </View>
+            <View 
+               style={{
+                  padding: 16,
+                  gap: 16,
+               }}
+            >
+               <View style={{ flexDirection: "row", alignItems: "center", gap: 8,  }}>
+                  <Icon i="mc" name="home" color="#eee"/>
+                  <P style={{ color: "#eee" }}>Item 1</P>
+               </View>
+               <View style={{ flexDirection: "row", alignItems: "center", gap: 8,  }}>
+                  <Icon i="mc" name="home" color="#eee"/>
+                  <P style={{ color: "#eee" }}>Item 2</P>
+               </View>
+               <View style={{ flexDirection: "row", alignItems: "center", gap: 8,  }}>
+                  <Icon i="mc" name="home" color="#eee"/>
+                  <P style={{ color: "#eee" }}>Item 3</P>
+               </View>
+            </View>
             { props.itens &&
                props.itens.map( ( item: { name: string; icon: string; iconFamily: string; onPress: () => void; } ) => (
                   <Item item={ item } onPress={ () => {
