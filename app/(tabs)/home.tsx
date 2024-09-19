@@ -1,6 +1,6 @@
 
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 import {
    PageFooter,
@@ -17,6 +17,7 @@ import {
    ImageBackground,
    ActivityIndicator,
    Pressable,
+   DrawerLayoutAndroid,
 } from "react-native";
 
 import { Appbar, } from "react-native-paper";
@@ -31,6 +32,8 @@ import { GetObjData, } from "@/src/widgets/clb-dbs";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getAuth } from "firebase/auth";
 import { router } from "expo-router";
+import { AniButton } from "@/src/widgets/ui/animated";
+import Drawer from "@/src/widgets/ui/Drawer";
 
 
 const 
@@ -57,6 +60,18 @@ export default function Home( { ...props } ) {
       [ User, setUser ] = useState( {} )
       ,
       [ Loading, setLoading ] = useState( false )
+   ;
+
+   /**
+    * DrawerHandler
+    * 
+    */
+   const 
+      drawer = useRef<DrawerLayoutAndroid>( null )
+      ,
+      [ OpenDrawer, setOpenDrawer ] = useState<boolean>( false )
+      ,
+      DrawerHandler = () => { setOpenDrawer( !OpenDrawer ); }
    ;
 
 
@@ -90,8 +105,9 @@ export default function Home( { ...props } ) {
       SetUser();
    }, [User] );
 
-   return( <>
-      <Sheet style={{ backgroundColor: "#fafafa", }}>
+   return( <Drawer ref={ drawer }>
+      {/* <Sheet style={{ backgroundColor: "#fafafa", }}> */}
+      <Sheet style={{ backgroundColor: "#ecf0f1", }}>
          <HeaderBanner >
             <Image source={ require( "@/src/images/EA/HeaderBannerBP.png" ) } resizeMode="contain" 
                style={{ width: "100%", height: "100%", }}
@@ -137,8 +153,16 @@ export default function Home( { ...props } ) {
                   </> );
                } )
             }
+            <AniButton 
+               title="open drawer"
+               // onPress={ DrawerHandler }
+               onPress={ () => drawer.current?.openDrawer() }
+            />
+            {/* {
+               OpenDrawer && <Drawer/>
+            } */}
          </Tiles>
       </Sheet>
-   </> );
+   </Drawer> );
 }
 
