@@ -25,6 +25,7 @@ import { Icon } from "@/src/widgets/clb-icons";
 import {
    FloatMenu, Drawer,
 } from "@/src/widgets/ui/modals";
+import UpdateCustomersBase from "@/src/services/fetchCustomers";
 
 // const Tab = createBottomTabNavigator();
 
@@ -115,12 +116,12 @@ export default function Layout() {
       <Tabs.Screen
          name="home"
          options={{
-               title: 'Home',
-               tabBarIcon: ({ color, size }) => {
-                  return <Icon i="mi" name="electrical-services" color="#27f"/>;
-               },
-               unmountOnBlur: true,
-               headerTitle: () => <HeaderTitle />, 
+            title: 'Home',
+            tabBarIcon: ({ color, size }) => {
+               return <Icon i="mi" name="electrical-services" color="#27f"/>;
+            },
+            unmountOnBlur: true,
+            headerTitle: () => <HeaderTitle />, 
          }}
       />
       <Tabs.Screen
@@ -130,61 +131,63 @@ export default function Layout() {
             tabBarIcon: ({ color, size }) => {
                return <Icon i="f" name="people-group" color="#fff"/>;
             },
-         headerRight: ({}) => {
-            return( <>
-               <Pressable 
-               style={{ 
-                  borderRadius: 100,
-                  justifyContent: "center", 
-                  overflow: "hidden",
-                  marginLeft: 8,
-                  aspectRatio: 1,
-                  width: 45,
-               }}
-               android_ripple={{ color: "#fff", 
-                  radius: 24,
-                  foreground: true,
-               }}
-               onPress={ () => {
-                  setFloatMenuEnable( !FloatMenuEnable );
-               } }
-               >
-                  <View style={{ 
-                     alignItems: "center",
-                     justifyContent: "center",
-                  }}>
-                     <Icon i="mc" name="dots-vertical" color="#fff"/>
-                  </View>
-               </Pressable>
+            headerRight: ({}) => {
+               return( <>
+                  <Pressable 
+                  style={{ 
+                     borderRadius: 100,
+                     justifyContent: "center", 
+                     overflow: "hidden",
+                     marginLeft: 8,
+                     aspectRatio: 1,
+                     width: 45,
+                  }}
+                  android_ripple={{ color: "#fff", 
+                     radius: 24,
+                     foreground: true,
+                  }}
+                  onPress={ () => {
+                     setFloatMenuEnable( !FloatMenuEnable );
+                  } }
+                  >
+                     <View style={{ 
+                        alignItems: "center",
+                        justifyContent: "center",
+                     }}>
+                        <Icon i="mc" name="dots-vertical" color="#fff"/>
+                     </View>
+                  </Pressable>
 
-               {  FloatMenuEnable &&
-                  <FloatMenu 
-                     enable={ () => setFloatMenuEnable( !FloatMenuEnable ) }
-                     itens={ [
-                        {
-                           name: "item do menu",
-                           icon: "receipt",
-                           iconFamily: "mc",
-                           onPress: () => { alert( "oi" ); }
-                        }, 
-                        {
-                           name: "item do menu",
-                           icon: "receipt",
-                           iconFamily: "mc",
-                           onPress: () => { alert( "oi" ); }
-                        }, 
-                        {
-                           name: "item do menu",
-                           icon: "receipt",
-                           iconFamily: "mc",
-                           onPress: () => { alert( "oi" ); }
-                        }, 
-                     ] }
-                  />
-               }
-            </> );
-          },
-          unmountOnBlur: true,
+                  {  FloatMenuEnable &&
+                     <FloatMenu 
+                        enable={ () => setFloatMenuEnable( !FloatMenuEnable ) }
+                        itens={ [
+                           {
+                              name: "atualizar dados dos clientes",
+                              icon: "receipt",
+                              iconFamily: "mc",
+                              onPress: () => {
+                                 UpdateCustomersBase(); 
+                              }
+                           }, 
+                           {
+                              name: "item do menu",
+                              icon: "receipt",
+                              iconFamily: "mc",
+                              onPress: () => { alert( "oi" ); }
+                           }, 
+                           {
+                              name: "item do menu",
+                              icon: "receipt",
+                              iconFamily: "mc",
+                              onPress: () => { alert( "oi" ); }
+                           }, 
+                        ] }
+                     />
+                  }
+               </> );
+            },
+            unmountOnBlur: true,
         }} 
       />
       <Tabs.Screen

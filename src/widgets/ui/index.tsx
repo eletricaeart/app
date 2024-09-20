@@ -236,6 +236,7 @@ export const
    Label = styled.View`
       padding: 8px 16px 8px 16px;
       gap: 6px;
+      overflow: hidden;
    `
    ,
    LabelText = styled.Text`
@@ -252,6 +253,7 @@ export const
       border-width: 1px;
       padding: 8px 14px;
       color: #000;
+      overflow: hidden;
    `
    ,
    InputText = styled.TextInput`
