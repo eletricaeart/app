@@ -16,12 +16,11 @@ export default async function UpdateCustomersBase() {
       .then(
          dataList => { 
             const 
-               list: (
-                  ( prevState: never[] ) => never[] ) 
+               list: ( ( prevState: never[] ) => never[] ) 
                   | 
                   { key: any; id: any; name: any; email: any; }[] = []
-               // list: SetStateAction<{ id: string; name: string; email: string; }> | { id: any; name: any; email: any; }[] = []
-            ;
+                  // list: SetStateAction<{ id: string; name: string; email: string; }> | { id: any; name: any; email: any; }[] = []
+               ;
             
             dataList.forEach( data => {
                const 
