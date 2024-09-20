@@ -25,7 +25,7 @@ import { Icon } from "@/src/widgets/clb-icons";
 import {
    FloatMenu, Drawer,
 } from "@/src/widgets/ui/modals";
-import UpdateCustomersBase from "@/src/services/fetchCustomers";
+import FetchUserData from "@/src/services/fetchCustomers";
 
 // const Tab = createBottomTabNavigator();
 
@@ -167,7 +167,7 @@ export default function Layout() {
                               icon: "receipt",
                               iconFamily: "mc",
                               onPress: () => {
-                                 UpdateCustomersBase(); 
+                                 FetchUserData(); 
                               }
                            }, 
                            {

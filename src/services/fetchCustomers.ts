@@ -6,14 +6,18 @@ import { get, child, ref, getDatabase } from "firebase/database";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as CStore from "@/src/widgets/clb-dbs";
 
-export default async function UpdateCustomersBase() {
+export default async function FetchUserData() {
    try {
       const 
          userInfo = await CStore.GetObjData( "user" )
       ;
       console.log( "user: ", await CStore.GetObjData( "user" ) );
-      await get( child( ref( getDatabase() ), props.path || `users/${ userInfo.uid }/customers` ) )
-      .then(
+      await get( 
+         child( 
+            ref( getDatabase() ), 
+            `users/${ userInfo.uid }/customers` 
+         ) 
+      ).then(
          dataList => { 
             const 
                list: ( ( prevState: never[] ) => never[] ) 
@@ -36,22 +40,14 @@ export default async function UpdateCustomersBase() {
                // } );
                list.push( { ...data.val() } )
             } );
-            AsyncStorage.setItem( "customers", JSON.stringify( list ) );
             return list;
-            
          }
-      );
-      
-      let
-         { CustomersFB, Loading } = useCustomersFB({})
-         ,
-         tempCustomersFBJson = JSON.stringify( CustomersFB )
-      ;
-
-      await AsyncStorage.setItem( "customers", tempCustomersFBJson );
+      ).then( async ( returned ) => {
+         await AsyncStorage.setItem( "customers", JSON.stringify( returned ) );
+      } );
 
    } catch( err: any ) {
-      console.error( "UpdateCustomersBase() err: \n\n\n", err );
+      console.error( "FetchUserData() err0: \n\n\n", err );
    }
 }
 

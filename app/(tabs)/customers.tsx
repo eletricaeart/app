@@ -149,6 +149,8 @@ export default function CustomersView( { ...props } ) {
       [ ModalGender, setModalGender ] = useState( false )
       ,
       [ ModalGenderVisibility, setModalGenderVisibility ] = useState( false )
+      ,
+      [ Updated, setUpdated ] = useState( 0 )
    ;
 
    async function FetchLocalCustomers() {
@@ -251,6 +253,10 @@ export default function CustomersView( { ...props } ) {
    useEffect( () => {
       SetCustomers();
    }, [] ); 
+
+   useEffect( () => {
+      SetCustomers();
+   }, [ Updated ] ); 
    
 
    /** == [ Fabb properties ] 
