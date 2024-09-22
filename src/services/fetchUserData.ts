@@ -1,12 +1,12 @@
 
 
 import useCustomersFB from "../hooks/useCustomersFB";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { get, child, ref, getDatabase } from "firebase/database";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as CStore from "@/src/widgets/clb-dbs";
 
-export default async function FetchUserData() {
+async function FetchCustomers() {   
    try {
       const 
          userInfo = await CStore.GetObjData( "user" )
@@ -46,12 +46,26 @@ export default async function FetchUserData() {
          await AsyncStorage.setItem( "customers", JSON.stringify( returned ) );
       } );
 
+      
    } catch( err: any ) {
-      console.error( "FetchUserData() err0: \n\n\n", err );
+      console.error( "FetchCustomers() err0: \n\n\n", err );
+   } finally{
    }
 }
 
+export default function FetchUserData() {
+   const 
+   [ FetchUserDataObserver, setFetchUserDataObserver ] = useState( false )
+   ;
+   
+   useEffect( () => {
+      FetchCustomers().then( () => {
+         setFetchUserDataObserver( true );
+      } );
+   }, [] );
 
+   return { FetchUserDataObserver };
+}
       
 
 

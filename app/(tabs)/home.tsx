@@ -33,7 +33,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getAuth } from "firebase/auth";
 import { router } from "expo-router";
 import { AniButton } from "@/src/widgets/ui/animated";
-import Drawer from "@/src/widgets/ui/Drawer";
+// import Drawer from "@/src/widgets/ui/Drawer";
 
 
 const 
@@ -105,7 +105,8 @@ export default function Home( { ...props } ) {
       SetUser();
    }, [User] );
 
-   return( <Drawer ref={ drawer }>
+   return( <>
+   {/* <Drawer ref={ drawer }> */}
       {/* <Sheet style={{ backgroundColor: "#fafafa", }}> */}
       <Sheet style={{ backgroundColor: "#ecf0f1", }}>
          <HeaderBanner >
@@ -156,13 +157,14 @@ export default function Home( { ...props } ) {
             <AniButton 
                title="open drawer"
                // onPress={ DrawerHandler }
-               onPress={ () => drawer.current?.openDrawer() }
+               // onPress={ () => drawer.current?.openDrawer() }
             />
             {/* {
                OpenDrawer && <Drawer/>
             } */}
          </Tiles>
       </Sheet>
-   </Drawer> );
+   {/* </Drawer>  */}
+   </> );
 }
 

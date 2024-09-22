@@ -54,6 +54,7 @@ import {
 } from "@/src/widgets/ui";
 import { ModalCardCenter, ModalFullPage } from "@/src/widgets/ui/modal";
 import { AniButton } from "@/src/widgets/ui/animated";
+import FetchUserData from "@/src/services/fetchUserData";
 
 
 /* == [ properties ]
@@ -150,17 +151,18 @@ export default function CustomersView( { ...props } ) {
       ,
       [ ModalGenderVisibility, setModalGenderVisibility ] = useState( false )
       ,
-      [ Updated, setUpdated ] = useState( 0 )
+      { FetchUserDataObserver } = FetchUserData()
    ;
 
    async function FetchLocalCustomers() {
       try {
          const 
-            data = await AsyncStorage.getItem( "customers" )
-            ,
-            jsonData = await JSON.parse( data )
+            data = await AsyncStorage.getItem( "customers" ).then( r => JSON.parse( data ) )
+            // ,
+            // jsonData = await JSON.parse( data )
          ;
-         return jsonData;
+         // return jsonData;
+         return data;
       } catch( err: any ) {
          console.error( "FetchLocalCustomers() err: \n\n\n", err );
       }
@@ -255,8 +257,9 @@ export default function CustomersView( { ...props } ) {
    }, [] ); 
 
    useEffect( () => {
-      SetCustomers();
-   }, [ Updated ] ); 
+      // SetCustomers();
+      console.log( "oi observer" );
+   }, [ FetchUserDataObserver ] ); 
    
 
    /** == [ Fabb properties ] 

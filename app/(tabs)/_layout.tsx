@@ -5,7 +5,6 @@ import { View, StyleSheet, Pressable, Modal } from 'react-native';
 import { Tabs } from "expo-router";
 
 import { CommonActions } from '@react-navigation/native';
-// import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Text, BottomNavigation,
    Button, Menu, Divider, PaperProvider,
 } from 'react-native-paper';
@@ -25,7 +24,7 @@ import { Icon } from "@/src/widgets/clb-icons";
 import {
    FloatMenu, Drawer,
 } from "@/src/widgets/ui/modals";
-import FetchUserData from "@/src/services/fetchCustomers";
+import FetchUserData from "@/src/services/fetchUserData";
 
 // const Tab = createBottomTabNavigator();
 

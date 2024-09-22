@@ -53,16 +53,21 @@ export default function SignInView( { ...props } ) {
    ;
 
    useEffect( () => {
-      onAuthStateChanged( FirebaseAuth, User => {
+      onAuthStateChanged( FirebaseAuth, user => {
          async function load() {
-            if( User ) {
-               const jsn = JSON.stringify( User );
-               await AsyncStorage.setItem( "User", jsn );
-            }
+            try{
+               if( user ) {
+                  const jsn = JSON.stringify( user );
+                  await AsyncStorage.setItem( "user", jsn );
+                  setUser( user );
+                  return user; 
+               }
+            } catch( err: any ) { console.log( "onAuthStateChanged useEffect err: ", err ) }
+
          }
-         load();
+         load().then( r => console.log( "onAuthStateChanged useEffect user: ", user ) );
          console.log( "onAuthStateChanged() signup: ", User );
-         setUser( User ); 
+         // setUser( User ); 
       } );
    }, [] ); 
 
