@@ -181,7 +181,7 @@ export default function Home( { ...props } ) {
                // onPress={ () => drawer.current?.openDrawer() }
             />
 
-            <Btn title="expoPrint teste" onPress={ () => { router.push( "/testes/printTestW" ) } }/>
+            <Btn title="expoPrint teste" onPress={ () => { router.push( "/testes/printTestW" ) } } />
             {/* {
                OpenDrawer && <Drawer/>
             } */}
