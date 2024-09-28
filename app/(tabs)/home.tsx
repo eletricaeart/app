@@ -33,7 +33,7 @@ import { GetObjData, } from "@/src/widgets/clb-dbs";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getAuth } from "firebase/auth";
 import { Href, router } from "expo-router";
-import { AniButton } from "@/src/widgets/ui/animated";
+import { AniButton, Btn } from "@/src/widgets/ui/animated";
 // import Drawer from "@/src/widgets/ui/Drawer";
 
 
@@ -181,7 +181,7 @@ export default function Home( { ...props } ) {
                // onPress={ () => drawer.current?.openDrawer() }
             />
 
-            <Button title="expoPrint teste" onPress={ () => { router.push( "/testes/printTestW" ) } }/>
+            <Btn title="expoPrint teste" onPress={ () => { router.push( "/testes/printTestW" ) } }/>
             {/* {
                OpenDrawer && <Drawer/>
             } */}
