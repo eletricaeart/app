@@ -157,12 +157,11 @@ export default function CustomersView( { ...props } ) {
    async function FetchLocalCustomers() {
       try {
          const 
-            data = await AsyncStorage.getItem( "customers" ).then( r => JSON.parse( data ) )
-            // ,
-            // jsonData = await JSON.parse( data )
+            data = await AsyncStorage.getItem( 
+               "customers" 
+            ).then( r => r != null ? JSON.parse( r ) : null )
          ;
-         // return jsonData;
-         return data;
+         return await data;
       } catch( err: any ) {
          console.error( "FetchLocalCustomers() err: \n\n\n", err );
       }
@@ -256,10 +255,10 @@ export default function CustomersView( { ...props } ) {
       SetCustomers();
    }, [] ); 
 
-   useEffect( () => {
+  /*  useEffect( () => {
       // SetCustomers();
       console.log( "oi observer" );
-   }, [ FetchUserDataObserver ] ); 
+   }, [ FetchUserDataObserver ] );  */
    
 
    /** == [ Fabb properties ] 

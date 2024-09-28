@@ -1,7 +1,7 @@
 
 
 import React, { useEffect, useRef, useState } from "react";
-import { printToFileAsync, } from "expo-print";
+import { printToFileAsync, printAsync } from "expo-print";
 import { shareAsync, } from "expo-sharing";
 import { EACard } from "@/src/widgets/clb-ea";
 import { AppbarStick, BackButton, H1, H3, H4, H5, H6, P } from "@/src/widgets/ui";
@@ -65,79 +65,48 @@ interface budget {
 // }
 
 export default function GetBudgetPdfView() {
-   const 
-      html = `
-         <html>
-            <t>oi</t>
-         </html>
-      `,
-      /* GeneratePDF = async () => {
-         const 
-            htmlData = invoiceHtml( { 
-               owner: Owner,
-               budget: Budget,
-            } )
-            ,
-            file = await printToFileAsync({
-               // html: html,
-               html: htmlData,
-               base64: false,
-               margins: { 
-                  top: 16,
-                  right: 16,
-                  bottom: 16,
-                  left: 16,
-               }
-            });
-         ;
-         
-         await shareAsync( file.uri );
-      } */
-      GeneratePDF = async () => {
-         // let data = { owner: {}, budget: {} };
-         const 
-            htmlData = invoiceHtml( 
-               // { 
-               //    owner: data.owner,
-               //    budget: data.budget,
-               // } 
+   const GeneratePDF = async () => {
+      const 
+         htmlData = invoiceHtml( 
+            await handle()
+         )
+         ,
+         file = await printToFileAsync({
+         // file = await printAsync({
+            // html: htmlData,
+            html: invoiceHtml( 
                await handle()
-            )
-            ,
-            file = await printToFileAsync({
-               // html: html,
-               html: htmlData,
-               base64: false,
-               margins: { 
-                  top: 16,
-                  right: 16,
-                  bottom: 16,
-                  left: 16,
-               },
-               
-            });
-         ;
+            ),
+            // base64: false,
+            // margins: { 
+            //    top: 16,
+            //    right: 16,
+            //    bottom: 16,
+            //    left: 16,
+            // },
+            
+         });
+      ;
          
-         async function handle() {
-            try {
-               const 
-                  data = await AsyncStorage.getItem( "budgetData" ).then( r => JSON.parse( r ) )
-               ;
-               console.log( "handle budgetData: ", await data );
-               return data;
-            } catch( err: any ) {
-               console.error( "handle() err: \n\n\n", err );
-            }
+      async function handle() {
+         try {
+            const 
+               data = await AsyncStorage.getItem( "budgetData" ).then( 
+                  // r => JSON.parse( r ) 
+                  r => (
+                     r != null ? JSON.parse( r ) : null
+                  )
+               )
+            ;
+            console.log( "handle budgetData: ", await data );
+            return data;
+         } catch( err: any ) {
+            console.error( "handle() err: \n\n\n", err );
          }
-         /* handle().then( r => {
-            data.owner = r.owner;
-            data.budget = r.budget;
-            console.log( "returned data: ", data );
-         } ); */
-         
-         await shareAsync( file.uri );
       }
-   ;
+      
+      await shareAsync( file.uri );
+   };
 
    const 
       [ Budget, setBudget ] = useState<budget>( {

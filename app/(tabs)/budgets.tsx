@@ -525,12 +525,13 @@ export default function BudgetsView( { ...props } ) {
    
          {/*  == [ Modal - forma de pagamento ]
          == == == == == == == == ==  */}
-         <ModalFullPage ModalVisibility={ ModalVisibility } onRequestClose={ () => setModalFormOfPayment( false ) }
+         {/* <ModalFullPage ModalVisibility={ ModalVisibility } onRequestClose={ () => setModalFormOfPayment( false ) } */}
+         <ModalFullPage ModalVisibility={ ModalVisibility } onRequestClose={ () => setModalVisibility( false ) }
          overlay={
             <ModalCardCenter 
-            setState={ setModalFormOfPayment } 
-            useState={ ModalFormOfPayment }
-            trigger={ ModalFormOfPayment }
+               setState={ setModalFormOfPayment } 
+               useState={ ModalFormOfPayment }
+               trigger={ ModalFormOfPayment }
             >
                <Centered style={{ paddingTop: 8, paddingBottom: 18, }}>
                   <H3>Qual a forma de pagamento?</H3>
@@ -587,7 +588,6 @@ export default function BudgetsView( { ...props } ) {
             <Section style={{ zIndex: 1, }}>
                <Header>
                   <View style={{ height: 80, flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingLeft: 16, paddingRight: 16, }}>
-                     {/* <H3 style={{ color: "#00559c99" }}>Novo orçamento</H3> */}
                      
                      <TextInput style={{ fontSize: 20, fontWeight: "bold", color: "#00559c99" }}
                         value={ BudgetName } 

@@ -204,7 +204,9 @@ export default function Index() {
          // }
          try {
             const 
-               localUser = await AsyncStorage.getItem( "user" ).then( r => JSON.parse( r ) )
+               localUser = await AsyncStorage.getItem( 
+                  "user" 
+               ).then( r => r != null ? JSON.parse( r ) : null )
             ;
 
             await get( child( ref( getDatabase() ), `users/${ localUser.uid }/name` ) )

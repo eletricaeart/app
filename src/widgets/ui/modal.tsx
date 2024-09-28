@@ -19,6 +19,7 @@ export function ModalCardCenter( { ...props } ) {
          position: "absolute", zIndex: 9,  width: "100%", height: "100%",
          alignSelf: "center", 
       }}
+         
          onPress={ () => { props.setState( !props.useState ); } }
       >
          <Section style={{

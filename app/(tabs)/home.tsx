@@ -18,6 +18,7 @@ import {
    ActivityIndicator,
    Pressable,
    DrawerLayoutAndroid,
+   Button,
 } from "react-native";
 
 import { Appbar, } from "react-native-paper";
@@ -27,11 +28,11 @@ import {
 } from "@/src/widgets/clb-icons";
 
 import * as c from "@/src/widgets/clb-html";
-import { Tiles, Tile, Header, T1, VSplit, HeaderBanner, T2, T, } from "@/src/widgets/ui";
+import { Tiles, Tile, Header, T1, VSplit, HeaderBanner, T2, T, Section, } from "@/src/widgets/ui";
 import { GetObjData, } from "@/src/widgets/clb-dbs";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getAuth } from "firebase/auth";
-import { router } from "expo-router";
+import { Href, router } from "expo-router";
 import { AniButton } from "@/src/widgets/ui/animated";
 // import Drawer from "@/src/widgets/ui/Drawer";
 
@@ -109,60 +110,82 @@ export default function Home( { ...props } ) {
    {/* <Drawer ref={ drawer }> */}
       {/* <Sheet style={{ backgroundColor: "#fafafa", }}> */}
       <Sheet style={{ backgroundColor: "#ecf0f1", }}>
-         <HeaderBanner >
-            <Image source={ require( "@/src/images/EA/HeaderBannerBP.png" ) } resizeMode="contain" 
-               style={{ width: "100%", height: "100%", }}
-            />
-            <Header style={{ position: "absolute", }}>
-               <T1 style={{ color: "#eee", }}>
-                  Olá { User && User.displayName }
-                  
-                  {/* Olá { 
-                     User ? Loading ? (
-                        <ActivityIndicator
-                        style={{marginTop: 30}}
-                        size="large"
-                        color="#fc0fc0"
-                        />
-                     ) : (
-                        User
-                     )
-                  } */}
-               </T1>
-               <T style={{ color: "#ddd", }}>Tudo bem!?</T>
-            </Header>
-         </HeaderBanner>
-         <Header style={{ flexDirection: "row", gap: 16 }}>
-            <Icon name="calculator" i="f" color="#00559C"/>
-            <T1 style={{ color: "#daa520", }}>Calculadoras</T1>
-         </Header>
-         <VSplit />
-         <Tiles>
-            {
-               items.map( item => {
-                  return( <>
-                     <Tile key={ item.id } >
-                        <Pressable onPress={ () => router.push( item.src ) }
-                           style={{ flex: 1, }}
-                        >
-                           <Icon name={ item.icon } color={ item.iconColor } i={ item.icn } size={ item.size }/>
-                           <Text style={{ fontSize: 18, color: "#fc0fc0", }}>calculadora</Text>
-                           <Text style={{ fontSize: 22, color: "#333", fontWeight: 800, }}>{ item.name }</Text>
-                           {/* <Text style={{ fontSize: 14, color: "#777", }}>{ item.src }</Text> */}
-                        </Pressable>
-                     </Tile>
-                  </> );
-               } )
-            }
+         <ScrollView>
+            <HeaderBanner >
+               <Image source={ require( "@/src/images/EA/HeaderBannerBP.png" ) } resizeMode="contain" 
+                  style={{ width: "100%", height: "100%", }}
+               />
+               <Header style={{ position: "absolute", }}>
+                  <T1 style={{ color: "#eee", }}>
+                     Olá { User && User.displayName }
+                  </T1>
+                  <T style={{ color: "#ddd", }}>Tudo bem!?</T>
+               </Header>
+            </HeaderBanner>
+
+            <Section>
+               <Header style={{ flexDirection: "row", gap: 16 }}>
+                  <Icon name="calculator" i="f" color="#00559C"/>
+                  <T1 style={{ color: "#daa520", }}>Orçamentos recentes</T1>
+               </Header>
+               <VSplit />
+               <Tiles></Tiles>
+            </Section>
+
+            <Section>
+               <Header style={{ flexDirection: "row", gap: 16 }}>
+                  <Icon name="calculator" i="f" color="#00559C"/>
+                  <T1 style={{ color: "#daa520", }}>Recibos recentes</T1>
+               </Header>
+               <VSplit />
+               <Tiles></Tiles>
+            </Section>
+
+            <Section>
+               <Header style={{ flexDirection: "row", gap: 16 }}>
+                  <Icon name="calculator" i="f" color="#00559C"/>
+                  <T1 style={{ color: "#daa520", }}>Calculadoras</T1>
+               </Header>
+               <VSplit />
+               <Tiles>
+                  {
+                     items.map( item => {
+                        return(
+                           <Tile key={ item.id } >
+                              <Pressable onPress={ () => router.push( item.src ) }
+                                 style={{ flex: 1, }}
+                              >
+                                 <Icon name={ item.icon } color={ item.iconColor } i={ item.icn } size={ item.size }/>
+                                 <Text style={{ fontSize: 18, color: "#fc0fc0", }}>calculadora</Text>
+                                 <Text style={{ fontSize: 22, color: "#333", fontWeight: 800, }}>{ item.name }</Text>
+                              </Pressable>
+                           </Tile>
+                        );
+                     } )
+                  }
+               </Tiles>
+            </Section>
+
+            <Section>
+               <Header style={{ flexDirection: "row", gap: 16 }}>
+                  <Icon name="calculator" i="f" color="#00559C"/>
+                  <T1 style={{ color: "#daa520", }}>Suporte</T1>
+               </Header>
+               <VSplit />
+               <Tiles></Tiles>
+            </Section>
+
             <AniButton 
                title="open drawer"
                // onPress={ DrawerHandler }
                // onPress={ () => drawer.current?.openDrawer() }
             />
+
+            <Button title="expoPrint teste" onPress={ () => { router.push( "/testes/printTestW" ) } }/>
             {/* {
                OpenDrawer && <Drawer/>
             } */}
-         </Tiles>
+         </ScrollView>
       </Sheet>
    {/* </Drawer>  */}
    </> );
