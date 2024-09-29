@@ -22,6 +22,7 @@ type DrawerProps = {
    open?: () => void;
    close?: () => void;
    openned?: boolean;
+   drawer?: any;
 };
 
 /** == [ exports ]
@@ -46,7 +47,7 @@ export default function Drawer( { ...props }: DrawerProps ) {
    props.open = () => drawer.current?.openDrawer();
    props.close = () => drawer.current?.closeDrawer();
  
-   const navigationView = () => (
+   const navigationView = () => props.drawer || (
       <View style={[ s.container ,  s.navigationContainer ]}>
          <Text style={ s.paragraph }>I'm in the Drawer!</Text>
          <Btn

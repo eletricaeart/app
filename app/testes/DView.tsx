@@ -27,6 +27,11 @@ export default function DView( { ...props } ) {
       <Drawer
          direction="right"
          openned={ Openned } 
+         drawer={
+            <View style={{ backgroundColor: "#212329", flex: 1, }}>
+               <View style={{ backgroundColor: "#2af", height: 56, }}></View>
+            </View>
+         }
       >
          <Text>oi</Text>
          <Btn 
