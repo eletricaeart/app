@@ -8,7 +8,8 @@ import {
    View,
    Text, 
 } from "react-native";
-import DrawerView from "./DrawerView";
+import Drawer from "@/src/widgets/ui/drawer";
+import { Btn } from "@/src/widgets/ui/animated";
 
 
 /** == [ properties ]
@@ -18,12 +19,26 @@ import DrawerView from "./DrawerView";
 /** == [ exports ]
  * == == == == == == == == == */
 export default function DView( { ...props } ) {
-
+   const 
+      [ Openned, setOpenned ] = useState( false )
+   ;
 
    return( 
-      <DrawerView>
+      <Drawer
+         direction="right"
+         openned={ Openned } 
+      >
          <Text>oi</Text>
-      </DrawerView>
+         <Btn 
+            title={ Openned ? "close Drawer" : "open Drawer" }
+            onPress={ () => {
+               async function load() {
+                  setOpenned( true );
+               }
+               load().then( () => setOpenned( false ) );
+            } }
+         />
+      </Drawer>
    );
 }
 

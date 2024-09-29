@@ -61,10 +61,10 @@ export default function DrawerView( { ...props } ) {
             title="Open drawer"
             onPress={() => drawer.current?.openDrawer()}
           /> */}
-          <Btn
+          {/* <Btn
             title="Open drawer"
             onPress={() => drawer.current?.openDrawer()}
-          />
+          /> */}
           { props.children }
         </View>
       </DrawerLayoutAndroid>
