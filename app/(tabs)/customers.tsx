@@ -53,8 +53,9 @@ import {
    Div, Item,
 } from "@/src/widgets/ui";
 import { ModalCardCenter, ModalFullPage } from "@/src/widgets/ui/modal";
-import { AniButton } from "@/src/widgets/ui/animated";
+import { AniButton, Btn } from "@/src/widgets/ui/animated";
 import FetchUserData from "@/src/services/fetchUserData";
+import DrawerStack from "@/src/widgets/ui/drawer/";
 
 
 /* == [ properties ]
@@ -93,40 +94,40 @@ export function Fabb() {
       { open } = state
    ;
  
-   return (
-     <PaperProvider>
-       <Portal>
-         <FAB.Group
-           open={open}
-           visible
-           icon={open ? 'calendar-today' : 'plus'}
-           actions={[
-             { icon: 'plus', onPress: () => console.log( 'Pressed add' ) },
-             {
-               icon: 'star',
-               label: 'Star',
-               onPress: () => console.log( 'Pressed star' ),
-             },
-             {
-               icon: 'email',
-               label: 'Email',
-               onPress: () => console.log( 'Pressed email' ),
-             },
-             {
-               icon: 'bell',
-               label: 'Remind',
-               onPress: () => console.log( 'Pressed notifications' ),
-             },
-           ]}
-           onStateChange={ onStateChange }
-           onPress={() => {
-               if( open ) {
-                  // do something if the speed dial is open
-               }
-           }}
-         />
-       </Portal>
-     </PaperProvider>
+   return(
+      <PaperProvider>
+         <Portal>
+            <FAB.Group
+            open={open}
+            visible
+            icon={open ? 'calendar-today' : 'plus'}
+            actions={[
+               { icon: 'plus', onPress: () => console.log( 'Pressed add' ) },
+               {
+                  icon: 'star',
+                  label: 'Star',
+                  onPress: () => console.log( 'Pressed star' ),
+               },
+               {
+                  icon: 'email',
+                  label: 'Email',
+                  onPress: () => console.log( 'Pressed email' ),
+               },
+               {
+                  icon: 'bell',
+                  label: 'Remind',
+                  onPress: () => console.log( 'Pressed notifications' ),
+               },
+            ]}
+            onStateChange={ onStateChange }
+            onPress={() => {
+                  if( open ) {
+                     // do something if the speed dial is open
+                  }
+            }}
+            />
+         </Portal>
+      </PaperProvider>
    );
 }
 
@@ -265,6 +266,8 @@ export default function CustomersView( { ...props } ) {
     * 
     * == == == == == == == == == */
    const 
+      [ DrawerOpener, setDrawerOpener ] = useState( false )
+      ,
       [ state, setState ] = React.useState({ open: false })
       ,
       onStateChange = ({ open }) => setState({ open })
@@ -419,381 +422,391 @@ export default function CustomersView( { ...props } ) {
    }
    
 
-   return( <>
-      <PaperProvider>
-         {/* <LinearGradient colors={[ "#f5f5f5", "#e5e5e5", ]} style={[ { flex: 1, } ]} > */}
-         <LinearGradient colors={[ "#fafafa", "#e5e5e5", ]} style={[ { flex: 1, } ]} >
-            
-            { Customers != null ? 
-               // <ScrollView style={{ flex: 1,  }}>
-               <View style={{ flex: 1, backgroundColor: "#e2f4fe00", gap: 16, }}>
-                  { 
-                     // Customers.map( customer => {
-                     //    return( 
-                     //       <ea.UsersCard 
-                     //          key={ customer.id }
-                     //          name={ customer.name }
-                     //       />
-                     //    );
-                     // } ) 
-                     <FlatList 
-                        ListHeaderComponent={ <>
-                           <Header>
-                              <T1 style={{ color: "#daa520", }}>Clientes</T1>
-                           </Header>
-                        </> }
-                        data={ Customers }
-                        renderItem={ ({item}) => <>
-                           <ea.UsersCard
-                              key={ item.id }
-                              name={ item.name }
-                              data={ item }
-                           />
-                        </> }
-                        keyExtractor={ item => item.id } 
-                        ItemSeparatorComponent={ 
-                           () => <View style={{ height: 16, }}/>
-                        }
-                        style={{ 
-                           width: "100%", 
-                           // backgroundColor: "#eaebef",
-                           paddingBottom: 0,
-                        }} 
-                        contentContainerStyle={{ padding: 16, paddingBottom: 38, }}
-                     />
-                  }
-               </View>
-               : 
-               <View style={{ flex: 1, }}>
-                  <Header>
-                     <Content>
-                        <H2>Clientes</H2>
-                     </Content>
-                  </Header>
-                  <View style={{ width: "100%", aspectRatio: "12 / 9", marginTop: 16, }}>
-                     <Image source={ require( "@/src/images/clipart/saying-no-to-customers.png" ) }
-                     style={{ width: "100%", height: "100%", }} resizeMode="contain"/>
-                  </View>
-                  <Center style={{ paddingTop: 16, }}>
-                     <H3 style={{ color: "#777", textAlign: "center", }}>Você ainda não tem nenhum cliente cadastrado</H3>
-                  </Center>
-               </View>
-            }
+   return( 
+      <DrawerStack
+         openerState={ DrawerOpener }
+         direction="right"
 
-         </LinearGradient>
-
-
-   
-      {/*  == [ Modal ]
-      == == == == == == == == ==  */}
-      <Modal visible={ ModalVisibility } 
-         onRequestClose={ () => { setModalVisibility( false ) } }
-         animationType="slide"
-         presentationStyle="formSheet"
       >
-
-         <c.Section style={[ s.modal_root ]}>
-            <ScrollView keyboardShouldPersistTaps="handled">
-               <View style={[ s.backSheet, elevation.elevation ]} />
-               <View style={[ s.frontSheet, elevation.elevation ]} >
-                  <c.Section bg="#f3f3f3" style={{ backgroundColor: "gradient-" }}>
-                     <c.Header>
-                        <c.Content>
-                           <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
-                              <c.H3 color="#00559c99">Cadastrar cliente</c.H3>
-                              <Pressable onPress={ () => { setModalVisibility( !ModalVisibility ) } }>
-                                 <View style={[ s.btnOverlay,  ]}>
-                                    <Icon i="f0" name="close" color={ colors.error } />
-                                 </View>
-                              </Pressable>
-                           </View>
-                        </c.Content>
-                     </c.Header>
-                     <c.Section bg="#fff" style={[ s.form, elevation.elevation ]}>
-                        <c.Content gap={ 8 }>
-
-                           <View style={ s.form } ref={ id_form }>
-                              <c.Section style={ s.header }>
-                                 <c.H4>Cliente { Name }</c.H4>
-                              </c.Section>
-
-                              <c.Section cliente section>
-                                 <Text style={ s.label }>Nome do Cliente</Text>
-                                 <TextInput style={ s.input }
-                                 value={ Name }
-                                 ref={ id_Name }
-                                 onChangeText={ setName }
-                                 />
-                              </c.Section>
-
-                              <c.Section>
-                                 <Text style={ s.label }>Gênero</Text>
-                                 <Pressable style={ s.input }
-                                    onPress={ () => { setModalGender( true ) } }
-                                 >
-                                    <Text>{ Gender }</Text>
-                                 </Pressable>
-                              </c.Section>
-
-                              <c.Section contato section>
-                                 <View style={ s.divider }>
-                                    <Text style={ s.dividerText }>CONTATO</Text>
-                                 </View>
-                                 <View style={ s.duo }>
-                                    <View style={ s.duoBox }>
-                                       <Text style={ s.label }>Celular</Text>
-                                       <TextInput style={ s.input }
-                                          value={ Cellphone }
-                                          onChangeText={ setCellphone }
-                                          keyboardType="number-pad"
-                                       />
-                                    </View>
-                                    
-                                    <View style={ s.duoBox }>
-                                       <Text style={ s.label }>WhatsApp</Text>
-                                       <TextInput style={ s.input }
-                                          value={ Whatsapp }
-                                          onChangeText={ setWhatsapp }
-                                          keyboardType="number-pad"
-                                       />
-                                    </View>
-                                 </View>
-                                 
-                                 <View style={ [ s.duo, {  } ] }>
-                                    <View style={ s.duoBox }>
-                                       <Text style={ s.label }>Telefone</Text>
-                                       <TextInput style={ s.input }
-                                          value={ Phone }
-                                          onChangeText={ setPhone }
-                                          keyboardType="number-pad"
-                                       />
-                                    </View>
-                                    
-                                    <View style={ s.duoBox }>
-                                       <Text style={ s.label }>Telefone 2</Text>
-                                       <TextInput style={ s.input }
-                                          value={ Phone2 }
-                                          onChangeText={ setPhone2 }
-                                          keyboardType="number-pad"
-                                       />
-                                    </View>
-                                 </View>
-                                 
-                                 <Text style={ s.label }>Email</Text>
-                                 <TextInput style={ s.input }
-                                    value={ Email }
-                                    onChangeText={ setEmail }
-                                    keyboardType="email-address"
-                                 />
-                                 
-                                 <View style={ [ s.duo, {  } ] }>
-                                    <View style={ s.duoBox }>
-                                       <Text style={ s.label }>RG/IE</Text>
-                                       <TextInput style={ s.input }
-                                          value={ Rg }
-                                          onChangeText={ setRg }
-                                          keyboardType="number-pad"
-                                       />
-                                    </View>
-                                    
-                                    <View style={ s.duoBox }>
-                                       <Text style={ s.label }>CPF</Text>
-                                       <TextInput style={ s.input }
-                                          value={ Cpf }
-                                          onChangeText={ setCpf }
-                                          keyboardType="number-pad"
-                                       />
-                                    </View>
-                                 </View>
-                              </c.Section>
-                              <c.Section endereço section>
-                                 <View style={ s.divider }>
-                                    <Text style={ s.dividerText }>ENDEREÇO</Text>
-                                 </View>
-                                 
-                                 <View style={ [ s.duo, {  } ] }>
-                                    <View style={ s.duoBox }>
-                                       <Text style={ s.label }>CEP</Text>
-                                       <TextInput style={ s.input }
-                                       keyboardType="number-pad"
-                                       value={  Cep }
-                                       placeholder="00.000-00"
-                                       onChangeText={ text => { 
-                                          setCep( text )
-                                       } }
-                                       onBlur={ () => { GetCEP() } }
-                                       />
-                                    </View>
-                                    
-                                    <View style={ s.duoBox }>
-                                       <Text style={ s.label }>UF</Text>
-                                       <TextInput style={ s.input }
-                                    value={ UF }
-                                    onChangeText={ setUF }
-                                 />
-                                    </View>
-                                 </View>
-                                 
-                                 <Text style={ s.label }>Rua</Text>
-                                 <TextInput style={ s.input }
-                                    value={ Logradouro }
-                                    onChangeText={ setLogradouro }
-                                 />
-                                 
-                                 <View style={ [ s.duo, {  } ] }>
-                                    <View style={ s.duoBox }>
-                                       <Text style={ s.label }>Número</Text>
-                                       <TextInput style={ s.input }
-                                          keyboardType="number-pad"
-                                          value={ Number }
-                                          onChangeText={ setNumber }
-                                       />
-                                    </View>
-                                    
-                                    <View style={ s.duoBox }>
-                                       <Text style={ s.label }>Complemento</Text>
-                                       <TextInput style={ s.input }
-                                          value={ Complemento }
-                                          onChangeText={ setComplemento }
-                                       />
-                                    </View>
-                                 </View>
-                                 
-                                 <Text style={ s.label }>Bairro</Text>
-                                 <TextInput style={ s.input }
-                                    value={ District }
-                                    onChangeText={ setDistrict }
-                                 />
-                                 
-                                 <Text style={ s.label }>Cidade</Text>
-                                 <TextInput style={ s.input }
-                                    value={ City }
-                                    onChangeText={ setCity }
-                                 />
-                              </c.Section>
-                              <c.Section observações section>
-                                 <View style={ s.divider }>
-                                    <Text style={ s.dividerText }>OBSERVAÇÕES</Text>
-                                 </View>
-                                 <Text style={ s.label }>Observação</Text>
-                                 <TextInput style={ s.input }
-                                    value={ Note }
-                                    onChangeText={ setNote }
-                                 />
-                              </c.Section>
-
-
-                              <c.Section style={ {
-                                 gap: 16,
-                                 marginTop: 24,
-                                 marginBottom: 66,
-                              } }>
-
-                                 <AniButton title="cadastrar"
-                                    animation="bounceIn"
-                                    bg="#00559C"
-                                    onPress={ () => { RegisterCustomerOnBase( { dbs_name: "customers", object: customersList } ) } }
-                                 />
-                              </c.Section>
-                              
-                           </View>
-                        </c.Content>
-                     </c.Section>
-                  </c.Section>
-               </View>
-            </ScrollView>
-         </c.Section>
-      </Modal>
-
-
-      {/* /** == [ ModalMenu ] 
-       * 
-       * == == == == == == == == == */}
-      <Modal visible={ ModalMenuVisibility } 
-         onRequestClose={ () => { setModalMenuVisibility( false ) } }
-         animationType="slide"
-         presentationStyle="formSheet"
-      >
-         <Text>Modal Menu</Text>
-      </Modal>
-
-
-         {/*  == [ Modal - Gênero ]
-         == == == == == == == == ==  */}
-         <ModalFullPage ModalVisibility={ ModalGender } onRequestClose={ () => setModalGender( false ) }
-         overlay={
-            <ModalCardCenter 
-            setState={ setModalGender } 
-            useState={ ModalGender }
-            trigger={ ModalGender }
-            >
-               <Centered style={{ paddingTop: 8, paddingBottom: 18, }}>
-                  <H3>Selecione o gênero</H3>
-               </Centered>
-
-               <Content style={{ gap: 8, }}>
-                  <Item>
-                     <P style={{ color: "#555", }}
-                     onPress={ () => {
-                        setGender( "Masculino" );
-                        setModalGender( !ModalGender );
-                     } }
-                     >
-                        Masculino
-                     </P>
-                  </Item>
-                  <Div />
-                  <Item>
-                     <P style={{ color: "#555", }}
-                     onPress={ () => {
-                        setGender( "Feminino" );
-                        setModalGender( !ModalGender );
-                     } }
-                     >
-                        Feminino
-                     </P>
-                  </Item>
-               </Content>
-            </ModalCardCenter>
-         }></ModalFullPage>
-      
-
-      <Portal>
-         <FAB.Group
-           open={open}
-           visible
-           backdropColor="#fffb"
-           fabStyle={{ backgroundColor: "#00559c", }}
-           icon={open ? 'atom' : 'plus'}
-           actions={[
-            //  { icon: 'plus', onPress: () => console.log('Pressed add') },
-             {
-               icon: "apple-icloud", /* 'account-reactivate', */
-               label: 'Baixar os contatos da base',
-               labelTextColor: "#00559C",
-               labelStyle: { fontWeight: "bold" },
-               onPress: () => {
-                  UpdateCustomersBase();
-               },
-            },
-            {
-               icon: 'account-plus',
-               label: 'Cadastrar um cliente novo',
-               labelTextColor: "#00559C",
-               labelStyle: { fontWeight: "bold", },
-               onPress: () => setModalVisibility( true ),
-             },
-           ]}
-           onStateChange={onStateChange}
-           onPress={() => {
-             if (open) {
-               // do something if the speed dial is open
-             }
-           }}
+         <Btn 
+            title="open drawer"
+            onPress={ () => { setDrawerOpener( true ); setTimeout( () => { setDrawerOpener( false ) }, 50 ); } }
          />
-       </Portal>
-     </PaperProvider>
-   </> );
+            <PaperProvider>
+               {/* <LinearGradient colors={[ "#f5f5f5", "#e5e5e5", ]} style={[ { flex: 1, } ]} > */}
+               <LinearGradient colors={[ "#fafafa", "#e5e5e5", ]} style={[ { flex: 1, } ]} >
+                  
+                  { Customers != null ? 
+                     // <ScrollView style={{ flex: 1,  }}>
+                     <View style={{ flex: 1, backgroundColor: "#e2f4fe00", gap: 16, }}>
+                        { 
+                           // Customers.map( customer => {
+                           //    return( 
+                           //       <ea.UsersCard 
+                           //          key={ customer.id }
+                           //          name={ customer.name }
+                           //       />
+                           //    );
+                           // } ) 
+                           <FlatList 
+                              ListHeaderComponent={ <>
+                                 <Header>
+                                    <T1 style={{ color: "#daa520", }}>Clientes</T1>
+                                 </Header>
+                              </> }
+                              data={ Customers }
+                              renderItem={ ({item}) => <>
+                                 <ea.UsersCard
+                                    key={ item.id }
+                                    name={ item.name }
+                                    data={ item }
+                                 />
+                              </> }
+                              keyExtractor={ item => item.id } 
+                              ItemSeparatorComponent={ 
+                                 () => <View style={{ height: 16, }}/>
+                              }
+                              style={{ 
+                                 width: "100%", 
+                                 // backgroundColor: "#eaebef",
+                                 paddingBottom: 0,
+                              }} 
+                              contentContainerStyle={{ padding: 16, paddingBottom: 38, }}
+                           />
+                        }
+                     </View>
+                     : 
+                     <View style={{ flex: 1, }}>
+                        <Header>
+                           <Content>
+                              <H2>Clientes</H2>
+                           </Content>
+                        </Header>
+                        <View style={{ width: "100%", aspectRatio: "12 / 9", marginTop: 16, }}>
+                           <Image source={ require( "@/src/images/clipart/saying-no-to-customers.png" ) }
+                           style={{ width: "100%", height: "100%", }} resizeMode="contain"/>
+                        </View>
+                        <Center style={{ paddingTop: 16, }}>
+                           <H3 style={{ color: "#777", textAlign: "center", }}>Você ainda não tem nenhum cliente cadastrado</H3>
+                        </Center>
+                     </View>
+                  }
+
+               </LinearGradient>
+
+
+         
+            {/*  == [ Modal ]
+            == == == == == == == == ==  */}
+            <Modal visible={ ModalVisibility } 
+               onRequestClose={ () => { setModalVisibility( false ) } }
+               animationType="slide"
+               presentationStyle="formSheet"
+            >
+
+               <c.Section style={[ s.modal_root ]}>
+                  <ScrollView keyboardShouldPersistTaps="handled">
+                     <View style={[ s.backSheet, elevation.elevation ]} />
+                     <View style={[ s.frontSheet, elevation.elevation ]} >
+                        <c.Section bg="#f3f3f3" style={{ backgroundColor: "gradient-" }}>
+                           <c.Header>
+                              <c.Content>
+                                 <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
+                                    <c.H3 color="#00559c99">Cadastrar cliente</c.H3>
+                                    <Pressable onPress={ () => { setModalVisibility( !ModalVisibility ) } }>
+                                       <View style={[ s.btnOverlay,  ]}>
+                                          <Icon i="f0" name="close" color={ colors.error } />
+                                       </View>
+                                    </Pressable>
+                                 </View>
+                              </c.Content>
+                           </c.Header>
+                           <c.Section bg="#fff" style={[ s.form, elevation.elevation ]}>
+                              <c.Content gap={ 8 }>
+
+                                 <View style={ s.form } ref={ id_form }>
+                                    <c.Section style={ s.header }>
+                                       <c.H4>Cliente { Name }</c.H4>
+                                    </c.Section>
+
+                                    <c.Section cliente section>
+                                       <Text style={ s.label }>Nome do Cliente</Text>
+                                       <TextInput style={ s.input }
+                                       value={ Name }
+                                       ref={ id_Name }
+                                       onChangeText={ setName }
+                                       />
+                                    </c.Section>
+
+                                    <c.Section>
+                                       <Text style={ s.label }>Gênero</Text>
+                                       <Pressable style={ s.input }
+                                          onPress={ () => { setModalGender( true ) } }
+                                       >
+                                          <Text>{ Gender }</Text>
+                                       </Pressable>
+                                    </c.Section>
+
+                                    <c.Section contato section>
+                                       <View style={ s.divider }>
+                                          <Text style={ s.dividerText }>CONTATO</Text>
+                                       </View>
+                                       <View style={ s.duo }>
+                                          <View style={ s.duoBox }>
+                                             <Text style={ s.label }>Celular</Text>
+                                             <TextInput style={ s.input }
+                                                value={ Cellphone }
+                                                onChangeText={ setCellphone }
+                                                keyboardType="number-pad"
+                                             />
+                                          </View>
+                                          
+                                          <View style={ s.duoBox }>
+                                             <Text style={ s.label }>WhatsApp</Text>
+                                             <TextInput style={ s.input }
+                                                value={ Whatsapp }
+                                                onChangeText={ setWhatsapp }
+                                                keyboardType="number-pad"
+                                             />
+                                          </View>
+                                       </View>
+                                       
+                                       <View style={ [ s.duo, {  } ] }>
+                                          <View style={ s.duoBox }>
+                                             <Text style={ s.label }>Telefone</Text>
+                                             <TextInput style={ s.input }
+                                                value={ Phone }
+                                                onChangeText={ setPhone }
+                                                keyboardType="number-pad"
+                                             />
+                                          </View>
+                                          
+                                          <View style={ s.duoBox }>
+                                             <Text style={ s.label }>Telefone 2</Text>
+                                             <TextInput style={ s.input }
+                                                value={ Phone2 }
+                                                onChangeText={ setPhone2 }
+                                                keyboardType="number-pad"
+                                             />
+                                          </View>
+                                       </View>
+                                       
+                                       <Text style={ s.label }>Email</Text>
+                                       <TextInput style={ s.input }
+                                          value={ Email }
+                                          onChangeText={ setEmail }
+                                          keyboardType="email-address"
+                                       />
+                                       
+                                       <View style={ [ s.duo, {  } ] }>
+                                          <View style={ s.duoBox }>
+                                             <Text style={ s.label }>RG/IE</Text>
+                                             <TextInput style={ s.input }
+                                                value={ Rg }
+                                                onChangeText={ setRg }
+                                                keyboardType="number-pad"
+                                             />
+                                          </View>
+                                          
+                                          <View style={ s.duoBox }>
+                                             <Text style={ s.label }>CPF</Text>
+                                             <TextInput style={ s.input }
+                                                value={ Cpf }
+                                                onChangeText={ setCpf }
+                                                keyboardType="number-pad"
+                                             />
+                                          </View>
+                                       </View>
+                                    </c.Section>
+                                    <c.Section endereço section>
+                                       <View style={ s.divider }>
+                                          <Text style={ s.dividerText }>ENDEREÇO</Text>
+                                       </View>
+                                       
+                                       <View style={ [ s.duo, {  } ] }>
+                                          <View style={ s.duoBox }>
+                                             <Text style={ s.label }>CEP</Text>
+                                             <TextInput style={ s.input }
+                                             keyboardType="number-pad"
+                                             value={  Cep }
+                                             placeholder="00.000-00"
+                                             onChangeText={ text => { 
+                                                setCep( text )
+                                             } }
+                                             onBlur={ () => { GetCEP() } }
+                                             />
+                                          </View>
+                                          
+                                          <View style={ s.duoBox }>
+                                             <Text style={ s.label }>UF</Text>
+                                             <TextInput style={ s.input }
+                                          value={ UF }
+                                          onChangeText={ setUF }
+                                       />
+                                          </View>
+                                       </View>
+                                       
+                                       <Text style={ s.label }>Rua</Text>
+                                       <TextInput style={ s.input }
+                                          value={ Logradouro }
+                                          onChangeText={ setLogradouro }
+                                       />
+                                       
+                                       <View style={ [ s.duo, {  } ] }>
+                                          <View style={ s.duoBox }>
+                                             <Text style={ s.label }>Número</Text>
+                                             <TextInput style={ s.input }
+                                                keyboardType="number-pad"
+                                                value={ Number }
+                                                onChangeText={ setNumber }
+                                             />
+                                          </View>
+                                          
+                                          <View style={ s.duoBox }>
+                                             <Text style={ s.label }>Complemento</Text>
+                                             <TextInput style={ s.input }
+                                                value={ Complemento }
+                                                onChangeText={ setComplemento }
+                                             />
+                                          </View>
+                                       </View>
+                                       
+                                       <Text style={ s.label }>Bairro</Text>
+                                       <TextInput style={ s.input }
+                                          value={ District }
+                                          onChangeText={ setDistrict }
+                                       />
+                                       
+                                       <Text style={ s.label }>Cidade</Text>
+                                       <TextInput style={ s.input }
+                                          value={ City }
+                                          onChangeText={ setCity }
+                                       />
+                                    </c.Section>
+                                    <c.Section observações section>
+                                       <View style={ s.divider }>
+                                          <Text style={ s.dividerText }>OBSERVAÇÕES</Text>
+                                       </View>
+                                       <Text style={ s.label }>Observação</Text>
+                                       <TextInput style={ s.input }
+                                          value={ Note }
+                                          onChangeText={ setNote }
+                                       />
+                                    </c.Section>
+
+
+                                    <c.Section style={ {
+                                       gap: 16,
+                                       marginTop: 24,
+                                       marginBottom: 66,
+                                    } }>
+
+                                       <AniButton title="cadastrar"
+                                          animation="bounceIn"
+                                          bg="#00559C"
+                                          onPress={ () => { RegisterCustomerOnBase( { dbs_name: "customers", object: customersList } ) } }
+                                       />
+                                    </c.Section>
+                                    
+                                 </View>
+                              </c.Content>
+                           </c.Section>
+                        </c.Section>
+                     </View>
+                  </ScrollView>
+               </c.Section>
+            </Modal>
+
+
+            {/* /** == [ ModalMenu ] 
+            * 
+            * == == == == == == == == == */}
+            <Modal visible={ ModalMenuVisibility } 
+               onRequestClose={ () => { setModalMenuVisibility( false ) } }
+               animationType="slide"
+               presentationStyle="formSheet"
+            >
+               <Text>Modal Menu</Text>
+            </Modal>
+
+
+               {/*  == [ Modal - Gênero ]
+               == == == == == == == == ==  */}
+               <ModalFullPage ModalVisibility={ ModalGender } onRequestClose={ () => setModalGender( false ) }
+               overlay={
+                  <ModalCardCenter 
+                  setState={ setModalGender } 
+                  useState={ ModalGender }
+                  trigger={ ModalGender }
+                  >
+                     <Centered style={{ paddingTop: 8, paddingBottom: 18, }}>
+                        <H3>Selecione o gênero</H3>
+                     </Centered>
+
+                     <Content style={{ gap: 8, }}>
+                        <Item>
+                           <P style={{ color: "#555", }}
+                           onPress={ () => {
+                              setGender( "Masculino" );
+                              setModalGender( !ModalGender );
+                           } }
+                           >
+                              Masculino
+                           </P>
+                        </Item>
+                        <Div />
+                        <Item>
+                           <P style={{ color: "#555", }}
+                           onPress={ () => {
+                              setGender( "Feminino" );
+                              setModalGender( !ModalGender );
+                           } }
+                           >
+                              Feminino
+                           </P>
+                        </Item>
+                     </Content>
+                  </ModalCardCenter>
+               }></ModalFullPage>
+            
+
+            <Portal>
+               <FAB.Group
+               open={open}
+               visible
+               backdropColor="#fffb"
+               fabStyle={{ backgroundColor: "#00559c", }}
+               icon={open ? 'atom' : 'plus'}
+               actions={[
+                  //  { icon: 'plus', onPress: () => console.log('Pressed add') },
+                  {
+                     icon: "apple-icloud", /* 'account-reactivate', */
+                     label: 'Baixar os contatos da base',
+                     labelTextColor: "#00559C",
+                     labelStyle: { fontWeight: "bold" },
+                     onPress: () => {
+                        UpdateCustomersBase();
+                     },
+                  },
+                  {
+                     icon: 'account-plus',
+                     label: 'Cadastrar um cliente novo',
+                     labelTextColor: "#00559C",
+                     labelStyle: { fontWeight: "bold", },
+                     onPress: () => setModalVisibility( true ),
+                  },
+               ]}
+               onStateChange={onStateChange}
+               onPress={() => {
+                  if (open) {
+                     // do something if the speed dial is open
+                  }
+               }}
+               />
+            </Portal>
+         </PaperProvider>
+      </DrawerStack>
+   );
 }
 
 

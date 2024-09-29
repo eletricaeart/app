@@ -47,7 +47,7 @@ export default function Layout() {
             height: 78,
             padding: 6,
             alignItems: "center",
-
+            borderTopColor: "#16181c",
          }, 
          tabBarItemStyle: {
             gap: 6,

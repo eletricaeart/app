@@ -34,7 +34,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getAuth } from "firebase/auth";
 import { Href, router } from "expo-router";
 import { AniButton, Btn } from "@/src/widgets/ui/animated";
-// import Drawer from "@/src/widgets/ui/Drawer";
+import DrawerStack from "@/src/widgets/ui/drawer/";
 
 
 const 
@@ -68,11 +68,20 @@ export default function Home( { ...props } ) {
     * 
     */
    const 
-      drawer = useRef<DrawerLayoutAndroid>( null )
+      [ DrawerOpener, setDrawerOpener ] = useState( false )
       ,
       [ OpenDrawer, setOpenDrawer ] = useState<boolean>( false )
       ,
-      DrawerHandler = () => { setOpenDrawer( !OpenDrawer ); }
+      DrawerHandler = () => { 
+         // async function load() {
+         //    setDrawerOpener( true );
+         // }
+         // load().then( () => setDrawerOpener( false ) );
+         setDrawerOpener( true );
+         setTimeout( () => {
+            setDrawerOpener( false );
+         }, 200 );
+      }
    ;
 
 
@@ -106,8 +115,13 @@ export default function Home( { ...props } ) {
       SetUser();
    }, [User] );
 
-   return( <>
-   {/* <Drawer ref={ drawer }> */}
+   return( 
+   <DrawerStack
+      direction="right"
+      openerState={ DrawerOpener }
+      // drawer={}
+      drawerBackgroundColor="#00559C"
+   >
       {/* <Sheet style={{ backgroundColor: "#fafafa", }}> */}
       <Sheet style={{ backgroundColor: "#ecf0f1", }}>
          <ScrollView>
@@ -177,7 +191,7 @@ export default function Home( { ...props } ) {
 
             <AniButton 
                title="open drawer"
-               // onPress={ DrawerHandler }
+               onPress={ DrawerHandler }
                // onPress={ () => drawer.current?.openDrawer() }
             />
 
@@ -188,7 +202,7 @@ export default function Home( { ...props } ) {
             } */}
          </ScrollView>
       </Sheet>
-   {/* </Drawer>  */}
-   </> );
+   </DrawerStack> 
+   );
 }
 

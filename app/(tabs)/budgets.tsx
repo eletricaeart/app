@@ -60,6 +60,7 @@ import useBudgetsFB from "@/src/hooks/useBudgetsFB";
 import { css } from "styled-components";
 import { Menu } from "@/src/widgets/ui";
 import { AniButton } from "@/src/widgets/ui/animated";
+import DrawerStack from "@/src/widgets/ui/drawer/";
 
 
 
@@ -90,6 +91,8 @@ interface customer {
 == == == == == == == == == */
 export default function BudgetsView( { ...props } ) {
    const 
+      [ DrawerOpener, setDrawerOpener ] = useState( false )
+      ,
       [ ModalVisibility, setModalVisibility ] = useState( false )
       ,
       [ ModalServicesVisibility, setModalServicesVisibility ] = useState( false )
@@ -464,7 +467,11 @@ export default function BudgetsView( { ...props } ) {
    
    
 
-   return( <>
+   return( <DrawerStack
+         direction="right"
+         openerState={ DrawerOpener }
+         drawerBackgroundColor="#212329"
+      >
       <PaperProvider>
          <LinearGradient colors={[ "#f5f5f5", "#e5e5e5", ]} style={[ { flex: 1, } ]} >
             
@@ -1344,7 +1351,7 @@ export default function BudgetsView( { ...props } ) {
             />
          </Portal>
      </PaperProvider>
-   </> );
+   </DrawerStack> );
 }
 
 

@@ -21,13 +21,14 @@ type DrawerProps = {
    children?: any;
    open?: () => void;
    close?: () => void;
-   openned?: boolean;
+   openerState?: boolean;
    drawer?: any;
+   drawerBackgroundColor?: string;
 };
 
 /** == [ exports ]
  * == == == == == == == == == */
-export default function Drawer( { ...props }: DrawerProps ) {
+export default function DrawerStack( { ...props }: DrawerProps ) {
    const 
       drawer = useRef<DrawerLayoutAndroid>(null)
       ,
@@ -48,32 +49,36 @@ export default function Drawer( { ...props }: DrawerProps ) {
    props.close = () => drawer.current?.closeDrawer();
  
    const navigationView = () => props.drawer || (
-      <View style={[ s.container ,  s.navigationContainer ]}>
-         <Text style={ s.paragraph }>I'm in the Drawer!</Text>
-         <Btn
-            title="Close drawer"
-            onPress={ () => drawer.current?.closeDrawer() }
-         />
-      </View> 
+      <></>
+      // <View style={[ s.container ,  s.navigationContainer ]}>
+      //    <Text style={ s.paragraph }>I'm in the Drawer!</Text>
+      //    <Btn
+      //       title="Close drawer"
+      //       onPress={ () => drawer.current?.closeDrawer() }
+      //    />
+      // </View> 
    );
 
+   useEffect( () => {
+      // useRef({})
+   }, [] );
 
-
-   return( <>
+   return(
       <DrawerLayoutAndroid
          ref={drawer}
          drawerWidth={300}
+         drawerBackgroundColor={ props.drawerBackgroundColor || "#212329" }
          drawerPosition={drawerPosition}
          renderNavigationView={navigationView}>
-         <View style={ s.container }>
+         {/* <View style={ s.drawerPage }> */}
             {
-               props.openned &&
+               props.openerState &&
                   drawer.current?.openDrawer()
             }
             { props.children }
-         </View>
+         {/* </View> */}
       </DrawerLayoutAndroid>
-   </> );
+   );
 }
 
 
@@ -86,11 +91,21 @@ const
          alignItems: "center",
          justifyContent: "center",
       },
+      drawerPage: {
+         flex: 1,
+         width: "100%",
+         // position: "absolute",
+         // zIndex: 999,
+      },
       container: {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
         padding: 16,
+      },
+      teste: {
+         position: "absolute",
+         zIndex: 999,
       },
       navigationContainer: {
         backgroundColor: '#ecf0f1',
