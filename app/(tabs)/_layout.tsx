@@ -1,13 +1,8 @@
 
 
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Pressable, Modal } from 'react-native';
+import { View, StyleSheet, Pressable, Modal, Text } from 'react-native';
 import { Tabs } from "expo-router";
-
-import { CommonActions } from '@react-navigation/native';
-import { Text, BottomNavigation,
-   Button, Menu, Divider, PaperProvider,
-} from 'react-native-paper';
 
 import {
    AppBar,
@@ -22,14 +17,17 @@ import {
 
 import { Icon } from "@/src/widgets/clb-icons";
 import {
-   FloatMenu, Drawer,
+   FloatMenu,
 } from "@/src/widgets/ui/modals";
 import FetchUserData from "@/src/services/fetchUserData";
+import DrawerStack from "@/src/widgets/ui/drawer/";
 
 // const Tab = createBottomTabNavigator();
 
 export default function Layout() {
    const 
+      [ DrawerOpener, setDrawerOpener ] = useState( false )
+      ,
       [ ModalMenuVisibility, setModalMenuVisibility ] = useState( false )
       ,
       [ FloatMenuEnable, setFloatMenuEnable ] = useState( false )
@@ -37,7 +35,33 @@ export default function Layout() {
       [ DrawerEnable, setDrawerEnable ] = useState( false )
    ;
 
-   return (
+   function DrawerOpenerToggle() {
+      setDrawerOpener( true );
+      setTimeout(() => {
+         setDrawerOpener( false );
+      }, 50 );
+   }
+
+   return ( 
+      <DrawerStack
+         openerState={ DrawerOpener }
+         drawer={ <>
+            <View
+               style={{
+                  backgroundColor: "#16181c",
+                  height: 160,
+               }}
+            >
+            </View>
+            <View
+               style={{
+                  flex: 1,
+               }}
+            >
+               <Text style={{ color: "#999", }}>oi</Text>
+            </View>
+         </> }
+      >
     <Tabs
       initialRouteName="home"  
       screenOptions={{
@@ -79,15 +103,8 @@ export default function Layout() {
          headerLeft: () => (
             <>
                <AppBarLeft 
-                  onPress={ () => { setDrawerEnable( !DrawerEnable ) } }
+                  onPress={ () => { DrawerOpenerToggle(); } } 
                />
-               {
-                  DrawerEnable && 
-                  <Drawer 
-                     enable={ () => setDrawerEnable( !DrawerEnable ) }
-                     bg="#0075BD"
-                  />
-               }
             </>
          )
          ,
@@ -200,6 +217,7 @@ export default function Layout() {
          }}
       />
     </Tabs>
+    </DrawerStack>
   );
 }
 

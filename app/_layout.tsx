@@ -20,6 +20,8 @@ import {
    User, 
 } from "firebase/auth";
 
+import DrawerStack from "@/src/widgets/ui/drawer/";
+
 
 
 export {
