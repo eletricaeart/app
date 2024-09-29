@@ -182,6 +182,7 @@ export default function Home( { ...props } ) {
             />
 
             <Btn title="expoPrint teste" onPress={ () => { router.push( "/testes/printTestW" ) } } />
+            <Btn title="drawerView" onPress={ () => { router.push( "/testes/DView" ) } } />
             {/* {
                OpenDrawer && <Drawer/>
             } */}
