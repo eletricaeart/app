@@ -47,7 +47,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { api_GetCEP } from "@/src/services/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { FirebaseDB, SaveDataOnFbRDB, GetDataFromFbRDB, FetchRtdbData } from "@/FirebaseConfig";
+import { FirebaseDB, SaveDataOnFbRDB, GetDataFromFbRDB, FetchRTDBData } from "@/FirebaseConfig";
 import { GetFBData, DeleteFBData, } from "@/src/widgets/clb-fb";
 
 import uuid from "react-native-uuid";

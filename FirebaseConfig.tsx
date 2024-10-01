@@ -73,7 +73,19 @@ export const FirestoreDB = getFirestore( FirebaseApp );
  * import { ref, set } from "firebase/database";
  * 
  */
-export async function SaveDataOnFbRDB( { ...props } ) {
+
+
+/**
+ * Save data
+ * == == == == == == == == == */
+type SaveDataProps = { 
+   ref: string; 
+   data: any; 
+   okMsg: string; 
+   errMsg: string; 
+};
+
+export async function SaveDataOnFbRDB( { ...props }: SaveDataProps ) {
    await set( ref( FirebaseDB, props.ref ), 
       props.data
    ).then( () => {
@@ -85,16 +97,26 @@ export async function SaveDataOnFbRDB( { ...props } ) {
    } );
 }
 
-export async function GetDataFromFbRDB( { ...props } ) {
+/**
+ * Get data
+ * == == == == == == == == == */
+type GetDataProps = { 
+   ref: string; 
+   dataHolder: any; 
+   value?: string; 
+};
+
+export async function GetDataFromFbRDB( { ...props }: GetDataProps ) {
    try {
       // const dbRef = ref( getDatabase() );
       const dbRef = ref( FirebaseDB );
       const data = "";
 
       get(
-         child( dbRef, props.ref ).then( snapshot => {
+         child( ref( FirebaseDB ), props.ref ).then( snapshot => {
             if( snapshot.exists() ) {
                props.dataHolder = ( snapshot.val().vampire ) ? "Sim" : "Não";
+               // props.dataHolder = ( snapshot.val(). ) ? "Sim" : "Não";
 
             } else {
                alert( "User doens't exist" );
@@ -109,11 +131,13 @@ export async function GetDataFromFbRDB( { ...props } ) {
 }
 
 /**
- * 
- * read data from rtdb
- * 
- */
-export async function FetchRtdbData( { ...props } ) {
+ * Fetch data
+ * == == == == == == == == == */
+type FetchDataProps = {
+   ref: string;
+};
+
+export async function FetchRTDBData( { ...props }: FetchDataProps ) {
    async function handle() {
       try {
          // const dbRef = ref( getDatabase() );
@@ -147,77 +171,16 @@ export async function FetchRtdbData( { ...props } ) {
 }
 
 /**
- * read [ {}, {} ] data from rtdb
- * 
- */
-/* async function FetchData() {
-   try {
-      const 
-         user = await CStore.GetObjData( "user" )
-      ;
-      console.log( "receipts: ", await CStore.GetObjData( "receipts" ) );
-      // await get( child( ref( getDatabase() ), `users/${ user.uid }/receipts` ) )
-      await get( child( 
-         ref( FirebaseDB ), `users/${ user.uid }/receipts` 
-      ) ).then(
-         dataList => { 
-            const 
-               list: ( 
-                  ( prevState: never[] ) => never[] 
-               ) | { 
-                  key: any;
-                  id: any;
-                  formOfPayment: any;
-                  isPaid: any;
-                  name: any;
-                  notes: any;
-                  owner: any;
-                  payday: any;
-                  receiptValue: any;
-                  services: any[];
-                  subtotal: any;
-                  warranty: any;
-               }[] = []
-               // list: SetStateAction<{ id: string; name: string; email: string; }> | { id: any; name: any; email: any; }[] = []
-            ;
-            
-            dataList.forEach( data => {
-               const 
-                  key = data.key,
-                  value = data.val(),
-                  services: any[] = []
-               ;
+ * Update data
+ * == == == == == == == == == */
+type UpdateDataProps = {
+   ref: string;
+   data: {};
+   okMsg: string;
+   errMsg: string;
+};
 
-               value.services.forEach( service => {
-                  services.push( Object.values( service ) );
-               } );
-
-               list.push( { 
-                  // ...value 
-                  key: key,
-                  id: value.id,
-                  formOfPayment: value.formOfPayment,
-                  isPaid: value.isPaid,
-                  name: value.name,
-                  notes: value.notes,
-                  owner: value.owner,
-                  payday: value.payday,
-                  receiptValue: value.receiptValue,
-                  services: services,
-                  subtotal: value.subtotal,
-                  warranty: value.warranty,
-               } );
-            } );
-            setReceiptsFB( list );
-            setLoading( false );
-         }
-      );
-   } catch( err: any ) {
-      alert( `Deu ruim no FetchData() err: \ncode: ${err.code} \nmsg: ${err.message}` );
-   }
-} */
-
-export async function UpdateDataOnFbRDB( { ...props } ) {
+export async function UpdateDataOnFbRDB( { ...props }: UpdateDataProps ) {
    await update( 
       ref( FirebaseDB, props.ref ),  
       props.data
@@ -228,9 +191,20 @@ export async function UpdateDataOnFbRDB( { ...props } ) {
    } );
 }
 
-async function RemoveDataOnFbRDB( { ...props } ) {
-   await remove( ref( FirebaseDB, props.ref
-   ) ).then( () => {
+
+/**
+ * Remove data
+ * == == == == == == == == == */
+type RemoveDataProps = {
+   ref: string;
+   okMsg: string;
+   errMsg: string;
+};
+
+async function RemoveDataOnFbRDB( { ...props }: RemoveDataProps ) {
+   await remove( 
+      ref( FirebaseDB, props.ref )
+   ).then( () => {
       alert( props.okMsg || "data has been destroyed on the cloud");
    } ).catch( err => {
       alert( props.errMsg || "deu ruim pra deletar da nuvem" );
