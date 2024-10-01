@@ -11,7 +11,7 @@ import styled from "styled-components/native";
 import { invoiceHtml, invoiceFile } from "@/src/services/invoicePDF";
 import { Brl2Float, CutRS, FixBrl, Float2Brl, Str2Brl } from "@/src/utils";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import budgets from "../(tabs)/budgets";
+import budgets from "../(drawer)/(tabs)/budgets";
 import { router, Stack } from "expo-router";
 import { AniButton } from "@/src/widgets/ui/animated";
 

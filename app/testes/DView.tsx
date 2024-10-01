@@ -8,7 +8,6 @@ import {
    View,
    Text, 
 } from "react-native";
-import DrawerStack from "@/src/widgets/ui/drawer/";
 import { Btn } from "@/src/widgets/ui/animated";
 
 
@@ -24,9 +23,9 @@ export default function DView( { ...props } ) {
    ;
 
    return( 
-      <DrawerStack
-         direction="right"
-         openerState={ Openned } 
+      <View
+         // direction="right"
+         openned={ Openned } 
          drawer={
             <View style={{ backgroundColor: "#212329", flex: 1, }}>
                <View style={{ backgroundColor: "#2af", height: 56, }}></View>
@@ -43,7 +42,7 @@ export default function DView( { ...props } ) {
                load().then( () => setOpenned( false ) );
             } }
          />
-      </DrawerStack>
+      </View>
    );
 }
 

@@ -75,9 +75,10 @@ export default function SignUpView( { ...props } ) {
 
    useEffect( () => {
       if( User ) {
-         router.replace( "/home" );
+         // router.replace( "/home" );
+         router.replace( "/(drawer)" );
       }
-      console.log( "User exist, so chancging signup to /home" );
+      console.log( "User exist, so chancging signup to /drawer::2" );
    }, [User] );
 
 

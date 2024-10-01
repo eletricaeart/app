@@ -74,9 +74,10 @@ export default function SignInView( { ...props } ) {
 
    useEffect( () => {
       if( User ) {
-         router.replace( "/home" );
+         // router.replace( "/home" );
+         router.replace( "/(drawer)" );
       }
-      console.log( "User exist, so changing signin to /home" );
+      console.log( "User exist, so changing signin to /drawer::1" );
    }, [User] );
 
    async function HandleSignIn() {

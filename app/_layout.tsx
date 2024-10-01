@@ -20,8 +20,6 @@ import {
    User, 
 } from "firebase/auth";
 
-import DrawerStack from "@/src/widgets/ui/drawer/";
-
 
 
 export {
@@ -68,7 +66,8 @@ export default function RootLayout() {
       if( Initializing ) { return; }
       const inTabs = segments[ 0 ] === "(tabs)";
       if( User && !inTabs ) {
-         router.replace( "/(tabs)/home" )
+         // router.replace( "/(tabs)/home" )
+         router.replace( "/(drawer)" )
       } else if( !User && inTabs ) {
          router.replace( "/" );
       }
@@ -86,7 +85,8 @@ export default function RootLayout() {
          >
             <Stack.Screen name="landing" options={{ headerShown: false, statusBarColor: "#1b1d22", animation: "fade" }} />
             <Stack.Screen name="index" options={{ headerShown: false, statusBarColor: "#1b1d22" }} />
-            <Stack.Screen name="(tabs)" options={{ headerShown: false, statusBarColor: "#00559c" }} />
+            {/* <Stack.Screen name="(tabs)" options={{ headerShown: false, statusBarColor: "#00559c" }} /> */}
+            <Stack.Screen name="(drawer)" options={{ headerShown: false, statusBarColor: "#00559c" }} />
             <Stack.Screen name="(home)" options={{ headerShown: false, statusBarColor: "#00559c" }} />
             <Stack.Screen name="(auth)" options={{ headerShown: false, animation: "none"  }} />
             {/* <Stack.Screen name="signup" options={{ headerShown: false , presentation: "modal", statusBarColor: "#1b1d22", animation: "none", }} /> */}

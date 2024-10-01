@@ -29,9 +29,20 @@ import {
 // <SimpleLineIcons name="user" size={24} color="black" />
 
 
+/* == [ properties ]
+== == == == == == == == == */
+type IconProps = {
+   i?: string;
+   name?: string;
+   size?: number;
+   color?: string;
+   style?: any;
+   onPress?: () => void;
+};
+
 /* == [ fontawesome ]
 == == == == == == == == == */
-export function Icon( { ...props } ) {
+export function Icon( { ...props }: IconProps ) {
    const 
       name = props.name 
       ,

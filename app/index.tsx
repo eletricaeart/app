@@ -250,7 +250,8 @@ export default function Index() {
    
    return( <>
       { User ? 
-         ( router.replace( "/home" ) ) 
+         // ( router.replace( "/home" ) ) 
+         ( router.replace( "/(drawer)" ) ) 
          : 
          ( <Landing /> )
       }
