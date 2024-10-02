@@ -36,7 +36,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { api_GetCEP } from "@/src/services/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { FirebaseDB, SaveDataOnFbRDB, GetDataFromFbRDB } from "@/FirebaseConfig";
+import { FirebaseDB, SaveDataOnFbRTDB, GetDataFromFbRDB } from "@/FirebaseConfig";
 import { GetFBData, DeleteFBData, } from "@/src/widgets/clb-fb";
 
 import uuid from "react-native-uuid";
@@ -237,13 +237,13 @@ export default function CustomersView( { ...props } ) {
             SetCustomers();
          } );
 
-         SaveDataOnFbRDB( { 
+         SaveDataOnFbRTDB( { 
             ref: `users/${ userInfo.uid }/customers/${ props.object.id }`,
             data: props.object,
-            okMsg: "Cliente cadastrado!",
-            errMsg: "Deu ruim no cadasdtro!"
+            okMsg: "O cliente foi cadastrado!",
+            errMsg: "Deu ruim no cadastro!"
          } );
-         
+
       } else {
          alert( "Digite o nome do seu cliente" );
       }
@@ -692,7 +692,14 @@ export default function CustomersView( { ...props } ) {
                                  <AniButton title="cadastrar"
                                     animation="bounceIn"
                                     bg="#00559C"
-                                    onPress={ () => { RegisterCustomerOnBase( { dbs_name: "customers", object: customersList } ) } }
+                                    onPress={ () => { 
+                                       RegisterCustomerOnBase( 
+                                          { 
+                                             dbs_name: "customers", 
+                                             object: customersList 
+                                          } 
+                                       ) 
+                                    } }
                                  />
                               </c.Section>
                               

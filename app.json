@@ -17,11 +17,11 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "com.devfellon.eletricaeart",
       "adaptiveIcon": {
         "foregroundImage": "./src/images/EA/EA-app_icon.png",
         "backgroundColor": "#1b1d22"
-      },
-      "package": "com.devfellon.eletricaeart"
+      }
     },
     "web": {
       "bundler": "metro",

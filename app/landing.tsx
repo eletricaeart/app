@@ -22,7 +22,7 @@ import { Link, router, } from "expo-router";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { FirebaseApp, FirebaseAuth, SaveDataOnFbRDB,  } from "@/FirebaseConfig";
+import { FirebaseApp, FirebaseAuth, SaveDataOnFbRTDB,  } from "@/FirebaseConfig";
 import { 
    signInWithEmailAndPassword, 
    createUserWithEmailAndPassword,

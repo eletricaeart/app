@@ -39,7 +39,7 @@ import { colors } from "@/src/widgets/clb-colors";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { FirebaseApp, FirebaseAuth, SaveDataOnFbRDB,  } from "@/FirebaseConfig";
+import { FirebaseApp, FirebaseAuth, SaveDataOnFbRTDB,  } from "@/FirebaseConfig";
 import { 
    signInWithEmailAndPassword, 
    createUserWithEmailAndPassword,
@@ -147,11 +147,11 @@ export default function Index() {
                userReady = JSON.stringify( userData )
             ;
             async function CreateUserSpace() {
-               SaveDataOnFbRDB( {
+               SaveDataOnFbRTDB( {
                   ref: `users/${ userData.uid }/name`,
                   data: Name,
                } );
-               SaveDataOnFbRDB( {
+               SaveDataOnFbRTDB( {
                   ref: `users/${ userData.uid }/uid`,
                   data: userData.uid,
                } );

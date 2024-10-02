@@ -18,7 +18,7 @@ import {
 } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
 
-import { FirebaseApp, FirebaseAuth, SaveDataOnFbRDB,  } from "@/FirebaseConfig";
+import { FirebaseApp, FirebaseAuth, SaveDataOnFbRTDB,  } from "@/FirebaseConfig";
 import { 
    signInWithEmailAndPassword, 
    createUserWithEmailAndPassword,
@@ -128,15 +128,15 @@ export default function SignUpView( { ...props } ) {
             photoURL: ""
          } );
          async function CreateUserSpace() {
-            SaveDataOnFbRDB( {
+            SaveDataOnFbRTDB( {
                ref: `users/${ userData.uid }/name`,
                data: Name,
             } );
-            SaveDataOnFbRDB( {
+            SaveDataOnFbRTDB( {
                ref: `users/${ userData.uid }/uid`,
                data: userData.uid,
             } );
-            SaveDataOnFbRDB( {
+            SaveDataOnFbRTDB( {
                ref: `users/${ userData.uid }/email`,
                data: Email,
             } );

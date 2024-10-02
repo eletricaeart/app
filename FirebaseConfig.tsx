@@ -80,12 +80,12 @@ export const FirestoreDB = getFirestore( FirebaseApp );
  * == == == == == == == == == */
 type SaveDataProps = { 
    ref: string; 
-   data: any; 
+   data: {}; 
    okMsg: string; 
    errMsg: string; 
 };
 
-export async function SaveDataOnFbRDB( { ...props }: SaveDataProps ) {
+export async function SaveDataOnFbRTDB( { ...props }: SaveDataProps ) {
    await set( ref( FirebaseDB, props.ref ), 
       props.data
    ).then( () => {

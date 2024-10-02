@@ -23,6 +23,12 @@ import { Icon } from "../../clb-icons";
 type direction = "left" | "right";
 
 type DrawerProps = {
+   user?: {
+      name: string;
+      email: string;
+   };
+   headerBG?: string;
+   bg?: string;
    direction?: direction;
    children?: any;
    open?: () => void;
@@ -88,7 +94,7 @@ export default function DrawerView( { ...props }: DrawerProps ) {
          style={[ s.sheet, { backgroundColor: props.bg || "#212329", } ]}
       >
          <ScrollView>
-            <View style={[ s.userInfoWrapper, { backgroundColor: props.bg || "#16181c", } ]}>
+            <View style={[ s.userInfoWrapper, { backgroundColor: props.headerBG || "#16181c", } ]}>
                <Image
                   source={{ uri: "https://randomuser.me/api/portraits/men/3.jpg" }}
                   width={80}
@@ -96,8 +102,8 @@ export default function DrawerView( { ...props }: DrawerProps ) {
                   style={ s.userImg}
                />
                <View style={ s.userDetailsWrapper}>
-                  <Text style={ s.userName}>John Doe</Text>
-                  <Text style={ s.userEmail}>john@email.com</Text>
+                  <Text style={ s.userName}>{ props.user?.name || "Céo Sammarco" }</Text>
+                  <Text style={ s.userEmail}>{ props.user?.email || "noah.kd@gmail.com" }</Text>
                </View>
             </View>
 

@@ -19,7 +19,7 @@ import { Link, router, } from "expo-router";
 
 import * as CStore from "@/src/widgets/clb-dbs";
 import { AppbarStick, BackButton, } from "@/src/widgets/ui";
-import { FirebaseApp, FirebaseAuth, SaveDataOnFbRDB,  } from "@/FirebaseConfig";
+import { FirebaseApp, FirebaseAuth, SaveDataOnFbRTDB,  } from "@/FirebaseConfig";
 import { 
    signInWithEmailAndPassword, 
    createUserWithEmailAndPassword,
