@@ -76,7 +76,7 @@ export default function GetBudgetPdfView() {
             // html: htmlData,
             html: invoiceHtml( 
                await handle()
-            ),
+            ), 
             // base64: false,
             // margins: { 
             //    top: 16,
