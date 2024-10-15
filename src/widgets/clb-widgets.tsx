@@ -518,7 +518,7 @@ export function BudgetCardList( { ...props } ) {
                                  console.error( "LoadBudget() err: \n\n\n", err );
                               }
                            }
-                           handle().then( () => router.push( "../getBudgetPdf" ) );
+                           handle().then( () => router.push( "/(file)/getBudgetPdf" ) );
                         }
                         LoadBudget();
                         setMenuState( !MenuState );

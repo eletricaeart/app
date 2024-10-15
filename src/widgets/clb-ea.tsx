@@ -103,7 +103,7 @@ export function EACard() {
             // backgroundColor: Colores.colors.blue0, 
             backgroundColor: "#19497b", 
             width: "100%", flexDirection: "row",
-            padding: 8,
+            padding: 10,
             // aspectRatio: "16 / 6.5",
             aspectRatio: "16 / 5.8",
             // alignItems: "center", justifyContent: "space-between",
@@ -118,7 +118,7 @@ export function EACard() {
             justifyContent: "center",
          },
          img: {
-            width: "97%", height: "97%",
+            width: "95%", height: "95%",
             borderRadius: 1000,
          },
 
