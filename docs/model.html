@@ -1,0 +1,569 @@
+
+
+<!DOCTYPE html>
+<html lang='pt-br'>
+   <head>
+      <title></title>
+      
+      <!-- <link rel='icon' href='src/pix/logo.svg' type='svg+xml'> -->
+      <meta charset='UTF-8'>
+      <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+      <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+      <!-- <link rel='stylesheet' href='https://fonts.googleapis.com/icon?family=Material+Icons'> -->
+      <style>
+         /* @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Cinzel+Decorative:wght@400;700;900&family=Open+Sans:wght@500;800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Tangerine:wght@400;700&display=swap'); */
+
+         *:not( h1,h2,h3,h4,h5,h6,p,menu,ul,ol,li,hr,pre,dd,blockquote,fieldset,legend ),
+         *:not( h1,h2,h3,h4,h5,h6,p,menu,ul,ol,li,hr,pre,dd,blockquote,fieldset,legend )::before,
+         *:not( h1,h2,h3,h4,h5,h6,p,menu,ul,ol,li,hr,pre,dd,blockquote,fieldset,legend )::after {
+            margin:0; padding:0; box-sizing:border-box;
+         }
+         
+         :root {
+            --top: #16181c;
+            --bar: #1b1d22;
+            --base: #2A171f;
+            --iBg: #1b1d22;
+            --iFg: #2d3037;
+            --bg: #212329;
+            --fg: #38393f;
+            --t: #fff;
+            --t1: #bbb;
+            --t2: #979899;
+            --tBlue: #3690f8;
+            --tG: #d7ba7d;
+            --tO: #ff9900;
+
+            --dark0: #16181c;   --dark1: #1b1d22;
+            --dark2: #212329;   --dark3: #505257;
+
+            --light0: #ffffff;  --light1: #f5f5f5;
+
+            --pink: #905;   --amber: #ffab00;   --red: #ce3635;
+            --azul: #27f;   --green: #006400;   --blue: #149cbe;
+            --texto: #e9e6e3;
+
+            --green-dark: #8b6d19;  --green-light: #a17d1a;    --green-bg: #fbf6e9;
+            --purple-dark: #603479; --purple-light: #965bb9;   --purple-bg: #f4edf7;
+            --red-dark: #902726;    --red-light: #b83232;      --red-bg: #fceeee;
+            --blue-dark: #1c5b6e;   --blue-light: #267d97;     --blue-bg: #ebf6fb;
+
+            --appbar-height: 81px;
+            --appbar-filter-shadow: drop-shadow( #0009 0 0 5px );
+            --sidebar-width: 68px;
+         }
+         
+         navlink { cursor: pointer; }
+         navlink:hover { color: #27f; transition: .3s ease-in-out; }
+         
+         ::-webkit-scrollbar {
+            width: 10px;
+         }
+         ::-webkit-scrollbar-track {
+            background: var( --pink );
+            border-radius: 5px;
+         }
+         ::-webkit-scrollbar-thumb {
+            background: var( --bar, #1b1d22 );
+            border-radius: 5px;
+         }
+         
+         html {
+            line-height: 1.15;
+            -webkit-text-size-adjust: 100%;
+            
+            background-color: var( --bg, #212329 );
+            background-color: var( --base, #212329 );
+            background-image: linear-gradient( 
+                  0deg, 
+                  #00000000 24px, 
+                  #313339 25px 
+               ),
+               linear-gradient( 
+                  90deg, 
+                  #00000000 24px, 
+                  #313339 25px 
+               );
+            background-size: 25px 25px;
+         }
+         body {
+            width: 100%;
+            min-height: 100vh;
+            color: var( --texto );
+            font-family: 'Poppins';
+            -webkit-font-smoothing: antialiased;
+         }
+         home-page {
+            display: flex;
+            flex-direction: column;
+            margin: 0 auto;
+            background: var( --bg, #212329 );
+         }
+
+         t1, t2, t3, t4, t5, t6, t7 {
+            font-weight: bold;
+            line-height: 1.2;
+            word-wrap: break-word;
+            color: var( --texto );
+         }
+         t { font-size: 1em; }
+         t1 { font-size: 2.1em; }
+         t2 { font-size: 1.7em; }
+         t3 { font-size: 1.5em; }
+         t4 { font-size: 1.15em; }
+         t5 { font-size: 1em; }
+         t6 { font-size: .8em; }
+         p { word-wrap: break-word; }
+
+         li { margin: 0.8ch 0; font-size: inherit; }
+         li > :nth-child( 1n ) {
+            padding-top: 1ch;
+            padding-bottom: 1ch;
+         }
+         li::marker {
+            font-size: larger;
+            font-weight: bolder;
+            color: #da0;
+         }
+
+         fieldset {
+            border-radius: 2rem;
+            margin: 1rem 0;
+            padding: 1rem;
+         }
+
+         legend { font-weight: bolder; }
+         
+         hr {
+            width: 100%;
+            border: #da05 solid;
+            border-radius: 2rem;
+         }
+
+         appbar {
+            display: block;
+            width: 100%;
+            height: 98px;
+            position: sticky;
+            top: 0; left: 0;
+            background: #16181c;
+            background: #2a171f;
+            box-shadow: #16181c 0 0 0 6px;
+            filter: drop-shadow( #0009 0 0 5px );
+            border-bottom-left-radius: 2rem;
+            border-bottom-right-radius: 2rem;
+            border-bottom: #da0 5px dashed;
+            border-left: #da0 5px dashed;
+            border-right: #da0 5px dashed;
+            z-index: 9;
+         }
+         appbar-body {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            width: 99%;
+            height: 81px;
+            margin: 0 auto;
+            background: #1b1d22;
+            box-shadow: #1b1d22 0 0 0 6px;
+            filter: drop-shadow( #0009 0 0 5px );
+            border-bottom-left-radius: 7ch;
+            border-bottom-right-radius: 7ch;
+            border-bottom: #313339 5px dashed;
+            border-left: #313339 5px dashed;
+            border-right: #313339 5px dashed;
+         }
+         appbar-body > t1 {
+            color: #e9e6e3;
+            display: grid;
+            place-items: center;
+         }
+
+         sidebar::-webkit-scrollbar { width: 0; }
+
+         card {
+            display: grid;
+            width: clamp( 100px, 90%, 950px );
+            height: 100%;
+            margin: 0 auto;
+            padding: 2rem;
+            background: #2232;
+            box-shadow: #2233 0 0 0 13px;
+            filter: drop-shadow( #9052 0 0 6px );
+            border-radius: 1.5rem;
+            border: 6px dashed #f275;
+         }
+         card-body {
+            display: block;
+            width: 100%;
+            height: 100%;
+            padding: 1.5em 2.5em;
+            background: #f5f5f5;
+         }
+
+      </style>
+      <style>         
+         exercices, header, section, exercice, question, answer {
+            display: flex;
+            flex-direction: column;
+         }
+
+         exercices {
+            width: 100%;
+            padding-top: 1.5em;
+            padding-bottom: 1.5em;
+            gap: 1em;
+         }
+         
+         exercices > header {
+            background: var( --base, #2a171f );
+         }
+         
+         exercices > header > t4 {
+            color: var( --based, #daa520 );
+         }
+         
+         exercices > header > t2 {
+            color: var( --based, #fff );
+         }
+         
+         exercices > section {
+            background: #0000;
+         }
+         
+         exercices > section > exercice {
+            /* background: var( --barx, #1b1d22 ); */
+            background: var( --barx, #ffffff08 );
+         }
+         
+         exercices question {
+            background: #0000;
+         }
+         
+         exercices answer {
+            /* background: var( --bg, #212329 ); */
+            background: var( --bgx, #ffffff15 );
+            border-radius: .7em;
+            padding: 0.5em;
+         }
+      </style>
+   </head>
+   <body>
+      <appbar>
+         <appbar-body>
+            <appbar-brand></appbar-brand>
+            <t1></t1>
+            <appbar-options></appbar-options>
+         </appbar-body>
+      </appbar>
+
+      <home-page>
+         <header bg="var( --base )" pd="24px">
+            <t1>Banco de Dados NoSQL</t1>
+         </header>
+      </home-page>
+
+      <script>
+         'use strict';
+         /* ==[ properties ]================= */
+         const 
+            _ = ( ...v ) => console.log( ...v )
+            ,
+            $ = ( v, a ) => {
+               if( !a ) {
+                  return( document.querySelector( v ) ); 
+               } else {
+                  return( document.querySelectorAll( v ) );
+               }
+            }
+         ;
+         /* -------------------------------- */
+
+         /**
+          * == [ prototypes ]
+          * == == == == == == == == == */ 
+         String.prototype.$ = function( v ) {
+            if( !v ) {
+               return(
+                  document.querySelector( this )
+               );
+            } else {
+               return(
+                  document.querySelectorAll( this )
+               );
+            }
+         }
+         String.prototype._ = function( v ) {
+            return(
+               console.log( "/** == [ Sting log ] == == == == == == == == == */\n\n", this )
+            );
+         }
+
+
+
+         function Exercices( { ...props } ) {
+            const 
+               exes = props.exercices.map( exe => `
+                  <exercice pd="1em" gap="1em">
+                     <question>${ exe.q }</question>
+                     <answer>${ exe.a }</answer>
+                  </exercice>` ).join( "" )
+               ,
+               model = `
+                  <exercices pv="1.5em" gap="1em">
+                     <header pd="1em">
+                        <t4>
+                           ${ props.tema }
+                        </t4>
+                        <t2>
+                           ${ props.name }
+                        </t2>
+                     </header>
+                     <section gap="1em">
+                        ${ exes }
+                     </section>
+                  </exercices>
+               `
+            ;
+            return(
+               $( "home-page" ).innerHTML += model
+            );
+         }
+
+
+
+         /* ==[ events ]==================== */
+         window.addEventListener( 'load', ev => {
+            let 
+               NavLinks
+            ;
+
+            Exercices( {
+               tema: "Tema 2",
+               name: "",
+               exercices: [
+                  {
+                     q: `É exemplo de um SGBD relacional-objeto,
+exceto:`,
+                     a: `MongoDB.`
+                  },
+                  {
+                     q: `Assinale a afirmativa que indica o modelo de
+banco de dados mais recente:`,
+                     a: `NoSQL.`
+                  },
+               ]
+            } );
+
+            Exercices( {
+               tema: "Tema 3",
+               name: "",
+               exercices: [
+                  {
+                     q: `É um formato de dado muito usado no modelo
+chave-valor:`,
+                     a: `JSON`
+                  },
+                  {
+                     q: `Sobre o modelo chave-valor podemos afirmar,
+exceto:`,
+                     a: `É usado no Neo4J.`
+                  },
+               ]
+            } );
+
+            Exercices( {
+               tema: "Tema 4",
+               name: "",
+               exercices: [
+                  {
+                     q: `Qual foi a primeira forma de trabalhar como
+modelo chave-valor no PostgreSQL?`,
+                     a: `Hstore`
+                  },
+                  {
+                     q: `Sobre o modelo chave-valor, podemos afirmar,
+exceto:`,
+                     a: `O controle transacional é baseado nas
+propriedades ACID.`
+                  },
+               ]
+            } );
+
+            Exercices( {
+               tema: "Tema 5",
+               name: "",
+               exercices: [
+                  {
+                     q: `Qual o operador que deve ser usado para listar
+no formato texto um atributo em JSON no
+PostgreeSQL?`,
+                     a: `->`
+                  },
+                  {
+                     q: `Sobre o comando a seguir, aplicado a um
+atributo detalhes em JSON, podemos afirmar
+que:
+SELECT detalhes -> 'itens'> 1 as itens FROM
+pedidos`,
+                     a: `Lista o segundo valor do array da
+chave itens como texto.`
+                  },
+               ]
+            } );
+
+            Exercices( {
+               tema: "Tema 6",
+               name: "",
+               exercices: [
+                  {
+                     q: `Não é um formato usado para o
+armazenamento de documentos em um banco
+de dados orientado a documentos:`,
+                     a: `csv`
+                  },
+                  {
+                     q: `Assinale a alternativa que não contém um termo
+usado na definição da estrutura de um banco
+de dados orientado a documentos:`,
+                     a: `Tabela.`
+                  },
+               ]
+            } );
+
+            Exercices( {
+               tema: "Tema 7",
+               name: "",
+               exercices: [
+                  {
+                     q: `Como é chamada a linguagem de consultas do
+MongoDB?`,
+                     a: `MQL.`
+                  },
+                  {
+                     q: `Assinale a alternativa que contém um recurso
+para facilitar o projeto de um banco de dados
+orientado a documentos:`,
+                     a: `Agregados.`
+                  },
+                  {
+                     q: `OS BANCOS DE DADOS NOSQL UTILIZAM UM
+PADRÃO DIFERENTE DE ARMAZENAMENTO EM
+RELAÇÃO AO SQL. COMPREENDER SUAS
+FUNÇÕES É SINTAXE É FUNDAMENTAL PARA O
+PROFISSIONAL DE TI MODERNO. NESSE
+SENTIDO, QUAL FUNÇÃO É RESPONSÁVEL
+POR CRIAR UM OBJETO JSON A PARTIR DE
+UMA LISTA DE ARGUMENTOS VARIADOS.`,
+                     a: `JSONB_BUILD_OBJECT).`
+                  },
+               ]
+            } );
+
+            Exercices( {
+               tema: "Tema 8",
+               name: "",
+               exercices: [
+                  {
+                     q: `Assinale a alternativa que indica erradamente
+um uso do modelo colunar e o do relacional :`,
+                     a: `o colunar foi projetado para uso em
+sistemas que necessitam de controle
+transacional.`
+                  },
+                  {
+                     q: `Um contêiner no Cassandra equivale a o que no
+relacional?`,
+                     a: `schema.`
+                  },
+               ]
+            } );
+
+            Exercices( {
+               tema: "Tema 9",
+               name: "",
+               exercices: [
+                  {
+                     q: `É um tipo de chave usada pelo Cassandra para
+facilitar a distribuição de dados pelos clusters:`,
+                     a: `Chave de partição.`
+                  },
+                  {
+                     q: `É UM TIPO DE CHAVE USADA PELO
+CASSANDRA PARA FACILITAR A DISTRIBUIÇÃO
+DE DADOS PELOS CLUSTERS:`,
+                     a: `CHAVE DE PARTIÇÃO.`
+                  },
+               ]
+            } );
+
+            Exercices( {
+               tema: "Tema 10",
+               name: "",
+               exercices: [
+                  {
+                     q: `O modelo baseado em grafos é uma
+representação que é utilizada para descrever
+relações em conjuntos de dados. Ele é
+amplamente usado em diversas aplicações,
+desde redes sociais e sistemas de
+recomendação até análise de circuitos e
+topologia de redes.
+Assinale a alternativa que contem componentes
+usados no modelo baseado em grafos:`,
+                     a: `nó, aresta e propriedades`
+                  },
+                  {
+                     q: `No modelo de dados em grafos, o
+relacionamento é:`,
+                     a: `a aresta.`
+                  },
+               ]
+            } );
+
+            Exercices( {
+               tema: "Tema 11",
+               name: "",
+               exercices: [
+                  {
+                     q: `Assinale a alternativa que cria um nó para um
+cliente com a apenas uma propriedade
+denominada nome:`,
+                     a: `CREATE ( : Cliente { nome : 'Léa' } )`
+                  },
+                  {
+                     q: `O que faz o comando abaixo?
+MATCH ( c1 : Cliente { nome: 'Léa' } ) , ( c2 Cliente {nome : 'Ana' } )
+CREATE ( c1 )-[ :USA_PRODUTO ] ( c2 ) ;`,
+                     a: `Cria um relacionamento entre clientes
+que usam o mesmo produto.`
+                  },
+               ]
+            } );
+
+
+            "navlink".$(1).forEach( link => link.addEventListener( 'click', ev => {
+               window.open( link.getAttribute( 'to' ), '_blank' );
+            } ) );
+
+            /* bg */
+            $( "[bg]", 1 ).forEach( bg => bg.style.background = bg.getAttribute( "bg" ) );
+
+            /* paddings */
+            $( "[pd]", 1 ).forEach( pd => pd.style.padding = pd.getAttribute( "pd" ) );
+            $( "[ph]", 1 ).forEach( ph => {
+               ph.style.paddingLeft = ph.getAttribute( "ph" ) 
+               ph.style.paddingRight = ph.getAttribute( "ph" ) 
+            } );
+            $( "[pv]", 1 ).forEach( pv => {
+               pv.style.paddingTop = pv.getAttribute( "pv" ) 
+               pv.style.paddingBottom = pv.getAttribute( "pv" ) 
+            } );
+
+            /* gap */
+            $( "[gap]", 1 ).forEach( gap => gap.style.gap = gap.getAttribute( "gap" ) );
+
+         } );
+
+      </script>
+   </body>
+</html>
